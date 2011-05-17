@@ -1,0 +1,7 @@
+# Mac OS Datei... irgendwas
+.DS_Store
+
+Thumbs.db
+
+#Binaries
+*.class
