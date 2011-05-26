@@ -22,6 +22,15 @@ namespace WinMovieRack
         public MainWindow()
         {
             InitializeComponent();
+            UserControl1 p = new UserControl1();
+            
+            
+            Grid.SetColumn(p, 2);
+            Grid.SetRow(p, 0);
+            
+           grid1.Children.Add(p);
+            
+            
         }
     }
 }
