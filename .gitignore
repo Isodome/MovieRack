@@ -5,3 +5,7 @@ Thumbs.db
 
 #Binaries
 *.class
+
+
+MacMovieRack/build
+WinMovieRack/WinMovieRack/bin
