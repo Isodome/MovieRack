@@ -4,11 +4,12 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid x:Name="grid1">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="col1"  Width="1*" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition x:Name="col1"  Width="0" />
+            <ColumnDefinition Width="41*" />
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="432*" />
         </Grid.ColumnDefinitions>
-        <TextBlock HorizontalAlignment="Center" Text="Hi" VerticalAlignment="Center" />
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+        <TextBlock HorizontalAlignment="Center" Text="Hi" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="57,148" />
+        <GridSplitter Grid.Column="3" HorizontalAlignment="Stretch" Margin="60,0,372,0" />
     </Grid>
 </Window>
