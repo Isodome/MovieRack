@@ -1,8 +1,0 @@
-\select@language {ngerman}
-\contentsline {section}{\numberline {1}Einleitung}{3}{section.1}
-\contentsline {section}{\numberline {2}Controller}{4}{section.2}
-\contentsline {section}{\numberline {3}GUI}{5}{section.3}
-\contentsline {section}{\numberline {4}Model}{6}{section.4}
-\contentsline {subsection}{\numberline {4.1}Filmdetails}{6}{subsection.4.1}
-\contentsline {section}{\numberline {5}Sequenzdiagramme}{7}{section.5}
-\contentsline {section}{\numberline {6}Gesamt\IeC {\"u}bersicht}{8}{section.6}
