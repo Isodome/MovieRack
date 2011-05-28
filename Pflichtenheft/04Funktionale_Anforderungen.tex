@@ -1,0 +1,311 @@
+\section{Funktionale Anforderungen}
+
+\subsection{Ansichten}
+\begin{description}
+	\item[/FA10/] Auswahl verschiedener Ansichten
+	\begin{description}
+		\item[/FA11/] \textbf{Fiminfoansicht}: Darstellung einer Liste der Filme, am linken Programmrand, rechts davon Informationen des makierten Films.
+		\item[/FA12/] \textbf{Listenansicht}: Eine Liste aller Filme mit einer kleinen Infoleiste am linken Programmrand
+		\item[/FA13/] \textbf{Statistikansicht}: Ansicht in der man sich verschiedene Statisiken der gesamten Datenbank anzeigen lassen kann
+		\item[/FA14/] \textbf{Personenansicht}: Ansicht zu einem Person in der Datenbank. In dieser werden detailierte Informationen zu einer Person angezeigt.
+		\item[/FA15/] \textbf{Optionenansicht}: Hier sind alle Optionen in verschiedene Tabs gekapselt. Auch das erstellen neuer Listen(Listen bestehen in dem Fall aus einem Teil von Filmen)
+		\item[/FA16/] \textbf{Film/Schauspieler-Bearbeitungsansicht}: Ein Pop-Up über dem man alle Einstellungen per Hand ändern kann.
+		\item[/FA17/] \textbf{MultipleUpdate}: Ansicht in der Man eine bestimmte Anzahl oder auch alle Filme Updaten kann.
+		\item[/FA17/]\textbf{MultipleAdd}: Ansicht, in der man mehrere Filme auf einmal hinzufügen kann.
+		\item[/FA17/][optional] \textbf{VirtualFlipansicht}: Ansicht, in der die Cover in einer Reige angeornet sind und man durchscollenkann
+		\item[/FA17/][optional] \textbf{Verleihmanagmentansicht}: Ansicht, in der man überblicken kann welche Filme man wem verliehen hat.
+	\end{description}
+	% \item Forumsvorschläge
+	% \begin{itemize}
+		% \item VirtualFlip
+		% e\item einfache Filterfunktion (Als Anforderung und im Design)
+		% \item Verleihmanagment
+		% e\item Statistiken (Als Anforderung und im Design)
+		% e\item Schauspieler Bereich (Als Anforderung und im Design)
+		% \item Gruppierung von Filmen einer Reihe
+		% e\item Empfehlungen \"Recommendation\" (Als Anforderung und im Design)
+		% \item OFDb als Alternative auslesen
+		% \item Scannen von Laufwerk-Verzeichnissen und den automatisierten Import der gefundenen Filmtitel, und übernahme des Verzeichnispfades
+		% \item Unbekannte Filme sollen in einem Logfile gespeichert werden um direkt danak oder zu einem späteren Zeitpunkt den Import fortzusetzen. 
+		% \item Doppelte Filme sollten übersprungen und ebenfalls in einem separaten Logfile, für spätere Bearbeitung, gespeichert werden.
+		% \item Bearbeitete Log-\textbf{Einträge} nicht Logfiles sollten als erledigt markiert und erst auf bestätigen des Anwenders gelöscht werden.
+		% \item Ferner wäre auch eine Import-Funktion aus einer Filmliste (z.B. Text-Datei) wünschenswert.
+		% \item ! Ordner auswählen der bei jedem start überprüft wird und erkannt wird ob neue Film in ihm sind, und dann gefragt wird ob dese hinzugefügt werden sollen
+		% e\item ! Metacritics (Als Anforderung und im Design)
+		% \item Advanced Search http://www.imdb.com/search/title
+		% \item Filmversion Directors Cut...
+		% \item Rottentomatos
+	% \end{itemize}
+\end{description}
+
+
+\newpage
+\subsection{Fiminfoansicht}
+\begin{description}
+	\item[/FAXXX/] Anzeige einer einfache Liste
+	\begin{description}
+		\item[/FAXXX/] Anzeige des Covers in der Liste
+		\item[/FAXXX/] Anzeige des Filmtitels in der Liste
+		\item[/FAXXX/] Möglichkeit die Liste nach bestimten Kriterien Sortieren zu lassen
+		\item[/FAXXX/] [optional] Anzeige einer weiteren einstellbaren Information des Films in der Liste
+		\item[/FAXXX/] Möglichkeit einen Film hinzuzfügen
+		\item[/FAXXX/] Möglichkeit einen Film zu löschen
+		\item[/FAXXX/] Möglichkeit eine zu einem Film gehörende Datei abspielen zu lassen
+		\item[/FAXXX/] Einheitliche Bar
+		\begin{itemize}
+			\item Titel, Orginaltitel, Erscheinungsjahr
+			\item Rating auf IMDB mit Anzahl der Bewertungen
+			\item IMDB Top 250 Platz
+			\item Link zu IMDB
+			\item Eigene Wertung (Eigene Wertung auf IMDB)
+			\item Gernres
+			\item Wertung auf Metacritics
+			\item Link zu Metacritics
+			\item Wertung auf Rottentomatos (Audience und Tomatoes)
+			\item Link zu Rottentomatos
+			\item Poster (möglichkeit auf Orginalgröße)
+			\item Edit-Button um die Daten des Fims zu editieren
+			\item [optional] Facebook Like-Button um den Film in Facebook zu veröffentlichen
+		\end{itemize}
+	\end{description}
+	\item[/FAXXX/] Anzeige der Filminformationen auf der rechten Seite, mit verschiedenen Tabs
+	\begin{description}
+		\item[/FAXXX/] \textbf{Allgemeine Informationen Tab}
+		\item Allgemeine Informationen zu einem Film. Diese Ansicht sollte den Großteil des am meisten Interessanten über einem Film enthalten.
+		\begin{description}
+			\item[/FAXXX/] Plot
+			\item[/FAXXX/] Details (Editierbar, was angezeigt werden soll.)
+			\begin{itemize}
+				\item Laufzeit
+				\item Premiere Datum
+				\item Zuletzt gesehen
+				\item Box Office
+				\item ...
+			\end{itemize}
+			\item[/FAXXX/] Notes (Eigene Notizen)
+			\item[/FAXXX/] Erweiterte Informationen (Eigends hinzugefügte Daten)
+			\item[/FAXXX/] Produktion Personen (Director, Writer) mit link zur \textbf{Schauspieler Tab} (Doppelklick)
+			\item[/FAXXX/] Top Actors mit link zur \textbf{Schauspieler Tab} (Doppelklick)	
+		\end{description}			
+		\item[/FAXXX/] \textbf{Erweitert Tab}
+		\item Hier sollen weniger wichtigere Daten visualisiert werden.
+			\begin{description}
+				\item[/FAXXX/] Liste wann man alles den Film gesehen hat mit Textfeld für kurze Information
+				\item[/FAXXX/] Liste wann man einen Film hinzugefügt hat und welches Format mit Textfeld für kurze Information
+				\item[/FAXXX/] Übersicht der Awards wie auf IMDB
+				\item[/FAXXX/] Also Kown As:
+				\item[/FAXXX/] Memorable Quotes
+				\item[/FAXXX/] Trivia
+				\item[/FAXXX/] Empfehlungen anhand dieses Films, bei einem Doppelklick auf den Film soll sich die IMDB-Seite öffnen.
+			\end{description}
+		\item[/FAXXX/] \textbf{Schauspieler Tab}
+		\item Die Ansicht in der alle Schauspieler des Films gezeigt werden.
+			\begin{description}
+				\item[/FAXXX/] Automatisch beim öffnen des Tabs wird der oberste Schauspieler(Star) angezeigt.
+				\item[/FAXXX/] Liste aller Schauspieler des Films, mit Bild Name, Charakter und Alter zur Zeit des Films.
+				\item[/FAXXX/] Regisseur
+				\item[/FAXXX/] Autor
+				\item[/FAXXX/] Falls ein Person makiert wird, passt sich der Bereich über die Person in dieser Ansicht dem Schauspieler an.
+				\item[/FAXXX/] Bild des Schauspielers mit der Möglichkeit das Bild in Orginalgröße anzuzeigen. 
+				\item[/FAXXX/] Schauspieler Details
+					\begin{itemize}
+						\item Geburtsdatum
+						\item Alter
+						\item Geburtsort
+						\item Awards
+						\item Durchschnittlicher IMDB Bewertung bzw. durchschnittliche eigene Bewertung aller Filme des Schauspielers in der Datenbank.
+						\item Bekannt für Filme (Entnehmbar IMDB), bei einem Doppelklick auf einen dieser Filme, soll sich die IMDB-Seite dieses Films öffnen bzw die \textbf{Allgemeine Informationen Tab}-Seite des Films falls in der Datenbank vorhanden(optional)
+						\item Lifetime Gross Total Box Office (entnehmbar Boxofficemjo)
+						\item Durschnittlicher Boxoffice (entnehmbar Boxofficemojo)
+						\item Liste aller Filme des Schauspielers in der Datenbank, bei einem Doppelklick auf einen dieser Filme soll zu diesem in die Filminfoansicht im \textbf{Allgemeine Informationen Tab} gewechselt werden.
+					\end{itemize}
+				\item[/FAXXX/] [optional] Andere Filme des Schauspielers welche nicht explizit in der Datenbank vorhanden sind.
+			\end{description}
+		\item[/FAXXX/] \textbf{Boxoffice Tab}
+		\item Hier werden alle Informationen die mit den Einspielergebnissen zusammenhängen aufbereitet.
+			\begin{description}
+				\item[/FAXXX/] Einnahmen in Amerika
+				\item[/FAXXX/] Einnahmen auserhalb Amerikas
+				\item[/FAXXX/] Einnahmen Weltweit
+				\item[/FAXXX/] Rang der Genres
+				\item[/FAXXX/] Rang in Amerika der Filme aller Zeiten
+				\item[/FAXXX/] Rang weltweit der Filme aller Zeiten
+				\item[/FAXXX/] Einspielergebnis am Erscheinungswochenende
+				\item[/FAXXX/] Wochenend Einspielergebnise mit Datum in Amerika
+				\item[/FAXXX/] Einspielergebnisse geglieder nach Ländern.			
+			\end{description}
+		\item[/FAXXX/] \textbf{Awards Tab}
+		\item Hier werden alle Preise bzw. Awards angezeigt.
+			\begin{description}
+				\item[/FAXXX/] Oscars Nominiert und Gewonnen, mit Kategorien und Nominierten
+				\item[/FAXXX/] [optional] Eine beliebige Anzahl weiterer Preise mit der gleichen aufbereitung wie die Oscars.
+			\end{description}
+		\item[/FAXXX/] \textbf{Bilder Tab}
+		\begin{description}
+			\item Bilder des Films
+			\item Möglichkeit Bilder hinzuzufügen und zu löschen
+		\end{description}
+	\end{description}
+\end{description}
+
+
+\newpage
+\subsection{Listenansicht}
+\begin{description}
+	\item[/FAXXX/] Aufbereiten de Filme in einer Liste mit verschiedenen Spalten
+	\item[/FAXXX/] Nach jeder Spalte soll sortiert werden können
+	\item[/FAXXX/] Variable Anzahl an spalten und deren Belegung
+	\item[/FAXXX/] Liste soll auch die Poster der Filme anzeigen
+	\item[/FAXXX/] Am rechte Rand eine Infoleiste mit zwei Tabs.
+	\item[/FAXXX/] Filminfo
+	\begin{description}
+		\item Falls ein Film makiert wurde
+		\item[/FAXXX/] Poster
+		\item[/FAXXX/] Klick auf das Poster soll es in Orginalgröße anzeigen
+		\item[/FAXXX/] Filmtitel und Orignaltitel
+		\item[/FAXXX/] Top Schauspieler
+		\item[/FAXXX/] Allgemeine Informationen (Plot usw.)
+		\item[/FAXXX/] Link zur \textbf{Filminfoansicht} dieses Films
+		\item Falls ein Schauspieler makiert wurde
+		\item[/FAXXX/] Kurzinformationen zum Film im Infotab
+		\item[/FAXXX/] Filme des Schauspielers in der Datenbank
+	\end{description}
+	\item[/FAXXX/] Filter
+	\begin{description}
+		\item[/FAXXX/] Möglichkeit nach bestimmten Kriterien nur eine Auswahl an Filmen anzeigen zu lassen
+		\begin{itemize}
+			\item Genres
+			\item Jahr
+			\item Nicht gesehen seit
+			\item Laufzeit
+			\item Länder
+			\item Formate
+			\item Altersfreigaben
+			\item ...
+		\end{itemize}
+	\end{description}
+\end{description}
+
+
+\newpage
+\subsection{Statistikansicht}
+\begin{description}
+	\item Allgemeine Informationen zur Datenbank
+	\begin{itemize}
+		\item Anzahl Schauspieler, Regiseure Genres, Formate usw.
+		\item Filme insgesamt
+		\item Laufzeit insgesamt
+		\item Durchschnittliche Wertung IMDB und eigene Wertung
+		\item Insgesamt gesehen.
+		\item Dauer der gesehenen Filme insgesamt
+	\end{itemize}
+	\item[/FAXXX/] Histogramm
+	\begin{description}
+		\item[/FAXXX/] Sammlunsverlauf
+		\item[/FAXXX/] Hinzugefügt pro Moat
+		\item[/FAXXX/] Gesehen pro Monat
+		\item[/FAXXX/] Gesehen und Hinzugefügt pro Monat in einem Diagramm			
+	\end{description}
+	\item[/FAXXX/] Balkendiagramm
+	\begin{description}
+		\item[/FAXXX/] Top Schauspieler
+		\item[/FAXXX/] Genres
+		\item[/FAXXX/] Formate
+		\item[/FAXXX/] Länder
+		\item[/FAXXX/] Altersfreigaben
+		\item[/FAXXX/] Erscheinungsjahre
+	\end{description}
+	\item[/FAXXX/] Kuchendiagramm
+	\begin{description}
+		\item[/FAXXX/] Top Schauspieler			
+		\item[/FAXXX/] Top Genres
+		\item[/FAXXX/] Formate
+		\item[/FAXXX/] Länder
+		\item[/FAXXX/] Altersfreigaben
+		\item[/FAXXX/] Erscheinungsjahre
+	\end{description}
+\end{description}
+
+
+
+\newpage
+\subsection{Personenansicht}
+\begin{description}
+	\item[/FAXXX/] Suchleiste, mit Ergebnis einer Auswahl an Ergebnissen
+	\begin{itemize}
+		\item Suche über den Name einer Person
+		\item Suche über die IMDB Nummer
+		\item Suche über den Name eines Films
+	\end{itemize}
+	\item[/FAXXX/] Einheitliche Bar
+	\begin{itemize}
+		\item Alter
+		\item Name
+		\item Orginal Name
+		\item Berufe
+		\item Durchschnittliche Wertung der IMDB Filme in der Datenbank
+		\item Durschnittliche Eigenwertung der Filme 
+		\item Durschnittliche Wertung af Metacritics
+		\item Best und Schlechtsbewertester Filme auf Rottentomatoes
+	\end{itemize}
+	\item[/FAXXX/] \textbf{Übersichts-Tab}
+	\begin{description}
+		\item[/FAXXX/] Schauspielerdetails
+		\begin{itemize}
+			\item Geburtstag
+			\item Alter
+			\item Geburtsort
+			\item Awards
+			\item IMDB Schnitt
+			\item Einnahmen Gesamt
+			\item Einnahmen Durschnitt
+		\end{itemize}
+		\item[/FAXXX/] Biographie
+		\item[/FAXXX/] Filme für die die Person bekannt ist
+		\item[/FAXXX/] Notizen
+	\end{description}	
+	\item[/FAXXX/] \textbf{Awards/Filme-Tab}
+	\begin{description}
+		\item[/FAXXX/] Übersicht über gewonnene Awards
+		\item[/FAXXX/] Auflistung der Awards
+		\item[/FAXXX/] Liste der Filme in der Datenbank mit diesem Person.
+		\item[/FAXXX/]Wenn auf ein Fim geklickt wird, werden Indormationen dazu angezeigt
+		\item[/FAXXX/] Bei Doppelklick kommt man zur \textbf{Filminfo-Übersicht des Films}
+	\end{description}
+	\item[/FAXXX/] \textbf{Bilder-Tab}
+	\begin{description}
+		\item Bilder einer Person
+		\item Möglichkeit Bilder hinzuzufügen und zu löschen
+	\end{description}
+\end{description}
+
+\newpage
+\subsection{Optionenansicht}
+\begin{description}
+	\item[/FAXXX/] Automatisches Laden der Datenbank beim starten des Programms
+	\item[/FAXXX/] Browserauswahl in welchem IMDB bzw. Links gestartet werden
+	\item[/FAXXX/] Playerauswahl mit welchem eine Videodatei, gestartet werden soll Windowsstandart oder Programmpfad.
+	\item[/FAXXX/] [optional] Einstellbaren Information des Films in der Liste
+	\item[/FAXXX/] Filminfoansicht Details [/FAXXX/] (Editierbar, was angezeigt werden soll.)
+	\item[/FAXXX/] Additional Information Werte eeintragen und erweitern können.
+\end{description}
+
+\subsection{Film/Schauspieler-Bearbeitungsansicht}
+\begin{description}
+	\item[/FAXXX/] Es müssen alle Daten eines Films bearbeitet werden können.
+\end{description}
+
+\subsection{MultipleUpdate}
+\begin{description}
+	\item[/FAXXX/] Auswahl an Informationen die akutalisiert werden sollen
+	\item[/FAXXX/] Auswahl welche Filme aktualisiert werden sollen
+	\begin{itemize}
+		\item Nach erstellten listen
+		\item Genres
+		\item Letzter Aktualisierung
+		\item Alle die keine IMDB Nummer haben
+		\item Alle die eine IMDB Nummer haben
+	\end{itemize}
+\end{description}
+		
+
