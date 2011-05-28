@@ -12,5 +12,11 @@ namespace WinMovieRack
     /// </summary>
     public partial class App : Application
     {
+
+            void App_StartUp(object sender, StartupEventArgs e)
+            {
+                //vor der GUi, hier :)
+            }
+        
     }
 }

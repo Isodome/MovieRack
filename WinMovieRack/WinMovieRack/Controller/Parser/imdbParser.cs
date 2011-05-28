@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WinMovieRack.Controller
+namespace WinMovieRack.Controller.Parser
 {
-    public class Controller
+    class imdbParser
     {
-
-
     }
 }
