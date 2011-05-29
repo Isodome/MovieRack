@@ -15,12 +15,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Height="auto" HorizontalAlignment="Stretch" Name="menu1" VerticalAlignment="Top" Width="auto" HorizontalContentAlignment="Left" Grid.ColumnSpan="3">
-            <MenuItem x:Name="fileMenuEntry" Header="Hallo" Click="fileMenuEntry_Click">
+            <MenuItem x:Name="fileMenuEntry" Header="Hallo">
                 <MenuItem x:Name="exitMenuEntry" Header="Exit" />
             </MenuItem>
         </Menu>
         <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menu2" VerticalAlignment="Top" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Width="196">
-            <MenuItem Header="Movies" HorizontalAlignment="Center" Click="MenuItem_Click" />
+            <MenuItem Header="Movies" Name="moviesMenuEntry" HorizontalAlignment="Center" Click="moviesMenuEntry_Clicked" />
             <MenuItem Header="Actors" HorizontalAlignment="Center" />
             <MenuItem Header="List" HorizontalAlignment="Center" />
         </Menu>

@@ -13,7 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.Resources.Localization.MainWindow;
 using WinMovieRack.Model;
-
+using WinMovieRack.Controller.Parser;
+using System.Threading;
 namespace WinMovieRack
 {
     /// <summary>
@@ -33,13 +34,14 @@ namespace WinMovieRack
             fileMenuEntry.Header = MainWindowStrings.FileKey;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void moviesMenuEntry_Clicked(object sender, RoutedEventArgs e)
         {
             DetailsView d = new DetailsView();
             changeView(d);
-            DBInterface i = new DBInterface();
-            i.initDb();
-            i.checkTables();
+
+			Thread t = new Thread(new ThreadStart(startThread));
+			t.Start();
+
         }
         private void changeView(UIElement newView)
         {
@@ -51,9 +53,18 @@ namespace WinMovieRack
             current = newView;
         }
 
-        private void fileMenuEntry_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+		protected void startThread()
+		{
+			imdbMovieParser p = new imdbMovieParser("0473075");
+			Console.WriteLine("http request");
+			p.doRequest();
+			Console.WriteLine("parsing");
+			p.doParse();
+			imdbMovieParser p11 = new imdbMovieParser("0120737");
+			Console.WriteLine("http request");
+			p11.doRequest();
+			Console.WriteLine("parsing");
+			p11.doParse();
+		}
     }
 }
