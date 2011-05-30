@@ -25,6 +25,7 @@ namespace WinMovieRack.Controller.Parser
 		private const string imdbRatingRegex = @"<span class=""rating-rating"">(?<rating>.*?)<span";
 		private const string countriesRegex = @"<h4 class=""inline"">Country:</h4>(?<country>(.|\n|\r)*?)</div>";
 		private const string languagesRegex = @"<h4 class=""inline"">Language:</h4>(?<lang>(.|\n|\r)*?)</div>";
+		private const string alsoKnownAsRegex = @"<h4 class=""inline"">Also Known As:</h4>(?<ana>.*)";
 
 
         private WebRequest req;
@@ -41,6 +42,7 @@ namespace WinMovieRack.Controller.Parser
 		private int imdbRating;
 		private List<string> countries;
 		private List<string> languages;
+		private string alsoKnownAs;
 
         public imdbMovieParser(string imdbID) 
         {
@@ -68,6 +70,7 @@ namespace WinMovieRack.Controller.Parser
 			extractIMDBRating();
 			extractLanguages();
 			extractCountries();
+			extractAlsoKnownAs();
 
 			printResults();
 		}
@@ -140,6 +143,11 @@ namespace WinMovieRack.Controller.Parser
 			}
 		}
 
+		private void extractAlsoKnownAs()
+		{
+			Match m = Regex.Match(src, alsoKnownAsRegex);
+			this.alsoKnownAs = m.Groups["ana"].Value.Trim();
+		}
 
 		/*
 		 * For debug only
@@ -171,6 +179,7 @@ namespace WinMovieRack.Controller.Parser
 				Console.Write(s + ", ");
 			}
 			Console.WriteLine("");
+			Console.WriteLine("Also known as: " + this.alsoKnownAs);
 		}
 
     }
