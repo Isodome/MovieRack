@@ -39,8 +39,11 @@ namespace WinMovieRack
             DetailsView d = new DetailsView();
             changeView(d);
 
-			Thread t = new Thread(new ThreadStart(startThread));
-			t.Start();
+			imdbMovieParser p = new imdbMovieParser(477348);
+			Console.WriteLine("http request");
+			p.doRequest();
+			//imdbMovieParser p11 = new imdbMovieParser(0120737);
+			//p11.doRequest();
 
         }
         private void changeView(UIElement newView)
@@ -52,19 +55,5 @@ namespace WinMovieRack
             mainGrid.Children.Add(newView);
             current = newView;
         }
-
-		protected void startThread()
-		{
-			imdbMovieParser p = new imdbMovieParser("0473075");
-			Console.WriteLine("http request");
-			p.doRequest();
-			Console.WriteLine("parsing");
-			p.doParse();
-			imdbMovieParser p11 = new imdbMovieParser("0120737");
-			Console.WriteLine("http request");
-			p11.doRequest();
-			Console.WriteLine("parsing");
-			p11.doParse();
-		}
     }
 }
