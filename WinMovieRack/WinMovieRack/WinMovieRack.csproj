@@ -63,12 +63,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\imdbMovieParserMaster.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParserMaster.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser.cs" />
+    <Compile Include="Controller\Parser\JobLoadAwardsPage.cs" />
+    <Compile Include="Controller\Parser\JobLoadCreditsPage.cs" />
+    <Compile Include="Controller\Parser\JobLoadImage.cs" />
+    <Compile Include="Controller\Parser\JobLoadMainPage.cs" />
+    <Compile Include="Controller\Parser\JobParse.cs" />
+    <Compile Include="Controller\Parser\JobPrintResults.cs" />
     <Compile Include="Controller\TestJob.cs" />
-    <Compile Include="Controller\ThreadJobMaster.cs" />
-    <Compile Include="Controller\ThreadJob.cs" />
-    <Compile Include="Controller\ThreadsMaster.cs" />
+    <Compile Include="Controller\ThreadManagement\ThreadJobMaster.cs" />
+    <Compile Include="Controller\ThreadManagement\ThreadJob.cs" />
+    <Compile Include="Controller\ThreadManagement\ThreadsMaster.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
     </Compile>
