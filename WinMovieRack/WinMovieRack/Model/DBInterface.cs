@@ -45,5 +45,10 @@ namespace WinMovieRack.Model
             command.Dispose();
         
         }
+
+        public List<Movie> getMovieList()
+        {
+            throw (new NotImplementedException());
+        }
     }
 }

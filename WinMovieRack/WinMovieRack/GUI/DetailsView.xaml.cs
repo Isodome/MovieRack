@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WinMovieRack.GUI;
 
 namespace WinMovieRack
 {
@@ -22,6 +23,9 @@ namespace WinMovieRack
         public DetailsView()
         {
             InitializeComponent();
+            MoviesListBoxItem listItem = new MoviesListBoxItem();
+            listBoxMovies.Items.Add(listItem);
+
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)

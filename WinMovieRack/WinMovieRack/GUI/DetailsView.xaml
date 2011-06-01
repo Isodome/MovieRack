@@ -29,8 +29,8 @@
         </Menu>
         <TextBox Height="25" Margin="12,27,78,0" Name="textBox1" VerticalAlignment="Top" Text="(search)" />
         <Button Content="GO" Height="23" Margin="0,29,15,0" Name="button1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="42" />
-        <ListBox Grid.Row="1" Height="auto" Margin="12,6,6,0" Name="list" VerticalAlignment="Stretch" ClipToBounds="True">
-            <ListBoxItem />
+        <ListBox Grid.Row="1" Height="auto" Margin="12,6,6,0" Name="listBoxMovies" VerticalAlignment="Stretch" ClipToBounds="True">
+
 
         </ListBox>
         <Label Content="title" Grid.Column="2" Height="auto" Width="auto" HorizontalAlignment="Left" Margin="5,10,0,0" Name="movieTitleLabel" VerticalAlignment="Top" />

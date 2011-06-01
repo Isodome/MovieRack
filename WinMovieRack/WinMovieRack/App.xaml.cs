@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using WinMovieRack.Controller;
 
 namespace WinMovieRack
 {
@@ -15,7 +16,9 @@ namespace WinMovieRack
 
             void App_StartUp(object sender, StartupEventArgs e)
             {
-                //vor der GUi, hier :)
+                imdbMovieParserMaster parserMaster = new imdbMovieParserMaster();
+                ThreadsMaster threadsMaster = new ThreadsMaster();
+                threadsMaster.addJobMaster(parserMaster);
             }
         
     }
