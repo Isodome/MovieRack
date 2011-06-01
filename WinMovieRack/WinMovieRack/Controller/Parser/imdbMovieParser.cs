@@ -275,6 +275,42 @@ namespace WinMovieRack.Controller.Parser
 			} 
 		}
 
+
+        //Methode um sich bei IMDB einzuloggen um so die seiten zu laden, die angezeigt werden wenn man eingeloggt ist, vorallem, liste aller bewerteten Filme!
+        CookieContainer cookie;
+        public void Login(string user, string password)
+        {
+
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://secure.imdb.com/register-imdb/login");
+
+            req.Method = "POST";
+            req.ContentType = "application/x-www-form-urlencoded";
+            string login = string.Format("login={0}&password={1}", user, password);
+            byte[] postbuf = Encoding.ASCII.GetBytes(login);
+            req.ContentLength = postbuf.Length;
+            Stream rs = req.GetRequestStream();
+            rs.Write(postbuf, 0, postbuf.Length);
+            rs.Close();
+
+            cookie = req.CookieContainer = new CookieContainer();
+
+            WebResponse resp = req.GetResponse();
+            resp.Close();
+            GetPage("http://www.imdb.com/title/tt0276830/");
+        }
+
+        public void GetPage(string path)
+        {
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(path);
+            req.CookieContainer = cookie;
+            WebResponse resp = req.GetResponse();
+            string t = new StreamReader(resp.GetResponseStream(), Encoding.Default).ReadToEnd();
+            Console.Write(t);
+        }
+
+
+
+
 		/*
 		 * For debug only
 		 */
