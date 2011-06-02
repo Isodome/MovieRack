@@ -15,8 +15,8 @@ namespace WinMovieRack.Controller
         private static Object lockvar = "";
         private static Object idlevar = "";
 
-		private int fewThreads = Math.Max((getLogicalProcessorsCount()/2),1);
-		private int maxThreads = getLogicalProcessorsCount() * 2;
+		private int fewThreads = Math.Max((getLogicalProcessorsCount()/4),1);
+		private int maxThreads = getLogicalProcessorsCount() * 4;
 
 		int currentNumberOfThreads = 0;
 		private bool[] running;
@@ -28,7 +28,14 @@ namespace WinMovieRack.Controller
 		{
 			threads = new Thread[maxThreads];
 			running = new bool[maxThreads];
-			switchToThreadCount(fewThreads);
+			switchToThreadCount(maxThreads/2);
+		}
+
+		public ThreadsMaster(int numberOfThreads)
+		{
+			threads = new Thread[maxThreads];
+			running = new bool[maxThreads];
+			switchToThreadCount(numberOfThreads);
 		}
 
 

@@ -11,11 +11,15 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 	{
 		private const string placeholder = "{ID}";
 		private const string url = "http://www.imdb.com/name/nm" + placeholder + "/";
+		private const string pictureRegex = @"<td id=""img_primary"" rowspan=""2"">(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
 
 		private ThreadJob mainPageJob;
 		private bool mainPageJobDone = false;
+		private ThreadJob pictureLoadJob;
+		private bool pictureLoadJobDone = false;
 		private ThreadJob parseJob;
 		private bool parseJobStarted = false;
+		private bool parseJobDone = false;
 
 		private string mainPage;
 
@@ -23,6 +27,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		public uint imdbID;
 		public string name;
 		public DateTime birthday;
+		public string birthname;
 
 		public ConcurrentIMDBNameParser(uint imdbID)
 		{
@@ -31,6 +36,12 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			this.addJob(mainPageJob);
 		}
 
+		private JobLoadImage getPictureLoadJob()
+		{
+			Match m = Regex.Match(mainPage, pictureRegex);
+			string imageURL = m.Groups["url"].Value + ".jpg";
+			return new JobLoadImage(imageURL, null);
+		}
 
 		public override bool hasFinished(ThreadJob job)
 		{
@@ -41,7 +52,16 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 				{
 					this.mainPage = res.getResult();
 					mainPageJobDone = true;
+					addJob(getPictureLoadJob());
 				}
+			} 
+			else  if (job == parseJob)
+			{
+				parseJobDone = true;
+			}
+			else if (job == pictureLoadJob)
+			{
+				pictureLoadJobDone = true;
 			}
 
 			Monitor.Enter(this);
@@ -53,7 +73,9 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			}
 			Monitor.Exit(this);
 
-			return (job == parseJob);
+
+
+			return (mainPageJobDone && parseJobDone && pictureLoadJobDone);
 		}
 	}
 

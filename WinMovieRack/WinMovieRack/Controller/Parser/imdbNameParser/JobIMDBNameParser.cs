@@ -12,8 +12,9 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		private ConcurrentIMDBNameParser parent;
 
 		private const string nameRegex = @"<title>(?<name>.*?)- IMDb</title>";
-		private const string brithdayRegexMonthDay = @"<a href=""/search/name?birth_monthday=(?<month>\d{2})-(?<day>\d{2})"">";
-		private const string birthdayRegexYear = @"<a href=""/search/name?birth_year=(?<year>\d{4})";
+		private const string brithdayRegexMonthDay = @"<a href=""/search/name\?birth_monthday=(?<month>\d{2})-(?<day>\d{2})"">";
+		private const string birthdayRegexYear = @"<a href=""/search/name\?birth_year=(?<year>\d{4})";
+		private const string birthnameRegex = @"<a class=""canwrap"" href=""bio"">(?<birthname>.*?)</a><br />";
 
 		public JobIMDBNameParser(ConcurrentIMDBNameParser parent, string mainPage)
 		{
@@ -25,6 +26,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		{
 			extractName();
 			extractBirthday();
+			extractBirthname();
 
 			printResults();
 		}
@@ -51,11 +53,18 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			parent.birthday = new DateTime(year, month, day);
 		}
 
+		private void extractBirthname()
+		{
+			Match m = Regex.Match(mainPage, birthnameRegex);
+			parent.birthname = m.Groups["birthname"].Value.Trim();
+		}
+
 		private void printResults()
 		{
 			Console.WriteLine("IMDB ID: " + parent.imdbID);
 			Console.WriteLine("Name: " + parent.name);
 			Console.WriteLine("Birthday: " + parent.birthday.ToString());
+			Console.WriteLine("Birthname: " + parent.birthname);
 		}
 
 	}
