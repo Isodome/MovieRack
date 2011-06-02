@@ -58,7 +58,7 @@ namespace WinMovieRack.Controller
 				Monitor.Exit(lockvar);
                 if (job != null)
                 {
-                    System.Console.WriteLine("I'm Thread {0} and I'm starting next job {1} now", threadId, job.GetType().ToString());
+                    System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());
                     job.run();
 					if (master.hasFinished(job))
 					{
