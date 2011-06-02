@@ -21,7 +21,6 @@ namespace WinMovieRack.Controller.Parser
         public void run()
         {
             doParse();
-            parent.hasFinished(this);
         }
 
 		public void doParse()

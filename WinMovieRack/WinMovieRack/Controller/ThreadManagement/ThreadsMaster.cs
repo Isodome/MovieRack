@@ -10,33 +10,61 @@ namespace WinMovieRack.Controller
 {
     class ThreadsMaster
     {
+		private static ThreadsMaster threadsMaster;
+		private static object instancelock = "";
+
         private List<ThreadJobMaster> jobMaster = new List<ThreadJobMaster>();
 
         private static Object lockvar = "";
         private static Object idlevar = "";
 
-        private const int NUMBER_THREADS = 4;
-        private int threadId = 0;
+		private int fewThreads = Math.Max((getLogicalProcessorsCount()/4),1);
+		private int maxThreads = getLogicalProcessorsCount() * 4;
 
-        public ThreadsMaster()
-        {
-            for (int i = 0; i < NUMBER_THREADS; i++)
-            {
-                Thread tmpThread = new Thread(new ThreadStart(threadStart));
-                tmpThread.Start();
-            }
-        }
+		int currentNumberOfThreads = 0;
+		private bool[] running;
+		private Thread[] threads;
+		
+
+
+		public ThreadsMaster()
+		{
+			threads = new Thread[maxThreads];
+			running = new bool[maxThreads];
+			switchToThreadCount(maxThreads/2);
+		}
 
         private void threadStart()
         {
-            int threadId = ++this.threadId;
-            while (true)
+			int threadId = 0;
+			while (Thread.CurrentThread != threads[threadId])
+			{
+				threadId++;
+			}			
+			
+
+            while (running[threadId])
             {
-                ThreadJob job = getJob();
+				Monitor.Enter(lockvar);
+				ThreadJobMaster master = null;
+				ThreadJob job = null;
+
+				for (int i = 0; i < jobMaster.Count && job == null; i++)
+				{
+					master = jobMaster.ElementAt<ThreadJobMaster>(i);
+					job = master.getJob();
+				}
+
+				Monitor.Exit(lockvar);
                 if (job != null)
                 {
                     System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());
                     job.run();
+					if (master.hasFinished(job))
+					{
+						hasFinished(master);		
+					}
+					
                 }
                 else
                 {
@@ -46,22 +74,7 @@ namespace WinMovieRack.Controller
             }
         }
 
-        public ThreadJob getJob()
-        {
-            Monitor.Enter(lockvar);
-            ThreadJobMaster master = null;
-            ThreadJob job = null;
 
-            for(int i=0; i<jobMaster.Count && job == null; i++)
-            {
-                master = jobMaster.ElementAt<ThreadJobMaster>(i);
-                job = master.getJob();
-            }
-
-            Monitor.Exit(lockvar);
-            return job;
-
-        }
 
         public void addJobMaster(ThreadJobMaster master)
         {
@@ -74,8 +87,64 @@ namespace WinMovieRack.Controller
         {
             Monitor.Enter(lockvar);
             jobMaster.Remove(master);
+			master.finalize();
             Monitor.Exit(lockvar);
         }
+
+		private void blockingSwitchThreadCount(object newThreadCountObject)
+		{
+			Monitor.Enter(this);
+			int newThreadCount = (int)newThreadCountObject;
+
+			if (newThreadCount < currentNumberOfThreads)
+			{
+				for (int i = newThreadCount; i < currentNumberOfThreads; i++)
+				{
+					running[i] = false;
+				}
+			}
+			else if (newThreadCount > currentNumberOfThreads)
+			{
+				for (int i = currentNumberOfThreads; i < newThreadCount; i++)
+				{
+					running[i] = true;
+					threads[i] = new Thread(new ThreadStart(threadStart));
+					threads[i].Start();
+				}
+			}
+			currentNumberOfThreads = newThreadCount;
+			Monitor.Exit(this);
+		}
+
+		public void switchToThreadCount(int newThreadCount)
+		{
+			if (newThreadCount != currentNumberOfThreads)
+			{
+				Thread tmpThread = new Thread(this.blockingSwitchThreadCount);
+				tmpThread.Start(newThreadCount);
+			}
+		}
+
+		private static int getLogicalProcessorsCount()
+		{
+			Console.WriteLine("Number Of Logical Processors: {0}", Environment.ProcessorCount);
+			return Environment.ProcessorCount * 2;
+		}
+
+		public static ThreadsMaster getInstance() {
+			object lockvar = "";
+			Monitor.Enter(instancelock);
+			if (threadsMaster == null) {
+				threadsMaster = new ThreadsMaster();
+			}
+			Monitor.Exit(instancelock);
+
+			return (threadsMaster);
+		}
+		public static void switchThreadsCount (int numberOfThreads) {
+			getInstance().switchToThreadCount(numberOfThreads);
+		}
+
 
     }
 }

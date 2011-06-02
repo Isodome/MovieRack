@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 using WinMovieRack.Controller;
+using WinMovieRack.Controller.Parser.imdbNameParser;
 
 namespace WinMovieRack
 {
@@ -18,11 +19,19 @@ namespace WinMovieRack
             {
                 ThreadsMaster threadsMaster = new ThreadsMaster();
                 imdbMovieParserMaster parserMaster;
-                parserMaster = new imdbMovieParserMaster(477348);
+				parserMaster = new imdbMovieParserMaster(477348);
+				parserMaster.setFinalizeFunction(this.filmFinished);
                 threadsMaster.addJobMaster(parserMaster);
-                parserMaster = new imdbMovieParserMaster(449088);
-                threadsMaster.addJobMaster(parserMaster); 
+
+
             }
+			void filmFinished(ThreadJobMaster sender)
+			{
+				imdbMovieParserMaster p = (imdbMovieParserMaster)sender;
+				foreach(Tuple<uint,string> t in p.roles) {
+					ThreadsMaster.getInstance().addJobMaster(new ConcurrentIMDBNameParser(t.Item1));
+				}
+			}
         
     }
 }

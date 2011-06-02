@@ -8,11 +8,14 @@ using System.Threading;
 
 namespace WinMovieRack.Controller
 {
+	delegate void FinalizeFunction(ThreadJobMaster master);
+
     abstract class ThreadJobMaster
     {
         private List<ThreadJob> jobs = new List<ThreadJob>();
-        private static Object lockvar = "";
-        private ThreadsMaster master;
+        private Object lockvar = "";
+		private FinalizeFunction finFunction = null;
+       // private ThreadsMaster master;
 
         public ThreadJob getJob()
         {
@@ -24,7 +27,7 @@ namespace WinMovieRack.Controller
                 returnJob = jobs.First<ThreadJob>();
                 jobs.Remove(returnJob);
             }
-
+			
             Monitor.Exit(lockvar);
             return returnJob;
 
@@ -35,8 +38,21 @@ namespace WinMovieRack.Controller
             jobs.Add(job);
             Monitor.Exit(lockvar);
         }
-        
-        abstract public void hasFinished(ThreadJob job);
+
+        abstract public bool hasFinished(ThreadJob job);
+
+		public void setFinalizeFunction(FinalizeFunction func)
+		{
+			this.finFunction = func;
+		}
+
+		public void finalize()
+		{
+			if (finFunction != null)
+			{
+				finFunction(this);
+			}
+		}
     }
 
 }

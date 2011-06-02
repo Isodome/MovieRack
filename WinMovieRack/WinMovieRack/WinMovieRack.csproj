@@ -63,14 +63,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Parser\imdbMovieParserMaster.cs" />
-    <Compile Include="Controller\Parser\imdbMovieParser.cs" />
-    <Compile Include="Controller\Parser\JobLoadAwardsPage.cs" />
-    <Compile Include="Controller\Parser\JobLoadCreditsPage.cs" />
-    <Compile Include="Controller\Parser\JobLoadImage.cs" />
-    <Compile Include="Controller\Parser\JobLoadMainPage.cs" />
-    <Compile Include="Controller\Parser\JobParse.cs" />
-    <Compile Include="Controller\Parser\JobPrintResults.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParserMaster.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
+    <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\JobParse.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\JobPrintResults.cs" />
+    <Compile Include="Controller\Parser\generalJobs\JobWebPageDownload.cs" />
+    <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
+    <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJobMaster.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJob.cs" />
@@ -170,6 +170,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
