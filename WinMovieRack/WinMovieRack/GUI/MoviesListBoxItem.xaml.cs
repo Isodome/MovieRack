@@ -23,5 +23,18 @@ namespace WinMovieRack.GUI
         {
             InitializeComponent();
         }
+
+        public void setMovieTitle(String title) 
+        {
+            labelMovieTitle.Content = title;
+        }
+        public void setMovieYear(String year)
+        {
+            labelMovieYear.Content = year;
+        }
+        public void setMovieEditable(String editable)
+        {
+            labelMovieEditable.Content = editable;
+        }
     }
 }

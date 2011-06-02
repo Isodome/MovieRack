@@ -23,6 +23,7 @@ namespace WinMovieRack
     public partial class MainWindow : Window
     {
         private UIElement current;
+        public DetailsView detailsView;
 
         public MainWindow()
         {
@@ -36,8 +37,8 @@ namespace WinMovieRack
 
         private void moviesMenuEntry_Clicked(object sender, RoutedEventArgs e)
         {
-            DetailsView d = new DetailsView();
-            changeView(d);
+            detailsView = new DetailsView();
+            changeView(detailsView);
 
 			imdbMovieParser p = new imdbMovieParser(477348);
 			Console.WriteLine("http request");

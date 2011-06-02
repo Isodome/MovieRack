@@ -23,11 +23,11 @@ namespace WinMovieRack
         public DetailsView()
         {
             InitializeComponent();
-            MoviesListBoxItem listItem = new MoviesListBoxItem();
-            listBoxMovies.Items.Add(listItem);
-            MoviesListBoxItem listItem2 = new MoviesListBoxItem();
-            listActorBox.Items.Add(listItem2);
+        }
 
+        public void addMoviesListBoxItem(MoviesListBoxItem item)
+        {
+            listBoxMovies.Items.Add(item);
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
