@@ -25,10 +25,27 @@ namespace WinMovieRack
             InitializeComponent();
             MoviesListBoxItem listItem = new MoviesListBoxItem();
             listBoxMovies.Items.Add(listItem);
+            MoviesListBoxItem listItem2 = new MoviesListBoxItem();
+            listActorBox.Items.Add(listItem2);
 
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void image1_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+
+        }
+
+        private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
