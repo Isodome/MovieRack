@@ -20,6 +20,7 @@ namespace WinMovieRack.Controller
         public const string URL = "http://www.imdb.com/title/tt" + placholder + "/";
         public const string URLAwards = URL + "awards";
         public const string URLcredits = URL + "fullcredits";
+		private string imageURL;
 
 
         // Regex to parse information from the imdbMainPage
@@ -45,9 +46,9 @@ namespace WinMovieRack.Controller
         public const string getNameFromURLRegex = @"<a href=""/name/nm(?<g>\d+)/"">";
 
 
-        public WebRequest mainPageRequest;
-        public WebRequest awardsPageRequest;
-        public WebRequest creditsPageRequest;
+        public ThreadJob mainPageJob;
+        public ThreadJob awardsPageJob;
+        public ThreadJob creditsPageJob;
 
         // Full text of websites;
         public string mainPage;
@@ -71,19 +72,20 @@ namespace WinMovieRack.Controller
         public List<uint> writers;
         public List<Tuple<uint, string>> roles;
         public string alsoKnownAs;
-        public Image poster;
+        public Image poster = null;
 
         private bool mainPageLoaded = false;
         private bool awardsPageLoaded = false;
         private bool creditsPageLoaded = false;
+		private bool parseJobStarted = false;
 
         public imdbMovieParserMaster(uint imdbID)
         {
             this.imdbID = imdbID;
 
-            this.mainPageRequest = WebRequest.Create(Regex.Replace(URL, placholder, imdbID.ToString()));
-            this.awardsPageRequest = WebRequest.Create(Regex.Replace(URLAwards, placholder, imdbID.ToString()));
-            this.creditsPageRequest = WebRequest.Create(Regex.Replace(URLcredits, placholder, imdbID.ToString()));
+            this.mainPageJob = new JobWebPageDownload(Regex.Replace(URL, placholder, imdbID.ToString()));
+			this.awardsPageJob = new JobWebPageDownload(Regex.Replace(URLAwards, placholder, imdbID.ToString()));
+			this.creditsPageJob = new JobWebPageDownload(Regex.Replace(URLcredits, placholder, imdbID.ToString()));
 
             genres = new List<string>();
             countries = new List<string>();
@@ -97,39 +99,101 @@ namespace WinMovieRack.Controller
 
         public void startJobs()
         {
-            this.addJob(new JobLoadMainPage(this));
-            this.addJob(new JobLoadAwardsPage(this));
-            this.addJob(new JobLoadCreditsPage(this));
+            this.addJob(mainPageJob);
+            this.addJob(awardsPageJob);
+            this.addJob(creditsPageJob);
+        }
+		private JobLoadImage getPictureLoadJob()
+		{
+			Match m = Regex.Match(mainPage, mediaURLRegex);
+			imageURL = m.Groups["url"].Value + ".jpg";
+			return new JobLoadImage(imageURL, null);
+		}
+
+        public override bool hasFinished(ThreadJob job) {
+			if (job is JobWebPageDownload)
+			{
+				JobWebPageDownload res = (JobWebPageDownload)job;
+				if (job == mainPageJob)
+				{
+					mainPageLoaded = true;
+					this.mainPage = res.getResult();
+					this.addJob(getPictureLoadJob());
+				}
+				else if (job == awardsPageJob)
+				{
+					awardsPageLoaded = true;
+					this.awardsPage = res.getResult();
+				}
+				else if (job == creditsPageJob)
+				{
+					creditsPageLoaded = true;
+					this.creditsPage = res.getResult();
+				}
+			}
+			Monitor.Enter(this);
+			if (!parseJobStarted && mainPageLoaded && awardsPageLoaded && creditsPageLoaded)
+			{
+				this.addJob(new JobParse(this));
+				parseJobStarted = true;
+			}
+			Monitor.Exit(this);
+			if (job is JobParse)
+			{
+				printResults();
+			}
+			return (job is JobParse);
         }
 
-        public override void hasFinished(ThreadJob job) {
-            if (job is JobLoadMainPage)
-            {
-                mainPageLoaded = true;
-            }
-            else if (job is JobLoadAwardsPage)
-            {
-                awardsPageLoaded = true;
-            }
-            else if (job is JobLoadCreditsPage)
-            {
-                creditsPageLoaded = true;
-            }
-            else if (job is JobParse)
-            {
-                addJob(new JobPrintResults(this));
-            }
-            else if (job is JobLoadImage)
-            {
-                addJob(new JobParse(this));
-            }
+		private void printResults()
+		{
+			Console.WriteLine("imdbID: " + this.imdbID);
+			Console.WriteLine("Title: " + this.title);
+			Console.WriteLine("Original Title: " + this.originalTitle);
+			Console.WriteLine("Year:" + this.year);
+			Console.WriteLine("Runtime: " + this.runtime);
+			Console.WriteLine("Plot: " + this.plot);
+			Console.Write("Genres: ");
+			foreach (string s in genres)
+			{
+				Console.Write(s + ", ");
+			}
+			Console.WriteLine("");
+			Console.WriteLine("imdb Rating(*10): " + this.imdbRating);
+			Console.WriteLine("Votes: " + this.imdbRatingVotes);
+			Console.Write("Countries: ");
+			foreach (string s in countries)
+			{
+				Console.Write(s + ", ");
+			}
+			Console.WriteLine("");
+			Console.Write("Languages: ");
+			foreach (string s in languages)
+			{
+				Console.Write(s + ", ");
+			}
+			Console.WriteLine("");
+			Console.WriteLine("Also known as: " + this.alsoKnownAs);
+			Console.Write("Directors: ");
+			foreach (uint s in directors)
+			{
+				Console.Write(s.ToString() + ", ");
+			}
+			Console.WriteLine("");
+			Console.Write("Writers: ");
+			foreach (uint s in writers)
+			{
+				Console.Write(s.ToString() + ", ");
+			}
+			Console.WriteLine("");
 
-
-            if (mainPageLoaded && awardsPageLoaded && creditsPageLoaded)
-            {
-                addJob(new JobLoadImage(this));
-            }
-        }
+			Console.Write("Cast: ");
+			foreach (Tuple<uint,string> t in roles.ToArray<Tuple<uint, string>>())
+			{
+				Console.WriteLine(t.Item1.ToString() + " as " + t.Item2);
+			}
+		}
+		
        
     }
 }

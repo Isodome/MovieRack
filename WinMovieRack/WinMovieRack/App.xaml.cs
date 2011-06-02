@@ -16,7 +16,7 @@ namespace WinMovieRack
 
             void App_StartUp(object sender, StartupEventArgs e)
             {
-                ThreadsMaster threadsMaster = new ThreadsMaster();
+                ThreadsMaster threadsMaster = new ThreadsMaster(4);
                 imdbMovieParserMaster parserMaster;
                 parserMaster = new imdbMovieParserMaster(477348);
                 threadsMaster.addJobMaster(parserMaster);

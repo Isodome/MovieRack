@@ -15,11 +15,13 @@ namespace WinMovieRack.Controller
         private static Object lockvar = "";
         private static Object idlevar = "";
 
-        private const int NUMBER_THREADS = 4;
+        private  int NUMBER_THREADS = 4;
         private int threadId = 0;
+		private bool running = true;
 
-        public ThreadsMaster()
+        public ThreadsMaster(int numberOfThreads)
         {
+			NUMBER_THREADS = numberOfThreads;
             for (int i = 0; i < NUMBER_THREADS; i++)
             {
                 Thread tmpThread = new Thread(new ThreadStart(threadStart));
@@ -30,13 +32,28 @@ namespace WinMovieRack.Controller
         private void threadStart()
         {
             int threadId = ++this.threadId;
-            while (true)
+            while (running)
             {
-                ThreadJob job = getJob();
+				Monitor.Enter(lockvar);
+				ThreadJobMaster master = null;
+				ThreadJob job = null;
+
+				for (int i = 0; i < jobMaster.Count && job == null; i++)
+				{
+					master = jobMaster.ElementAt<ThreadJobMaster>(i);
+					job = master.getJob();
+				}
+
+				Monitor.Exit(lockvar);
                 if (job != null)
                 {
                     System.Console.WriteLine("I'm Thread {0} and I'm starting next job now", threadId + "");
                     job.run();
+					if (master.hasFinished(job))
+					{
+						hasFinished(master);		
+					}
+					
                 }
                 else
                 {
@@ -46,22 +63,7 @@ namespace WinMovieRack.Controller
             }
         }
 
-        public ThreadJob getJob()
-        {
-            Monitor.Enter(lockvar);
-            ThreadJobMaster master = null;
-            ThreadJob job = null;
 
-            for(int i=0; i<jobMaster.Count && job == null; i++)
-            {
-                master = jobMaster.ElementAt<ThreadJobMaster>(i);
-                job = master.getJob();
-            }
-
-            Monitor.Exit(lockvar);
-            return job;
-
-        }
 
         public void addJobMaster(ThreadJobMaster master)
         {
