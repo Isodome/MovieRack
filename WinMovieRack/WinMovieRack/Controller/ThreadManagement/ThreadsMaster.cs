@@ -35,7 +35,7 @@ namespace WinMovieRack.Controller
                 ThreadJob job = getJob();
                 if (job != null)
                 {
-                    System.Console.WriteLine("I'm Thread {0} and I'm starting next job now", threadId + "");
+                    System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());
                     job.run();
                 }
                 else
