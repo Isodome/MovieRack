@@ -12,7 +12,7 @@ namespace WinMovieRack.Controller
     {
         private List<ThreadJob> jobs = new List<ThreadJob>();
         private Object lockvar = "";
-        private ThreadsMaster master;
+       // private ThreadsMaster master;
 
         public ThreadJob getJob()
         {
