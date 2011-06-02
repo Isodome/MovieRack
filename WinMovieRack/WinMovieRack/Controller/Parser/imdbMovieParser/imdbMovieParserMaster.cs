@@ -49,6 +49,8 @@ namespace WinMovieRack.Controller
         public ThreadJob mainPageJob;
         public ThreadJob awardsPageJob;
         public ThreadJob creditsPageJob;
+		public ThreadJob imageLoadJob;
+		public ThreadJob parseJob;
 
         // Full text of websites;
         public string mainPage;
@@ -74,9 +76,11 @@ namespace WinMovieRack.Controller
         public string alsoKnownAs;
         public Image poster = null;
 
-        private bool mainPageLoaded = false;
-        private bool awardsPageLoaded = false;
-        private bool creditsPageLoaded = false;
+        private bool mainPageJobDone = false;
+        private bool awardsPageJobDone = false;
+        private bool creditsPageJobDone = false;
+		private bool parseJobDone = false;
+		private bool imageLoadJobDone = false;
 		private bool parseJobStarted = false;
 
         public imdbMovieParserMaster(uint imdbID)
@@ -103,11 +107,12 @@ namespace WinMovieRack.Controller
             this.addJob(awardsPageJob);
             this.addJob(creditsPageJob);
         }
-		private JobLoadImage getPictureLoadJob()
+		private ThreadJob getPictureLoadJob()
 		{
 			Match m = Regex.Match(mainPage, mediaURLRegex);
 			imageURL = m.Groups["url"].Value + ".jpg";
-			return new JobLoadImage(imageURL, null);
+			imageLoadJob =new JobLoadImage(imageURL, null);
+			return imageLoadJob;
 		}
 
         public override bool hasFinished(ThreadJob job) {
@@ -116,33 +121,37 @@ namespace WinMovieRack.Controller
 				JobWebPageDownload res = (JobWebPageDownload)job;
 				if (job == mainPageJob)
 				{
-					mainPageLoaded = true;
+					mainPageJobDone = true;
 					this.mainPage = res.getResult();
 					this.addJob(getPictureLoadJob());
 				}
 				else if (job == awardsPageJob)
 				{
-					awardsPageLoaded = true;
+					awardsPageJobDone = true;
 					this.awardsPage = res.getResult();
 				}
 				else if (job == creditsPageJob)
 				{
-					creditsPageLoaded = true;
+					creditsPageJobDone = true;
 					this.creditsPage = res.getResult();
 				}
+
+				if (mainPageJobDone && awardsPageJobDone && creditsPageJobDone)
+				{
+					parseJob = new JobParse(this);
+					this.addJob(parseJob);
+				}
 			}
-			Monitor.Enter(this);
-			if (!parseJobStarted && mainPageLoaded && awardsPageLoaded && creditsPageLoaded)
+			else if (job == parseJob)
 			{
-				this.addJob(new JobParse(this));
-				parseJobStarted = true;
-			}
-			Monitor.Exit(this);
-			if (job is JobParse)
-			{
+				parseJobDone = true;
 				printResults();
 			}
-			return (job is JobParse);
+			else if (job == imageLoadJob)
+			{
+				imageLoadJobDone = true;
+			}
+			return (awardsPageJobDone && creditsPageJobDone && imageLoadJobDone && mainPageJobDone && parseJobDone);
         }
 
 		private void printResults()

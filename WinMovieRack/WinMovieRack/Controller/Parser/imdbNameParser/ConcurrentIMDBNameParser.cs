@@ -45,15 +45,17 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 
 		public override bool hasFinished(ThreadJob job)
 		{
-			if (job is JobWebPageDownload)
+			
+			
+			if (job == mainPageJob)
 			{
 				JobWebPageDownload res = (JobWebPageDownload)job;
-				if (job == mainPageJob)
-				{
-					this.mainPage = res.getResult();
-					mainPageJobDone = true;
-					addJob(getPictureLoadJob());
-				}
+				this.mainPage = res.getResult();
+				mainPageJobDone = true;
+				addJob(getPictureLoadJob());
+				parseJob = new JobIMDBNameParser(this, mainPage);
+				addJob(parseJob);
+				parseJobStarted = true;
 			} 
 			else  if (job == parseJob)
 			{
@@ -63,17 +65,6 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			{
 				pictureLoadJobDone = true;
 			}
-
-			Monitor.Enter(this);
-			if (!parseJobStarted && mainPageJobDone)
-			{
-				parseJob = new JobIMDBNameParser(this, mainPage);
-				addJob(parseJob);
-				parseJobStarted = true;
-			}
-			Monitor.Exit(this);
-
-
 
 			return (mainPageJobDone && parseJobDone && pictureLoadJobDone);
 		}
