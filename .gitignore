@@ -36,6 +36,7 @@ WinMovieRack/WinMovieRack/bin
 *.lib
 *.sbr
 *.sdf
+*.suo
 ipch/
 obj/
 [Bb]in
