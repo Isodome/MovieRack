@@ -10,6 +10,9 @@ namespace WinMovieRack.Controller
 {
     class ThreadsMaster
     {
+		private static ThreadsMaster threadsMaster;
+		private static object instancelock = "";
+
         private List<ThreadJobMaster> jobMaster = new List<ThreadJobMaster>();
 
         private static Object lockvar = "";
@@ -30,14 +33,6 @@ namespace WinMovieRack.Controller
 			running = new bool[maxThreads];
 			switchToThreadCount(maxThreads/2);
 		}
-
-		public ThreadsMaster(int numberOfThreads)
-		{
-			threads = new Thread[maxThreads];
-			running = new bool[maxThreads];
-			switchToThreadCount(numberOfThreads);
-		}
-
 
         private void threadStart()
         {
@@ -92,6 +87,7 @@ namespace WinMovieRack.Controller
         {
             Monitor.Enter(lockvar);
             jobMaster.Remove(master);
+			master.finalize();
             Monitor.Exit(lockvar);
         }
 
@@ -134,5 +130,21 @@ namespace WinMovieRack.Controller
 			Console.WriteLine("Number Of Logical Processors: {0}", Environment.ProcessorCount);
 			return Environment.ProcessorCount * 2;
 		}
+
+		public static ThreadsMaster getInstance() {
+			object lockvar = "";
+			Monitor.Enter(instancelock);
+			if (threadsMaster == null) {
+				threadsMaster = new ThreadsMaster();
+			}
+			Monitor.Exit(instancelock);
+
+			return (threadsMaster);
+		}
+		public static void switchThreadsCount (int numberOfThreads) {
+			getInstance().switchToThreadCount(numberOfThreads);
+		}
+
+
     }
 }

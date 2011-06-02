@@ -20,11 +20,18 @@ namespace WinMovieRack
                 ThreadsMaster threadsMaster = new ThreadsMaster();
                 imdbMovieParserMaster parserMaster;
 				parserMaster = new imdbMovieParserMaster(477348);
-                //threadsMaster.addJobMaster(parserMaster);
-                parserMaster = new imdbMovieParserMaster(449088);
-               // threadsMaster.addJobMaster(parserMaster);
-				threadsMaster.addJobMaster(new ConcurrentIMDBNameParser(4695));
+				parserMaster.setFinalizeFunction(this.filmFinished);
+                threadsMaster.addJobMaster(parserMaster);
+
+
             }
+			void filmFinished(ThreadJobMaster sender)
+			{
+				imdbMovieParserMaster p = (imdbMovieParserMaster)sender;
+				foreach(Tuple<uint,string> t in p.roles) {
+					ThreadsMaster.getInstance().addJobMaster(new ConcurrentIMDBNameParser(t.Item1));
+				}
+			}
         
     }
 }
