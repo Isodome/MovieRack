@@ -27,6 +27,8 @@ namespace WinMovieRack.Controller.Parser
             WebResponse resp =req.GetResponse();
             StreamReader r = new StreamReader(resp.GetResponseStream());
             result = r.ReadToEnd();
+			resp.Close();
+			r.Close();
         }
 
 		public string getResult()

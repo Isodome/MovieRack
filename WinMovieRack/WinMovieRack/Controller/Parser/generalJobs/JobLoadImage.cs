@@ -28,12 +28,14 @@ namespace WinMovieRack.Controller.Parser
 
 		private void getPicture()
 		{
-			WebResponse resp = WebRequest.Create(url).GetResponse();
+			WebRequest req = WebRequest.Create(url);
+			WebResponse resp = req.GetResponse();
 			result = Image.FromStream(resp.GetResponseStream(), true, true);
 			if (savePath != null)
 			{
 				result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 			}
+			resp.Close();
 		}
     }
 }

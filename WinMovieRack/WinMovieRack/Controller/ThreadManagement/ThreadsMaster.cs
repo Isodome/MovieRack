@@ -74,8 +74,6 @@ namespace WinMovieRack.Controller
             }
         }
 
-
-
         public void addJobMaster(ThreadJobMaster master)
         {
             Monitor.Enter(lockvar);
@@ -141,6 +139,7 @@ namespace WinMovieRack.Controller
 
 			return (threadsMaster);
 		}
+
 		public static void switchThreadsCount (int numberOfThreads) {
 			getInstance().switchToThreadCount(numberOfThreads);
 		}
