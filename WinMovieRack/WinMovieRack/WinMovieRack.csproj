@@ -81,8 +81,8 @@
     <Compile Include="GUI\DetailsViewActorPanel.xaml.cs">
       <DependentUpon>DetailsViewActorPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MoviesListBoxItem.xaml.cs">
-      <DependentUpon>MoviesListBoxItem.xaml</DependentUpon>
+    <Compile Include="GUI\MovieRackListBoxItem.xaml.cs">
+      <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
@@ -101,7 +101,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\MoviesListBoxItem.xaml">
+    <Page Include="GUI\MovieRackListBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -36,10 +36,10 @@ namespace WinMovieRack
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        MoviesListBoxItem boxItem = new MoviesListBoxItem();
-                        boxItem.setMovieTitle(p.title);
-                        boxItem.setMovieYear(p.year.ToString());
-                        boxItem.setMovieEditable(p.imdbRating.ToString());
+                        MovieRackListBoxItem boxItem = new MovieRackListBoxItem();
+                        boxItem.setListBoxTitle(p.title);
+                        boxItem.setYearCharakter(p.year.ToString());
+                        boxItem.setEditableAge(p.imdbRating.ToString());
                         mainWindow.detailsView.addMoviesListBoxItem(boxItem);
                     }));
                 }

@@ -27,7 +27,7 @@ namespace WinMovieRack
             InitializeComponent();
         }
 
-        public void addMoviesListBoxItem(MoviesListBoxItem item)
+        public void addMoviesListBoxItem(WinMovieRack.GUI.MovieRackListBoxItem item)
         {
             listBoxMovies.Items.Add(item);
         }
