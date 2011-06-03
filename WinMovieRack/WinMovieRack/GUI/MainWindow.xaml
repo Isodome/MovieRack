@@ -15,9 +15,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu Height="auto" HorizontalAlignment="Stretch" Name="menu1" VerticalAlignment="Top" Width="auto" HorizontalContentAlignment="Left" Grid.ColumnSpan="3">
-            <MenuItem x:Name="fileMenuEntry" Header="Hallo">
-                <MenuItem x:Name="exitMenuEntry" Header="Exit" />
-            </MenuItem>
+            
         </Menu>
         <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menu2" VerticalAlignment="Top" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Width="196">
             <MenuItem Header="Movies" Name="moviesMenuEntry" HorizontalAlignment="Center" Click="moviesMenuEntry_Clicked" />
@@ -25,6 +23,10 @@
             <MenuItem Header="List" HorizontalAlignment="Center" />
         </Menu>
         <Menu Grid.Column="1" Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menu3" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="195,0,0,0" />
-        <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menu4" VerticalAlignment="Top" Margin="1,0,0,0" />
+        <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menu4" VerticalAlignment="Top" Margin="1,0,0,0">
+            <MenuItem x:Name="fileMenuEntry" Header="Menu">
+                <MenuItem x:Name="exitMenuEntry" Header="Exit" />
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

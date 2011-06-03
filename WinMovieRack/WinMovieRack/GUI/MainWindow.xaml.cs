@@ -15,6 +15,7 @@ using WinMovieRack.Resources.Localization.MainWindow;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.Parser;
 using System.Threading;
+
 namespace WinMovieRack
 {
     /// <summary>
