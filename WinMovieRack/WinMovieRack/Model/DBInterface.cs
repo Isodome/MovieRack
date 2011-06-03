@@ -8,12 +8,12 @@ namespace WinMovieRack.Model
 {
 	interface DBInterface
 	{
-		public void initDb();
+		 void initDb();
 		
 
-		public void checkTables();
+		 void checkTables();
 		
 
-		public List<Movie> getMovieList();
+		 List<Movie> getMovieList();
 	}
 }
