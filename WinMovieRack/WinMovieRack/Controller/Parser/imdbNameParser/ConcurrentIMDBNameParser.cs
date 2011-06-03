@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Drawing;
 
 namespace WinMovieRack.Controller.Parser.imdbNameParser
 {
@@ -28,7 +29,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		public string name;
 		public DateTime birthday;
 		public string birthname;
-
+		public Image image;
 		public ConcurrentIMDBNameParser(uint imdbID)
 		{
 			this.imdbID = imdbID;
@@ -64,6 +65,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			else if (job == pictureLoadJob)
 			{
 				pictureLoadJobDone = true;
+				image = ((JobLoadImage)job).getResult();
 			}
 
 			return (mainPageJobDone && parseJobDone && pictureLoadJobDone);

@@ -149,6 +149,7 @@ namespace WinMovieRack.Controller
 			}
 			else if (job == imageLoadJob)
 			{
+				this.poster = ((JobLoadImage)job).getResult();
 				imageLoadJobDone = true;
 			}
 			return (awardsPageJobDone && creditsPageJobDone && imageLoadJobDone && mainPageJobDone && parseJobDone);

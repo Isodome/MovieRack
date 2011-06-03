@@ -15,6 +15,7 @@ namespace WinMovieRack.Controller.Parser
 		string url;
 		Image result;
 		string savePath;
+
         public JobLoadImage(string url, string savePath)
         {
 			this.savePath = savePath;
@@ -36,6 +37,10 @@ namespace WinMovieRack.Controller.Parser
 				result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 			}
 			resp.Close();
+		}
+		public Image getResult()
+		{
+			return this.result;
 		}
     }
 }
