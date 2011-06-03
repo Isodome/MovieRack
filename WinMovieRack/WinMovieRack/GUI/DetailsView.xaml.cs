@@ -20,6 +20,8 @@ namespace WinMovieRack
     /// </summary>
     public partial class DetailsView : UserControl
     {
+        private UIElement current;
+        DetailsViewActorPanel actorPanel;
         public DetailsView()
         {
             InitializeComponent();
@@ -46,6 +48,27 @@ namespace WinMovieRack
         }
 
         private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void testButton_Click(object sender, RoutedEventArgs e)
+        {
+            actorPanel = new DetailsViewActorPanel();
+            changeView(actorPanel);
+        }
+
+        private void changeView(UIElement newView)
+        {
+            tabControl.Children.Remove(current);
+            Grid.SetColumn(newView, 2);
+            Grid.SetRow(newView, 2);
+            Grid.SetColumnSpan(newView, 1);
+            tabControl.Children.Add(newView);
+            current = newView;
+        }
+
+        private void director_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

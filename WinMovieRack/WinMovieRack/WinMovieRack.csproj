@@ -78,6 +78,9 @@
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DetailsViewActorPanel.xaml.cs">
+      <DependentUpon>DetailsViewActorPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MoviesListBoxItem.xaml.cs">
       <DependentUpon>MoviesListBoxItem.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowStrings.resx</DependentUpon>
     </Compile>
+    <Page Include="GUI\DetailsViewActorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\MoviesListBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

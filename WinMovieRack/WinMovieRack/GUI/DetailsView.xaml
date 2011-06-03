@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="619" d:DesignWidth="964">
+             d:DesignHeight="832" d:DesignWidth="1692" xmlns:my="clr-namespace:WinMovieRack.GUI">
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -59,9 +59,27 @@
         <Image Grid.Column="2" Margin="0,11,12,0" Name="image1" Stretch="Fill" Grid.RowSpan="2" ImageFailed="image1_ImageFailed" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="160" Height="217" VerticalAlignment="Top" />
         <TabControl Grid.Column="2" Grid.Row="1" Margin="12,151,12,12" Name="tabControl1">
             <TabItem Header="Summery" Name="summery">
-                <Grid Height="357" Width="607">
-                    <ListBox ClipToBounds="True" Margin="7,6,0,0" Name="listActorBox" VerticalAlignment="Top" Height="345" HorizontalAlignment="Left" Width="140" />
-               </Grid>
+                <Grid x:Name="tabControl" Height="auto" Width="auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="171" />
+                        <RowDefinition Height="278*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="225" />
+                        <ColumnDefinition Width="849*" />
+                    </Grid.ColumnDefinitions>
+                    <ListBox ClipToBounds="True" Margin="6,55,6,6" Name="listActorBox" Grid.RowSpan="2">
+                        <Button Content="Button" Height="auto" HorizontalAlignment="Left" Margin="30,32,0,0" Name="testButton" VerticalAlignment="Top" Width="auto" Click="testButton_Click" />
+                    </ListBox>
+                    <Label Content="Actors/Stars:" Height="auto
+                           " HorizontalAlignment="Left" Margin="37,6,0,0" Name="starsLabel" VerticalAlignment="Top" FontSize="25" />
+                    <Label Content="Production:" FontSize="25" Height="auto  " HorizontalAlignment="Left" Margin="18,0,0,0" Name="productionLabel" VerticalAlignment="Top" Grid.Column="1" FontStretch="Normal" />
+                    <Rectangle Grid.Column="1" Margin="6,49,15,10" Name="rectangle1" Stroke="Black" Opacity="0.8" StrokeThickness="0.5" />
+                    <my:MoviesListBoxItem Grid.Column="1" HorizontalAlignment="Left" Margin="18,55,0,0" x:Name="director" VerticalAlignment="Top" Focusable="True" Loaded="director_Loaded" />
+                    <my:MoviesListBoxItem Grid.Column="1" HorizontalAlignment="Left" Margin="224,55,0,0" x:Name="writer1" VerticalAlignment="Top" Focusable="True" />    
+                    <my:MoviesListBoxItem HorizontalAlignment="Left" Margin="430,55,0,0" x:Name="writer2" VerticalAlignment="Top" Grid.Column="1" Focusable="True" />
+                    <my:MoviesListBoxItem HorizontalAlignment="Left" Margin="636,55,0,0" x:Name="writer3" VerticalAlignment="Top" Grid.Column="1" Focusable="True" />
+                </Grid>
             </TabItem>
             <TabItem Header="Enhanced" Name="enanced">
                 <Grid Height="387" Width="299" />
