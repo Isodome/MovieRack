@@ -74,14 +74,13 @@ namespace WinMovieRack.Controller
         public List<uint> writers;
         public List<Tuple<uint, string>> roles;
         public string alsoKnownAs;
-        public Image poster = null;
+        public Bitmap poster = null;
 
         private bool mainPageJobDone = false;
         private bool awardsPageJobDone = false;
         private bool creditsPageJobDone = false;
 		private bool parseJobDone = false;
 		private bool imageLoadJobDone = false;
-		private bool parseJobStarted = false;
 
         public imdbMovieParserMaster(uint imdbID)
         {

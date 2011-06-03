@@ -34,6 +34,10 @@ namespace WinMovieRack.Controller
 			switchToThreadCount(maxThreads/2);
 		}
 
+
+		/// <summary>
+		/// Entry point for new generated threads
+		/// </summary>
         private void threadStart()
         {
 			int threadId = 0;
@@ -140,6 +144,10 @@ namespace WinMovieRack.Controller
 			return (threadsMaster);
 		}
 
+		/// <summary>
+		/// Change the count of worker threads for this application to numberOfThreads
+		/// </summary>
+		/// <param name="numberOfThreads">New Thread Count</param>
 		public static void switchThreadsCount (int numberOfThreads) {
 			getInstance().switchToThreadCount(numberOfThreads);
 		}

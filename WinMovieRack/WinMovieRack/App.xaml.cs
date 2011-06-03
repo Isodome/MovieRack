@@ -7,6 +7,7 @@ using System.Windows;
 using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.GUI;
+using System.Windows.Media.Imaging;
 
 namespace WinMovieRack
 {
@@ -40,6 +41,12 @@ namespace WinMovieRack
                         boxItem.setMovieTitle(p.title);
                         boxItem.setMovieYear(p.year.ToString());
                         boxItem.setMovieEditable(p.imdbRating.ToString());
+						BitmapSource destination; 
+						IntPtr hBitmap = p.poster.GetHbitmap(); 
+						BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions(); 
+						destination = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, sizeOptions); 
+						destination.Freeze();
+						boxItem.imageMovie.Source = destination;
                         mainWindow.detailsView.addMoviesListBoxItem(boxItem);
                     }));
                 }

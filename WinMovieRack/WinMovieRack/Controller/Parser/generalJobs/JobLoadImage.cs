@@ -13,7 +13,7 @@ namespace WinMovieRack.Controller.Parser
     class JobLoadImage : ThreadJob
     {
 		string url;
-		Image result;
+		Bitmap result;
 		string savePath;
 
         public JobLoadImage(string url, string savePath)
@@ -31,14 +31,15 @@ namespace WinMovieRack.Controller.Parser
 		{
 			WebRequest req = WebRequest.Create(url);
 			WebResponse resp = req.GetResponse();
-			result = Image.FromStream(resp.GetResponseStream(), true, true);
+			
+			result = new Bitmap(resp.GetResponseStream());
 			if (savePath != null)
 			{
 				result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 			}
 			resp.Close();
 		}
-		public Image getResult()
+		public Bitmap getResult()
 		{
 			return this.result;
 		}

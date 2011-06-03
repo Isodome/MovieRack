@@ -31,6 +31,10 @@ namespace WinMovieRack.Controller.Parser
 			r.Close();
         }
 
+		/// <summary>
+		/// Get the result of the WebRequest as a string
+		/// </summary>
+		/// <returns>The result of the web request as string</returns>
 		public string getResult()
 		{
 			return (this.result);

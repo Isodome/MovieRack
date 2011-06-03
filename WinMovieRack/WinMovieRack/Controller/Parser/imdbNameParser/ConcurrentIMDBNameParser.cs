@@ -19,7 +19,6 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		private ThreadJob pictureLoadJob;
 		private bool pictureLoadJobDone = false;
 		private ThreadJob parseJob;
-		private bool parseJobStarted = false;
 		private bool parseJobDone = false;
 
 		private string mainPage;
@@ -29,7 +28,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		public string name;
 		public DateTime birthday;
 		public string birthname;
-		public Image image;
+		public Bitmap image;
 		public ConcurrentIMDBNameParser(uint imdbID)
 		{
 			this.imdbID = imdbID;
@@ -53,10 +52,12 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 				JobWebPageDownload res = (JobWebPageDownload)job;
 				this.mainPage = res.getResult();
 				mainPageJobDone = true;
-				addJob(getPictureLoadJob());
+
+				pictureLoadJob = getPictureLoadJob();
+				addJob(pictureLoadJob);
+
 				parseJob = new JobIMDBNameParser(this, mainPage);
 				addJob(parseJob);
-				parseJobStarted = true;
 			} 
 			else  if (job == parseJob)
 			{
