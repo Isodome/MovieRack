@@ -82,6 +82,7 @@
       <DependentUpon>MoviesListBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DBInterface.cs" />
+    <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
