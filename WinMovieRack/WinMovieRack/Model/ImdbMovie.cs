@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace WinMovieRack
+namespace WinMovieRack.Model
 {
-    public class Movie : DBItem
+    public class ImdbMovie : DBItem
     {
 		public uint imdbID;
 		public string title;
@@ -25,7 +25,7 @@ namespace WinMovieRack
 		public string alsoKnownAs;
 		public Bitmap poster = null;
 
-		public Movie() {
+		public ImdbMovie() {
 
 			genres = new List<string>();
 			countries = new List<string>();
@@ -36,7 +36,7 @@ namespace WinMovieRack
 
 		}
 
-		public Movie(uint imdbID) : this() {
+		public ImdbMovie(uint imdbID) : this() {
 			this.imdbID = imdbID;
 		}
 

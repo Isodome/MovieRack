@@ -63,10 +63,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\IMDBUtil.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParserMaster.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
-    <Compile Include="Controller\Parser\imdbMovieParser\JobParse.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\JobImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobWebPageDownload.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
@@ -87,8 +88,9 @@
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DBInterface.cs" />
+    <Compile Include="Model\ImdbPerson.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
-    <Compile Include="Model\Movie.cs" />
+    <Compile Include="Model\ImdbMovie.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

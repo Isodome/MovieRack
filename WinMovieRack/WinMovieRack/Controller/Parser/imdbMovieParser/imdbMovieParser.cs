@@ -9,7 +9,7 @@ using System.Web;
 using System.Threading;
 using System.Drawing;
 
-namespace WinMovieRack.Controller.Parser
+namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
     
     class imdbMovieParser

@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Drawing;
+using WinMovieRack.Model;
 using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack.Controller.Parser.imdbNameParser
@@ -24,15 +25,15 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 
 		private string mainPage;
 
+		public ImdbPerson person;
 
-		public uint imdbID;
-		public string name;
-		public DateTime birthday;
-		public string birthname;
-		public Bitmap image;
+
+		
+
 		public ConcurrentIMDBNameParser(uint imdbID)
 		{
-			this.imdbID = imdbID;
+			person = new ImdbPerson(imdbID);
+
 			mainPageJob = new JobWebPageDownload(Regex.Replace(url, placeholder, imdbID.ToString()));
 			this.addJob(mainPageJob);
 		}
@@ -57,7 +58,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 				pictureLoadJob = getPictureLoadJob();
 				addJob(pictureLoadJob);
 
-				parseJob = new JobIMDBNameParser(this, mainPage);
+				parseJob = new JobIMDBNameParser(mainPage, person);
 				addJob(parseJob);
 			} 
 			else  if (job == parseJob)
@@ -67,7 +68,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			else if (job == pictureLoadJob)
 			{
 				pictureLoadJobDone = true;
-				image = ((JobLoadImage)job).getResult();
+				person.image = ((JobLoadImage)job).getResult();
 			}
 
 			return (mainPageJobDone && parseJobDone && pictureLoadJobDone);

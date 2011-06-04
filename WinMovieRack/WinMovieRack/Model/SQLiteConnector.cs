@@ -46,7 +46,7 @@ namespace WinMovieRack.Model
         
         }
 
-        public List<Movie> getMovieList()
+        public List<ImdbMovie> getMovieList()
         {
             throw (new NotImplementedException());
         }

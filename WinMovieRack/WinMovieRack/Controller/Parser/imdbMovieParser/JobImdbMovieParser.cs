@@ -10,10 +10,10 @@ using System.Drawing;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.ThreadManagement;
 
-namespace WinMovieRack.Controller.Parser
+namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
 	delegate void parseFunctions();
-    class JobParse : ThreadJob
+    class JobImdbMovieParser : ThreadJob
     {
 
 		// Regex to parse information from the imdbMainPage
@@ -38,7 +38,7 @@ namespace WinMovieRack.Controller.Parser
 		public const string id_RoleRegex = @"<td class=""nm""><a href=""/name/nm(?<nm>\d+?)/(.|\n|\r)*?</td><td class=""char"">(?<char>.*?)</td>";
 		public const string getNameFromURLRegex = @"<a href=""/name/nm(?<g>\d+)/"">";
 
-		private Movie movie;
+		private ImdbMovie movie;
 
 		private string mainPage;
 		private string creditsPage;
@@ -52,16 +52,16 @@ namespace WinMovieRack.Controller.Parser
 		/// <param name="mainPage">Needed for title, year, runtime, original title, genres, imdbrating, imdbvotes, languages, countries, also known as.</param>
 		/// <param name="creditsPage">Needed for directors, writers, cast</param>
 		/// <param name="awardsPage"></param>
-		public JobParse(string mainPage, string creditsPage, string awardsPage, uint imdbID)
+		public JobImdbMovieParser(string mainPage, string creditsPage, string awardsPage)
         {
-			this.initialize(mainPage, creditsPage, awardsPage, new Movie(imdbID));
+			this.initialize(mainPage, creditsPage, awardsPage, new ImdbMovie());
         }
 
-		public JobParse(string mainPage, string creditsPage, string awardsPage, Movie movieToFillOut) {
+		public JobImdbMovieParser(string mainPage, string creditsPage, string awardsPage, ImdbMovie movieToFillOut) {
 			this.initialize(mainPage, creditsPage, awardsPage, movieToFillOut);
 		}
 
-		private void initialize(string mainPage, string creditsPage, string awardsPage, Movie movieToFillOut) {
+		private void initialize(string mainPage, string creditsPage, string awardsPage, ImdbMovie movieToFillOut) {
 
 			this.movie = movieToFillOut;
 			this.mainPage = mainPage;
@@ -93,35 +93,35 @@ namespace WinMovieRack.Controller.Parser
         {
 			startSelectiveParse();
         }
-		public Movie getResult() {
+		public ImdbMovie getResult() {
 			return (movie);
 		}
 
-        private void extractTitleAndYear()
+        public void extractTitleAndYear()
         {
             Match m = Regex.Match(mainPage, titleAndYearRegex);
             movie.title = m.Groups[1].Value.Trim();
             movie.year = int.Parse(m.Groups[2].Value);
 
         }
-        private void extractPlot()
+        public void extractPlot()
         {
             Match m = Regex.Match(mainPage, plotRegex);
             movie.plot = m.Groups["plot"].Value;
             movie.plot = Regex.Replace(movie.plot, writtenByRegex, "").Trim(); // Remove all html tags
         }
-        private void extractRuntime()
+		public void extractRuntime()
         {
             Match m = Regex.Match(mainPage, runtimeRegex);
             movie.runtime = int.Parse( m.Groups["time"].Value);
 
         }
-        private void extractOriginalTitle()
+		public void extractOriginalTitle()
         {
             Match m = Regex.Match(mainPage, originalTitleRegex);
             movie.originalTitle = m.Groups["orgTitle"].Value.Trim();
         }
-		private void extractGenres()
+		public void extractGenres()
 		{
 			Match m = Regex.Match(mainPage, genresRegex);
 			string genreString = m.Groups["genres"].Value;
@@ -131,20 +131,20 @@ namespace WinMovieRack.Controller.Parser
 				movie.genres.Add(match.Groups["g"].Value.Trim());
 			}
 		}
-		private void extractIMDBRating()
+		public void extractIMDBRating()
 		{
 			Match m = Regex.Match(mainPage, imdbRatingRegex);
 			string tmpString = Regex.Replace(m.Groups["rating"].Value, @"\D", "");
 			movie.imdbRating = int.Parse(tmpString);
 			
 		}
-		private void extractIMDBRatingVotes()
+		public void extractIMDBRatingVotes()
 		{
 			Match m = Regex.Match(mainPage, imdbRatingVotesRegex);
 			string tmpString = Regex.Replace(m.Groups["votes"].Value, @"\D", "");
 			movie.imdbRatingVotes = int.Parse(tmpString);
 		}
-		private void extractCountries() 
+		public void extractCountries() 
 		{
 			Match m = Regex.Match(mainPage, countriesRegex);
 			string genreString = m.Groups["country"].Value;
@@ -154,7 +154,7 @@ namespace WinMovieRack.Controller.Parser
 				movie.countries.Add(match.Groups["g"].Value.Trim());
 			}
 		}
-		private void extractLanguages()
+		public void extractLanguages()
 		{
 			Match m = Regex.Match(mainPage, languagesRegex);
 			string genreString = m.Groups["lang"].Value;
@@ -164,12 +164,12 @@ namespace WinMovieRack.Controller.Parser
 				movie.languages.Add(match.Groups["g"].Value.Trim());
 			}
 		}
-		private void extractAlsoKnownAs()
+		public void extractAlsoKnownAs()
 		{
 			Match m = Regex.Match(mainPage, alsoKnownAsRegex);
 			movie.alsoKnownAs = m.Groups["ana"].Value.Trim();
 		}
-		private void extractDirectors() 
+		public void extractDirectors() 
 		{
 			Match m = Regex.Match(creditsPage, directorsRegex);
 			string tmp = m.Groups["directors"].Value;
@@ -182,7 +182,7 @@ namespace WinMovieRack.Controller.Parser
 			} 
 
 		}
-		private void extractWriters()
+		public void extractWriters()
 		{
 			Match m = Regex.Match(creditsPage, writersRegex);
 			string tmp = m.Groups["writers"].Value;
@@ -193,7 +193,7 @@ namespace WinMovieRack.Controller.Parser
 				movie.writers.Add(uint.Parse(id));
 			} 
 		}
-		private void extractCast()
+		public void extractCast()
 		{
 			Match m = Regex.Match(creditsPage, castRegex);
 			string tmp = m.Groups["cast"].Value;

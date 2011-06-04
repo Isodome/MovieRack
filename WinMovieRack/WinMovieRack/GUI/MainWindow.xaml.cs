@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.Resources.Localization.MainWindow;
 using WinMovieRack.Model;
-using WinMovieRack.Controller.Parser;
+using WinMovieRack.Controller.Parser.imdbMovieParser;
 using WinMovieRack.GUI;
 using System.Threading;
 

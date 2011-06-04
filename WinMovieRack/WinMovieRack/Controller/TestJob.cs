@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WinMovieRack.Controller.ThreadManagement;
+using WinMovieRack.Controller.Parser.imdbMovieParser;
 
 namespace WinMovieRack.Controller
 {

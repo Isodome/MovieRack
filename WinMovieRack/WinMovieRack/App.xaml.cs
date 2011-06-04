@@ -6,8 +6,10 @@ using System.Linq;
 using System.Windows;
 using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser.imdbNameParser;
+using WinMovieRack.Controller.Parser.imdbMovieParser;
 using WinMovieRack.GUI;
 using System.Windows.Media.Imaging;
+using WinMovieRack.Model;
 using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack
@@ -32,7 +34,7 @@ namespace WinMovieRack
             }
 			void filmFinished(ThreadJobMaster sender)
 			{
-				Movie p = ((imdbMovieParserMaster)sender).movieData;
+				ImdbMovie p = ((imdbMovieParserMaster)sender).movieData;
                 if (mainWindow.detailsView != null)
                 {
                     Dispatcher.BeginInvoke(new Action(() =>

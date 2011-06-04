@@ -14,6 +14,6 @@ namespace WinMovieRack.Model
 		 void checkTables();
 		
 
-		 List<Movie> getMovieList();
+		 List<ImdbMovie> getMovieList();
 	}
 }

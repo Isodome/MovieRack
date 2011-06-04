@@ -12,8 +12,9 @@ using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser;
 using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.Controller.Parser.imdbNameParser;
+using WinMovieRack.Model;
 
-namespace WinMovieRack.Controller
+namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
     class imdbMovieParserMaster : ThreadJobMaster
     {
@@ -36,7 +37,7 @@ namespace WinMovieRack.Controller
 
         public const string mediaURLRegex = @"id=""img_primary""(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
 
-		public Movie movieData;
+		public ImdbMovie movieData;
 
         private bool mainPageJobDone = false;
         private bool awardsPageJobDone = false;
@@ -46,7 +47,7 @@ namespace WinMovieRack.Controller
 
         public imdbMovieParserMaster(uint imdbID)
         {
-			movieData = new Movie(imdbID);
+			movieData = new ImdbMovie(imdbID);
 
             this.mainPageJob = new JobWebPageDownload(Regex.Replace(URL, placholder, imdbID.ToString()));
 			this.awardsPageJob = new JobWebPageDownload(Regex.Replace(URLAwards, placholder, imdbID.ToString()));
@@ -92,7 +93,7 @@ namespace WinMovieRack.Controller
 
 				if (mainPageJobDone && awardsPageJobDone && creditsPageJobDone)
 				{
-					parseJob = new JobParse(mainPage, creditsPage, awardsPage, movieData);
+					parseJob = new JobImdbMovieParser(mainPage, creditsPage, awardsPage, movieData);
 					this.addJob(parseJob);
 				}
 			}
