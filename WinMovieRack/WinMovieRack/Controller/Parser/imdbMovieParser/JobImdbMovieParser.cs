@@ -113,7 +113,11 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 		public void extractRuntime()
         {
             Match m = Regex.Match(mainPage, runtimeRegex);
-            movie.runtime = int.Parse( m.Groups["time"].Value);
+			try {
+				movie.runtime = int.Parse(m.Groups["time"].Value);
+			} catch (FormatException) {
+				Log.log("Could not parse runtime of " + movie.title);
+			}
 
         }
 		public void extractOriginalTitle()
@@ -142,7 +146,13 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 		{
 			Match m = Regex.Match(mainPage, imdbRatingVotesRegex);
 			string tmpString = Regex.Replace(m.Groups["votes"].Value, @"\D", "");
-			movie.imdbRatingVotes = int.Parse(tmpString);
+
+			try {
+				movie.imdbRatingVotes = int.Parse(tmpString);
+			} catch (FormatException) {
+				Log.log("Could not parse imdb votes of " + movie.title);
+				movie.imdbRatingVotes = -1;
+			}
 		}
 		public void extractCountries() 
 		{

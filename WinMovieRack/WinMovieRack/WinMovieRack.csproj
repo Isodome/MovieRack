@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\IMDBUtil.cs" />
+    <Compile Include="Controller\Log.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParserMaster.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
