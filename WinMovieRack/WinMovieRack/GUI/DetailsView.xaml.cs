@@ -68,9 +68,5 @@ namespace WinMovieRack
             current = newView;
         }
 
-        private void director_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
