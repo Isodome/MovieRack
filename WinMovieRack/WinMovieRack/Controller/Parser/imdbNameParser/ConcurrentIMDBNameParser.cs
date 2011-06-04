@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Drawing;
+using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack.Controller.Parser.imdbNameParser
 {

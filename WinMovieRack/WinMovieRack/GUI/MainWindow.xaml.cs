@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using WinMovieRack.Resources.Localization.MainWindow;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.Parser;
+using WinMovieRack.GUI;
 using System.Threading;
 
 namespace WinMovieRack
@@ -25,10 +26,13 @@ namespace WinMovieRack
     {
         private UIElement current;
         public DetailsView detailsView;
+		public IMDBBrowser imdbBrowser;
 
         public MainWindow()
         {
-            InitializeComponent();         
+            InitializeComponent();
+			detailsView = new DetailsView();
+			imdbBrowser = new IMDBBrowser();
         }
 
         void setLocalization()
@@ -38,7 +42,7 @@ namespace WinMovieRack
 
         private void moviesMenuEntry_Clicked(object sender, RoutedEventArgs e)
         {
-            detailsView = new DetailsView();
+            
             changeView(detailsView);
 
 			imdbMovieParser p = new imdbMovieParser(477348);
@@ -62,5 +66,9 @@ namespace WinMovieRack
         {
 
         }
+
+		private void imdbMenuEntry_Click(object sender, RoutedEventArgs e) {
+			changeView(imdbBrowser);
+		}
     }
 }

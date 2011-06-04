@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Web;
 using System.Drawing;
+using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack.Controller.Parser
 {

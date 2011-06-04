@@ -6,7 +6,7 @@ using System.Threading;
 using WinMovieRack.Controller;
 using System.Collections.Concurrent;
 
-namespace WinMovieRack.Controller
+namespace WinMovieRack.Controller.ThreadManagement
 {
     class ThreadsMaster
     {
@@ -27,7 +27,7 @@ namespace WinMovieRack.Controller
 		
 
 
-		public ThreadsMaster()
+		private ThreadsMaster()
 		{
 			threads = new Thread[maxThreads];
 			running = new bool[maxThreads];

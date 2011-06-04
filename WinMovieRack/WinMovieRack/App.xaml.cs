@@ -8,6 +8,7 @@ using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.GUI;
 using System.Windows.Media.Imaging;
+using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack
 {

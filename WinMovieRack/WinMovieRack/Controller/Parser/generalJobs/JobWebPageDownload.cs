@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
-
+using WinMovieRack.Controller.ThreadManagement;
 namespace WinMovieRack.Controller.Parser
 {
 	class JobWebPageDownload : ThreadJob

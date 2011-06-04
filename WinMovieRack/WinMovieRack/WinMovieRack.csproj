@@ -80,6 +80,9 @@
     <Compile Include="GUI\DetailsViewActorPanel.xaml.cs">
       <DependentUpon>DetailsViewActorPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\IMDBBrowser.xaml.cs">
+      <DependentUpon>IMDBBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MovieRackListBoxItem.xaml.cs">
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <DependentUpon>MainWindowStrings.resx</DependentUpon>
     </Compile>
     <Page Include="GUI\DetailsViewActorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\IMDBBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

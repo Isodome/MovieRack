@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WinMovieRack.Controller;
+using WinMovieRack.Controller.ThreadManagement;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace WinMovieRack.Controller
+namespace WinMovieRack.Controller.ThreadManagement
 {
 	delegate void FinalizeFunction(ThreadJobMaster master);
 

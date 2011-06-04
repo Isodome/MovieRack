@@ -8,6 +8,8 @@ using System.IO;
 using System.Web;
 using System.Drawing;
 using WinMovieRack.Model;
+using WinMovieRack.Controller.ThreadManagement;
+
 namespace WinMovieRack.Controller.Parser
 {
 	delegate void parseFunctions();
@@ -50,9 +52,9 @@ namespace WinMovieRack.Controller.Parser
 		/// <param name="mainPage">Needed for title, year, runtime, original title, genres, imdbrating, imdbvotes, languages, countries, also known as.</param>
 		/// <param name="creditsPage">Needed for directors, writers, cast</param>
 		/// <param name="awardsPage"></param>
-		public JobParse(string mainPage, string creditsPage, string awardsPage)
+		public JobParse(string mainPage, string creditsPage, string awardsPage, uint imdbID)
         {
-			this.initialize(mainPage, creditsPage, awardsPage, new Movie());
+			this.initialize(mainPage, creditsPage, awardsPage, new Movie(imdbID));
         }
 
 		public JobParse(string mainPage, string creditsPage, string awardsPage, Movie movieToFillOut) {

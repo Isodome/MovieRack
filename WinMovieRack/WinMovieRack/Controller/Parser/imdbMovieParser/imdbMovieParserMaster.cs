@@ -10,7 +10,8 @@ using System.Threading;
 using System.Drawing;
 using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser;
-
+using WinMovieRack.Controller.ThreadManagement;
+using WinMovieRack.Controller.Parser.imdbNameParser;
 
 namespace WinMovieRack.Controller
 {
@@ -64,7 +65,7 @@ namespace WinMovieRack.Controller
 		{
 			Match m = Regex.Match(mainPage, mediaURLRegex);
 			imageURL = m.Groups["url"].Value + ".jpg";
-			imageLoadJob =new JobLoadImage(imageURL, null);
+			imageLoadJob = new JobLoadImage(imageURL, null);
 			return imageLoadJob;
 		}
 
