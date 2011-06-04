@@ -50,9 +50,7 @@ namespace WinMovieRack
                         mainWindow.detailsView.addMoviesListBoxItem(boxItem);
                     }));
                 }
-				foreach(Tuple<uint,string> t in p.roles) {
-					ThreadsMaster.getInstance().addJobMaster(new ConcurrentIMDBNameParser(t.Item1));
-				}
+				
 			}
         
     }
