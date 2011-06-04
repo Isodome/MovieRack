@@ -35,7 +35,7 @@ namespace WinMovieRack.Controller
 
         public const string mediaURLRegex = @"id=""img_primary""(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
 
-		private Movie movieData;
+		public Movie movieData;
 
         private bool mainPageJobDone = false;
         private bool awardsPageJobDone = false;

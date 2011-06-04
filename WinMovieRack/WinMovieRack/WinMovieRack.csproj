@@ -67,7 +67,6 @@
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\JobParse.cs" />
-    <Compile Include="Controller\Parser\imdbMovieParser\JobPrintResults.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobWebPageDownload.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />

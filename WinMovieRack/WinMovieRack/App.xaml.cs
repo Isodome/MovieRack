@@ -32,7 +32,7 @@ namespace WinMovieRack
             }
 			void filmFinished(ThreadJobMaster sender)
 			{
-				imdbMovieParserMaster p = (imdbMovieParserMaster)sender;
+				Movie p = ((imdbMovieParserMaster)sender).movieData;
                 if (mainWindow.detailsView != null)
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
