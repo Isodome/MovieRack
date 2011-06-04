@@ -57,5 +57,10 @@ namespace WinMovieRack
             mainGrid.Children.Add(newView);
             current = newView;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
