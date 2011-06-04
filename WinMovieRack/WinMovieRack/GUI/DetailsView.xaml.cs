@@ -12,7 +12,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.GUI;
-
 namespace WinMovieRack
 {
     /// <summary>
@@ -66,6 +65,15 @@ namespace WinMovieRack
             Grid.SetColumnSpan(newView, 1);
             tabControl.Children.Add(newView);
             current = newView;
+        }
+
+        private void listBoxMovies_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
+            String title = (String)selectetItem.labelMovieTitle.Content;
+            String imdbRating = (String)selectetItem.labelMovieEditable.Content;
+            this.movieTitleLabel.Content = title;
+            this.imdbRating.Content = imdbRating;
         }
 
     }
