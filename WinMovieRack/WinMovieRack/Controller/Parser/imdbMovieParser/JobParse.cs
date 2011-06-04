@@ -7,148 +7,203 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Web;
 using System.Drawing;
-
+using WinMovieRack.Model;
 namespace WinMovieRack.Controller.Parser
 {
+	delegate void parseFunctions();
     class JobParse : ThreadJob
     {
-        private imdbMovieParserMaster parent;
-        public JobParse(imdbMovieParserMaster parent)
+
+		// Regex to parse information from the imdbMainPage
+		public const string titleAndYearRegex = @"<title>(.*?)\((\d+)\) - IMDb</title>";
+		public const string plotRegex = @"<h2>Storyline</h2>(.|\n|\r)*?<p>(?<plot>(.|\n|\r)*?)</p>";
+		public const string writtenByRegex = @"<(.|\n|\r)*?>";
+		public const string runtimeRegex = @"<h4 class=""inline"">Runtime:</h4>(.|\n|\r)*?(?<time>\d+) min";
+		public const string originalTitleRegex = @"<br\s/><span\sclass=""title-extra"">(?<orgTitle>(.|\n|\r)*?)<i>\(original\stitle\)</i>";
+		public const string genresRegex = @"<div class=""see-more inline canwrap"">(.|\n|\r)*?<h4 class=""inline"">Genres:</h4>(?<genres>(.|\n|\r)*?)</div>";
+		public const string getLinkTextRegex = "<a href=.*?>(?<g>.*?)</a>";
+		public const string imdbRatingRegex = @"<span class=""rating-rating"">(?<rating>.*?)<span";
+		public const string imdbRatingVotesRegex = @"Users:(.|\n|\r)*?href=""ratings""(.|\n|\r)*?>(?<votes>.*?)votes</a>\)";
+		public const string countriesRegex = @"<h4 class=""inline"">Country:</h4>(?<country>(.|\n|\r)*?)</div>";
+		public const string languagesRegex = @"<h4 class=""inline"">Language:</h4>(?<lang>(.|\n|\r)*?)</div>";
+		public const string alsoKnownAsRegex = @"<h4 class=""inline"">Also Known As:</h4>(?<ana>.*)";
+
+
+		//Regex to parse information from the imdb credits page
+		public const string directorsRegex = @">Directed by</a>(?<directors>.*?)Writing credits<";
+		public const string writersRegex = @">Writing credits</a>(?<writers>.*?)</table>";
+		public const string castRegex = @"<table class=""cast"">(?<cast>(.|\n|\r)*?)</table>";
+		public const string id_RoleRegex = @"<td class=""nm""><a href=""/name/nm(?<nm>\d+?)/(.|\n|\r)*?</td><td class=""char"">(?<char>.*?)</td>";
+		public const string getNameFromURLRegex = @"<a href=""/name/nm(?<g>\d+)/"">";
+
+		private Movie movie;
+
+		private string mainPage;
+		private string creditsPage;
+		private string awardsPage;
+
+		parseFunctions startSelectiveParse;
+
+		/// <summary>
+		/// Creates a new Parse job. All 3 html string are allowed to be null. 
+		/// </summary>
+		/// <param name="mainPage">Needed for title, year, runtime, original title, genres, imdbrating, imdbvotes, languages, countries, also known as.</param>
+		/// <param name="creditsPage">Needed for directors, writers, cast</param>
+		/// <param name="awardsPage"></param>
+		public JobParse(string mainPage, string creditsPage, string awardsPage)
         {
-            this.parent = parent;
+			this.initialize(mainPage, creditsPage, awardsPage, new Movie());
         }
+
+		public JobParse(string mainPage, string creditsPage, string awardsPage, Movie movieToFillOut) {
+			this.initialize(mainPage, creditsPage, awardsPage, movieToFillOut);
+		}
+
+		private void initialize(string mainPage, string creditsPage, string awardsPage, Movie movieToFillOut) {
+
+			this.movie = movieToFillOut;
+			this.mainPage = mainPage;
+			this.creditsPage = creditsPage;
+			this.awardsPage = awardsPage;
+
+			if (mainPage != null) {
+				startSelectiveParse += this.extractTitleAndYear;
+				startSelectiveParse += this.extractPlot;
+				startSelectiveParse += this.extractRuntime;
+				startSelectiveParse += this.extractOriginalTitle;
+				startSelectiveParse += this.extractGenres;
+				startSelectiveParse += this.extractIMDBRating;
+				startSelectiveParse += this.extractIMDBRatingVotes;
+				startSelectiveParse += this.extractLanguages;
+				startSelectiveParse += this.extractCountries;
+				startSelectiveParse += this.extractAlsoKnownAs;
+			}
+			if (creditsPage != null) {
+				startSelectiveParse += this.extractDirectors;
+				startSelectiveParse += this.extractWriters;
+				startSelectiveParse += this.extractCast;
+			}
+			if (awardsPage != null) {
+			}
+		}
 
         public void run()
         {
-            doParse();
+			startSelectiveParse();
         }
-
-		public void doParse()
-		{
-			extractTitleAndYear();
-			extractPlot();
-			extractRuntime();
-			extractOriginalTitle();
-			extractGenres();
-			extractIMDBRating();
-			extractIMDBRatingVotes();
-			extractLanguages();
-			extractCountries();
-			extractAlsoKnownAs();
-			extractDirectors();
-			extractWriters();
-			extractCast();
-        }
+		public Movie getResult() {
+			return (movie);
+		}
 
         private void extractTitleAndYear()
         {
-            Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.titleAndYearRegex);
-            parent.title = m.Groups[1].Value.Trim();
-            parent.year = int.Parse(m.Groups[2].Value);
+            Match m = Regex.Match(mainPage, titleAndYearRegex);
+            movie.title = m.Groups[1].Value.Trim();
+            movie.year = int.Parse(m.Groups[2].Value);
 
         }
         private void extractPlot()
         {
-            Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.plotRegex);
-            parent.plot = m.Groups["plot"].Value;
-            parent.plot = Regex.Replace(parent.plot, imdbMovieParserMaster.writtenByRegex, "").Trim(); // Remove all html tags
+            Match m = Regex.Match(mainPage, plotRegex);
+            movie.plot = m.Groups["plot"].Value;
+            movie.plot = Regex.Replace(movie.plot, writtenByRegex, "").Trim(); // Remove all html tags
         }
         private void extractRuntime()
         {
-            Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.runtimeRegex);
-            parent.runtime = int.Parse( m.Groups["time"].Value);
+            Match m = Regex.Match(mainPage, runtimeRegex);
+            movie.runtime = int.Parse( m.Groups["time"].Value);
 
         }
         private void extractOriginalTitle()
         {
-            Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.originalTitleRegex);
-            parent.originalTitle = m.Groups["orgTitle"].Value.Trim();
+            Match m = Regex.Match(mainPage, originalTitleRegex);
+            movie.originalTitle = m.Groups["orgTitle"].Value.Trim();
         }
 		private void extractGenres()
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.genresRegex);
+			Match m = Regex.Match(mainPage, genresRegex);
 			string genreString = m.Groups["genres"].Value;
-			MatchCollection mc = Regex.Matches(genreString, imdbMovieParserMaster.getLinkTextRegex);
+			MatchCollection mc = Regex.Matches(genreString, getLinkTextRegex);
 			foreach (Match match in mc)
 			{
-				parent.genres.Add(match.Groups["g"].Value.Trim());
+				movie.genres.Add(match.Groups["g"].Value.Trim());
 			}
 		}
 		private void extractIMDBRating()
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.imdbRatingRegex);
+			Match m = Regex.Match(mainPage, imdbRatingRegex);
 			string tmpString = Regex.Replace(m.Groups["rating"].Value, @"\D", "");
-			parent.imdbRating = int.Parse(tmpString);
+			movie.imdbRating = int.Parse(tmpString);
 			
 		}
 		private void extractIMDBRatingVotes()
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.imdbRatingVotesRegex);
+			Match m = Regex.Match(mainPage, imdbRatingVotesRegex);
 			string tmpString = Regex.Replace(m.Groups["votes"].Value, @"\D", "");
-			parent.imdbRatingVotes = int.Parse(tmpString);
+			movie.imdbRatingVotes = int.Parse(tmpString);
 		}
 		private void extractCountries() 
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.countriesRegex);
+			Match m = Regex.Match(mainPage, countriesRegex);
 			string genreString = m.Groups["country"].Value;
-			MatchCollection mc = Regex.Matches(genreString, imdbMovieParserMaster.getLinkTextRegex);
+			MatchCollection mc = Regex.Matches(genreString, getLinkTextRegex);
 			foreach (Match match in mc)
 			{
-				parent.countries.Add(match.Groups["g"].Value.Trim());
+				movie.countries.Add(match.Groups["g"].Value.Trim());
 			}
 		}
 		private void extractLanguages()
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.languagesRegex);
+			Match m = Regex.Match(mainPage, languagesRegex);
 			string genreString = m.Groups["lang"].Value;
-			MatchCollection mc = Regex.Matches(genreString, imdbMovieParserMaster.getLinkTextRegex);
+			MatchCollection mc = Regex.Matches(genreString, getLinkTextRegex);
 			foreach (Match match in mc)
 			{
-				parent.languages.Add(match.Groups["g"].Value.Trim());
+				movie.languages.Add(match.Groups["g"].Value.Trim());
 			}
 		}
 		private void extractAlsoKnownAs()
 		{
-			Match m = Regex.Match(parent.mainPage, imdbMovieParserMaster.alsoKnownAsRegex);
-			parent.alsoKnownAs = m.Groups["ana"].Value.Trim();
+			Match m = Regex.Match(mainPage, alsoKnownAsRegex);
+			movie.alsoKnownAs = m.Groups["ana"].Value.Trim();
 		}
 		private void extractDirectors() 
 		{
-			Match m = Regex.Match(parent.creditsPage, imdbMovieParserMaster.directorsRegex);
+			Match m = Regex.Match(creditsPage, directorsRegex);
 			string tmp = m.Groups["directors"].Value;
 			
-			MatchCollection mc = Regex.Matches(tmp, imdbMovieParserMaster.getNameFromURLRegex);
+			MatchCollection mc = Regex.Matches(tmp, getNameFromURLRegex);
 			foreach (Match match in mc)
 			{
 				string id = Regex.Replace(match.Groups["g"].Value.Trim(), @"\D", "");
-				parent.directors.Add(uint.Parse(id));
+				movie.directors.Add(uint.Parse(id));
 			} 
 
 		}
 		private void extractWriters()
 		{
-			Match m = Regex.Match(parent.creditsPage, imdbMovieParserMaster.writersRegex);
+			Match m = Regex.Match(creditsPage, writersRegex);
 			string tmp = m.Groups["writers"].Value;
-			MatchCollection mc = Regex.Matches(tmp, imdbMovieParserMaster.getNameFromURLRegex);
+			MatchCollection mc = Regex.Matches(tmp, getNameFromURLRegex);
 			foreach (Match match in mc)
 			{
 				string id = Regex.Replace(match.Groups["g"].Value.Trim(), @"\D", "");
-				parent.writers.Add(uint.Parse(id));
+				movie.writers.Add(uint.Parse(id));
 			} 
 		}
 		private void extractCast()
 		{
-			Match m = Regex.Match(parent.creditsPage, imdbMovieParserMaster.castRegex);
+			Match m = Regex.Match(creditsPage, castRegex);
 			string tmp = m.Groups["cast"].Value;
 
-			MatchCollection mc = Regex.Matches(tmp, imdbMovieParserMaster.id_RoleRegex);
+			MatchCollection mc = Regex.Matches(tmp, id_RoleRegex);
 			foreach (Match match in mc)
 			{
 				string nmstring = match.Groups["nm"].Value.Trim();
 				string role = match.Groups["char"].Value.Trim();
 				role = Regex.Replace(role, @"<.*?>", ""); // Remove link if there is one
 				uint nm = uint.Parse(nmstring);
-				parent.roles.Add(Tuple.Create<uint, string>(nm, role));
+				movie.roles.Add(Tuple.Create<uint, string>(nm, role));
 			} 
 		}
     }
