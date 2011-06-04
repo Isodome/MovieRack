@@ -11,10 +11,11 @@
             <RowDefinition Height="406*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
+        <Image Grid.Column="2" Margin="0,11,12,0" Name="image1" Stretch="Fill" Grid.RowSpan="2" ImageFailed="image1_ImageFailed" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="200" Height="278" VerticalAlignment="Top" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="5" Grid.RowSpan="2" />
         <Menu Height="Auto" HorizontalAlignment="Stretch" Name="menu1" VerticalAlignment="Top" IsMainMenu="False">
             <MenuItem Header="Add" />
@@ -29,56 +30,74 @@
         </Menu>
         <TextBox Height="25" Margin="12,27,78,0" Name="textBox1" VerticalAlignment="Top" Text="(search)" />
         <Button Content="GO" Height="23" Margin="0,29,15,0" Name="button1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="42" />
-        <ListBox Grid.Row="1" Height="auto" Margin="12,6,6,0" Name="listBoxMovies" VerticalAlignment="Stretch" ClipToBounds="True" SelectionChanged="listBoxMovies_SelectionChanged">
-
-
+        <ListBox Grid.Row="1" Margin="12,6,6,12" Name="listBoxMovies" VerticalAlignment="Stretch" ClipToBounds="True" SelectionChanged="listBoxMovies_SelectionChanged">
         </ListBox>
-        <Label Content="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Center" FontSize="35" Margin="53,11,0,1" HorizontalAlignment="Left" Width="auto
-               " />
-        <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="0,11,0,1" Name="year" VerticalAlignment="Center" Width="auto" Grid.Column="2" />
-        <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="47,52,0,0" Name="orgialTitle" VerticalAlignment="Top" Grid.RowSpan="2" />
-        <Label Content="Rating:" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="12,35,0,0" Name="RatingLabel" VerticalAlignment="Top" FontWeight="Bold" />
-        <Label Content="5/10" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="54,35,0,0" Name="imdbRating" VerticalAlignment="Top" />
-        <Label Content="Top 250:" Height="auto" Margin="157,35,0,0" Name="top250" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="56" FontWeight="Bold" />
-        <Label Content="N/A" Height="auto" HorizontalAlignment="Left" Margin="208,35,0,0" Name="rank" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="Own Rating:" Height="auto" HorizontalAlignment="Left" Margin="12,56,0,0" Name="ownRatingLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" />
-        <Label Content="7 (IMDB)" HorizontalAlignment="Left" Margin="82,55,0,0" Name="ownRating" Grid.Column="2" Grid.Row="1" Height="26" VerticalAlignment="Top" />
-        <Label Content="Genres:" Height="auto" HorizontalAlignment="Left" Margin="142,55,0,0" Name="genresLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" />
-        <Label Content="Action | Krimi" Height="auto" HorizontalAlignment="Left" Margin="193,55,0,0" Name="genres" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="Metacritics:" Height="auto" HorizontalAlignment="Left" Margin="12,77,0,0" Name="metacritics" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" />
-        <Label Content="Rottentomatoes:" Height="auto" HorizontalAlignment="Left" Margin="12,99,0,0" Name="tomatometer" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" />
-        <Label Content="7 %" Height="auto" HorizontalAlignment="Left" Margin="206,98,0,0" Name="label1" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="7/100" Height="auto" HorizontalAlignment="Left" Margin="81,76,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="Audience:" Height="auto" HorizontalAlignment="Left" Margin="115,119,0,0" Name="label3" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="Tomatometer:" Height="auto" HorizontalAlignment="Left" Margin="115,99,0,0" Name="label4" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Label Content="7 %" Height="auto" HorizontalAlignment="Left" Margin="183,119,0,0" Name="label5" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Button Content="Link" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="248,37,0,0" Name="imdbLink" VerticalAlignment="Top" Width="auto" Click="button2_Click" FontSize="10" />
-        <Button Content="Link" FontSize="10" Height="auto" HorizontalAlignment="Left" Margin="128,80,0,0" Name="metacriticsLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" Grid.Row="1" />
-        <Button Content="Link" FontSize="10" Height="auto" HorizontalAlignment="Left" Margin="242,104,0,0" Name="rottentomatoesLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" Grid.Row="1" />
-        <Label Content="(Votes)" Height="auto" HorizontalAlignment="Left" Margin="89,33,0,0" Name="imdbVotes" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <Image Grid.Column="2" Margin="0,11,12,0" Name="image1" Stretch="Fill" Grid.RowSpan="2" ImageFailed="image1_ImageFailed" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="160" Height="217" VerticalAlignment="Top" />
-        <TabControl Grid.Column="2" Grid.Row="1" Margin="12,151,12,12" Name="tabControl1">
+        
+        <Label Content="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" />
+        <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,26,0,0" Name="year" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
+        <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="60,55,0,0" Name="orgialTitle" VerticalAlignment="Top" Grid.RowSpan="2" FontSize="15" />
+        <Label Content="Rating:" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="10,20,0,0" Name="RatingLabel" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" />
+        <Label Content="10/10" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="70,20,0,0" Name="imdbRating" VerticalAlignment="Top" FontSize="15" />
+        <Label Content="(999999)" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="115,20,0,0" Name="imdbVotes" VerticalAlignment="Top" FontSize="15" />
+        <Label Content="Top 250:" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="180,20,0,0" Name="top250" VerticalAlignment="Top"   Width="auto" FontWeight="Bold" FontSize="15" />
+        <Label Content="250" Height="auto" HorizontalAlignment="Left" Margin="250,20,0,0" Name="rank" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="Own Rating:" Height="auto" HorizontalAlignment="Left" Margin="10,50,0,0" Name="ownRatingLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="15" />
+        <Label Content="100/100 (10/10)" HorizontalAlignment="Left" Margin="100,50,0,0" Name="ownRating" Grid.Column="2" Grid.Row="1" Height="26" VerticalAlignment="Top" FontSize="15" />
+        <Label Content="Genres:" Height="auto" HorizontalAlignment="Left" Margin="220,50,0,0" Name="genresLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="15" />
+        <Label Content="Action | Krimi" Height="auto" HorizontalAlignment="Left" Margin="280,50,0,0" Name="genres" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="Metacritics:" Height="auto" HorizontalAlignment="Left" Margin="10,80,0,0" Name="metacritics" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="15" />
+        <Label Content="Rottentomatoes:" Height="auto" HorizontalAlignment="Left" Margin="10,132,0,0" Name="tomatometer" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="15" />
+        <Label Content="100%" Height="auto" HorizontalAlignment="Left" Margin="240,130,0,0" Name="label" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="100%" Height="auto" HorizontalAlignment="Left" Margin="215,150,0,0" Name="label1" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="10/10" Height="auto" HorizontalAlignment="Left" Margin="185,100,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="Users Score:" Height="auto" HorizontalAlignment="Left" Margin="100,100,0,0" Name="label3" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="Tomatometer:" Height="auto" HorizontalAlignment="Left" Margin="140,130,0,0" Name="label4" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" />
+        <Label Content="100/100" Height="auto" Margin="180,80,0,0" Name="label5" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="15" HorizontalAlignment="Left" Width="57" />
+        <Button Content="IMDB" Grid.Column="2" Grid.Row="1" Height="auto" HorizontalAlignment="Left" Margin="300,20,0,0" Name="imdbLink" VerticalAlignment="Top" Width="auto" FontSize="15" />
+        <Button Content="Metacritics" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="320,100,0,0" Name="metacriticsLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" Grid.Row="1" />
+        <Button Content="Rottentomatoes" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="358,150,0,0" Name="rottentomatoesLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" Grid.Row="1" />
+        <TabControl Grid.Column="2" Grid.Row="1" Margin="12,211,12,12" Name="tabControl1">
             <TabItem Header="Summery" Name="summery">
                 <Grid x:Name="tabControl" Height="auto" Width="auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="171" />
-                        <RowDefinition Height="278*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="225" />
-                        <ColumnDefinition Width="849*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <ListBox ClipToBounds="True" Margin="6,55,6,6" Name="listActorBox" Grid.RowSpan="2">
-                        <Button Content="Button" Height="auto" HorizontalAlignment="Left" Margin="30,32,0,0" Name="testButton" VerticalAlignment="Top" Width="auto" Click="testButton_Click" />
-                    </ListBox>
-                    <Label Content="Actors/Stars:" Height="auto
-                           " HorizontalAlignment="Left" Margin="37,6,0,0" Name="starsLabel" VerticalAlignment="Top" FontSize="25" />
-                    <Label Content="Production:" FontSize="25" Height="auto  " HorizontalAlignment="Left" Margin="18,0,0,0" Name="productionLabel" VerticalAlignment="Top" Grid.Column="1" FontStretch="Normal" />
-                    <Rectangle Grid.Column="1" Margin="6,49,15,10" Name="rectangle1" Stroke="Black" Opacity="0.8" StrokeThickness="0.5" />
-                    <my:MoviesListBoxItem Grid.Column="1" HorizontalAlignment="Left" Margin="18,55,0,0" x:Name="director" VerticalAlignment="Top" Focusable="True" Loaded="director_Loaded" />
-                    <my:MoviesListBoxItem Grid.Column="1" HorizontalAlignment="Left" Margin="224,55,0,0" x:Name="writer1" VerticalAlignment="Top" Focusable="True" />    
-                    <my:MoviesListBoxItem HorizontalAlignment="Left" Margin="430,55,0,0" x:Name="writer2" VerticalAlignment="Top" Grid.Column="1" Focusable="True" />
-                    <my:MoviesListBoxItem HorizontalAlignment="Left" Margin="636,55,0,0" x:Name="writer3" VerticalAlignment="Top" Grid.Column="1" Focusable="True" />
+                    <GroupBox Grid.Column="2" Grid.RowSpan="2" Header="Details" Margin="5,180,5,0" Name="groupBox1" FontSize="20" FontWeight="Bold">
+                        <Grid></Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="20" FontWeight="Bold" Header="Plot" Height="164" Margin="5,5,5,0" Name="groupBox2" VerticalAlignment="Top" Grid.Column="2">
+                        <Grid>
+                            <RichTextBox Margin="0,0,0,0" Name="richTextBox1" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="20" FontWeight="Bold" Header="Stars" Name="groupBox3" Grid.Row="1" Margin="0,0,5,0">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox2"></ListBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="20" FontWeight="Bold" Header="Production" Margin="0,0,5,0" Name="groupBox4">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox1" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="20" FontWeight="Bold" Header="Additional Information" Margin="15,5,10,0" Name="groupBox5" Grid.Column="3">
+                        <Grid></Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="20" FontWeight="Bold" Header="Notes" Margin="15,5,10,0" Name="groupBox6" Grid.Column="3" Grid.Row="1">
+                        <Grid>
+                            <Grid Margin="0,0,0,0">
+                                <RichTextBox Margin="0,0,0,0" Name="richTextBox2" />
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+                    <GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0" Name="gridSplitter1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="5" />
                 </Grid>
             </TabItem>
             <TabItem Header="Enhanced" Name="enanced">
@@ -90,12 +109,16 @@
             <TabItem Header="Boxoffice" Name="boxoffice">
                 <Grid Height="387" Width="299" />
             </TabItem>
-            <TabItem Header="Awards" Name="awards">
-                <Grid Height="387" Width="299" />
-            </TabItem>
+            <TabItem Header="Awards" Name="awards"></TabItem>
             <TabItem Header="Pictures" Name="pictures">
                 <Grid Height="387" Width="299" />
             </TabItem>
         </TabControl>
+        <Label Content="Metascore:" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="100,80,0,0" Name="metascoreLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Label Content="Audience:" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="140,150,0,0" Name="label7" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Label Content="(999999)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="240,80,0,0" Name="metascoureCriticsLabel" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Label Content="(999999)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="240,99,0,0" Name="label8" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Label Content="(999999)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="285,130,0,0" Name="label6" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
+        <Label Content="(999999)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="260,150,0,0" Name="label9" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
     </Grid>
 </UserControl>

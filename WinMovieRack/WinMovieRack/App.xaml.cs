@@ -37,11 +37,11 @@ namespace WinMovieRack
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        MoviesListBoxItem boxItem = new MoviesListBoxItem();
-                        boxItem.setMovieTitle(p.title);
-                        boxItem.setMovieYear(p.year.ToString());
-                        boxItem.setMovieEditable(p.imdbRating.ToString());
-						BitmapSource destination; 
+						MovieRackListBoxItem boxItem = new MovieRackListBoxItem();
+						boxItem.labelMovieTitle.Content = p.title;
+						boxItem.labelMovieYear.Content = p.year;
+						boxItem.labelMovieEditable.Content = (((float)p.imdbRating)/10.0).ToString() + " ( " + p.imdbRatingVotes + " votes)";
+ 						BitmapSource destination; 
 						IntPtr hBitmap = p.poster.GetHbitmap(); 
 						BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions(); 
 						destination = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, sizeOptions); 
