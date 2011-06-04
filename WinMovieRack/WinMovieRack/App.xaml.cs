@@ -23,11 +23,10 @@ namespace WinMovieRack
             {
                 mainWindow = new MainWindow();
                 mainWindow.Show();
-                ThreadsMaster threadsMaster = new ThreadsMaster();
                 imdbMovieParserMaster parserMaster;
 				parserMaster = new imdbMovieParserMaster(477348);
 				parserMaster.setFinalizeFunction(this.filmFinished);
-                threadsMaster.addJobMaster(parserMaster);
+				ThreadsMaster.getInstance().addJobMaster(parserMaster);
 
             }
 			void filmFinished(ThreadJobMaster sender)

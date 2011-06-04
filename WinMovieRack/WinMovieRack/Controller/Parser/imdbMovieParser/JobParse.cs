@@ -204,7 +204,7 @@ namespace WinMovieRack.Controller.Parser
 				role = Regex.Replace(role, @"<.*?>", ""); // Remove link if there is one
 				uint nm = uint.Parse(nmstring);
 				movie.roles.Add(Tuple.Create<uint, string>(nm, role));
-			} 
+			}
 		}
     }
 }

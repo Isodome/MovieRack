@@ -40,7 +40,7 @@ namespace WinMovieRack
 			this.imdbID = imdbID;
 		}
 
-		private void printToConsole() {
+		public void printToConsole() {
 			Console.WriteLine("imdbID: " + this.imdbID);
 			Console.WriteLine("Title: " + this.title);
 			Console.WriteLine("Original Title: " + this.originalTitle);

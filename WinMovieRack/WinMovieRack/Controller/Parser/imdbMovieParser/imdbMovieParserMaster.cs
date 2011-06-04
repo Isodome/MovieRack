@@ -91,13 +91,14 @@ namespace WinMovieRack.Controller
 
 				if (mainPageJobDone && awardsPageJobDone && creditsPageJobDone)
 				{
-					parseJob = new JobParse(mainPage, creditsPage, awardsPage);
+					parseJob = new JobParse(mainPage, creditsPage, awardsPage, movieData);
 					this.addJob(parseJob);
 				}
 			}
 			else if (job == parseJob)
 			{
 				parseJobDone = true;
+				movieData.printToConsole();
 			}
 			else if (job == imageLoadJob)
 			{
