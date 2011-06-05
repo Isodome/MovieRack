@@ -8,17 +8,57 @@ using WinMovieRack.Model;
 
 namespace WinMovieRack.Controller {
 	public class Controller {
+
 		private WinMovieRack.GUI.GUI gui;
 		private App app;
 
+		private ImdbBrowserController browserController;
+		private MainWindowController windowController;
+		private DetailsViewController detailsViewController;
+
 		public Controller(App app) {
 			this.app = app;
-			gui = new WinMovieRack.GUI.GUI(this);
+
+			initializeGUI();
 
 			imdbMovieParserMaster parserMaster;
 			parserMaster = new imdbMovieParserMaster(477348);
 			parserMaster.setFinalizeFunction(this.filmFinished);
 			ThreadsMaster.getInstance().addJobMaster(parserMaster);
+		}
+
+		private void initializeGUI() {
+
+			browserController = new ImdbBrowserController();
+			IMDBBrowser browser = new IMDBBrowser(browserController);
+			browserController.setBrowser(this, browser);
+
+			windowController = new MainWindowController();
+			MainWindow mw = new MainWindow(windowController);
+			windowController.setMainWindow(this, mw);
+
+			detailsViewController = new DetailsViewController();
+			DetailsView dv = new DetailsView(detailsViewController);
+			detailsViewController.setDetailsView(dv);
+
+			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv);
+		}
+
+
+		public void changeToView(View view) {
+			//Inform specific controllers
+			switch (view) {
+				case View.ACTORS_VIEW:
+					break;
+				case View.DETAILS_VIEW:
+
+					break;
+				case View.IMDB_BROWSER:
+					break;
+				case View.LIST_VIEW:
+					break;
+			}
+			gui.changeToView(view);
 		}
 
 		void filmFinished(ThreadJobMaster sender) {

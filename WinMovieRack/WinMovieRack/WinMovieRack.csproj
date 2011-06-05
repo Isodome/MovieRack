@@ -15,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -81,8 +81,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\DetailsViewController.cs" />
+    <Compile Include="Controller\ImdbBrowserController.cs" />
     <Compile Include="Controller\IMDBUtil.cs" />
     <Compile Include="Controller\Log.cs" />
+    <Compile Include="Controller\MainWindowController.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParserMaster.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
@@ -94,9 +97,7 @@
     <Compile Include="Controller\ThreadManagement\ThreadJobMaster.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJob.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadsMaster.cs" />
-    <Compile Include="GUI\BigPicture.xaml.cs">
-      <DependentUpon>BigPicture.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
     </Compile>
@@ -124,10 +125,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowStrings.resx</DependentUpon>
     </Compile>
-    <Page Include="GUI\BigPicture.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\DetailsViewActorPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
