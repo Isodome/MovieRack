@@ -13,16 +13,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.GUI;
 using WinMovieRack.Controller;
-
+using System.Windows.Forms;
+using System.Windows.Media.Animation;
 namespace WinMovieRack
 {
     /// <summary>
     /// Interaction logic for Movies.xaml
     /// </summary>
-    public partial class DetailsView : UserControl
+    public partial class DetailsView : System.Windows.Controls.UserControl
     {
         private UIElement current;
         DetailsViewActorPanel actorPanel;
+		BigPicture bigPicture;
 
 		DetailsViewController controller;
 
@@ -69,9 +71,15 @@ namespace WinMovieRack
 
         private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            BigPicture bigPicture = new BigPicture();
-            bigPicture.Show();
-            bigPicture.bigPicture.Source=posterTitle.Source; //Only Debug, should load originalPicture
+            bigPicture = new BigPicture();
+			bigPicture.bigPicture.Source = posterTitle.Source; //Only Debug, should load originalPicture
+
+           
+			Point origin = new Point(0, 0);
+			Point screenOrigin = posterTitle.PointToScreen(origin);
+			bigPicture.setOrigin(posterTitle.Height, posterTitle.Width, screenOrigin.X, screenOrigin.Y);
+
+			bigPicture.fadeIn();
         }
 
     }

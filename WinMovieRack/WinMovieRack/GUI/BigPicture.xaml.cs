@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Windows.Media.Animation;
 namespace WinMovieRack.GUI
 {
     /// <summary>
@@ -18,12 +18,68 @@ namespace WinMovieRack.GUI
     /// </summary>
     public partial class BigPicture : Window
     {
+		double posx;
+		double posy;
+		double orgHeight;
+		double orgWidth;
+
         public BigPicture()
         {
             InitializeComponent();
             this.MaxHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
         }
+		public void setOrigin(double height, double width, double posx, double posy) {
+			this.orgWidth = width;
+			this.orgHeight = height;
+			this.posx = posx;
+			this.posy = posy;
+		}
 
+		public void fadeIn() {
+			
+			this.Height = orgHeight;
+			this.Width = orgWidth;
+			this.Left = posx;
+			this.Top = posy;
+			this.Show();
+
+			Storyboard sb = new Storyboard();
+			DoubleAnimation heightAnim = new DoubleAnimation();
+			DoubleAnimation widthAnim = new DoubleAnimation();
+			DoubleAnimation posXAnim = new DoubleAnimation();
+			DoubleAnimation posYAnim = new DoubleAnimation();
+
+			Duration dur1sec = new Duration(TimeSpan.FromMilliseconds(500));
+
+			heightAnim.Duration = dur1sec;
+			widthAnim.Duration = dur1sec;
+			posXAnim.Duration = dur1sec;
+			posYAnim.Duration = dur1sec;
+
+			sb.Children.Add(heightAnim);
+			sb.Children.Add(widthAnim);
+			sb.Children.Add(posXAnim);
+			sb.Children.Add(posYAnim);
+
+			Storyboard.SetTarget(heightAnim, this);
+			Storyboard.SetTarget(widthAnim, this);
+			Storyboard.SetTarget(posXAnim, this);
+			Storyboard.SetTarget(posYAnim, this);
+
+
+			Storyboard.SetTargetProperty(heightAnim, new PropertyPath("(Canvas.Height)"));
+			Storyboard.SetTargetProperty(widthAnim, new PropertyPath("(Canvas.Width)"));
+			Storyboard.SetTargetProperty(posXAnim, new PropertyPath("(Canvas.Left)"));
+			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
+
+			heightAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight;
+			widthAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth;
+			posYAnim.To = 0;
+			posXAnim.To = 0;
+
+
+			sb.Begin();
+		}
         private void bigPicture_MouseLeave(object sender, MouseEventArgs e)
         {
             buttonGrid.Opacity = 0;
@@ -57,13 +113,54 @@ namespace WinMovieRack.GUI
 
         private void buttonGrid_MouseLeave(object sender, MouseEventArgs e)
         {
-            buttonGrid.Opacity = 0;
+           buttonGrid.Opacity = 0;
         }
 
         private void quitButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+			Storyboard sb = new Storyboard();
+			DoubleAnimation heightAnim = new DoubleAnimation();
+			DoubleAnimation widthAnim = new DoubleAnimation();
+			DoubleAnimation posXAnim = new DoubleAnimation();
+			DoubleAnimation posYAnim = new DoubleAnimation();
+
+			Duration duration = new Duration(TimeSpan.FromMilliseconds(500));
+			Duration duration2 = new Duration(TimeSpan.FromMilliseconds(250));
+
+			heightAnim.Duration = duration;
+			widthAnim.Duration = duration;
+			posXAnim.Duration = duration;
+			posYAnim.Duration = duration;
+
+			sb.Children.Add(heightAnim);
+			sb.Children.Add(widthAnim);
+			sb.Children.Add(posXAnim);
+			sb.Children.Add(posYAnim);
+
+			Storyboard.SetTarget(heightAnim, this);
+			Storyboard.SetTarget(widthAnim, this);
+			Storyboard.SetTarget(posXAnim, this);
+			Storyboard.SetTarget(posYAnim, this);
+
+
+			Storyboard.SetTargetProperty(heightAnim, new PropertyPath("(Canvas.Height)"));
+			Storyboard.SetTargetProperty(widthAnim, new PropertyPath("(Canvas.Width)"));
+			Storyboard.SetTargetProperty(posXAnim, new PropertyPath("(Canvas.Left)"));
+			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
+
+
+			heightAnim.To = this.orgHeight;
+			widthAnim.To = this.orgWidth;
+			posYAnim.To = posy;
+			posXAnim.To = posx;
+			sb.Completed += closeThisWindow;
+			sb.Begin();
+
         }
+
+		private void closeThisWindow(object sender, EventArgs e) {
+			this.Close();
+		}
 
         private void quitButton_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -84,5 +181,6 @@ namespace WinMovieRack.GUI
         {
             buttonGrid.Opacity = 0;
         }
+		
     }
 }
