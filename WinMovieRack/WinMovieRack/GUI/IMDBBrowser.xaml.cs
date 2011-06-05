@@ -26,10 +26,15 @@ namespace WinMovieRack.GUI {
 
 		public string lastURL;
 		public const string homeURL = "http://www.imdb.com";
+		private ImdbBrowserController controller;
 
 
-		public IMDBBrowser() {
+		public IMDBBrowser(ImdbBrowserController contr) {
 			InitializeComponent();
+			this.controller = contr;
+		}
+
+		public void goToHome() {
 			this.imdbWebBrowser.Navigate(homeURL);
 		}
 

@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.Resources.Localization.MainWindow;
 using WinMovieRack.Model;
+using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser.imdbMovieParser;
 using WinMovieRack.GUI;
 using System.Threading;
@@ -25,14 +26,13 @@ namespace WinMovieRack
     public partial class MainWindow : Window
     {
         private UIElement current;
-        public DetailsView detailsView;
-		public IMDBBrowser imdbBrowser;
 
-        public MainWindow()
+		private MainWindowController controller;
+
+        public MainWindow(MainWindowController c)
         {
             InitializeComponent();
-			detailsView = new DetailsView();
-			imdbBrowser = new IMDBBrowser();
+			this.controller = c;
         }
 
         void setLocalization()
@@ -42,17 +42,10 @@ namespace WinMovieRack
 
         private void moviesMenuEntry_Clicked(object sender, RoutedEventArgs e)
         {
-            
-            changeView(detailsView);
-
-			imdbMovieParser p = new imdbMovieParser(477348);
-			Console.WriteLine("http request");
-			p.doRequest();
-			//imdbMovieParser p11 = new imdbMovieParser(0120737);
-			//p11.doRequest();
-
+			controller.shouldChangeView(View.DETAILS_VIEW);
         }
-        private void changeView(UIElement newView)
+
+        public void changeView(UIElement newView)
         {
             mainGrid.Children.Remove(current);
             Grid.SetColumn(newView, 0);
@@ -68,7 +61,7 @@ namespace WinMovieRack
         }
 
 		private void imdbMenuEntry_Click(object sender, RoutedEventArgs e) {
-			changeView(imdbBrowser);
+			controller.shouldChangeView(View.IMDB_BROWSER);
 		}
     }
 }

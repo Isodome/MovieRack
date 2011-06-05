@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.GUI;
+using WinMovieRack.Controller;
+
 namespace WinMovieRack
 {
     /// <summary>
@@ -21,9 +23,13 @@ namespace WinMovieRack
     {
         private UIElement current;
         DetailsViewActorPanel actorPanel;
-        public DetailsView()
+
+		DetailsViewController controller;
+
+        public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
+			this.controller = dvc;
         }
 
         public void addMoviesListBoxItem(WinMovieRack.GUI.MovieRackListBoxItem item)
