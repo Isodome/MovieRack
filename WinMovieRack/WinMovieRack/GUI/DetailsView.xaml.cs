@@ -37,26 +37,6 @@ namespace WinMovieRack
             listBoxMovies.Items.Add(item);
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void image1_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void testButton_Click(object sender, RoutedEventArgs e)
         {
             actorPanel = new DetailsViewActorPanel();
@@ -76,10 +56,22 @@ namespace WinMovieRack
         private void listBoxMovies_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
-            String title = (String)selectetItem.labelMovieTitle.Content;
-            String imdbRating = (String)selectetItem.labelMovieEditable.Content;
-            this.movieTitleLabel.Content = title;
-            this.imdbRating.Content = imdbRating;
+            int itemID = selectetItem.getdBID();
+            if (selectetItem.getIsMovie())
+            {
+                //Get Info from MovieTable
+            }
+            else
+            {
+                //Get Info from PersonTable
+            }
+        }
+
+        private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            BigPicture bigPicture = new BigPicture();
+            bigPicture.Show();
+            bigPicture.bigPicture.Source=posterTitle.Source; //Only Debug, should load originalPicture
         }
 
     }

@@ -19,25 +19,42 @@ namespace WinMovieRack.GUI
     /// </summary>
     public partial class MovieRackListBoxItem : UserControl
     {
-        public MovieRackListBoxItem()
+        private bool isMovie; //Boolean, da MRListBoxItem auch für Personen genutzt wird
+        private int dBID; //DatenbankID des Films, um bei einem Klick die ID zu bekommen, womit man die Daten aus der Datenban holen kann.
+        public MovieRackListBoxItem(int dBID, bool isMovie)
         {
             InitializeComponent();
+            this.dBID = dBID;
+            this.isMovie = isMovie;
         }
 
         public void setListBoxTitle(String title) 
         {
             labelMovieTitle.Content = title;
         }
+       
         public void setYearCharakter(String yearCharakter)
         {
             labelMovieYear.Content = yearCharakter;
         }
+       
         public void setEditableAge(String editableAge)
         {
             labelMovieEditable.Content = editableAge;
         }
+       
         public void setPicture()
         {
+        }
+
+        public bool getIsMovie()
+        {
+            return isMovie;
+        }
+
+        public int getdBID()
+        {
+            return dBID;
         }
     }
 }
