@@ -123,6 +123,7 @@ namespace WinMovieRack.GUI
 			DoubleAnimation widthAnim = new DoubleAnimation();
 			DoubleAnimation posXAnim = new DoubleAnimation();
 			DoubleAnimation posYAnim = new DoubleAnimation();
+			DoubleAnimation opacityAnim = new DoubleAnimation();
 
 			Duration duration = new Duration(TimeSpan.FromMilliseconds(500));
 			Duration duration2 = new Duration(TimeSpan.FromMilliseconds(250));
@@ -131,28 +132,35 @@ namespace WinMovieRack.GUI
 			widthAnim.Duration = duration;
 			posXAnim.Duration = duration;
 			posYAnim.Duration = duration;
+			opacityAnim.Duration = duration2;
 
 			sb.Children.Add(heightAnim);
 			sb.Children.Add(widthAnim);
 			sb.Children.Add(posXAnim);
 			sb.Children.Add(posYAnim);
+			sb.Children.Add(opacityAnim);
 
 			Storyboard.SetTarget(heightAnim, this);
 			Storyboard.SetTarget(widthAnim, this);
 			Storyboard.SetTarget(posXAnim, this);
 			Storyboard.SetTarget(posYAnim, this);
+			Storyboard.SetTarget(opacityAnim, this);
 
 
 			Storyboard.SetTargetProperty(heightAnim, new PropertyPath("(Canvas.Height)"));
 			Storyboard.SetTargetProperty(widthAnim, new PropertyPath("(Canvas.Width)"));
 			Storyboard.SetTargetProperty(posXAnim, new PropertyPath("(Canvas.Left)"));
 			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
+			Storyboard.SetTargetProperty(opacityAnim, new PropertyPath("(Canvas.Opacity)"));
+
 
 
 			heightAnim.To = this.orgHeight;
 			widthAnim.To = this.orgWidth;
 			posYAnim.To = posy;
 			posXAnim.To = posx;
+			opacityAnim.To = 0.1;
+
 			sb.Completed += closeThisWindow;
 			sb.Begin();
 
