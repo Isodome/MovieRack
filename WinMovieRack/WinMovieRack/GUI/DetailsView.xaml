@@ -11,7 +11,7 @@
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Stretch="Fill" ImageFailed="image1_ImageFailed" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="200" Height="276" VerticalAlignment="Top" />
+        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Stretch="Fill" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="200" Height="276" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         <Label Content="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" />
         <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,26,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
