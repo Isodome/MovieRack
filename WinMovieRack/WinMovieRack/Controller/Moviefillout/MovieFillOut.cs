@@ -15,6 +15,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 		private SQLiteConnector db;
 
 		private int persons;
+		Thread t;
 
 		public MovieFillOut(Movie movie, SQLiteConnector db) {
 			this.movie = movie;
@@ -23,7 +24,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void startFillout() {
-			Thread t = new Thread(new ThreadStart(parseNames));
+			 t = new Thread(new ThreadStart(parseNames));
 		}
 
 		public void parseNames() {
@@ -46,8 +47,8 @@ namespace WinMovieRack.Controller.Moviefillout {
 		private void startParse(uint i) {
 			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(i);
 			p.setFinalizeFunction(parseFinished);
-			ThreadsMaster.getInstance().addJobMaster(p);
 			lock (this) {
+				ThreadsMaster.getInstance().addJobMaster(p);
 				persons++;
 			}
 		}
@@ -57,13 +58,19 @@ namespace WinMovieRack.Controller.Moviefillout {
 			lock (this.movie.persons) {
 				this.movie.persons.Add(p.person);
 			}
+			t.Join();
 			lock (this) {
 				persons--;
+				if (persons != 0) {
+					return;
+				}
 			}
-			
+			insertInDB();
 		}
 
-
+		private void insertInDB() {
+			
+		}
 
 	}
 }
