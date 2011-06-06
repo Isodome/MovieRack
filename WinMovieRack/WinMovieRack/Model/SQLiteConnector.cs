@@ -43,8 +43,18 @@ namespace WinMovieRack.Model {
 
 		}
 
-		public List<ImdbMovie> getMovieList() {
-			throw (new NotImplementedException());
-		}
+        public List<MovieListData> getMovieList(MovieEnum editable)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            List<MovieListData> movieList = new List<MovieListData>();
+            command.CommandText = "SELECT idMovies, title, imdbRating, " + editable.ToString() + ", posterPath FROM Movies";
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                movieList.Add(new MovieListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString()));
+            }
+            command.Dispose();
+            return movieList;
+        }
 	}
 }
