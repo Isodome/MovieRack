@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 
 namespace WinMovieRack.Controller.ThreadManagement
 {
-    class ThreadsMaster
+    public class ThreadsMaster
     {
 		private static ThreadsMaster threadsMaster;
 		private static object instancelock = "";

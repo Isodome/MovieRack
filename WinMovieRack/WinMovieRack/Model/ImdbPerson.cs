@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 
 namespace WinMovieRack.Model {
-	class ImdbPerson {
+	public class ImdbPerson {
 
 		public uint imdbID;
 		public string name;

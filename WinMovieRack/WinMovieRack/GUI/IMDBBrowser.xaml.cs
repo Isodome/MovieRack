@@ -27,6 +27,7 @@ namespace WinMovieRack.GUI {
 		public string lastURL;
 		public const string homeURL = "http://www.imdb.com";
 		private ImdbBrowserController controller;
+		private ThreadJobMaster lastParser;
 
 
 		public IMDBBrowser(ImdbBrowserController contr) {
@@ -40,7 +41,7 @@ namespace WinMovieRack.GUI {
 
 		private void homeButton_Click(object sender, RoutedEventArgs e) {
 			this.imdbWebBrowser.Navigate(homeURL);
-			
+
 		}
 
 		private void backButton_Click(object sender, RoutedEventArgs e) {
@@ -52,7 +53,13 @@ namespace WinMovieRack.GUI {
 		}
 
 		private void actionButton_Click(object sender, RoutedEventArgs e) {
-			
+			if (lastParser != null) {
+				if (lastParser is ConcurrentIMDBNameParser) {
+					controller.insertPersonInDB((ConcurrentIMDBNameParser)lastParser);
+				} else if (lastParser is imdbMovieParserMaster) {
+					controller.insertMovieInDB((imdbMovieParserMaster)lastParser);
+				}
+			}
 		}
 
 
@@ -63,6 +70,7 @@ namespace WinMovieRack.GUI {
 				return;
 			}
 			setButton("add", false);
+			lastParser = null;
 			lastURL = url;
 
 			if (IMDBUtil.isMovieUrl(url)) {
@@ -77,13 +85,15 @@ namespace WinMovieRack.GUI {
 				updateActionButton(null);
 			}
 		}
+
 		private void updateActionButton(ThreadJobMaster sender) {
 			if (sender != null) {
 				if (sender is ConcurrentIMDBNameParser) {
-					setButton("Add " + ((ConcurrentIMDBNameParser)sender).person.name + " to Database", true);
+					setButton("Add '" + ((ConcurrentIMDBNameParser)sender).person.name + "' to Database", true);
 				} else if (sender is imdbMovieParserMaster) {
-					setButton("Add " + ((imdbMovieParserMaster)sender).movieData.title + " to Database", true);
+					setButton("Add '" + ((imdbMovieParserMaster)sender).movieData.title + "' to Database", true);
 				}
+				lastParser = sender;
 			} else {
 				setButton("add", false);
 			}
@@ -92,11 +102,10 @@ namespace WinMovieRack.GUI {
 
 		private void setButton(string newContent, bool active) {
 
-			Dispatcher.BeginInvoke(new Action(() =>
-                    {
+			Dispatcher.BeginInvoke(new Action(() => {
 						actionButton.IsEnabled = active;
 						actionButton.Content = newContent;
-                    }));
+					}));
 		}
 	}
 }

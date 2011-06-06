@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WinMovieRack.Controller.ThreadManagement
 {
-    interface ThreadJob
+    public interface ThreadJob
     {
         void run();
     }

@@ -6,10 +6,8 @@ using System.Text.RegularExpressions;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.ThreadManagement;
 
-namespace WinMovieRack.Controller.Parser.imdbNameParser
-{
-	class JobIMDBNameParser : ThreadJob
-	{
+namespace WinMovieRack.Controller.Parser.imdbNameParser {
+	public class JobIMDBNameParser : ThreadJob {
 		string mainPage;
 		private ImdbPerson person;
 
@@ -25,30 +23,26 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		public JobIMDBNameParser(string mainPage, ImdbPerson person) {
 			this.initialize(mainPage, person);
 		}
-		
+
 		private void initialize(string mainPage, ImdbPerson person) {
 			this.person = person;
 			this.mainPage = mainPage;
 		}
 
-		public void run()
-		{
+		public void run() {
 			extractName();
 			extractBirthday();
 			extractBirthname();
 
 		}
 
-		public void extractName()
-		{
+		public void extractName() {
 			Match m = Regex.Match(mainPage, nameRegex);
 			person.name = m.Groups["name"].Value.Trim();
 		}
 
-		public void extractBirthday()
-		{
-			try
-			{
+		public void extractBirthday() {
+			try {
 				Match m = Regex.Match(mainPage, birthdayRegexYear);
 				string yearString = m.Groups["year"].Value;
 				int year = int.Parse(yearString);
@@ -61,15 +55,12 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 				int month = int.Parse(monthstring);
 
 				person.birthday = new DateTime(year, month, day);
-			}
-			catch (FormatException)
-			{
+			} catch (FormatException) {
 				Console.WriteLine("No Birthday for {0}", person.name);
 			}
 		}
 
-		public void extractBirthname()
-		{
+		public void extractBirthname() {
 			Match m = Regex.Match(mainPage, birthnameRegex);
 			person.birthname = m.Groups["birthname"].Value.Trim();
 		}

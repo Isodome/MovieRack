@@ -10,7 +10,7 @@ using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack.Controller.Parser.imdbNameParser
 {
-	class ConcurrentIMDBNameParser : ThreadJobMaster
+	public class ConcurrentIMDBNameParser : ThreadJobMaster
 	{
 		private const string placeholder = "{ID}";
 		private const string url = "http://www.imdb.com/name/nm" + placeholder + "/";

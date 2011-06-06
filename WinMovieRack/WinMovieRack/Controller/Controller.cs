@@ -10,6 +10,7 @@ namespace WinMovieRack.Controller {
 	public class Controller {
 
 		private WinMovieRack.GUI.GUI gui;
+		public SQLiteConnector db;
 		private App app;
 
 		private ImdbBrowserController browserController;
@@ -20,6 +21,7 @@ namespace WinMovieRack.Controller {
 			this.app = app;
 
 			initializeGUI();
+			initializeModel();
 
 			imdbMovieParserMaster parserMaster;
 			parserMaster = new imdbMovieParserMaster(477348);
@@ -29,19 +31,24 @@ namespace WinMovieRack.Controller {
 
 		private void initializeGUI() {
 
-			browserController = new ImdbBrowserController();
+			browserController = new ImdbBrowserController(this);
 			IMDBBrowser browser = new IMDBBrowser(browserController);
-			browserController.setBrowser(this, browser);
+			browserController.setBrowser(browser);
 
 			windowController = new MainWindowController();
 			MainWindow mw = new MainWindow(windowController);
 			windowController.setMainWindow(this, mw);
 
-			detailsViewController = new DetailsViewController();
+			detailsViewController = new DetailsViewController(this);
 			DetailsView dv = new DetailsView(detailsViewController);
 			detailsViewController.setDetailsView(dv);
 
 			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv);
+		}
+
+		private void initializeModel() {
+			db = new SQLiteConnector();
+			db.initDb();
 		}
 
 
@@ -51,7 +58,6 @@ namespace WinMovieRack.Controller {
 				case View.ACTORS_VIEW:
 					break;
 				case View.DETAILS_VIEW:
-
 					break;
 				case View.IMDB_BROWSER:
 					break;

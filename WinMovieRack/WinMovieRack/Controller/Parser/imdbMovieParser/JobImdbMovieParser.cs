@@ -13,7 +13,7 @@ using WinMovieRack.Controller.ThreadManagement;
 namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
 	delegate void parseFunctions();
-    class JobImdbMovieParser : ThreadJob
+    public class JobImdbMovieParser : ThreadJob
     {
 
 		// Regex to parse information from the imdbMainPage

@@ -8,9 +8,10 @@ namespace WinMovieRack.Controller {
 	public class DetailsViewController {
 
 		private DetailsView view;
+		private Controller controller;
 
-		public DetailsViewController() {
-
+		public DetailsViewController(Controller c) {
+			this.controller = c;
 		}
 
 		public void setDetailsView(DetailsView dv) {

@@ -12,7 +12,7 @@ using System.Drawing;
 namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
     
-    class imdbMovieParser
+    public class imdbMovieParser
     {
         private const string placholder = "{ID}";
         private const string URL = "http://www.imdb.com/title/tt" + placholder + "/";
