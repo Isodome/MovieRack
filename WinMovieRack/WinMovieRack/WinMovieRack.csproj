@@ -119,6 +119,8 @@
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\ImdbPerson.cs" />
     <Compile Include="Model\Movie.cs" />
+    <Compile Include="Model\MovieEnum.cs" />
+    <Compile Include="Model\MovieListData.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\ImdbMovie.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
