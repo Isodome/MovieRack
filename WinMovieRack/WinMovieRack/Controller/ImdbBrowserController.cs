@@ -27,8 +27,8 @@ namespace WinMovieRack.Controller {
 
 		public void insertMovieInDB(imdbMovieParserMaster parser) {
 			Movie m = new Movie(parser.movieData);
-			ConcurrentMovieFillOut fillout = new ConcurrentMovieFillOut(m, controller.db);
-			ThreadsMaster.getInstance().addJobMaster(fillout);
+			MovieFillOut fillout = new MovieFillOut(m, controller.db);
+			fillout.startFillout();
 		}
 
 		public void insertPersonInDB(ConcurrentIMDBNameParser parser) {

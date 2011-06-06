@@ -86,8 +86,7 @@
     <Compile Include="Controller\IMDBUtil.cs" />
     <Compile Include="Controller\Log.cs" />
     <Compile Include="Controller\MainWindowController.cs" />
-    <Compile Include="Controller\Moviefillout\ConcurrentMovieFillOut.cs" />
-    <Compile Include="Controller\Moviefillout\JobCheckPersonIsInDatabase.cs" />
+    <Compile Include="Controller\Moviefillout\MovieFillOut.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParserMaster.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\imdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
