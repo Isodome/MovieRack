@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.Model;
-using System.Threading;
+
 namespace WinMovieRack.Controller.Moviefillout {
 
 	public class MovieFillOut {
@@ -12,9 +14,12 @@ namespace WinMovieRack.Controller.Moviefillout {
 		private Movie movie;
 		private SQLiteConnector db;
 
+		private int persons;
+
 		public MovieFillOut(Movie movie, SQLiteConnector db) {
 			this.movie = movie;
 			this.db = db;
+			persons = 0;
 		}
 
 		public void startFillout() {
@@ -23,20 +28,39 @@ namespace WinMovieRack.Controller.Moviefillout {
 
 		public void parseNames() {
 			foreach (uint cur in movie.imdbMovie.directors) {
-				if (!true) {
-					
+				if (!db.testAndSetPerson(cur)) {
+					startParse(cur);
 				}
 			}
 			foreach (uint cur in movie.imdbMovie.writers) {
-				if (!true) {
-
+				if (!db.testAndSetPerson(cur)) {
+					startParse(cur);
 				}
 			}
 			foreach (Tuple<uint, string> cur in movie.imdbMovie.roles) {
-				if (!true) {
-
+				if (!db.testAndSetPerson(cur.Item1)) {
+					startParse(cur.Item1);
 				}
 			}
+		}
+		private void startParse(uint i) {
+			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(i);
+			p.setFinalizeFunction(parseFinished);
+			ThreadsMaster.getInstance().addJobMaster(p);
+			lock (this) {
+				persons++;
+			}
+		}
+
+		public void parseFinished(ThreadJobMaster sender) {
+			ConcurrentIMDBNameParser p = (ConcurrentIMDBNameParser)sender;
+			lock (this.movie.persons) {
+				this.movie.persons.Add(p.person);
+			}
+			lock (this) {
+				persons--;
+			}
+			
 		}
 
 

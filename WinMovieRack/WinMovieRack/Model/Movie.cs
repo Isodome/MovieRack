@@ -8,6 +8,7 @@ using WinMovieRack.Controller.Parser.imdbMovieParser;
 namespace WinMovieRack.Model {
 
 	public class Movie {
+		private uint uniqueID;
 		public ImdbMovie imdbMovie;
 		public List<ImdbPerson> persons;
 
