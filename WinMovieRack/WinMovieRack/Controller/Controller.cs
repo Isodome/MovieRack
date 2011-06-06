@@ -24,7 +24,7 @@ namespace WinMovieRack.Controller {
 			imdbMovieParserMaster parserMaster;
 			parserMaster = new imdbMovieParserMaster(477348);
 			parserMaster.setFinalizeFunction(this.filmFinished);
-			ThreadsMaster.getInstance().addJobMaster(parserMaster);
+			//ThreadsMaster.getInstance().addJobMaster(parserMaster);
 		}
 
 		private void initializeGUI() {
