@@ -32,20 +32,27 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void parseNames() {
+			bool newActor = false;
 			foreach (uint cur in movie.imdbMovie.directors) {
 				if (!db.testAndSetPerson(cur)) {
 					startParse(cur);
+					newActor = true;
 				}
 			}
 			foreach (uint cur in movie.imdbMovie.writers) {
 				if (!db.testAndSetPerson(cur)) {
 					startParse(cur);
+					newActor = true;
 				}
 			}
 			foreach (Tuple<uint, string> cur in movie.imdbMovie.roles) {
 				if (!db.testAndSetPerson(cur.Item1)) {
 					startParse(cur.Item1);
+					newActor = true;
 				}
+			}
+			if (!newActor) {
+				cb(this.movie);
 			}
 		}
 
