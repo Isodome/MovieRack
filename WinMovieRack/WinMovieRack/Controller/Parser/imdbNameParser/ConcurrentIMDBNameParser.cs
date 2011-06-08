@@ -14,7 +14,10 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 	{
 		private const string placeholder = "{ID}";
 		private const string url = "http://www.imdb.com/name/nm" + placeholder + "/";
-		private const string pictureRegex = @"<td id=""img_primary"" rowspan=""2"">(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
+		private const string pictureRegex = @"(?<url>img_primary(.|\n|\r)*?</td>)";
+
+		private const string pictureRegex2 = @"img_primary""\srowspan=""2"">(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
+
 
 		private ThreadJob mainPageJob;
 		private bool mainPageJobDone = false;
@@ -43,10 +46,13 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			if (mainPage == null) {
 				Console.WriteLine("mainpage ist null");
 			}
-			Regex r = new Regex(pictureRegex);
-			Match m =r.Match(mainPage);
-			if (m.Success) {
-				return new JobLoadImage(m.Groups["url"].Value + ".jpg", null);
+
+			Match m =Regex.Match(mainPage, pictureRegex);
+			string tmp = m.Groups["url"].Value;
+			Match m2 = Regex.Match(tmp, pictureRegex2);
+			
+			if (m2.Success) {
+				return new JobLoadImage(m2.Groups["url"].Value + ".jpg", null);
 			}
 			return null;
 		}

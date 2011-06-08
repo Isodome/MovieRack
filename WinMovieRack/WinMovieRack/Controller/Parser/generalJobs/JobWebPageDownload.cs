@@ -32,8 +32,8 @@ namespace WinMovieRack.Controller.Parser
 				r.Close();
 			} catch (UriFormatException e) {
 				Console.WriteLine("Unvalid URL: " + this.url);
-			} catch (TimeoutException f) {
-				Console.WriteLine("Timeout: " + this.url);
+			} catch (WebException f) {
+				Console.WriteLine("Webexception: " + this.url + f.Message);
 			}
         }
 
