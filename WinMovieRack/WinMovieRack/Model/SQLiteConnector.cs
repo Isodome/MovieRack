@@ -81,9 +81,12 @@ namespace WinMovieRack.Model {
 			return contains;
 
 		}
-
+		public void closeConnection() {
+			connection.Dispose();
+			connection.Close();
+		}
 		public void insertMovieData(Movie m) {
-
+			Console.WriteLine("done");
 		}
 	}
 }

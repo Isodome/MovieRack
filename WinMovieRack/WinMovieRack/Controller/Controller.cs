@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 using WinMovieRack.Controller.Parser.imdbMovieParser;
@@ -19,7 +20,7 @@ namespace WinMovieRack.Controller {
 
 		public Controller(App app) {
 			this.app = app;
-
+			this.app.Exit += aboutToExit;
 			initializeGUI();
 			initializeModel();
 
@@ -88,6 +89,11 @@ namespace WinMovieRack.Controller {
 			}
 			  */
 
+		}
+
+		public void aboutToExit(object sender, ExitEventArgs e) {
+			db.closeConnection();
+			Application.Current.Shutdown();
 		}
 	}
 }

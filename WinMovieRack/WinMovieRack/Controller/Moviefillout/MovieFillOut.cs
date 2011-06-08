@@ -79,7 +79,6 @@ namespace WinMovieRack.Controller.Moviefillout {
 			}
 
 			Monitor.Exit(this);
-			Console.WriteLine("done");
 			cb(this.movie);
 		}
 
