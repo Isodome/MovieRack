@@ -21,8 +21,9 @@ namespace WinMovieRack.Controller {
 		public Controller(App app) {
 			this.app = app;
 			this.app.Exit += aboutToExit;
-			initializeGUI();
 			initializeModel();
+			initializeGUI();
+			
 
 			imdbMovieParserMaster parserMaster;
 			parserMaster = new imdbMovieParserMaster(477348);

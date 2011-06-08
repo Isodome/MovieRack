@@ -20,7 +20,7 @@ namespace WinMovieRack.Controller
         {
             this.controller = c;
             this.db = db;
-          //  createmovieRackListBoxItems();
+           createmovieRackListBoxItems();
            // addMovieRackListBoxItem();
         }
 
