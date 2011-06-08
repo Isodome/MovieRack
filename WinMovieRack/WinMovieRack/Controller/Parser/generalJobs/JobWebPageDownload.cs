@@ -23,12 +23,18 @@ namespace WinMovieRack.Controller.Parser
 
         private void getMainPage()
         {
-			WebRequest req = WebRequest.Create(url);
-            WebResponse resp =req.GetResponse();
-            StreamReader r = new StreamReader(resp.GetResponseStream());
-            result = r.ReadToEnd();
-			resp.Close();
-			r.Close();
+			try {
+				WebRequest req = WebRequest.Create(url);
+				WebResponse resp = req.GetResponse();
+				StreamReader r = new StreamReader(resp.GetResponseStream());
+				result = r.ReadToEnd();
+				resp.Close();
+				r.Close();
+			} catch (UriFormatException e) {
+				Console.WriteLine("Unvalid URL: " + this.url);
+			} catch (TimeoutException f) {
+				Console.WriteLine("Timeout: " + this.url);
+			}
         }
 
 		/// <summary>

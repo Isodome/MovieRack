@@ -40,9 +40,15 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 
 		private JobLoadImage getPictureLoadJob()
 		{
-			Match m = Regex.Match(mainPage, pictureRegex);
-			string imageURL = m.Groups["url"].Value + ".jpg";
-			return new JobLoadImage(imageURL, null);
+			if (mainPage == null) {
+				Console.WriteLine("mainpage ist null");
+			}
+			Regex r = new Regex(pictureRegex);
+			Match m =r.Match(mainPage);
+			if (m.Success) {
+				return new JobLoadImage(m.Groups["url"].Value + ".jpg", null);
+			}
+			return null;
 		}
 
 		public override bool hasFinished(ThreadJob job)
@@ -56,7 +62,11 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 				mainPageJobDone = true;
 
 				pictureLoadJob = getPictureLoadJob();
-				addJob(pictureLoadJob);
+				if (pictureLoadJob != null) {
+					addJob(pictureLoadJob);
+				} else {
+					pictureLoadJobDone = true;
+				}
 
 				parseJob = new JobIMDBNameParser(mainPage, person);
 				addJob(parseJob);
