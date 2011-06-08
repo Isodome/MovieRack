@@ -27,7 +27,7 @@ namespace WinMovieRack
         private UIElement current;
         DetailsViewActorPanel actorPanel;
         BigPicture bigPicture;
-
+        GUIMovie movieDetails;
         DetailsViewController controller;
 
         public DetailsView(DetailsViewController dvc)
@@ -54,8 +54,11 @@ namespace WinMovieRack
         private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
-            int itemID = selectetItem.itemID;
-
+            if (selectetItem != null)
+            {
+                getMovieDetails(selectetItem.itemID);
+                setMovieDetails(movieDetails);
+            }
         }
 
         private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
@@ -71,5 +74,19 @@ namespace WinMovieRack
             bigPicture.fadeIn();
         }
 
+        public void resetMovieList()
+        {
+            listBoxMovies.Items.Clear();
+        }
+
+        private void getMovieDetails(int itemID)
+        {
+            this.movieDetails = controller.getGUIMovie(itemID);
+        }
+
+        private void setMovieDetails(GUIMovie movieDetails)
+        {
+            movieTitleLabel.Content = movieDetails.title;
+        }
     }
 }

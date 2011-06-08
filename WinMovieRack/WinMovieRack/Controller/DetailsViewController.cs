@@ -29,6 +29,7 @@ namespace WinMovieRack.Controller
 
         public void loadList()
         {
+            view.resetMovieList();
             createmovieRackListBoxItems();
             addMovieRackListBoxItem();
         }
@@ -50,9 +51,10 @@ namespace WinMovieRack.Controller
                 view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
         }
-    
-    
-    
-    
+
+        public GUIMovie getGUIMovie(int itemID)
+        {
+            return db.getMovieInfo(itemID);
+        }
     }
 }

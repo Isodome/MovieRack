@@ -321,5 +321,13 @@ namespace WinMovieRack.Model {
             command.ExecuteNonQuery();
         }
 
+
+        public GUIMovie getMovieInfo(int idMovies) {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
+            SQLiteDataReader reader = command.ExecuteReader();
+            return new GUIMovie(reader[0].ToString());
+        }
+
     }
 }
