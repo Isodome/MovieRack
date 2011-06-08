@@ -40,7 +40,7 @@ namespace WinMovieRack.Controller {
 			MainWindow mw = new MainWindow(windowController);
 			windowController.setMainWindow(this, mw);
 
-			detailsViewController = new DetailsViewController(this);
+			detailsViewController = new DetailsViewController(this, db);
 			DetailsView dv = new DetailsView(detailsViewController);
 			detailsViewController.setDetailsView(dv);
 

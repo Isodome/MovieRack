@@ -54,18 +54,31 @@ namespace WinMovieRack.Model {
 			*/
 		}
 
-		public List<MovieListData> getMovieList(MovieEnum editable) {
+		public List<MRListData> getMovieList(MovieEnum editable) {
 			SQLiteCommand command = new SQLiteCommand(connection);
-			List<MovieListData> movieList = new List<MovieListData>();
+			List<MRListData> movieList = new List<MRListData>();
 			command.CommandText = "SELECT idMovies, title, imdbRating, " + editable.ToString() + ", posterPath FROM Movies";
 			SQLiteDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
-				movieList.Add(new MovieListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString()));
+				movieList.Add(new MRListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString()));
 			}
 			command.Dispose();
 			return movieList;
 		}
-
+        
+        public List<MRListData> getPersonList(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            List<MRListData> personList = new List<MRListData>();
+            List<string> personID = new List<string>();
+            command.CommandText = "SELECT Person_idPerson, CharacterName, FROM Role WHERE Movies_idMovies = " + idMovies;
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                personID.Add(reader[0].ToString());
+            }
+            return personList;
+        }
 
 		public bool testAndSetPerson(uint imdbID) {
 			bool contains;
