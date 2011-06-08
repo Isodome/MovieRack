@@ -12,16 +12,14 @@ namespace WinMovieRack.Controller
 
         private DetailsView view;
         private Controller controller;
-        SQLiteConnector db;
-        List<MRListData> mrListData;
-        List<MovieRackListBoxItem> movieRackListBoxItems;
+        private SQLiteConnector db;
+        private List<MRListData> mrListData;
+        private List<MovieRackListBoxItem> movieRackListBoxItems;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
             this.controller = c;
             this.db = db;
-           createmovieRackListBoxItems();
-           // addMovieRackListBoxItem();
         }
 
         public void setDetailsView(DetailsView dv)
@@ -29,9 +27,15 @@ namespace WinMovieRack.Controller
             this.view = dv;
         }
 
+        public void loadList()
+        {
+            createmovieRackListBoxItems();
+            addMovieRackListBoxItem();
+        }
+
         private void createmovieRackListBoxItems()
         {
-            this.mrListData = db.getMovieList(MovieEnum.Runtime);//Aus Config lesen
+            this.mrListData = db.getMovieList(MovieEnum.runtime);//Aus Config lesen
             this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
@@ -43,9 +47,12 @@ namespace WinMovieRack.Controller
         {
             for (int i = 0; i < movieRackListBoxItems.Count; i++)
             {
-
                 view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
         }
+    
+    
+    
+    
     }
 }

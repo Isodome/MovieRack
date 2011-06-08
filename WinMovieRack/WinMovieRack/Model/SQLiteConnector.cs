@@ -37,9 +37,9 @@ namespace WinMovieRack.Model {
 			// Erstellen der Tabelle, sofern diese noch nicht existiert.
 			command.CommandText = script;
 			command.ExecuteNonQuery();
-			/*
+			
 			// Einfügen eines Test-Datensatzes.
-			command.CommandText = "INSERT INTO Movies (idMovies, Year, Title, Plot) VALUES(NULL, 1970, 'James Bond xx', 'laaangweilig')";
+			command.CommandText = "INSERT INTO Movies (idMovies, year, title, plot, runtime, posterPath) VALUES(NULL, 1970, 'James Bond xx', 'laaangweilig', 120, 'Z:\\MovieRack\\WinMovieRack\\WinMovieRack\\Images\\#9.jpg')";
 			command.ExecuteNonQuery();
 
 			command.CommandText = "SELECT Plot, Title FROM Movies WHERE Year = 1970";
@@ -51,13 +51,13 @@ namespace WinMovieRack.Model {
 			}
 			// Freigabe der Ressourcen.
 			command.Dispose();
-			*/
+			
 		}
 
 		public List<MRListData> getMovieList(MovieEnum editable) {
 			SQLiteCommand command = new SQLiteCommand(connection);
 			List<MRListData> movieList = new List<MRListData>();
-			command.CommandText = "SELECT idMovies, title, imdbRating, " + editable.ToString() + ", posterPath FROM Movies";
+            command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + ", posterPath FROM Movies";
 			SQLiteDataReader reader = command.ExecuteReader();
 			while (reader.Read()) {
 				movieList.Add(new MRListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString()));
