@@ -85,8 +85,7 @@ namespace WinMovieRack.Model {
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
             SQLiteDataReader reader = command.ExecuteReader();
-            Console.WriteLine(reader[1]);
-             return new GUIMovie();
+             return new GUIMovie(reader[0].ToString());
         }
 
 		public bool testAndSetPerson(uint imdbID) {

@@ -42,7 +42,6 @@ namespace WinMovieRack.Controller
             {
                 this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i)));
             }
-            db.getMovieInfo(1);
         }
 
         private void addMovieRackListBoxItem()
@@ -51,6 +50,11 @@ namespace WinMovieRack.Controller
             {
                 view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
+        }
+
+        public GUIMovie getGUIMovie(int itemID)
+        {
+            return db.getMovieInfo(itemID);
         }
     }
 }
