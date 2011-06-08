@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="832" d:DesignWidth="1692" >
+             d:DesignHeight="1302" d:DesignWidth="2207" xmlns:my="clr-namespace:WinMovieRack.GUI">
     <Grid ShowGridLines="False" Background="#FFF0F0F0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MinWidth="250"/>
@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Stretch="Fill" Source="/WinMovieRack;component/Images/%2391.jpg" HorizontalAlignment="Right" Width="200" Height="276" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        <Label Content="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" />
+        <TextBox Text="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
         <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,26,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="60,55,0,0" Name="orgialTitleLabel" VerticalAlignment="Top" FontSize="15" />
         <Label Content="Rating:" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,87,0,0" Name="imdbRatingLabel" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" />
@@ -43,8 +43,8 @@
         <Button Content="Metacritics" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="370,167,0,0" Name="metacriticsLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <Button Content="Rottentomatoes" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="400,217,0,0" Name="rottentomatoesLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <TabControl Grid.Column="2" Margin="12,278,12,12" Name="detailsViewTab">
-            <TabItem Header="Summery" Name="summery">
-                <Grid x:Name="tabControl" Height="auto" Width="auto" Background="#FFF9F9F9">
+            <TabItem Header="Summery" Name="summeryTab">
+                <Grid x:Name="tabControl" Width="auto" Background="#FFF9F9F9">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
@@ -55,14 +55,52 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="2" Grid.RowSpan="2" Header="Details" Margin="5,180,5,0" Name="SummeryDetails" FontSize="15" FontWeight="Bold">
+                    <GroupBox Grid.Column="2" Header="Details" Margin="5,0" Name="SummeryDetails" FontSize="15" FontWeight="Bold" Height="306" VerticalAlignment="Bottom" Grid.Row="1">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" Height="200" HorizontalAlignment="Left" Margin="6,6,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="200" />
+                            <StackPanel Margin="0,0,0,0" Name="stackPanel2" Orientation="Vertical" Visibility="Visible" Opacity="1" CanHorizontallyScroll="False" Focusable="False">
+                                <StackPanel Height="Auto" Name="stackPanel1" Width="Auto" Orientation="Horizontal">
+                                    <Label Content="Runtime:" Height="auto" Width="auto" Name="runtimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left" UseLayoutRounding="False" />
+                                    <Label Content="120 min" Height="Auto" Name="runtime" Width="auto" FontWeight="Normal" HorizontalContentAlignment="Right" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel3" Orientation="Horizontal" Width="Auto"></StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel5" Orientation="Horizontal">
+                                    <Label Content="Cinema Date:" Height="auto" Width="auto" Name="cinemaDateLabel" />
+                                    <Label Content="13.05.2010" Height="auto" Name="cinemaDate" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel7" Orientation="Horizontal">
+                                    <Label Content="Last Seen:" Height="auto" Width="auto" Name="lastSeenLabel" />
+                                    <Label Content="16.05.2010" Height="auto" Name="lastSeen" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel4" Orientation="Horizontal" Width="Auto">
+                                    <Label Content="MPAA:" Height="auto" Width="auto" Name="mpaaLabel" />
+                                    <Label Content="R" Height="auto" Name="mpaa" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel6" Orientation="Horizontal">
+                                    <Label Content="Seen:" Height="auto" Width="auto" Name="seenLabel" />
+                                    <Label Content="3" Height="auto" Name="seen" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel8" Orientation="Horizontal">
+                                    <Label Content="Awards:" Height="auto" Width="auto" Name="awardsLabel" />
+                                    <Label Content="3" Height="auto" Name="awards" Width="45" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel9" Orientation="Horizontal">
+                                    <Label Content="Production Budget:" Height="auto" Width="auto" Name="productionBudgetLabel" />
+                                    <Label Content="150 mio" Height="auto" Name="budget" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel10" Orientation="Horizontal">
+                                    <Label Content="Boxoffice:" Height="auto" Width="auto" Name="boxofficeLabel" />
+                                    <Label Content="502.675.435" Height="auto" Name="boxxoffice" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel11" Orientation="Horizontal">
+                                    <Label Content="Language:" Height="auto" Width="auto" Name="LanguageLabel" />
+                                    <Label Content="German" Height="auto" Name="language" Width="auto" FontWeight="Normal" />
+                                </StackPanel>
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Plot" Height="164" Margin="5,5,5,0" Name="SummeryPlot" VerticalAlignment="Top" Grid.Column="2">
-                        <Grid>
-                            <RichTextBox Margin="0,0,0,0" Name="SummeryPlotTextbox" />
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Plot" Margin="5,5,5,312" Name="SummeryPlot" Grid.Column="2" Height="auto" Grid.RowSpan="2">
+                        <Grid Width="auto" Height="auto">
+                            <RichTextBox Margin="0,0,0,0" Name="SummeryPlotTextbox" IsReadOnly="True" />
                         </Grid>
                     </GroupBox>
                     <GroupBox FontSize="15" FontWeight="Bold" Header="Stars" Name="SummeryStars" Grid.Row="1" Margin="0,0,5,0">
@@ -81,14 +119,14 @@
                     <GroupBox FontSize="15" FontWeight="Bold" Header="Notes" Margin="15,5,10,0" Name="SummeryNotes" Grid.Column="3" Grid.Row="1">
                         <Grid>
                             <Grid Margin="0,0,0,0">
-                                <RichTextBox Margin="0,0,0,0" Name="SummeryNoteTextbox" />
+                                <RichTextBox Margin="0,0,0,0" Name="SummeryNoteTextbox" IsReadOnly="True" />
                             </Grid>
                         </Grid>
                     </GroupBox>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0" Name="gridSplitter1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Enhanced" Name="enanced">
+            <TabItem Header="Enhanced" Name="enancedTab">
                 <Grid Width="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
@@ -102,13 +140,13 @@
                         <Grid>
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Awards" Height="88" Margin="10,200,0,0" Name="EnhancedAwards" VerticalAlignment="Top" HorizontalAlignment="Left" Width="348">
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Awards" Height="56" Margin="10,200,10,0" Name="EnhancedAwards" VerticalAlignment="Top">
                         <Grid>
+                            <Label Content="Won 4 Oscars. Another 63 wins and 92 nominations" HorizontalAlignment="Left" Margin="5,0,0,0" Name="awardsOverview" FontWeight="Normal" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Also Known As" Height="178" Margin="10,300,54,0" Name="EnhancedAlsoKnownAs" VerticalAlignment="Top">
-                        <Grid>
-                        </Grid>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Also Known As" Margin="10,262,16,6" Name="EnhancedAlsoKnownAs">
+                        <Grid></Grid>
                     </GroupBox>
                     <GroupBox FontSize="15" FontWeight="Bold" Header="Recommendations" Height="250" Margin="10,200,10,0" Name="EnhancedRecommendations" VerticalAlignment="Top" Grid.Column="1">
                         <Grid>
@@ -116,14 +154,14 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Cast" Name="cast">
+            <TabItem Header="Cast" Name="castTab">
                 <Grid Height="auto" Width="auto" />
             </TabItem>
-            <TabItem Header="Boxoffice" Name="boxoffice">
+            <TabItem Header="Boxoffice" Name="boxofficeTab">
                 <Grid Height="387" Width="299" />
             </TabItem>
-            <TabItem Header="Awards" Name="awards"></TabItem>
-            <TabItem Header="Pictures" Name="pictures">
+            <TabItem Header="Awards" Name="awardsTab"></TabItem>
+            <TabItem Header="Pictures" Name="picturesTab">
                 <Grid Height="387" Width="299" />
             </TabItem>
         </TabControl>      
