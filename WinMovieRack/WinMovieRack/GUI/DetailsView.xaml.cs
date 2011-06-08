@@ -86,7 +86,7 @@ namespace WinMovieRack
 
         private void setMovieDetails(GUIMovie movieDetails)
         {
-            movieTitleLabel.Content = movieDetails.title;
+            movieTitleLabel.Text = movieDetails.title;
         }
     }
 }
