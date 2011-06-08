@@ -8,7 +8,10 @@ Anleitung um sqlite3 CREATE script zu bekommen:
 ------------------------------------------
 --------Script exportieren----------------
 4.) In der Menüleiste 'Plugins->Utilities->Export SQLite CREAT script' ausführen
-3.) Freuen, dass du es nicht per Hand machen musst.
+5.) Das script unter dem Namen 'creatscript.sql' in diesen Ordner legen
+6.) ifnotexists.pl ausführen
+5.) Freuen, dass du es nicht per Hand machen musst.
+
 
 
 
