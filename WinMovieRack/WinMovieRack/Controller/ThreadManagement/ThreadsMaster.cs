@@ -13,7 +13,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 		private static ThreadsMaster threadsMaster;
 		private static object instancelock = "";
 
-        private List<ThreadJobMaster> jobMaster = new List<ThreadJobMaster>();
+        private LinkedList<ThreadJobMaster> jobMaster = new LinkedList<ThreadJobMaster>();
 
         private static Object lockvar = "";
         private static Object idlevar = "";
@@ -72,7 +72,7 @@ namespace WinMovieRack.Controller.ThreadManagement
                 }
                 else
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(150);
                     //Monitor.Wait(idlevar);
                 }
             }
@@ -81,9 +81,15 @@ namespace WinMovieRack.Controller.ThreadManagement
         public void addJobMaster(ThreadJobMaster master)
         {
             Monitor.Enter(lockvar);
-            jobMaster.Add(master);
+            jobMaster.AddLast(master);
             Monitor.Exit(lockvar);
         }
+
+		public void addVeryVeryImportantThreadMaster(ThreadJobMaster master) {
+			Monitor.Enter(lockvar);
+			jobMaster.AddFirst(master);
+			Monitor.Exit(lockvar);
+		}
 
         public void hasFinished(ThreadJobMaster master)
         {

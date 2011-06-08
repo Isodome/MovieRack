@@ -76,11 +76,11 @@ namespace WinMovieRack.GUI {
 			if (IMDBUtil.isMovieUrl(url)) {
 				imdbMovieParserMaster parser = new imdbMovieParserMaster(IMDBUtil.getTitleIdFromUrl(url));
 				parser.setFinalizeFunction(this.updateActionButton);
-				ThreadsMaster.getInstance().addJobMaster(parser);
+				ThreadsMaster.getInstance().addVeryVeryImportantThreadMaster(parser);
 			} else if (IMDBUtil.isNameURL(url)) {
 				ConcurrentIMDBNameParser parser = new ConcurrentIMDBNameParser(IMDBUtil.getNameIdFromUrl(url));
 				parser.setFinalizeFunction(this.updateActionButton);
-				ThreadsMaster.getInstance().addJobMaster(parser);
+				ThreadsMaster.getInstance().addVeryVeryImportantThreadMaster(parser);
 			} else {
 				updateActionButton(null);
 			}
