@@ -80,6 +80,15 @@ namespace WinMovieRack.Model {
             return personList;
         }
 
+        public GUIMovie getMovieInfo(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
+            SQLiteDataReader reader = command.ExecuteReader();
+            Console.WriteLine(reader[1]);
+             return new GUIMovie();
+        }
+
 		public bool testAndSetPerson(uint imdbID) {
 			bool contains;
 			lock (this.imdbPersonIds) {

@@ -116,6 +116,7 @@
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DBInterface.cs" />
+    <Compile Include="Model\GUIMovie.cs" />
     <Compile Include="Model\ImdbPerson.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\MovieEnum.cs" />

@@ -71,5 +71,11 @@ namespace WinMovieRack
             bigPicture.fadeIn();
         }
 
+        public void resetMovieList()
+        {
+            listBoxMovies.Items.Clear();
+        }
+
+
     }
 }
