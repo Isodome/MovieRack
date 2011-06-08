@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing;
+using WinMovieRack.Model;
 
 namespace WinMovieRack.GUI
 {
@@ -19,42 +21,22 @@ namespace WinMovieRack.GUI
     /// </summary>
     public partial class MovieRackListBoxItem : UserControl
     {
-        private bool isMovie; //Boolean, da MRListBoxItem auch für Personen genutzt wird
-        private int dBID; //DatenbankID des Films, um bei einem Klick die ID zu bekommen, womit man die Daten aus der Datenban holen kann.
-        public MovieRackListBoxItem(int dBID, bool isMovie)
+        private MRListData dbItem;
+        public int itemID;
+
+        public MovieRackListBoxItem(MRListData dbItem)
         {
             InitializeComponent();
-            this.dBID = dBID;
-            this.isMovie = isMovie;
-        }
-
-        public void setListBoxTitle(String title) 
-        {
-            labelMovieTitle.Content = title;
-        }
-       
-        public void setYearCharakter(String yearCharakter)
-        {
-            labelMovieYear.Content = yearCharakter;
-        }
-       
-        public void setEditableAge(String editableAge)
-        {
-            labelMovieEditable.Content = editableAge;
-        }
-       
-        public void setPicture()
-        {
-        }
-
-        public bool getIsMovie()
-        {
-            return isMovie;
-        }
-
-        public int getdBID()
-        {
-            return dBID;
+            this.dbItem = dbItem;
+            this.itemID = dbItem.dbItemID;
+            labelTitleName.Content = dbItem.titleName;
+            labelYearAge.Content = dbItem.yearAge;
+            labelEditableCharacter.Content = dbItem.editableCharakter;
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(dbItem.posterPath);
+            posterBitmap.EndInit();
+            poster.Source = posterBitmap;
         }
     }
 }
