@@ -60,6 +60,7 @@ namespace WinMovieRack.GUI {
 					controller.insertMovieInDB((imdbMovieParserMaster)lastParser);
 				}
 			}
+			lastParser = null;
 		}
 
 

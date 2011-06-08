@@ -21,7 +21,7 @@ namespace WinMovieRack.Model {
 			this.imdbID = id;
 		}
 
-		private void printToConsole() {
+		public void printToConsole() {
 			Console.WriteLine("IMDB ID: " + this.imdbID);
 			Console.WriteLine("Name: " + this.name);
 			Console.WriteLine("Birthday: " + this.birthday.ToString());

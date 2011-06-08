@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
 using WinMovieRack.Model;
+using System.IO;
 
 namespace WinMovieRack.GUI
 {
@@ -34,7 +35,7 @@ namespace WinMovieRack.GUI
             labelEditableCharacter.Content = dbItem.editableCharakter;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-            posterBitmap.UriSource = new Uri(dbItem.posterPath);
+            posterBitmap.UriSource = new Uri(Directory.GetCurrentDirectory()+"\\"+ dbItem.posterPath);
             posterBitmap.EndInit();
             poster.Source = posterBitmap;
         }
