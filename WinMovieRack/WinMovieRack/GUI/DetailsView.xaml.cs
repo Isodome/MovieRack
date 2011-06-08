@@ -29,7 +29,6 @@ namespace WinMovieRack
         BigPicture bigPicture;
 
         DetailsViewController controller;
-        List<MRListData> movieList;
 
         public DetailsView(DetailsViewController dvc)
         {
@@ -42,12 +41,6 @@ namespace WinMovieRack
             listBoxMovies.Items.Add(item);
         }
 
-        private void testButton_Click(object sender, RoutedEventArgs e)
-        {
-            actorPanel = new DetailsViewActorPanel();
-            changeView(actorPanel);
-        }
-
         private void changeView(UIElement newView)
         {
             tabControl.Children.Remove(current);
@@ -58,7 +51,7 @@ namespace WinMovieRack
             current = newView;
         }
 
-        private void listBoxMovies_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
             int itemID = selectetItem.itemID;

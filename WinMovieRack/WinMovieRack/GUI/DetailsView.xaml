@@ -137,7 +137,7 @@
                 </Menu>
                 <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
-                <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged_1" />
+                <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" />
             </Grid>
         </GroupBox>
     </Grid>
