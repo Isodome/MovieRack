@@ -177,7 +177,8 @@ namespace WinMovieRack.Model {
             //TODO
             param = new SQLiteParameter("@Biography") { Value = "" };
             command.Parameters.Add(param);
-            param = new SQLiteParameter("@Birthday") { Value = person.birthday };
+            //TODO
+            param = new SQLiteParameter("@Birthday") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@Deathday") { Value = 0 };
@@ -186,7 +187,10 @@ namespace WinMovieRack.Model {
             param = new SQLiteParameter("@male") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
-            param = new SQLiteParameter("@CountryofBirth") { Value = "" };
+            param = new SQLiteParameter("@CountryofBirth") { Value = 0 };
+            command.Parameters.Add(param);
+            //TODO
+            param = new SQLiteParameter("@CityofBirth") { Value = "" };
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@lifetimeGross") { Value = 0 };
