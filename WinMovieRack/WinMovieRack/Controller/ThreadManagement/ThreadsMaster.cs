@@ -44,8 +44,8 @@ namespace WinMovieRack.Controller.ThreadManagement
 			while (Thread.CurrentThread != threads[threadId])
 			{
 				threadId++;
-			}			
-			
+			}
+			Thread.CurrentThread.Name = "WorkerThread " + threadId.ToString();
 
             while (running[threadId])
             {
@@ -88,9 +88,9 @@ namespace WinMovieRack.Controller.ThreadManagement
         public void hasFinished(ThreadJobMaster master)
         {
             Monitor.Enter(lockvar);
-            jobMaster.Remove(master);
-			master.finalize();
+            jobMaster.Remove(master);	
             Monitor.Exit(lockvar);
+			master.finalize();
         }
 
 		private void blockingSwitchThreadCount(object newThreadCountObject)
