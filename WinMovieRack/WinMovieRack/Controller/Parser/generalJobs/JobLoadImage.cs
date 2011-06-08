@@ -30,15 +30,20 @@ namespace WinMovieRack.Controller.Parser
 
 		private void getPicture()
 		{
-			WebRequest req = WebRequest.Create(url);
-			WebResponse resp = req.GetResponse();
-			
-			result = new Bitmap(resp.GetResponseStream());
-			if (savePath != null)
-			{
-				result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+			try {
+				WebRequest req = WebRequest.Create(url);
+				WebResponse resp = req.GetResponse();
+				result = new Bitmap(resp.GetResponseStream());
+				if (savePath != null) {
+					result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+				}
+				resp.Close();
+			} catch (Exception) {
+				result = null;
 			}
-			resp.Close();
+
+			
+			
 		}
 		public Bitmap getResult()
 		{

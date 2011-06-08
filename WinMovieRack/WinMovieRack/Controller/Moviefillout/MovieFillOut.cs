@@ -9,22 +9,26 @@ using WinMovieRack.Model;
 
 namespace WinMovieRack.Controller.Moviefillout {
 
+	public delegate void CallBack (Movie m);
 	public class MovieFillOut {
 
 		private Movie movie;
 		private SQLiteConnector db;
+		private CallBack cb;
 
 		private int persons;
 		Thread t;
 
-		public MovieFillOut(Movie movie, SQLiteConnector db) {
+		public MovieFillOut(Movie movie, SQLiteConnector db, CallBack cb) {
 			this.movie = movie;
 			this.db = db;
+			this.cb = cb;
 			persons = 0;
 		}
 
 		public void startFillout() {
 			 t = new Thread(new ThreadStart(parseNames));
+			 t.Start();
 		}
 
 		public void parseNames() {
@@ -44,13 +48,14 @@ namespace WinMovieRack.Controller.Moviefillout {
 				}
 			}
 		}
+
 		private void startParse(uint i) {
 			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(i);
 			p.setFinalizeFunction(parseFinished);
-			lock (this) {
-				ThreadsMaster.getInstance().addJobMaster(p);
-				persons++;
-			}
+			Monitor.Enter(this);
+			ThreadsMaster.getInstance().addJobMaster(p);
+			persons++;
+			Monitor.Exit(this);
 		}
 
 		public void parseFinished(ThreadJobMaster sender) {
@@ -59,18 +64,19 @@ namespace WinMovieRack.Controller.Moviefillout {
 				this.movie.persons.Add(p.person);
 			}
 			t.Join();
-			lock (this) {
-				persons--;
-				if (persons != 0) {
-					return;
-				}
+			Monitor.Enter(this);
+			persons--;
+			if (persons != 0) {
+				Monitor.Exit(this);
+				return;
 			}
-			insertInDB();
+
+			Monitor.Exit(this);
+			Console.WriteLine("done");
+			cb(this.movie);
 		}
 
-		private void insertInDB() {
-			
-		}
+
 
 	}
 }

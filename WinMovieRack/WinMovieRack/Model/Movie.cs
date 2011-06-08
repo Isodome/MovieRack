@@ -14,6 +14,7 @@ namespace WinMovieRack.Model {
 
 		public Movie(ImdbMovie imdbMovie) {
 			this.imdbMovie = imdbMovie;
+			this.persons = new List<ImdbPerson>();
 		}
 
 		public void imdbParseFinished(ThreadJobMaster sender) {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.SQLite;
 using System.IO;
 namespace WinMovieRack.Model {
-	public class SQLiteConnector : DBInterface {
+	public class SQLiteConnector {
 		private SQLiteConnection connection;
 		private HashSet<uint> imdbPersonIds;
 
@@ -14,6 +14,7 @@ namespace WinMovieRack.Model {
 			connection = new SQLiteConnection();
 			connection.ConnectionString = "Data Source=" + dataSource;
 			connection.Open();
+			this.checkTables();
 
 			imdbPersonIds = new HashSet<uint>();
 
@@ -36,7 +37,7 @@ namespace WinMovieRack.Model {
 			// Erstellen der Tabelle, sofern diese noch nicht existiert.
 			command.CommandText = script;
 			command.ExecuteNonQuery();
-
+			/*
 			// Einfügen eines Test-Datensatzes.
 			command.CommandText = "INSERT INTO Movies (idMovies, Year, Title, Plot) VALUES(NULL, 1970, 'James Bond xx', 'laaangweilig')";
 			command.ExecuteNonQuery();
@@ -50,7 +51,7 @@ namespace WinMovieRack.Model {
 			}
 			// Freigabe der Ressourcen.
 			command.Dispose();
-
+			*/
 		}
 
 		public List<MovieListData> getMovieList(MovieEnum editable) {
@@ -78,6 +79,10 @@ namespace WinMovieRack.Model {
 				}
 			}
 			return contains;
+
+		}
+
+		public void insertMovieData(Movie m) {
 
 		}
 	}

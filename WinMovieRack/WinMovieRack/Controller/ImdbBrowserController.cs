@@ -24,10 +24,13 @@ namespace WinMovieRack.Controller {
 		public void setBrowser(IMDBBrowser b) {
 			this.browser = b;
 		}
+		public void activated() {
+			browser.goToHome();
+		}
 
 		public void insertMovieInDB(imdbMovieParserMaster parser) {
 			Movie m = new Movie(parser.movieData);
-			MovieFillOut fillout = new MovieFillOut(m, controller.db);
+			MovieFillOut fillout = new MovieFillOut(m, controller.db, controller.db.insertMovieData);
 			fillout.startFillout();
 		}
 

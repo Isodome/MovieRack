@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WinMovieRack.Model
 {
-    class MovieListData
+    public class MovieListData
     {
         public int idMovies;
         public string title;

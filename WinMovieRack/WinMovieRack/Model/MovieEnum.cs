@@ -7,6 +7,6 @@ namespace WinMovieRack.Model
 {
     public enum MovieEnum
     {
-        Runtime, Plot, OriginalTitle, imdbRating, imdbRatingVotes, imdbTop250, metacriticsReviewRating, metacriticsUsersRating, metacriticsUsersRating, rottenTomatoesAudience, tomatometer, personalRating, Year, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, seenCount, lastSeen
+        Runtime, Plot, OriginalTitle, imdbRating, imdbRatingVotes, imdbTop250, metacriticsReviewRating, metacriticsUsersRating, rottenTomatoesAudience, tomatometer, personalRating, Year, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, seenCount, lastSeen
     }
 }
