@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
+
 namespace WinMovieRack.Model
 {
     public class SQLiteConnector
@@ -120,6 +121,7 @@ namespace WinMovieRack.Model
             connection.Dispose();
             connection.Close();
         }
+
         public void insertMovieData(Movie m)
         {
             insertImdbMovie(m.imdbMovie);
@@ -138,13 +140,13 @@ namespace WinMovieRack.Model
             }
             if (m.imdbMovie.poster != null)
             {
-              saveMovieImage(m.imdbMovie.poster, idMovies);
+				PictureHandler.savePicturePoster(m.imdbMovie.poster, idMovies);
             }
-			}
+			
         }
 
 		private void saveMovieImage(Bitmap b, int idMovies) {
-        {
+        
 			string path = @"img\mov\" + idMovies;
 			string filename = "poster.jpg";
 			savePictureToHD(b, path, filename);
@@ -165,12 +167,6 @@ namespace WinMovieRack.Model
             string filename = "poster.jpg";
             savePictureToHD(b, path, filename);
 
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
-			command.Parameters.Add(param);
 			SQLiteCommand command = new SQLiteCommand(connection);
 			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
 			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
@@ -445,16 +441,16 @@ namespace WinMovieRack.Model
             int dbId = int.Parse(reader[0].ToString());
             string title = reader[1].ToString();
             string originalTitle = reader[2].ToString();
-            int runtime = int.Parse(reader[3].ToString());
+            int runtime = int.Parse(reader["runtime"].ToString());
             string plot = reader[4].ToString();
             int year = int.Parse(reader[5].ToString());
             int imdbID = int.Parse(reader[6].ToString());
             int imdbRating = int.Parse(reader[7].ToString());
             int imdbRatingVotes = int.Parse(reader[8].ToString());
-            int imdbTop250 = int.Parse(reader[9].ToString());
+            int imdbTop250 = int.Parse(reader["imdbTop250"].ToString());
             string metacriticsID = reader[10].ToString();
             int metacriticsReviewRating = int.Parse(reader[11].ToString());
-            int metacriticsUsersRating = int.Parse(reader[12].ToString());
+            int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
             string rottentomatoesID = reader[13].ToString();
             int rottenTomatoesAudience = int.Parse(reader[14].ToString());
             int tomatometer = int.Parse(reader[15].ToString());

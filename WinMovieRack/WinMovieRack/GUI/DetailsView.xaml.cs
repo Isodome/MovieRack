@@ -67,7 +67,11 @@ namespace WinMovieRack
         private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
         {
             bigPicture = new BigPicture();
-            bigPicture.bigPicture.Source = posterTitle.Source; //Only Debug, should load originalPicture
+			BitmapImage posterBitmap = new BitmapImage();
+			posterBitmap.BeginInit();
+			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, EImageSizes.FULL));
+			posterBitmap.EndInit();
+			bigPicture.bigPicture.Source = posterBitmap;
 
 
             Point origin = new Point(0, 0);
@@ -99,6 +103,7 @@ namespace WinMovieRack
 
         private void setMovieDetails(GUIMovie movieDetails)
         {
+			this.movieDetails = movieDetails;
             yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
@@ -115,7 +120,7 @@ namespace WinMovieRack
             plot.Text = movieDetails.plot;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-            posterBitmap.UriSource = new Uri(Directory.GetCurrentDirectory() + "\\img\\mov\\" + movieDetails.dbId + "\\poster.jpg");
+            posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, EImageSizes.PREVIEW));
             posterBitmap.EndInit();
             posterTitle.Source = posterBitmap;
             runtime.Content = movieDetails.runtime;
