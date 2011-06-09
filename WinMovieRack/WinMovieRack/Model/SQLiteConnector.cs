@@ -118,25 +118,9 @@ namespace WinMovieRack.Model {
                 }
             }
 			if (m.imdbMovie.poster != null) {
-				saveMovieImage(m.imdbMovie.poster, idMovies);
+				PictureHandler.savePicturePoster(m.imdbMovie.poster, idMovies);
 			}
         }
-
-		private void saveMovieImage(Bitmap b, int idMovies) {
-			string path = @"img\mov\" + idMovies;
-			string filename = "poster.jpg";
-			savePictureToHD(b, path, filename);
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idMovies") { Value = idMovies };
-			command.Parameters.Add(param);
-
-			executeCommandThreadSafe(command);
-			command.Dispose();
-		}
-
 		private void savePersonImage(Bitmap b, int idPerson) {
 			string path = @"img\per\" + idPerson;
 			string filename = "poster.jpg";
@@ -152,13 +136,11 @@ namespace WinMovieRack.Model {
 			executeCommandThreadSafe(command);
 			command.Dispose();
 		}
-
 		private void executeCommandThreadSafe(SQLiteCommand command) {
 			lock (DBProtect) {
 				command.ExecuteNonQuery();
 			}
 		}
-
 		private SQLiteDataReader executeReaderThreadSafe(SQLiteCommand command) {
 			SQLiteDataReader r;
 			lock (DBProtect) {

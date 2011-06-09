@@ -121,8 +121,11 @@
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\MovieEnum.cs" />
     <Compile Include="Model\MRListData.cs" />
+    <Compile Include="Model\PictureHandler.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\ImdbMovie.cs" />
+    <Compile Include="Model\Symbols.cs" />
+    <Compile Include="Model\EImageSizes.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,6 +249,11 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\nopicFULL.jpg" />
+    <Resource Include="Resources\nopicLIST.jpg" />
+    <Resource Include="Resources\nopicPREVIEW.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

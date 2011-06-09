@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 namespace WinMovieRack.Controller {
 	 static class IMDBUtil {
 
-		 public const int NO_RATING_SYMBOL = -1;
 
 		private const string nameRegex = @"://www\.imdb\.com/name/nm(?<id>\d+)/";
 		private const string titleRegex = @"://www\.imdb\.com/title/tt(?<id>\d+)/";

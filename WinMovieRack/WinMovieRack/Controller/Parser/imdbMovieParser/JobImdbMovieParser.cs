@@ -130,7 +130,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 			Match m = Regex.Match(mainPage, imdbRatingRegex);
 			string tmpString =m.Groups["rating"].Value;
 			if (tmpString.Equals("-")) {
-				movie.imdbRating = -IMDBUtil.NO_RATING_SYMBOL;
+				movie.imdbRating = Symbols.NO_IMDB_RATING;
 			} else {
 				movie.imdbRating = int.Parse(Regex.Replace(m.Groups["rating"].Value, @"\D", ""));
 			}
