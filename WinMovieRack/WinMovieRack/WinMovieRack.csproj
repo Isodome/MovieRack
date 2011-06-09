@@ -95,12 +95,17 @@
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
+    <Compile Include="Controller\ActorsViewController.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJobMaster.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJob.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadsMaster.cs" />
+    <Compile Include="GUI\ActorsView.xaml.cs">
+      <DependentUpon>ActorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\BigPicture.xaml.cs">
       <DependentUpon>BigPicture.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ListComparerTest.cs" />
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
@@ -133,6 +138,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainWindowStrings.resx</DependentUpon>
     </Compile>
+    <Page Include="GUI\ActorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\BigPicture.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

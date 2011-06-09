@@ -23,7 +23,7 @@
                 </LinearGradientBrush>
             </Menu.Background>
             <MenuItem Header="Movies" Name="moviesMenuEntry" HorizontalAlignment="Center" Click="moviesMenuEntry_Clicked" Padding="8,3" />
-            <MenuItem Header="Actors" Name="actorsMenuEntry" HorizontalAlignment="Center" Padding="8,3" />
+            <MenuItem Header="Actors" Name="actorsMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="actorsMenuEntry_Click" />
             <MenuItem Header="List" Name="listMenuEntry" HorizontalAlignment="Center" Padding="8,3" />
             <MenuItem Header="IMDB" Name="imdbMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="imdbMenuEntry_Click" />
         </Menu>

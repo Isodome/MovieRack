@@ -16,6 +16,9 @@ using WinMovieRack.Model;
 using WinMovieRack.Controller;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
+using System.IO;
+using System.Collections;
+
 
 namespace WinMovieRack
 {
@@ -84,9 +87,39 @@ namespace WinMovieRack
             this.movieDetails = controller.getGUIMovie(itemID);
         }
 
+        public void sortListBox()
+        {
+          //  System.ComponentModel.SortDescription test = new System.ComponentModel.SortDescription("Content.title", System.ComponentModel.ListSortDirection.Descending);
+          //  Console.Write(test.PropertyName);
+          //  listBoxMovies.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Content", System.ComponentModel.ListSortDirection.Descending));
+           // ArrayList arrList;
+          //  arrList = ArrayList.Adapter(listBoxMovies.Items);
+          //  arrList.Sort(new ListComparerTest()); 
+        }
+
         private void setMovieDetails(GUIMovie movieDetails)
         {
+            yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
+            orgialTitleLabel.Content = movieDetails.originalTitle;
+            imdbRating.Content = movieDetails.imdbRating + "/10";
+            imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
+            if (movieDetails.imdbTop250 > 0)
+            {
+                top250.Content = movieDetails.imdbTop250;
+            }
+            else
+            {
+                top250.Content = "N/A";
+            }
+            plot.Text = movieDetails.plot;
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(Directory.GetCurrentDirectory() + "\\img\\mov\\" + movieDetails.dbId + "\\poster.jpg");
+            posterBitmap.EndInit();
+            posterTitle.Source = posterBitmap;
+            runtime.Content = movieDetails.runtime;
+
         }
     }
 }

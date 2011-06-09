@@ -6,13 +6,16 @@ using System.Data.SQLite;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
-namespace WinMovieRack.Model {
-    public class SQLiteConnector {
-		private object DBProtect = new object();
+namespace WinMovieRack.Model
+{
+    public class SQLiteConnector
+    {
+        private object DBProtect = new object();
         private SQLiteConnection connection;
         private HashSet<uint> imdbPersonIds;
 
-        public void initDb() {
+        public void initDb()
+        {
             string dataSource = "MovieRack.db";
             connection = new SQLiteConnection();
             connection.ConnectionString = "Data Source=" + dataSource;
@@ -24,19 +27,22 @@ namespace WinMovieRack.Model {
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "select imdbID FROM Person";
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 this.imdbPersonIds.Add(uint.Parse(reader[0].ToString()));
             }
 
-			createFolders();
+            createFolders();
         }
 
-		private void createFolders() {
-			Directory.CreateDirectory("img\\mov");
-			Directory.CreateDirectory("img\\per");
-		}
+        private void createFolders()
+        {
+            Directory.CreateDirectory("img\\mov");
+            Directory.CreateDirectory("img\\per");
+        }
 
-        public void checkTables() {
+        public void checkTables()
+        {
             FileInfo file = new FileInfo("createscript.sql");
             string script = file.OpenText().ReadToEnd();
 
@@ -55,7 +61,8 @@ namespace WinMovieRack.Model {
 
             SQLiteDataReader reader = executeReaderThreadSafe(command);
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 Console.WriteLine("Dies ist der {0}. eingefügte Datensatz mit dem Wert: \"{1}\"", reader[0].ToString(), reader[1].ToString());
             }
             // Freigabe der Ressourcen.
@@ -63,35 +70,42 @@ namespace WinMovieRack.Model {
 
         }
 
-        public List<MRListData> getMovieList(MovieEnum editable) {
+        public List<MRListData> getMovieList(MovieEnum editable)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> movieList = new List<MRListData>();
             command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + ", posterPath FROM Movies";
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 movieList.Add(new MRListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString(), reader[4].ToString()));
             }
             command.Dispose();
             return movieList;
         }
 
-        public List<MRListData> getPersonList(int idMovies) {
+        public List<MRListData> getPersonList(int idMovies)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> personList = new List<MRListData>();
             List<string> personID = new List<string>();
             command.CommandText = "SELECT Person_idPerson, CharacterName, FROM Role WHERE Movies_idMovies = " + idMovies;
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 personID.Add(reader[0].ToString());
             }
             return personList;
         }
 
-        public bool testAndSetPerson(uint imdbID) {
+        public bool testAndSetPerson(uint imdbID)
+        {
             bool contains;
-            lock (this.imdbPersonIds) {
+            lock (this.imdbPersonIds)
+            {
                 contains = this.imdbPersonIds.Contains(imdbID);
-                if (!contains) {
+                if (!contains)
+                {
                     this.imdbPersonIds.Add(imdbID);
                     SQLiteCommand command = new SQLiteCommand(connection);
                     command.CommandText = "insert into Person (imdbID) values (" + imdbID.ToString() + ")";
@@ -101,96 +115,114 @@ namespace WinMovieRack.Model {
             return contains;
 
         }
-        public void closeConnection() {
+        public void closeConnection()
+        {
             connection.Dispose();
             connection.Close();
         }
-        public void insertMovieData(Movie m) {
+        public void insertMovieData(Movie m)
+        {
             insertImdbMovie(m.imdbMovie);
-            foreach (ImdbPerson person in m.persons) {
+            foreach (ImdbPerson person in m.persons)
+            {
                 updateImdbPerson(person);
             }
 
             int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
-            if (idMovies > -1) {
-                foreach (Tuple<uint, string> t in m.imdbMovie.roles.ToArray<Tuple<uint, string>>()) {
+            if (idMovies > -1)
+            {
+                foreach (Tuple<uint, string> t in m.imdbMovie.roles.ToArray<Tuple<uint, string>>())
+                {
                     insertRole(t.Item1, t.Item2, (uint)idMovies);
                 }
             }
-			if (m.imdbMovie.poster != null) {
-				saveMovieImage(m.imdbMovie.poster, idMovies);
-			}
+            if (m.imdbMovie.poster != null)
+            {
+                saveMovieImage(m.imdbMovie.poster, idMovies);
+            }
         }
 
-		private void saveMovieImage(Bitmap b, int idMovies) {
-			string path = @"img\mov\" + idMovies;
-			string filename = "poster.jpg";
-			savePictureToHD(b, path, filename);
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idMovies") { Value = idMovies };
-			command.Parameters.Add(param);
+        private void saveMovieImage(Bitmap b, int idMovies)
+        {
+            string path = @"img\mov\" + idMovies;
+            string filename = "poster.jpg";
+            savePictureToHD(b, path, filename);
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
+            var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
+            command.Parameters.Add(param);
+            param = new SQLiteParameter("@idMovies") { Value = idMovies };
+            command.Parameters.Add(param);
 
-			executeCommandThreadSafe(command);
-			command.Dispose();
-		}
+            executeCommandThreadSafe(command);
+            command.Dispose();
+        }
 
-		private void savePersonImage(Bitmap b, int idPerson) {
-			string path = @"img\per\" + idPerson;
-			string filename = "poster.jpg";
-			savePictureToHD(b, path, filename);
+        private void savePersonImage(Bitmap b, int idPerson)
+        {
+            string path = @"img\per\" + idPerson;
+            string filename = "poster.jpg";
+            savePictureToHD(b, path, filename);
 
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
-			command.Parameters.Add(param);
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
+            var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
+            command.Parameters.Add(param);
+            param = new SQLiteParameter("@idPerson") { Value = idPerson };
+            command.Parameters.Add(param);
 
-			executeCommandThreadSafe(command);
-			command.Dispose();
-		}
+            executeCommandThreadSafe(command);
+            command.Dispose();
+        }
 
-		private void executeCommandThreadSafe(SQLiteCommand command) {
-			lock (DBProtect) {
-				command.ExecuteNonQuery();
-			}
-		}
+        private void executeCommandThreadSafe(SQLiteCommand command)
+        {
+            lock (DBProtect)
+            {
+                command.ExecuteNonQuery();
+            }
+        }
 
-		private SQLiteDataReader executeReaderThreadSafe(SQLiteCommand command) {
-			SQLiteDataReader r;
-			lock (DBProtect) {
-				r = command.ExecuteReader();
-			}
-			return r;
-		}
+        private SQLiteDataReader executeReaderThreadSafe(SQLiteCommand command)
+        {
+            SQLiteDataReader r;
+            lock (DBProtect)
+            {
+                r = command.ExecuteReader();
+            }
+            return r;
+        }
 
 
-        private int getIdPersonByImdbId(uint personImdbId) {
+        private int getIdPersonByImdbId(uint personImdbId)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "SELECT idPerson FROM Person WHERE imdbID=" + personImdbId.ToString();
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            if (reader.Read()) {
+            if (reader.Read())
+            {
                 return int.Parse(reader[0].ToString());
             }
             return -1;
         }
 
-        private int getIdMoviesByImdbId(uint movieImdbId) {
+        private int getIdMoviesByImdbId(uint movieImdbId)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "SELECT idMovies FROM Movies WHERE imdbID = " + movieImdbId.ToString();
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            if (reader.Read()) {
+            if (reader.Read())
+            {
                 return int.Parse(reader[0].ToString());
             }
             return -1;
         }
 
-        private void insertRole(uint personImdbId, String characterName, uint idMovies) {
+        private void insertRole(uint personImdbId, String characterName, uint idMovies)
+        {
             int idPerson = getIdPersonByImdbId(personImdbId);
-            if (idPerson > -1) {
+            if (idPerson > -1)
+            {
                 SQLiteCommand command = new SQLiteCommand(connection);
 
                 command.CommandText = "INSERT INTO Role (Person_idPerson, Movies_idMovies, CharacterName, Rank) VALUES(@Person_idPerson, @Movies_idMovies, @CharacterName, @Rank)";
@@ -207,9 +239,10 @@ namespace WinMovieRack.Model {
             }
         }
 
-        private void updateImdbPerson(ImdbPerson person) {
+        private void updateImdbPerson(ImdbPerson person)
+        {
 
-			int idPerson = getIdPersonByImdbId(person.imdbID);
+            int idPerson = getIdPersonByImdbId(person.imdbID);
             SQLiteCommand command = new SQLiteCommand(connection);
 
             command.CommandText = "UPDATE Person SET Name=@Name, " +
@@ -227,7 +260,7 @@ namespace WinMovieRack.Model {
                 "OtherNominations=@OtherNominations, " +
                 "OtherWins=@OtherWins, " +
                 "PosterPath=@PosterPath" +
-				" WHERE idPerson=@idPerson";
+                " WHERE idPerson=@idPerson";
 
             var param = new SQLiteParameter("@Name") { Value = person.name };
             command.Parameters.Add(param);
@@ -272,16 +305,18 @@ namespace WinMovieRack.Model {
             //TODO
             param = new SQLiteParameter("@PosterPath") { Value = "" };
             command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
+            param = new SQLiteParameter("@idPerson") { Value = idPerson };
             command.Parameters.Add(param);
 
             executeCommandThreadSafe(command);
-			if (person.image != null) {
-				savePersonImage(person.image, idPerson);
-			}
+            if (person.image != null)
+            {
+                savePersonImage(person.image, idPerson);
+            }
         }
 
-        private void insertImdbMovie(ImdbMovie movie) {
+        private void insertImdbMovie(ImdbMovie movie)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
 
             command.CommandText = "INSERT INTO Movies (title, runtime, plot, originalTitle, " +
@@ -315,24 +350,24 @@ namespace WinMovieRack.Model {
             param = new SQLiteParameter("@imdbTop250") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
-			/*
-			 * Meta ID oben entfernt!!
+            /*
+             * Meta ID oben entfernt!!
             param = new SQLiteParameter("@metacriticsID") { Value = "" };
             command.Parameters.Add(param);
-			 * */
+             * */
             //TODO
             param = new SQLiteParameter("@metacriticsReviewRating") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@metacriticsUsersRating") { Value = 0 };
             command.Parameters.Add(param);
-            
-			/*
-			 * entfernt
+
+            /*
+             * entfernt
             param = new SQLiteParameter("@rottentomatoesID") { Value = 0 };
             command.Parameters.Add(param);
             */
-			//TODO
+            //TODO
             param = new SQLiteParameter("@rottenTomatoesAudience") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
@@ -344,11 +379,11 @@ namespace WinMovieRack.Model {
             param = new SQLiteParameter("@year") { Value = movie.year };
             command.Parameters.Add(param);
             //TODO
-			/*
-			 * oben entfernt
+            /*
+             * oben entfernt
             param = new SQLiteParameter("@boxofficemojoID") { Value = "" };
             command.Parameters.Add(param);
-			 */
+             */
             //TODO
             param = new SQLiteParameter("@boxofficeWorldwide") { Value = 0 };
             command.Parameters.Add(param);
@@ -395,17 +430,50 @@ namespace WinMovieRack.Model {
             executeCommandThreadSafe(command);
         }
 
-        public GUIMovie getMovieInfo(int idMovies) {
+        public GUIMovie getMovieInfo(int idMovies)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-            return new GUIMovie(reader[0].ToString());
-        }
+            int dbId = int.Parse(reader[0].ToString());
+            string title = reader[1].ToString();
+            string originalTitle = reader[2].ToString();
+            int runtime = int.Parse(reader[3].ToString());
+            string plot = reader[4].ToString();
+            int year = int.Parse(reader[5].ToString());
+            int imdbID = int.Parse(reader[6].ToString());
+            int imdbRating = int.Parse(reader[7].ToString());
+            int imdbRatingVotes = int.Parse(reader[8].ToString());
+            int imdbTop250 = int.Parse(reader[9].ToString());
+            string metacriticsID = reader[10].ToString();
+            int metacriticsReviewRating = int.Parse(reader[11].ToString());
+            int metacriticsUsersRating = int.Parse(reader[12].ToString());
+            string rottentomatoesID = reader[13].ToString();
+            int rottenTomatoesAudience = int.Parse(reader[14].ToString());
+            int tomatometer = int.Parse(reader[15].ToString());
+            int personalRating = int.Parse(reader[16].ToString());
+            string boxofficemojoID = reader[17].ToString();
+            UInt32 boxofficeWorldwide = UInt32.Parse(reader[18].ToString());
+            UInt32 boxofficeAmerica = UInt32.Parse(reader[19].ToString());
+            UInt32 boxofficeForeign = UInt32.Parse(reader[20].ToString());
+            int boxofficeFirstWeekend = int.Parse(reader[21].ToString());
+            int rangFirstWeekend = int.Parse(reader[22].ToString());
+            int rankAllTime = int.Parse(reader[23].ToString());
+            int weeksInCinema = int.Parse(reader[24].ToString());
+            int otherWins = int.Parse(reader[25].ToString());
+            int otherNominations = int.Parse(reader[26].ToString());
+            string notes = reader[27].ToString();
+            bool TVSeries = true; //noch auslesen
+            int seenCount = int.Parse(reader[29].ToString());
+            DateTime lastSeen = new DateTime(); // noch auslesen
+            return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, rottentomatoesID, rottenTomatoesAudience, tomatometer, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen);
+    }
 
-		public void savePictureToHD(Bitmap b, string path, string filename){
-			Directory.CreateDirectory(path);
-			b.Save(path + "\\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-		}
+        public void savePictureToHD(Bitmap b, string path, string filename)
+        {
+            Directory.CreateDirectory(path);
+            b.Save(path + "\\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+        }
 
     }
 }

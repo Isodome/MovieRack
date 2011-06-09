@@ -24,12 +24,13 @@ namespace WinMovieRack.GUI
     {
         private MRListData dbItem;
         public int itemID;
-
+        public string title;
         public MovieRackListBoxItem(MRListData dbItem)
         {
             InitializeComponent();
             this.dbItem = dbItem;
             this.itemID = dbItem.dbItemID;
+            this.title = dbItem.titleName;
             labelTitleName.Content = dbItem.titleName;
             labelYearAge.Content = dbItem.yearAge;
             labelEditableCharacter.Content = dbItem.editableCharakter;

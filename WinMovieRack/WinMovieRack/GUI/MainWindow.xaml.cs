@@ -63,5 +63,10 @@ namespace WinMovieRack
 		private void imdbMenuEntry_Click(object sender, RoutedEventArgs e) {
 			controller.shouldChangeView(View.IMDB_BROWSER);
 		}
+
+        private void actorsMenuEntry_Click(object sender, RoutedEventArgs e)
+        {
+            controller.shouldChangeView(View.ACTORS_VIEW);
+        }
     }
 }

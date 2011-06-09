@@ -17,6 +17,7 @@ namespace WinMovieRack.Controller {
 		private ImdbBrowserController browserController;
 		private MainWindowController windowController;
 		private DetailsViewController detailsViewController;
+        private ActorsViewController actorsViewController;
 
 		public Controller(App app) {
 			this.app = app;
@@ -45,7 +46,11 @@ namespace WinMovieRack.Controller {
 			DetailsView dv = new DetailsView(detailsViewController);
 			detailsViewController.setDetailsView(dv);
 
-			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv);
+            actorsViewController = new ActorsViewController();
+            ActorsView av = new ActorsView();
+            actorsViewController.setActorsView(av);
+
+			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av);
 		}
 
 		private void initializeModel() {
