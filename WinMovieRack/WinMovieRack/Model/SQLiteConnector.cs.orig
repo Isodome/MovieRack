@@ -136,27 +136,62 @@ namespace WinMovieRack.Model
                     insertRole(t.Item1, t.Item2, (uint)idMovies);
                 }
             }
-            if (m.imdbMovie.poster != null)
-            {
-              saveMovieImage(m.imdbMovie.poster, idMovies);
-            }
+<<<<<<< HEAD
+			if (m.imdbMovie.poster != null) {
+				PictureHandler.savePicturePoster(m.imdbMovie.poster, idMovies);
 			}
         }
-
-		private void saveMovieImage(Bitmap b, int idMovies) {
-        {
-			string path = @"img\mov\" + idMovies;
+		private void savePersonImage(Bitmap b, int idPerson) {
+			string path = @"img\per\" + idPerson;
 			string filename = "poster.jpg";
 			savePictureToHD(b, path, filename);
+
 			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
+			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
 			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
 			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idMovies") { Value = idMovies };
+			param = new SQLiteParameter("@idPerson") { Value = idPerson };
 			command.Parameters.Add(param);
 
 			executeCommandThreadSafe(command);
 			command.Dispose();
+		}
+		private void executeCommandThreadSafe(SQLiteCommand command) {
+			lock (DBProtect) {
+				command.ExecuteNonQuery();
+			}
+		}
+		private SQLiteDataReader executeReaderThreadSafe(SQLiteCommand command) {
+			SQLiteDataReader r;
+			lock (DBProtect) {
+				r = command.ExecuteReader();
+			}
+			return r;
+		}
+
+
+        private int getIdPersonByImdbId(uint personImdbId) {
+=======
+            if (m.imdbMovie.poster != null)
+            {
+                saveMovieImage(m.imdbMovie.poster, idMovies);
+            }
+        }
+
+        private void saveMovieImage(Bitmap b, int idMovies)
+        {
+            string path = @"img\mov\" + idMovies;
+            string filename = "poster.jpg";
+            savePictureToHD(b, path, filename);
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
+            var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
+            command.Parameters.Add(param);
+            param = new SQLiteParameter("@idMovies") { Value = idMovies };
+            command.Parameters.Add(param);
+
+            executeCommandThreadSafe(command);
+            command.Dispose();
         }
 
         private void savePersonImage(Bitmap b, int idPerson)
@@ -165,18 +200,12 @@ namespace WinMovieRack.Model
             string filename = "poster.jpg";
             savePictureToHD(b, path, filename);
 
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
-			command.Parameters.Add(param);
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
-			command.Parameters.Add(param);
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
+            var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
+            command.Parameters.Add(param);
+            param = new SQLiteParameter("@idPerson") { Value = idPerson };
+            command.Parameters.Add(param);
 
             executeCommandThreadSafe(command);
             command.Dispose();
@@ -203,6 +232,7 @@ namespace WinMovieRack.Model
 
         private int getIdPersonByImdbId(uint personImdbId)
         {
+>>>>>>> 20651b2aee2146f92cd29edc8f1f48aa78de0bee
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "SELECT idPerson FROM Person WHERE imdbID=" + personImdbId.ToString();
             SQLiteDataReader reader = executeReaderThreadSafe(command);

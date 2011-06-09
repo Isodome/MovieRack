@@ -50,6 +50,7 @@ namespace WinMovieRack.Controller
             {
                 view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
+            view.sortListBox();
         }
 
         public GUIMovie getGUIMovie(int itemID)
