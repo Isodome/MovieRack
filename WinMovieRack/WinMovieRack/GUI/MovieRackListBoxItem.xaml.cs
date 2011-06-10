@@ -36,7 +36,7 @@ namespace WinMovieRack.GUI
             labelEditableCharacter.Content = dbItem.editableCharakter;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(dbItem.dbItemID, EImageSizes.LIST));
+			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(dbItem.dbItemID, PosterSize.LIST));
             posterBitmap.EndInit();
             poster.Source = posterBitmap;
         }

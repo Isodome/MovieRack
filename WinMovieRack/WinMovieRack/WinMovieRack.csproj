@@ -130,7 +130,7 @@
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\ImdbMovie.cs" />
     <Compile Include="Model\Symbols.cs" />
-    <Compile Include="Model\EImageSizes.cs" />
+    <Compile Include="Model\Enums.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

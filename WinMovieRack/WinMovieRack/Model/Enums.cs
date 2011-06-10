@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace WinMovieRack.Model {
-	public enum EImageSizes {
+	public enum PosterSize {
 		FULL,
 		LIST,
-		PREVIEW
+		PREVIEW,
+		TINY
 	}
 }

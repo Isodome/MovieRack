@@ -145,39 +145,6 @@ namespace WinMovieRack.Model
 			
         }
 
-		private void saveMovieImage(Bitmap b, int idMovies) {
-        
-			string path = @"img\mov\" + idMovies;
-			string filename = "poster.jpg";
-			savePictureToHD(b, path, filename);
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Movies SET posterPath=@posterPath WHERE idMovies=@idMovies";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idMovies") { Value = idMovies };
-			command.Parameters.Add(param);
-
-			executeCommandThreadSafe(command);
-			command.Dispose();
-        }
-
-        private void savePersonImage(Bitmap b, int idPerson)
-        {
-            string path = @"img\per\" + idPerson;
-            string filename = "poster.jpg";
-            savePictureToHD(b, path, filename);
-
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "UPDATE Person SET PosterPath=@PosterPath WHERE idPerson=@idPerson";
-			var param = new SQLiteParameter("@PosterPath") { Value = path + "\\" + filename };
-			command.Parameters.Add(param);
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
-			command.Parameters.Add(param);
-
-            executeCommandThreadSafe(command);
-            command.Dispose();
-        }
-
         private void executeCommandThreadSafe(SQLiteCommand command)
         {
             lock (DBProtect)
@@ -314,7 +281,7 @@ namespace WinMovieRack.Model
             executeCommandThreadSafe(command);
             if (person.image != null)
             {
-                savePersonImage(person.image, idPerson);
+				PictureHandler.savePersonPortrait(person.image, idPerson);
             }
         }
 

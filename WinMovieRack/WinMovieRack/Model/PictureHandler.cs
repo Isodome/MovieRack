@@ -17,24 +17,28 @@ namespace WinMovieRack.Model {
 		public static string personImagesPath = PATH_TO_DB + @"\img\per\";
 
 
-		public const int LIST_IMAGE_HEIGHT = 80;
-		public const int LIST_IMAGE_WIDTH = 80;
-
 		public const int PREVIEW_IMAGE_WIDTH = 200;
 		public const int PREVIEW_IMAGE_HEIGHT = 200;
+		public const int LIST_IMAGE_HEIGHT = 80;
+		public const int LIST_IMAGE_WIDTH = 80;
+		public const int TINY_IMAGE_HEIGHT = 20;
+		public const int TINY_IMAGE_WIDTH = 20;
+
 
 		public const string moviePosterName = "poster";
 		public const string personPortraitName = "portrait";
+
+		public static System.Drawing.Imaging.ImageFormat imageCode = System.Drawing.Imaging.ImageFormat.Jpeg;
 
 		private PictureHandler () {
 		}
 
 		public static void savePicturePoster(Bitmap b, int idMovies) {
-			saveMovieImageToHD(b, movieImagesPath + idMovies.ToString(), moviePosterName);
+			savePosterToHD(b, movieImagesPath + idMovies.ToString(), moviePosterName);
 		}
 
-		public static string getPicturePosterPath(int idMovies, EImageSizes size) {
-			string path= buildPath(movieImagesPath + idMovies.ToString(), moviePosterName, size);
+		public static string getPicturePosterPath(int idMovies, PosterSize size) {
+			string path = buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, size);
 			if (File.Exists(path)) {
 				return path;
 			} else {
@@ -42,24 +46,41 @@ namespace WinMovieRack.Model {
 			}
 		}
 
-
-		private static void saveMovieImageToHD(Bitmap b, string path, string filename) {
-			Directory.CreateDirectory(path);
-
-			b.Save(buildPath(path, filename,EImageSizes.FULL), System.Drawing.Imaging.ImageFormat.Jpeg);
-
-			Bitmap scaledLIST = scaleImageProportianal(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT);
-			scaledLIST.Save(buildPath(path, filename, EImageSizes.LIST), System.Drawing.Imaging.ImageFormat.Jpeg);
-
-			Bitmap scaledPREVIEW = scaleImageProportianal(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
-			scaledPREVIEW.Save(buildPath(path, filename, EImageSizes.PREVIEW), System.Drawing.Imaging.ImageFormat.Jpeg);
+		public static void savePersonPortrait(Bitmap b, int idPerson) {
+			savePosterToHD(b, personImagesPath + idPerson.ToString(), personPortraitName);
 		}
 
-		private static string getNoPic(EImageSizes size) {
+		public static string getPersonPortraitPath(int idPerson, PosterSize size) {
+			string path = buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, size);
+			if (File.Exists(path)) {
+				return path;
+			} else {
+				return getNoPic(size);
+			}
+		}
+
+		private static void savePosterToHD(Bitmap b, string path, string filename) {
+			Directory.CreateDirectory(path);
+
+			b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCode);
+
+			Bitmap bPreview = scaleImageProportianal(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
+			bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCode);
+
+			Bitmap bList = scaleImageProportianal(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT);
+			bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCode);
+
+			Bitmap bTiny = scaleImageProportianal(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT);
+			bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCode);
+
+		}
+
+
+		private static string getNoPic(PosterSize size) {
 			return @"Ressources\nopic" + size.ToString() + ".jpg";
 		}
 
-		private static string buildPath(string path, string filename, EImageSizes size) {
+		private static string buildPosterPath(string path, string filename, PosterSize size) {
 			return makePathStringSafe(path) + @"\" + filename + size.ToString() + ".jpg";
 		}
 

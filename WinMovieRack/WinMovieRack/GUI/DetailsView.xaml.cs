@@ -69,7 +69,7 @@ namespace WinMovieRack
             bigPicture = new BigPicture();
 			BitmapImage posterBitmap = new BitmapImage();
 			posterBitmap.BeginInit();
-			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, EImageSizes.FULL));
+			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, PosterSize.FULL));
 			posterBitmap.EndInit();
 			bigPicture.bigPicture.Source = posterBitmap;
 
@@ -120,7 +120,7 @@ namespace WinMovieRack
             plot.Text = movieDetails.plot;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-            posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, EImageSizes.PREVIEW));
+            posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(movieDetails.dbId, PosterSize.PREVIEW));
             posterBitmap.EndInit();
             posterTitle.Source = posterBitmap;
             runtime.Content = movieDetails.runtime;

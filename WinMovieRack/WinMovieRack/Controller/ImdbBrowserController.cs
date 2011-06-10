@@ -15,6 +15,7 @@ namespace WinMovieRack.Controller {
 
 		private IMDBBrowser browser;
 		private Controller controller;
+		private bool firstLoad = true;
 
 		public ImdbBrowserController(Controller c) {
 			this.controller = c;
@@ -24,8 +25,13 @@ namespace WinMovieRack.Controller {
 		public void setBrowser(IMDBBrowser b) {
 			this.browser = b;
 		}
+
 		public void activated() {
-			browser.goToHome();
+
+			if (firstLoad) {
+				firstLoad = false;
+				browser.goToHome();
+			}
 		}
 
 		public void insertMovieInDB(imdbMovieParserMaster parser) {
