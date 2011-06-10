@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
-    <Grid Height="auto" Width="auto">
+    <Grid Height="100" Width="auto">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="90" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image x:Name="poster" Height="90" HorizontalAlignment="Stretch" Margin="5" Stretch="Fill" VerticalAlignment="Stretch" Width="65" />
+        <Image x:Name="poster" Height="auto" Margin="5" Width="auto" />
         <Label Content="Title/Name" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,12,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" />
         <Label Content="Year/Age" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,38,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" />
         <Label Content="Editable/Char." Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,64,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" />

@@ -20,7 +20,7 @@
         <Label Content="Name" Grid.Column="1" Height="auto" HorizontalAlignment="Left" Margin="60,10,0,0" Name="name" VerticalAlignment="Top" FontSize="35" FontWeight="Bold" />
         <Label Content="Age" Height="auto" HorizontalAlignment="Left" Margin= "10,30,0,0" Name="age" VerticalAlignment="Top" Grid.Column="1" FontSize="15" />
         <Label Content="Orginal Name" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="60,55,0,0" Name="orgialName" VerticalAlignment="Top" Grid.Column="1" />
-        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Stretch="Fill" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="200" Height="276" VerticalAlignment="Top" />
+        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" />
         <StackPanel Grid.Column="1" Height="auto" HorizontalAlignment="Left" Margin="12,91,0,0" Name="staticDetails" VerticalAlignment="Top" Width="auto">
             <StackPanel Height="auto" Name="jobsStack" Width="auto" Orientation="Horizontal" VerticalAlignment="Center">
                 <Label Content="Jobs:" FontSize="15" FontWeight="Bold" Height="auto" Name="jobs" />

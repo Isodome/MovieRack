@@ -11,37 +11,11 @@
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Stretch="Fill" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="200" Height="276" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
+        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         <TextBox Text="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
         <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,26,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="60,55,0,0" Name="orgialTitleLabel" VerticalAlignment="Top" FontSize="15" />
-        <Label Content="IMDB Rating:" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,87,0,0" Name="imdbRatingLabel" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" />
-        <Label Content="10/10" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="110,87,0,0" Name="imdbRating" VerticalAlignment="Top" FontSize="15" />
-        <Label Content="(999999 Votes)" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="155,87,0,0" Name="imdbVotes" VerticalAlignment="Top" FontSize="15" />
-        <Label Content="Top 250:" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="270,87,0,0" Name="top250Label" VerticalAlignment="Top"   Width="auto" FontWeight="Bold" FontSize="15" />
-        <Label Content="250" Height="auto" HorizontalAlignment="Left" Margin="340,87,0,0" Name="top250" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="Own Rating:" Height="auto" HorizontalAlignment="Left" Margin="10,117,0,0" Name="ownRatingLabel" VerticalAlignment="Top" Grid.Column="2" FontWeight="Bold" FontSize="15" />
-        <Label Content="100/100 (10/10)" HorizontalAlignment="Left" Margin="100,117,0,0" Name="ownRating" Grid.Column="2" Height="26" VerticalAlignment="Top" FontSize="15" />
-        <Label Content="Genres:" Height="auto" HorizontalAlignment="Left" Margin="220,117,0,0" Name="genresLabel" VerticalAlignment="Top" Grid.Column="2" FontWeight="Bold" FontSize="15" />
-        <Label Content="Action | Krimi" Height="auto" HorizontalAlignment="Left" Margin="280,117,0,0" Name="genres" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="Metacritics:" Height="auto" HorizontalAlignment="Left" Margin="10,147,0,0" Name="metacriticslabel" VerticalAlignment="Top" Grid.Column="2" FontWeight="Bold" FontSize="15" />
-        <Label Content="Rottentomatoes:" Height="auto" HorizontalAlignment="Left" Margin="10,199,0,0" Name="rottentomatoesLabel" VerticalAlignment="Top" Grid.Column="2" FontWeight="Bold" FontSize="15" />
-        <Label Content="100%" Height="auto" HorizontalAlignment="Left" Margin="240,197,0,0" Name="rottentomatoesTomatometerRating" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="100%" Height="auto" HorizontalAlignment="Left" Margin="215,217,0,0" Name="rottentomatoesAudienceRating" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="10/10" Height="auto" HorizontalAlignment="Left" Margin="185,167,0,0" Name="metacriticsUserRating" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="Users Score:" Height="auto" HorizontalAlignment="Left" Margin="100,167,0,0" Name="metacriticsUserLabel" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="Tomatometer:" Height="auto" HorizontalAlignment="Left" Margin="140,197,0,0" Name="rottentomatoesTomatometerLabel" VerticalAlignment="Top" Grid.Column="2" FontSize="15" />
-        <Label Content="100/100" Height="auto" Margin="180,147,0,0" Name="label5" VerticalAlignment="Top" Grid.Column="2" FontSize="15" HorizontalAlignment="Left" Width="auto" />
-        <Label Content="Metascore:" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="100,147,0,0" Name="MetacriticsMetascoreLabel" VerticalAlignment="Top" Grid.Column="2" />
-        <Label Content="Audience:" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="140,217,0,0" Name="RottentomatoesAudienceLabel" VerticalAlignment="Top" Grid.Column="2" />
-        <Label Content="(999999 Critics)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="240,147,0,0" Name="MetacriticsMetascoreCriticsVotes" VerticalAlignment="Top" Grid.Column="2" />
-        <Label Content="(999999 Votes)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="240,166,0,0" Name="MetacriticsMetascoreUsersVotes" VerticalAlignment="Top" Grid.Column="2" />
-        <Label Content="(999999 Critics)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="285,197,0,0" Name="RottentomatoesTomatoemeterVotes" VerticalAlignment="Top" Grid.Column="2" />
-        <Label Content="(999999 Votes)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="260,217,0,0" Name="RottentomatoesAudienceVotes" VerticalAlignment="Top" Grid.Column="2" />
-        <Button Content="IMDB" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="390,87,0,0" Name="imdbLink" VerticalAlignment="Top" Width="auto" FontSize="15" />
-        <Button Content="Metacritics" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="370,167,0,0" Name="metacriticsLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
-        <Button Content="Rottentomatoes" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin="400,217,0,0" Name="rottentomatoesLink" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <TabControl Grid.Column="2" Margin="12,278,12,12" Name="detailsViewTab">
             <TabItem Header="Summery" Name="summeryTab">
                 <Grid x:Name="tabControl" Width="auto" Background="#FFF9F9F9">
@@ -178,5 +152,55 @@
                 <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" />
             </Grid>
         </GroupBox>
+        <StackPanel Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,90,0,0" Name="stackPanel22" VerticalAlignment="Top" Width="auto">
+            <StackPanel Height="auto" Name="stackPanel12" Width="auto" Orientation="Horizontal">
+                <Label Content="IMDB Rating:" Height="auto" Name="imdbRatingLabel" FontWeight="Bold" FontSize="15" />
+                <Label Content="10/10" Height="auto" Name="imdbRating" FontSize="15" />
+                <Label Content="(999999 Votes)" Height="auto" Name="imdbVotes" FontSize="15" Width="auto" />
+                <Label Content="Top 250:" Height="auto" Name="top250Label" Width="auto" FontWeight="Bold" FontSize="15" />
+                <Label Content="250" Height="auto" Name="top250" FontSize="15" />
+                <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Height="auto" Name="stackPanel13" Width="auto" Orientation="Horizontal">
+                <Label Content="Own Rating:" Height="auto" Name="ownRatingLabel" FontWeight="Bold" FontSize="15" />
+                <Label Content="100/100 (10/10)" Name="ownRating" Height="26" FontSize="15" />
+                <Label Content="Genres:" Height="auto" Name="genresLabel" FontWeight="Bold" FontSize="15" />
+                <Label Content="Action" Height="auto" Name="label1" FontSize="15" />
+                <Label Content="|" Height="auto" Name="label2" FontSize="15" />
+                <Label Content="Thriller" Height="auto" Name="label3" FontSize="15" />
+            </StackPanel>
+            <StackPanel Height="auto" Name="stackPanel15" Width="auto" Orientation="Horizontal">
+                <Label Content="Metacritics:" Height="auto" Name="metacriticslabel" FontWeight="Bold" FontSize="15" />
+                <StackPanel Height="auto" Name="stackPanel17" Width="auto">
+                    <StackPanel Height="auto" Name="stackPanel14" Width="auto" Orientation="Horizontal">
+                        <Label Content="Metascore:" FontSize="15" Height="auto" Name="MetacriticsMetascoreLabel" />
+                        <Label Content="100/100" Height="auto" Name="label5" FontSize="15" Width="auto" />
+                        <Label Content="(999999 Critics)" FontSize="15" Height="auto" Name="MetacriticsMetascoreCriticsVotes" />
+                    </StackPanel>
+                    <StackPanel Height="auto" Name="stackPanel16" Width="auto" Orientation="Horizontal">
+                        <Label Content="Users Score:" Height="auto" Name="metacriticsUserLabel" FontSize="15" />
+                        <Label Content="10/10" Height="auto" Name="metacriticsUserRating" FontSize="15" />
+                        <Label Content="(999999 Votes)" FontSize="15" Height="auto" Name="MetacriticsMetascoreUsersVotes" />
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="Metacritics" FontSize="10" Height="auto" Name="metacriticsLink" Width="auto" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Height="auto" Name="stackPanel18" Width="auto" Orientation="Horizontal">
+                <Label Content="Rottentomatoes:" Height="auto" Name="rottentomatoesLabel" FontWeight="Bold" FontSize="15" />
+                <StackPanel Height="auto" Name="stackPanel21" Width="auto">
+                    <StackPanel Name="stackPanel19" Orientation="Horizontal" Height="auto" Width="auto">
+                        <Label Content="Tomatometer:" Height="auto" Name="rottentomatoesTomatometerLabel" FontSize="15" />
+                        <Label Content="100%" Height="auto" Name="rottentomatoesTomatometerRating" FontSize="15" />
+                        <Label Content="(999999 Critics)" FontSize="15" Height="auto" Name="RottentomatoesTomatoemeterVotes" />
+                    </StackPanel>
+                    <StackPanel Height="auto" Name="stackPanel20" Width="auto" Orientation="Horizontal">
+                        <Label Content="Audience:" FontSize="15" Height="auto" Name="RottentomatoesAudienceLabel" />
+                        <Label Content="100%" Height="auto" Name="rottentomatoesAudienceRating" FontSize="15" />
+                        <Label Content="(999999 Votes)" FontSize="15" Height="auto" Name="RottentomatoesAudienceVotes" />
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="Rottentomatoes" FontSize="10" Height="auto" Name="rottentomatoesLink" Width="auto" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

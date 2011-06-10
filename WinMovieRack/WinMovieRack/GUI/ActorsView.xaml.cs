@@ -73,6 +73,8 @@ namespace WinMovieRack.GUI
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
             posterBitmap.EndInit();
             posterTitle.Source = posterBitmap;
+            biography.Content = personDetails.Biography;
+            orgialName.Content = personDetails.OriginalName;
         }
     }
 }
