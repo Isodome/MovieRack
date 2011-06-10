@@ -76,7 +76,7 @@ namespace WinMovieRack
 
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
-            bigPicture.setOrigin(posterTitle.Height, posterTitle.Width, screenOrigin.X, screenOrigin.Y);
+            bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
 
             bigPicture.fadeIn();
         }
