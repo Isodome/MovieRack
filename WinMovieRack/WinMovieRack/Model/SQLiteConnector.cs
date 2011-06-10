@@ -133,7 +133,7 @@ namespace WinMovieRack.Model
             string Biography = reader["Biography"].ToString();
             DateTime Birthday; //noch einfügen
             DateTime Deathday;
-            bool male;
+            char gender;
             int CountryofBirth = int.Parse(reader["CountryofBirth"].ToString());
             string CityofBirth = reader["CityofBirth"].ToString();
             UInt64 lifetimeGross = UInt64.Parse(reader["lifetimeGross"].ToString());

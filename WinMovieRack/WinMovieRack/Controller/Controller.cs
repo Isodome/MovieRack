@@ -26,13 +26,10 @@ namespace WinMovieRack.Controller {
 			initializeModel();
 			initializeGUI();
 
-			ThreadJobMaster m = new ConcurrentIMDBNameParser(424060);
-			m.setFinalizeFunction(func);
-			ThreadsMaster.getInstance().addJobMaster(m);
 		}
 
 		public void func(ThreadJobMaster sender) {
-			((ConcurrentIMDBNameParser)sender).person.printToConsole();
+			((imdbMovieParserMaster)sender).movieData.printToConsole();
 		}
 
 		private void initializeGUI() {

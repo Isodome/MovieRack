@@ -120,6 +120,7 @@
     <Compile Include="GUI\MovieRackListBoxItem.xaml.cs">
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Award.cs" />
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\GUIMovie.cs" />
     <Compile Include="Model\GUIPerson.cs" />
