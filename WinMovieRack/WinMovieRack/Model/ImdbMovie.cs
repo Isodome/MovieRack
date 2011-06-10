@@ -24,6 +24,7 @@ namespace WinMovieRack.Model
 		public List<Tuple<uint, string>> roles;
 		public string alsoKnownAs;
 		public Bitmap poster = null;
+		public List<Award> awards;
 
 		public ImdbMovie() {
 
@@ -33,7 +34,7 @@ namespace WinMovieRack.Model
 			directors = new List<uint>();
 			writers = new List<uint>();
 			roles = new List<Tuple<uint, string>>();
-
+			awards = new List<Award>();
 		}
 
 		public ImdbMovie(uint imdbID) : this() {
@@ -79,6 +80,11 @@ namespace WinMovieRack.Model
 			Console.Write("Cast: ");
 			foreach (Tuple<uint, string> t in roles.ToArray<Tuple<uint, string>>()) {
 				Console.WriteLine(t.Item1.ToString() + " as " + t.Item2);
+			}
+
+			Console.WriteLine("Awards:");
+			foreach (Award a in awards) {
+				Console.WriteLine(a.ToString());
 			}
 		}
     }

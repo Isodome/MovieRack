@@ -27,7 +27,8 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		public const string countriesRegex = @"<h4 class=""inline"">Country:</h4>(?<country>(.|\n|\r)*?)</div>";
 		public const string languagesRegex = @"<h4 class=""inline"">Language:</h4>(?<lang>(.|\n|\r)*?)</div>";
 		public const string alsoKnownAsRegex = @"<h4 class=""inline"">Also Known As:</h4>(?<ana>.*)";
-
+		public const string awardsTableRegex = @"<table style=""margin-top: 8px; margin-bottom: 8px"" cellspacing=""2"" cellpadding=""2"" border=""1"">(?<bigtable>(.|\r|\n)*?)</table>";
+		public const string awardWinnerRegex = @"<a href=""/name/nm(?<nm>\d+?)/";
 
 		//Regex to parse information from the imdb credits page
 		public const string directorsRegex = @">Directed by</a>(?<directors>.*?)Writing credits<";
@@ -83,6 +84,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 				startSelectiveParse += this.extractCast;
 			}
 			if (awardsPage != null) {
+				startSelectiveParse += extractAwards;
 			}
 		}
 
@@ -199,6 +201,77 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 				uint nm = uint.Parse(nmstring);
 				movie.roles.Add(Tuple.Create<uint, string>(nm, role));
 			}
+		}
+
+		public void extractAwards() {
+			Match mTable = Regex.Match(awardsPage, awardsTableRegex);
+			string awardsTable = mTable.Groups["bigtable"].Value;
+
+			int[] rowSpanRemaining = {0,0,0,0};
+			int currentColumn = 0;
+			int currentYear = 0;
+			string currentAward = null;
+			string currentResult = null;
+
+			MatchCollection mc = Regex.Matches(awardsTable, @"(?<cell><td(.|\n|\r)*?</td>)");
+			foreach (Match match in mc) {
+				string curCell = match.Groups["cell"].Value;
+				if (Regex.Match(curCell, @"colspan=""4""").Success) {
+					continue;
+				} else {
+					while (rowSpanRemaining[currentColumn] > 0) {
+						rowSpanRemaining[currentColumn]--;
+						currentColumn = ++currentColumn % 4;
+					}
+
+					if (currentColumn != 3) {
+						Match m = Regex.Match(curCell, @"rowspan=""(?<rowspan>\d+)""");
+						int rs = int.Parse(m.Groups["rowspan"].Value);
+
+						string content = Regex.Replace(curCell, @"(<.*?>|\n)", "").Trim();
+
+						rowSpanRemaining[currentColumn] = rs - 1;
+
+						if (currentColumn == 0) {
+							currentYear = int.Parse(content);
+						} else if (currentColumn == 1) {
+							currentResult = content;
+						} else if (currentColumn == 2) {
+							currentAward = content;
+						}
+						currentColumn++;
+					} else {
+						addAward(curCell, currentYear, currentAward, currentResult);
+						currentColumn = 0;
+					}
+
+				}
+			}
+			
+
+		}
+
+		private void addAward(string text, int year, string award, string result) {
+			Match m = Regex.Match(text, @"<td valign=""top"">(?<category>(.|\n|\r)*?)<br>");
+			string tmpcategory = m.Groups["category"].Value;
+			string category = Regex.Replace(tmpcategory, @"(<.*?>|\n)", "").Trim();
+
+			Award a = new Award();
+			a.isOscar = Regex.Match(award, @"Oscar").Success;
+			a.won = Regex.Match(result, @"Won").Success;
+			a.year = year;
+			a.award = award;
+			a.category = category;
+
+			MatchCollection mc = Regex.Matches(text, awardWinnerRegex);
+			
+			foreach (Match match in mc) {
+				string nmstring = match.Groups["nm"].Value.Trim();
+				uint nm = uint.Parse(nmstring);
+
+				a.persons.Add(nm);
+			}
+			movie.awards.Add(a);
 		}
 	}
 }
