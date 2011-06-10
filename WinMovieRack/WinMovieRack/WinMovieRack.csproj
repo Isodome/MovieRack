@@ -122,10 +122,12 @@
     </Compile>
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\GUIMovie.cs" />
+    <Compile Include="Model\GUIPerson.cs" />
     <Compile Include="Model\ImdbPerson.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\MovieEnum.cs" />
     <Compile Include="Model\MRListData.cs" />
+    <Compile Include="Model\PersonEnum.cs" />
     <Compile Include="Model\PictureHandler.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\ImdbMovie.cs" />

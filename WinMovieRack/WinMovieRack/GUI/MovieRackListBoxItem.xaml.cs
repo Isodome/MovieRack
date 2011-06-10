@@ -25,7 +25,7 @@ namespace WinMovieRack.GUI
         private MRListData dbItem;
         public int itemID;
         public string title;
-        public MovieRackListBoxItem(MRListData dbItem)
+        public MovieRackListBoxItem(MRListData dbItem, bool isMovie)
         {
             InitializeComponent();
             this.dbItem = dbItem;
@@ -36,7 +36,14 @@ namespace WinMovieRack.GUI
             labelEditableCharacter.Content = dbItem.editableCharakter;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-			posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(dbItem.dbItemID, PosterSize.LIST));
+            if (isMovie)
+            {
+                posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(dbItem.dbItemID, PosterSize.LIST));
+            }
+            else
+            {
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
+            }
             posterBitmap.EndInit();
             poster.Source = posterBitmap;
         }

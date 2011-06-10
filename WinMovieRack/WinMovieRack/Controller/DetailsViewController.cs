@@ -40,7 +40,7 @@ namespace WinMovieRack.Controller
             this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i)));
+                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i),true));
             }
         }
 
