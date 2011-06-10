@@ -180,7 +180,7 @@ namespace WinMovieRack.Model
             }
             if (m.imdbMovie.poster != null)
             {
-                PictureHandler.savePicturePoster(m.imdbMovie.poster, idMovies);
+                PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
             }
 
         }

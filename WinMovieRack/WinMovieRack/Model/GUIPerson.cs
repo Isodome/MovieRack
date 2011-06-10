@@ -13,7 +13,7 @@ namespace WinMovieRack.Model
         public string Biography;
         public DateTime Birthday;
         public DateTime Deathday;
-        public bool male;
+        public char gender;
         public int CountryofBirth;
         public string CityofBirth;
         public UInt64 lifetimeGross;
@@ -32,7 +32,7 @@ namespace WinMovieRack.Model
             this.Biography = Biography;
             this.Birthday = Birthday;
             this.Deathday = Deathday;
-            this.male = male;
+            this.gender = gender;
             this.CountryofBirth = CountryofBirth;
             this.CityofBirth = CityofBirth;
             this.lifetimeGross = lifetimeGross;

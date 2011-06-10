@@ -38,7 +38,7 @@ namespace WinMovieRack.GUI
             posterBitmap.BeginInit();
             if (isMovie)
             {
-                posterBitmap.UriSource = new Uri(PictureHandler.getPicturePosterPath(dbItem.dbItemID, PosterSize.LIST));
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbItem.dbItemID, PosterSize.LIST));
             }
             else
             {

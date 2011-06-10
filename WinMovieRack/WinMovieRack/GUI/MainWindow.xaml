@@ -39,6 +39,10 @@
         </Menu>
         <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menuBar1" VerticalAlignment="Stretch" Margin="0" IsMainMenu="True" Padding="0,6,0,0">
             <MenuItem x:Name="fileMenuEntry" Header="Menu" Padding="8,3,8,3">
+                <MenuItem Name="importMenuItem" Header="Import...">
+                    <MenuItem Name="byImdbIDs" Header="by IMDB IDs in Text File" />
+                    <MenuItem Name="byScanningFolder" Header="by scanning Folders" />
+                </MenuItem>
                 <MenuItem x:Name="exitMenuEntry" Header="Exit" />
             </MenuItem>
             <Menu.Background>

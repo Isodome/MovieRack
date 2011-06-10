@@ -110,6 +110,9 @@ namespace WinMovieRack.Controller.ThreadManagement
 				{
 					running[i] = false;
 				}
+				for (int i = newThreadCount ; i < currentNumberOfThreads ; i++) {
+					threads[i].Join();
+				}
 			}
 			else if (newThreadCount > currentNumberOfThreads)
 			{
@@ -122,6 +125,18 @@ namespace WinMovieRack.Controller.ThreadManagement
 			}
 			currentNumberOfThreads = newThreadCount;
 			Monitor.Exit(this);
+		}
+
+		public void waitToFinish() {
+			while (this.jobMaster.Count > 0) {
+				Thread.Sleep(100);
+			}
+			for (int i = 0 ; i < currentNumberOfThreads ; i++) {
+				running[i] = false;
+			}
+			for (int i = 0 ; i < currentNumberOfThreads ; i++) {
+				threads[i].Join();
+			}
 		}
 
 		public void switchToThreadCount(int newThreadCount)

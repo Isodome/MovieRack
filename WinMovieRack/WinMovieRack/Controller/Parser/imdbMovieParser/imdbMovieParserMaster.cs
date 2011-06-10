@@ -100,7 +100,6 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 			else if (job == parseJob)
 			{
 				parseJobDone = true;
-				movieData.printToConsole();
 			}
 			else if (job == imageLoadJob)
 			{

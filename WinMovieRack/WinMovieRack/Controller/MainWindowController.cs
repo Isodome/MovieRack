@@ -18,5 +18,9 @@ namespace WinMovieRack.Controller {
 		public void shouldChangeView(View v) {
 			controller.changeToView(v);
 		}
+
+		internal void close() {
+			mainWindow.Close();
+		}
 	}
 }

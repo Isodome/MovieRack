@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media.Imaging;
 using WinMovieRack.Controller.Parser.imdbMovieParser;
+using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
@@ -24,12 +25,14 @@ namespace WinMovieRack.Controller {
 			this.app.Exit += aboutToExit;
 			initializeModel();
 			initializeGUI();
-			
 
-			imdbMovieParserMaster parserMaster;
-			parserMaster = new imdbMovieParserMaster(477348);
-			parserMaster.setFinalizeFunction(this.filmFinished);
-			//ThreadsMaster.getInstance().addJobMaster(parserMaster);
+			ThreadJobMaster m = new ConcurrentIMDBNameParser(424060);
+			m.setFinalizeFunction(func);
+			ThreadsMaster.getInstance().addJobMaster(m);
+		}
+
+		public void func(ThreadJobMaster sender) {
+			((ConcurrentIMDBNameParser)sender).person.printToConsole();
 		}
 
 		private void initializeGUI() {
@@ -56,7 +59,7 @@ namespace WinMovieRack.Controller {
 		private void initializeModel() {
 			db = new SQLiteConnector();
 			db.initDb();
-			PictureHandler.initNoPic();
+			PictureHandler.initialize();
 		}
 
 
@@ -78,30 +81,11 @@ namespace WinMovieRack.Controller {
 			gui.changeToView(view);
 		}
 
-		void filmFinished(ThreadJobMaster sender) {
-			ImdbMovie p = ((imdbMovieParserMaster)sender).movieData;
-			/*
-			if (mainWindow.detailsView != null) {
-				Dispatcher.BeginInvoke(new Action(() => {
-					MovieRackListBoxItem boxItem = new MovieRackListBoxItem();
-					boxItem.labelMovieTitle.Content = p.title;
-					boxItem.labelMovieYear.Content = p.year;
-					boxItem.labelMovieEditable.Content = (((float)p.imdbRating) / 10.0).ToString() + " ( " + p.imdbRatingVotes + " votes)";
-					BitmapSource destination;
-					IntPtr hBitmap = p.poster.GetHbitmap();
-					BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions();
-					destination = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, sizeOptions);
-					destination.Freeze();
-					boxItem.imageMovie.Source = destination;
-					mainWindow.detailsView.addMoviesListBoxItem(boxItem);
-				}));
-			}
-			  */
-
-		}
 
 		public void aboutToExit(object sender, ExitEventArgs e) {
 			db.closeConnection();
+			windowController.close();
+			ThreadsMaster.getInstance().waitToFinish();
 			Application.Current.Shutdown();
 		}
 	}

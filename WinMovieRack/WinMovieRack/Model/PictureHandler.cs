@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using WinMovieRack.Properties;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
 namespace WinMovieRack.Model {
@@ -30,18 +31,20 @@ namespace WinMovieRack.Model {
 		public const string personPortraitName = "portrait";
 		public const string noPicName = "nopic";
 
-		public static System.Drawing.Imaging.ImageFormat imageCode = System.Drawing.Imaging.ImageFormat.Jpeg;
+		private static System.Drawing.Imaging.ImageCodecInfo imageCodec;
+		private static EncoderParameters encodeParams = new EncoderParameters(1);
+		private static long jpegQuali = 100L;
 
-		private PictureHandler () {
-		}
 
-		public static void savePicturePoster(Bitmap b, int idMovies) {
+		private PictureHandler () {}
+
+		public static void saveMoviePoster(Bitmap b, int idMovies) {
 			savePosterToHD(b, movieImagesPath + idMovies.ToString(), moviePosterName);
 		}
 
-		public static string getPicturePosterPath(int idMovies, PosterSize size) {
+		public static string getMoviePosterPath(int idMovies, PosterSize size) {
 			string path = buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, size);
-			if (File.Exists(path)) {
+			if (moviePosterInDB(idMovies)) {
 				return path;
 			} else {
 				return getNoPic(size);
@@ -54,26 +57,49 @@ namespace WinMovieRack.Model {
 
 		public static string getPersonPortraitPath(int idPerson, PosterSize size) {
 			string path = buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, size);
-			if (File.Exists(path)) {
+			if (personPortraitInDB(idPerson)) {
 				return path;
 			} else {
 				return getNoPic(size);
 			}
 		}
 
+		public static bool moviePosterInDB(int idMovies) {
+			string[] paths = {
+					buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, PosterSize.FULL),
+					buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, PosterSize.PREVIEW),
+					buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, PosterSize.LIST),
+					buildPosterPath(movieImagesPath + idMovies.ToString(), moviePosterName, PosterSize.TINY)
+							 };
+
+			return checkFullAvailability(paths);
+		}
+		
+		public static bool personPortraitInDB(int idPerson) {
+			string[] paths = {
+					buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, PosterSize.FULL),
+					buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, PosterSize.PREVIEW),
+					buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, PosterSize.LIST),
+					buildPosterPath(personImagesPath + idPerson.ToString(), personPortraitName, PosterSize.TINY)
+							 };
+
+			return checkFullAvailability(paths);
+		}
+
+
 		private static void savePosterToHD(Bitmap b, string path, string filename) {
 			Directory.CreateDirectory(path);
 
-			b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCode);
+			b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
 
-			Bitmap bPreview = scaleImageProportianal(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
-			bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCode);
+			Bitmap bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
+			bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
 
-			Bitmap bList = scaleImageProportianal(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT);
-			bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCode);
+			Bitmap bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT);
+			bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCodec, encodeParams);
 
-			Bitmap bTiny = scaleImageProportianal(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT);
-			bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCode);
+			Bitmap bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT);
+			bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
 
 		}
 
@@ -81,7 +107,7 @@ namespace WinMovieRack.Model {
 			return makePathStringSafe(path) + @"\" + filename + size.ToString() + ".jpg";
 		}
 
-		public static Bitmap scaleImageProportianal(Image image, int newMaxWidth, int newMaxHeight)
+		public static Bitmap scaleImageProportional(Image image, int newMaxWidth, int newMaxHeight)
         {
 
 			int scaleHeight, scaleWidth;
@@ -116,24 +142,62 @@ namespace WinMovieRack.Model {
 			return  Regex.Replace(safePath, @"\s", "\\ ");
 		}
 
-		public static void initNoPic() {
+		public static void initialize() {
+
+			EncoderParameter myEncoderParameter = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuali);
+			encodeParams.Param[0] = myEncoderParameter;
+			imageCodec = GetEncoderInfo("image/jpeg");
+
 			Directory.CreateDirectory(nopicPath);
 
 			Bitmap noPicFull = WinMovieRack.Properties.Resources.nopicFULL;
-			noPicFull.Save(buildPosterPath(nopicPath, noPicName, PosterSize.FULL), imageCode);
+			noPicFull.Save(buildPosterPath(nopicPath, noPicName, PosterSize.FULL), imageCodec, encodeParams);
 
 			Bitmap prev = WinMovieRack.Properties.Resources.nopicPREVIEW;
-			prev.Save(buildPosterPath(nopicPath, noPicName, PosterSize.PREVIEW), imageCode);
+			prev.Save(buildPosterPath(nopicPath, noPicName, PosterSize.PREVIEW), imageCodec, encodeParams);
 
 			Bitmap list = WinMovieRack.Properties.Resources.nopicLIST;
-			list.Save(buildPosterPath(nopicPath, noPicName, PosterSize.LIST), imageCode);
+			list.Save(buildPosterPath(nopicPath, noPicName, PosterSize.LIST), imageCodec, encodeParams);
 
 			Bitmap tiny = WinMovieRack.Properties.Resources.nopicTINY;
-			tiny.Save(buildPosterPath(nopicPath, noPicName, PosterSize.TINY), imageCode);
+			tiny.Save(buildPosterPath(nopicPath, noPicName, PosterSize.TINY), imageCodec, encodeParams);
+
+			
 		}
 
 		private static string getNoPic(PosterSize size) {
 			return buildPosterPath(nopicPath, noPicName, size);
+		}
+
+		private static bool checkFullAvailability(string[] paths) {
+			bool[] exists = new bool[paths.Length];
+			bool everyoneThere = true;
+			for (int i = 0 ; i < paths.Length ; i++) {
+				exists[i] = File.Exists(paths[i]);
+				everyoneThere &= exists[i];
+			}
+
+			if (!everyoneThere) {
+				for (int i = 0 ; i < paths.Length ; i++) {
+					if (exists[i]) {
+						File.Delete(paths[i]);
+					}
+				}
+			}
+			return everyoneThere;
+
+		}
+
+		private static ImageCodecInfo GetEncoderInfo(String mimeType) {
+        int j;
+        ImageCodecInfo[] encoders;
+        encoders = ImageCodecInfo.GetImageEncoders();
+        for(j = 0; j < encoders.Length; ++j)
+        {
+            if(encoders[j].MimeType == mimeType)
+                return encoders[j];
+        }
+        return null;
 		}
 	}
 }
