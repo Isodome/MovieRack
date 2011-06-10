@@ -44,6 +44,11 @@ namespace WinMovieRack
             listBoxMovies.Items.Add(item);
         }
 
+        public void gernerateCastListBox(MovieRackListBoxItem item)
+        {
+            castListBox.Items.Add(item);
+        }
+
         private void changeView(UIElement newView)
         {
             tabControl.Children.Remove(current);
@@ -61,17 +66,18 @@ namespace WinMovieRack
             {
                 getMovieDetails(selectetItem.itemID);
                 setMovieDetails(movieDetails);
+                controller.loadActorList(selectetItem.itemID);
             }
         }
 
         private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
         {
             bigPicture = new BigPicture();
-			BitmapImage posterBitmap = new BitmapImage();
-			posterBitmap.BeginInit();
-			posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.FULL));
-			posterBitmap.EndInit();
-			bigPicture.bigPicture.Source = posterBitmap;
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.FULL));
+            posterBitmap.EndInit();
+            bigPicture.bigPicture.Source = posterBitmap;
 
 
             Point origin = new Point(0, 0);
@@ -80,6 +86,7 @@ namespace WinMovieRack
 
             bigPicture.fadeIn();
         }
+
 
         public void resetMovieList()
         {
@@ -93,17 +100,17 @@ namespace WinMovieRack
 
         public void sortListBox()
         {
-          //  System.ComponentModel.SortDescription test = new System.ComponentModel.SortDescription("Content.title", System.ComponentModel.ListSortDirection.Descending);
-          //  Console.Write(test.PropertyName);
-          //  listBoxMovies.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Content", System.ComponentModel.ListSortDirection.Descending));
-           // ArrayList arrList;
-          //  arrList = ArrayList.Adapter(listBoxMovies.Items);
-          //  arrList.Sort(new ListComparerTest()); 
+            //  System.ComponentModel.SortDescription test = new System.ComponentModel.SortDescription("Content.title", System.ComponentModel.ListSortDirection.Descending);
+            //  Console.Write(test.PropertyName);
+            //  listBoxMovies.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Content", System.ComponentModel.ListSortDirection.Descending));
+            // ArrayList arrList;
+            //  arrList = ArrayList.Adapter(listBoxMovies.Items);
+            //  arrList.Sort(new ListComparerTest()); 
         }
 
         private void setMovieDetails(GUIMovie movieDetails)
         {
-			this.movieDetails = movieDetails;
+            this.movieDetails = movieDetails;
             yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
@@ -126,5 +133,20 @@ namespace WinMovieRack
             runtime.Content = movieDetails.runtime;
 
         }
+
+        private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
+            if (selectetItem != null)
+            {
+                GUIPerson personDetails = controller.getGUIPerson(selectetItem.itemID);
+                setPersonDetails(personDetails);
+            }
+        }
+        private void setPersonDetails(GUIPerson personDetails)
+        {
+            personName.Content = personDetails.Name;
+        }
+
     }
 }

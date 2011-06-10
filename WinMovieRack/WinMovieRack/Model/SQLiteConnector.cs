@@ -90,16 +90,26 @@ namespace WinMovieRack.Model
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> personList = new List<MRListData>();
             List<string> personID = new List<string>();
-            command.CommandText = "SELECT Person_idPerson, CharacterName, FROM Role WHERE Movies_idMovies = " + idMovies;
+            List<string> charakter = new List<string>();
+            command.CommandText = "SELECT Person_idPerson, CharacterName FROM Role WHERE Movies_idMovies = " + idMovies;
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             while (reader.Read())
             {
                 personID.Add(reader[0].ToString());
+                charakter.Add(reader[1].ToString());
             }
+            for (int i = 0; i < personID.Count; i++)
+            {
+                command = new SQLiteCommand(connection);
+                command.CommandText = "SELECT idPerson, Name, Birthday FROM Person WHERE idPerson = " + personID.ElementAt(i);
+                reader = executeReaderThreadSafe(command);
+                personList.Add(new MRListData(int.Parse(reader["idPerson"].ToString()), reader["Name"].ToString(), 10, charakter.ElementAt(i)));
+            }
+            command.Dispose();
             return personList;
         }
 
-        public List<MRListData> getPersonList(PersonEnum editable)
+        public List<MRListData> getCompletePersonList(PersonEnum editable)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> personList = new List<MRListData>();
@@ -133,9 +143,6 @@ namespace WinMovieRack.Model
             int OtherNominations = int.Parse(reader["OtherNominations"].ToString());
             int OtherWins = int.Parse(reader["OtherWins"].ToString());
             int imdbID = int.Parse(reader["imdbID"].ToString());
-
-
-
             return new GUIPerson(dbID,Name,OriginalName,Biography,CountryofBirth,CityofBirth,lifetimeGross,boxofficeAverage,OscarNominations,OscarWins,OtherNominations,OtherWins,imdbID);
         }
 

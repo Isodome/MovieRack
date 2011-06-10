@@ -243,7 +243,7 @@
                             <Button Content="Test Add" Height="23" HorizontalAlignment="Left" Margin="873,106,0,0" Name="add" VerticalAlignment="Top" Width="75" Click="add_Click" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Name="listboxCast" Header="Cast" Margin="5,5,5,5" Height="auto" Grid.Row="1" FontSize="15" FontWeight="Bold">
+                    <GroupBox Name="listboxCast" Header="Movies" Margin="5,5,5,5" Height="auto" Grid.Row="1" FontSize="15" FontWeight="Bold">
                     <Grid Margin="5,5,0,5" Width="auto">
                         <ListBox Margin="5,5,5,5" Name="listBox1" Height="auto" />
                     </Grid>

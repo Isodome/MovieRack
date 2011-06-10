@@ -17,7 +17,7 @@ namespace WinMovieRack.Controller
 
         public ActorsViewController(Controller c, SQLiteConnector db)
         {
-            this.db=db;
+            this.db = db;
             this.controller = c;
 
         }
@@ -28,18 +28,17 @@ namespace WinMovieRack.Controller
 
         public void loadList()
         {
-            
             createmovieRackListBoxItems();
             addMovieRackListBoxItem();
         }
 
         private void createmovieRackListBoxItems()
         {
-            this.mrListData = db.getPersonList(PersonEnum.OscarWins);//Aus Config lesen
+            this.mrListData = db.getCompletePersonList(PersonEnum.OscarWins);//Aus Config lesen
             this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i),false));
+                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
             }
         }
 
@@ -50,7 +49,8 @@ namespace WinMovieRack.Controller
                 view.addActorListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
         }
-        public GUIPerson getGUIPerson(int itemID){
+        public GUIPerson getGUIPerson(int itemID)
+        {
             return db.getPersonInfo(itemID);
         }
     }

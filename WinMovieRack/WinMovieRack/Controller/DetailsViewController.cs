@@ -27,11 +27,31 @@ namespace WinMovieRack.Controller
             this.view = dv;
         }
 
-        public void loadList()
+        public void loadMovieList()
         {
             view.resetMovieList();
             createmovieRackListBoxItems();
             addMovieRackListBoxItem();
+
+        }
+
+        public void loadActorList(int itemID)
+        {
+            this.mrListData = db.getPersonListToMovie(itemID);
+            this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            for (int i = 0; i < mrListData.Count; i++)
+            {
+                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i),false));
+            }
+            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            {
+                view.gernerateCastListBox(movieRackListBoxItems.ElementAt(i));
+            }
+        }
+
+        public GUIPerson getGUIPerson(int itemID)
+        {
+            return db.getPersonInfo(itemID);
         }
 
         private void createmovieRackListBoxItems()

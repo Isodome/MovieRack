@@ -129,7 +129,96 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Cast" Name="castTab">
-                <Grid Height="auto" Width="auto" />
+                <Grid Width="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Cast" Margin="5" Name="castBox" FontSize="15" FontWeight="Bold">
+                        <Grid>
+                            <ListBox Height="auto" Margin="5" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Production" Height="419" Margin="10,10,10,0" Name="groupBox1" Grid.Column="2" VerticalAlignment="Top">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox1" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="Actor" Margin="10,433,10,10" Name="groupBox2" FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Margin="10,100,0,0" Name="actorPoster" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" MaxHeight="200" MaxWidth="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" />
+                            <Label Content="NAme" Height="auto" HorizontalAlignment="Left" Margin="20,20,0,0" Name="personName" VerticalAlignment="Top" FontSize="35" />
+                            <GroupBox FontSize="15" FontWeight="Bold" Header="Details" Margin="10,10,10,0" Name="groupBox3" Grid.Column="1" Height="350" VerticalAlignment="Top">
+                                <Grid Height="auto" Width="auto">
+                                    <StackPanel CanHorizontallyScroll="False" Focusable="False" Height="auto" Name="detailsStack" Opacity="1" Orientation="Vertical" VerticalAlignment="Top" Visibility="Visible">
+                                        <StackPanel Height="Auto" Name="birthdayStack" Orientation="Horizontal" Width="Auto">
+                                            <Label Content="Birthday:" Height="auto" HorizontalAlignment="Left" Name="birthdayLabel" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" />
+                                            <Label Content="10.06.2007" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="birthday" Width="auto" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="ageStack" Orientation="Horizontal">
+                                            <Label Content="Age:" Height="auto" Name="ageLabel" Width="auto" />
+                                            <Label Content="5" FontWeight="Normal" Height="auto" Name="ageDetails" Width="auto" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="locationOfBirthStack" Orientation="Horizontal">
+                                            <Label Content="Location of Birth:" Height="auto" Name="locationOfBirthLabel" Width="auto" />
+                                            <Label Content="Hollywood, California, USA" FontWeight="Normal" Height="auto" Name="locationOfBirth" Width="auto" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="awardsStack" Orientation="Horizontal" Width="Auto">
+                                            <Label Content="Oscars:" Height="auto" Name="oscarsLabel" Width="auto" />
+                                            <Label Content="2" FontWeight="Normal" Height="auto" Name="oscars" Width="auto" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="lifetimeGrossStack" Orientation="Horizontal">
+                                            <Label Content="Lifetime Gross:" Height="auto" Name="lifetimeGrossLabel" Width="auto" />
+                                            <Label Content="3.600.570.482" FontWeight="Normal" Height="auto" Name="lifetimeGross" Width="auto" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="averageBoxofficeStack" Orientation="Horizontal">
+                                            <Label Content="Average Boxoffice:" Height="auto" Name="averageBoxofficeLabel" Width="auto" />
+                                            <Label Content="200.000.000" FontWeight="Normal" Height="auto" Name="averageBoxoffice" Width="auto" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox FontSize="15" FontWeight="Bold" Header="Kown For" Margin="6,360,14,16" Name="groupBox4">
+                                <Grid>
+                                    <StackPanel CanHorizontallyScroll="False" Focusable="False" Margin="0,0,0,0" Name="stackPanel23" Opacity="1" Orientation="Vertical" Visibility="Visible">
+                                        <StackPanel Height="Auto" Name="stackPanel24" Orientation="Horizontal" Width="Auto">
+                                            <Label Content="Title1" Height="auto" HorizontalAlignment="Left" Name="label6" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="label7" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="label9" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="stackPanel25" Orientation="Horizontal" Width="Auto" />
+                                        <StackPanel Height="Auto" Name="stackPanel26" Orientation="Horizontal">
+                                            <Label Content="Title2" Height="auto" Name="label8" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="label10" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="label11" />
+                                        </StackPanel>
+                                        <StackPanel Height="Auto" Name="stackPanel27" Orientation="Horizontal">
+                                            <Label Content="Title3" Height="auto" Name="label12" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="label13" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="labe11" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="Movies in Database" Margin="10,10,10,10" Name="groupBox5" Grid.Column="2">
+                                <Grid>
+                                    <ListBox Margin="5" Name="listBox2" />
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Stars" Margin="10,10,10,0" Name="groupBox6" Grid.Column="1" Height="419" VerticalAlignment="Top">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox3" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
             </TabItem>
             <TabItem Header="Boxoffice" Name="boxofficeTab">
                 <Grid Height="387" Width="299" />

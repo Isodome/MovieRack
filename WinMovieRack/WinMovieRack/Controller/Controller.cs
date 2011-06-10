@@ -70,7 +70,7 @@ namespace WinMovieRack.Controller {
                     actorsViewController.loadList();
 					break;
 				case View.DETAILS_VIEW:
-                    detailsViewController.loadList();
+                    detailsViewController.loadMovieList();
 					break;
 				case View.IMDB_BROWSER:
 					browserController.activated();
