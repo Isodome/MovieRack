@@ -15,6 +15,7 @@ namespace WinMovieRack.Model {
 
 		public static string movieImagesPath = PATH_TO_DB + @"\img\mov\";
 		public static string personImagesPath = PATH_TO_DB + @"\img\per\";
+		public static string nopicPath = PATH_TO_DB + @"\img\nopic";
 
 
 		public const int PREVIEW_IMAGE_WIDTH = 200;
@@ -27,6 +28,7 @@ namespace WinMovieRack.Model {
 
 		public const string moviePosterName = "poster";
 		public const string personPortraitName = "portrait";
+		public const string noPicName = "nopic";
 
 		public static System.Drawing.Imaging.ImageFormat imageCode = System.Drawing.Imaging.ImageFormat.Jpeg;
 
@@ -75,11 +77,6 @@ namespace WinMovieRack.Model {
 
 		}
 
-
-		private static string getNoPic(PosterSize size) {
-			return @"Ressources\nopic" + size.ToString() + ".jpg";
-		}
-
 		private static string buildPosterPath(string path, string filename, PosterSize size) {
 			return makePathStringSafe(path) + @"\" + filename + size.ToString() + ".jpg";
 		}
@@ -117,6 +114,26 @@ namespace WinMovieRack.Model {
 		private static string makePathStringSafe(string path) {
 			string safePath = Regex.Replace(path.Trim(), "\\$", "");
 			return  Regex.Replace(safePath, @"\s", "\\ ");
+		}
+
+		public static void initNoPic() {
+			Directory.CreateDirectory(nopicPath);
+
+			Bitmap noPicFull = WinMovieRack.Properties.Resources.nopicFULL;
+			noPicFull.Save(buildPosterPath(nopicPath, noPicName, PosterSize.FULL), imageCode);
+
+			Bitmap prev = WinMovieRack.Properties.Resources.nopicPREVIEW;
+			prev.Save(buildPosterPath(nopicPath, noPicName, PosterSize.PREVIEW), imageCode);
+
+			Bitmap list = WinMovieRack.Properties.Resources.nopicLIST;
+			list.Save(buildPosterPath(nopicPath, noPicName, PosterSize.LIST), imageCode);
+
+			Bitmap tiny = WinMovieRack.Properties.Resources.nopicTINY;
+			tiny.Save(buildPosterPath(nopicPath, noPicName, PosterSize.TINY), imageCode);
+		}
+
+		private static string getNoPic(PosterSize size) {
+			return buildPosterPath(nopicPath, noPicName, size);
 		}
 	}
 }

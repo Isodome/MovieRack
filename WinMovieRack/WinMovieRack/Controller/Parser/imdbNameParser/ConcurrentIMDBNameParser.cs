@@ -31,8 +31,6 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		public ImdbPerson person;
 
 
-		
-
 		public ConcurrentIMDBNameParser(uint imdbID)
 		{
 			person = new ImdbPerson(imdbID);

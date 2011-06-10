@@ -56,6 +56,7 @@ namespace WinMovieRack.Controller {
 		private void initializeModel() {
 			db = new SQLiteConnector();
 			db.initDb();
+			PictureHandler.initNoPic();
 		}
 
 
