@@ -11,15 +11,13 @@ namespace WinMovieRack.Model
         public string titleName;
         public int yearAge;
         public string editableCharakter;
-        public string posterPath;
 
-        public MRListData(int dbItemID, string titleName, int yearAge, string editableCharakter, string posterPath)
+        public MRListData(int dbItemID, string titleName, int yearAge, string editableCharakter)
         {
             this.dbItemID = dbItemID;
             this.titleName = titleName;
             this.yearAge = yearAge;
             this.editableCharakter = editableCharakter;
-            this.posterPath = posterPath;
         }
     }
 }

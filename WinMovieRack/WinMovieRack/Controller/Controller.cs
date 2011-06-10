@@ -46,8 +46,8 @@ namespace WinMovieRack.Controller {
 			DetailsView dv = new DetailsView(detailsViewController);
 			detailsViewController.setDetailsView(dv);
 
-            actorsViewController = new ActorsViewController();
-            ActorsView av = new ActorsView();
+            actorsViewController = new ActorsViewController(this, db);
+            ActorsView av = new ActorsView(actorsViewController);
             actorsViewController.setActorsView(av);
 
 			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av);
@@ -64,6 +64,7 @@ namespace WinMovieRack.Controller {
 			//Inform specific controllers
 			switch (view) {
 				case View.ACTORS_VIEW:
+                    actorsViewController.loadList();
 					break;
 				case View.DETAILS_VIEW:
                     detailsViewController.loadList();

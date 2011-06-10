@@ -14,7 +14,7 @@
             <Grid>
                 <TextBox Height="30" Margin="5,6,50,0" Name="searchBox" Text="(Search)" VerticalAlignment="Top" />
                 <Button Content="Search" FontSize="10" FontWeight="Normal" Height="auto" HorizontalAlignment="Right" Margin="0,17,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" />
-                <ListBox Margin="5,54,5,5" Name="listBoxMovies" />
+                <ListBox Margin="5,54,5,5" Name="listBoxActor" SelectionChanged="listBoxActor_SelectionChanged" />
             </Grid>
         </GroupBox>
         <Label Content="Name" Grid.Column="1" Height="auto" HorizontalAlignment="Left" Margin="60,10,0,0" Name="name" VerticalAlignment="Top" FontSize="35" FontWeight="Bold" />
@@ -138,10 +138,125 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Awards/Movies" Name="awardsMovies">
-                <Grid />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Details" Margin="5,5,5,185" Name="groupBox1" Grid.Column="1" Grid.Row="1" Height="auto">
+                        <Grid>
+                            <StackPanel CanHorizontallyScroll="False" Focusable="False" Name="stackPanel2" Opacity="1" Orientation="Vertical" Visibility="Visible" Margin="0,0,0,0">
+                                <StackPanel Height="Auto" Name="stackPanel1" Orientation="Horizontal" Width="Auto">
+                                    <Label Content="Runtime:" Height="auto" HorizontalAlignment="Left" Name="runtimeLabel" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" />
+                                    <Label Content="120 min" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="runtime" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel3" Orientation="Horizontal" Width="Auto" />
+                                <StackPanel Height="Auto" Name="stackPanel5" Orientation="Horizontal">
+                                    <Label Content="Cinema Date:" Height="auto" Name="cinemaDateLabel" Width="auto" />
+                                    <Label Content="13.05.2010" FontWeight="Normal" Height="auto" Name="cinemaDate" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel4" Orientation="Horizontal">
+                                    <Label Content="Last Seen:" Height="auto" Name="lastSeenLabel" Width="auto" />
+                                    <Label Content="16.05.2010" FontWeight="Normal" Height="auto" Name="lastSeen" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel6" Orientation="Horizontal" Width="Auto">
+                                    <Label Content="MPAA:" Height="auto" Name="mpaaLabel" Width="auto" />
+                                    <Label Content="R" FontWeight="Normal" Height="auto" Name="mpaa" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel8" Orientation="Horizontal">
+                                    <Label Content="Seen:" Height="auto" Name="seenLabel" Width="auto" />
+                                    <Label Content="3" FontWeight="Normal" Height="auto" Name="seen" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel12" Orientation="Horizontal">
+                                    <Label Content="Awards:" Height="auto" Name="awardsLabel" Width="auto" />
+                                    <Label Content="3" FontWeight="Normal" Height="auto" Name="awards" Width="45" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel13" Orientation="Horizontal">
+                                    <Label Content="Production Budget:" Height="auto" Name="productionBudgetLabel" Width="auto" />
+                                    <Label Content="150 mio" FontWeight="Normal" Height="auto" Name="budget" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel14" Orientation="Horizontal">
+                                    <Label Content="Boxoffice:" Height="auto" Name="boxofficeLabel" Width="auto" />
+                                    <Label Content="502.675.435" FontWeight="Normal" Height="auto" Name="boxxoffice" Width="auto" />
+                                </StackPanel>
+                                <StackPanel Height="Auto" Name="stackPanel15" Orientation="Horizontal">
+                                    <Label Content="Language:" Height="auto" Name="LanguageLabel" Width="auto" />
+                                    <Label Content="German" FontWeight="Normal" Height="auto" Name="language" Width="auto" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Stars" Margin="5" Name="SummeryStars" Height="483" Grid.Column="2" Grid.Row="1">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="SummeryStarsListbox" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Awards" Height="56" Margin="5,5,5,5" Name="EnhancedAwards" VerticalAlignment="Top" Grid.ColumnSpan="3">
+                        <Grid>
+                            <Label Content="Won 4 Oscars. Another 63 wins and 92 nominations" FontWeight="Normal" HorizontalAlignment="Left" Margin="5,0,0,0" Name="awardsOverview" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Awards" Margin="5,70,5,5" Name="completeAwards" Grid.ColumnSpan="3">
+                        <Grid>
+                            <FlowDocumentReader Height="auto" HorizontalAlignment="Left" Width="auto" VerticalAlignment="Top" ViewingMode="Scroll" IsTwoPageViewEnabled="False" IsPageViewEnabled="False" IsManipulationEnabled="True" IsPrintEnabled="False" IsFindEnabled="False" UseLayoutRounding="True">
+                                <FlowDocument Name="FlowDokumen">
+                                    <Table Name="resistorTable">
+                                        <TableRowGroup>
+                                            <!--Row header-->
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Paragraph FontSize="14">Year</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="14">Award</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="14">Result</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="14">Categorie</Paragraph>
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Paragraph FontSize="12">2011</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="12">Oscar</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="12">Won</Paragraph>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Paragraph FontSize="12">Best Actor</Paragraph>
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableRowGroup>
+                                    </Table>
+                                </FlowDocument>
+                            </FlowDocumentReader>
+                            <Button Content="Test Add" Height="23" HorizontalAlignment="Left" Margin="873,106,0,0" Name="add" VerticalAlignment="Top" Width="75" Click="add_Click" />
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Name="listboxCast" Header="Cast" Margin="5,5,5,5" Height="auto" Grid.Row="1" FontSize="15" FontWeight="Bold">
+                    <Grid Margin="5,5,0,5" Width="auto">
+                        <ListBox Margin="5,5,5,5" Name="listBox1" Height="auto" />
+                    </Grid>
+                    </GroupBox>
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Production" Margin="5,310,5,5" Name="SummeryProduction" Height="174" Grid.Column="1" Grid.Row="1">
+                        <Grid>
+                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="SummeryProductionListbox" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
             </TabItem>
             <TabItem Header="Pictures" Name="pictures">
-                <Grid />
+                <Grid></Grid>
             </TabItem>
         </TabControl>
     </Grid>
