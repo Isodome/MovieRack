@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using WinMovieRack.Controller.ThreadManagement;
+using System.Net;
 namespace WinMovieRack.Controller.Parser
 {
 	class JobWebPageDownload : ThreadJob
@@ -27,7 +28,7 @@ namespace WinMovieRack.Controller.Parser
 				WebRequest req = WebRequest.Create(url);
 				WebResponse resp = req.GetResponse();
 				StreamReader r = new StreamReader(resp.GetResponseStream());
-				result = r.ReadToEnd();
+				result =WebUtility.HtmlDecode(r.ReadToEnd());
 				resp.Close();
 				r.Close();
 			} catch (UriFormatException e) {
