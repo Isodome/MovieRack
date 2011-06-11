@@ -9,7 +9,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MinWidth="250"/>
             <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="4*" MinWidth="750" />
         </Grid.ColumnDefinitions>
         <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
@@ -24,10 +24,10 @@
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" MinWidth="250" />
                         <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" MinWidth="250" />
+                        <ColumnDefinition Width="1*" MinWidth="250" />
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="2" Header="Details" Margin="5,0" Name="SummeryDetails" FontSize="15" FontWeight="Bold" Height="306" VerticalAlignment="Bottom" Grid.Row="1">
                         <Grid>
@@ -72,7 +72,7 @@
                             </StackPanel>
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Plot" Margin="5,5,5,312" Name="SummeryPlot" Grid.Column="2" Height="auto" Grid.RowSpan="2">
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Plot" Margin="0,0,0,312" Name="SummeryPlot" Grid.Column="2" Height="auto" Grid.RowSpan="2">
                         <Grid Width="auto" Height="auto">
                             <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" />
                         </Grid>
@@ -87,7 +87,7 @@
                             <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="SummeryProductionListbox" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Additional Information" Margin="15,5,10,0" Name="SummeryAdditionalInformation" Grid.Column="3">
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Additional Information" Margin="15,5,10,5" Name="SummeryAdditionalInformation" Grid.Column="3">
                         <Grid></Grid>
                     </GroupBox>
                     <GroupBox FontSize="15" FontWeight="Bold" Header="Notes" Margin="15,5,10,0" Name="SummeryNotes" Grid.Column="3" Grid.Row="1">
@@ -97,7 +97,7 @@
                             </Grid>
                         </Grid>
                     </GroupBox>
-                    <GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0" Name="gridSplitter1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
+                    <GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0" Name="gridSplitter1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                 </Grid>
             </TabItem>
             <TabItem Header="Enhanced" Name="enancedTab">
@@ -130,31 +130,36 @@
             </TabItem>
             <TabItem Header="Cast" Name="castTab">
                 <Grid Width="auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" MinWidth="250" />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition Width="1*" MinWidth="250" />
+                        <ColumnDefinition Width="15" />
+                        <ColumnDefinition Width="1*"  MinWidth="250" />
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Cast" Margin="5" Name="castBox" FontSize="15" FontWeight="Bold">
+                    <GroupBox Header="Cast" Margin="5,5,5,5" Name="castBox" FontSize="15" FontWeight="Bold" Grid.RowSpan="2" Height="auto">
                         <Grid>
                             <ListBox Height="auto" Margin="5" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Production" Height="419" Margin="10,10,10,0" Name="groupBox1" Grid.Column="2" VerticalAlignment="Top">
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Production" Margin="0,10,0,10" Name="groupBox1" Grid.Column="4" MinWidth="250">
                         <Grid>
                             <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox1" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Actor" Margin="10,433,10,10" Name="groupBox2" FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2">
+                    <GroupBox Grid.Column="2" Header="Actor" Margin="10,10,10,10" Name="groupBox2" FontSize="15" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
                             </Grid.ColumnDefinitions>
                             <Image Margin="10,100,0,0" Name="actorPoster" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" MaxHeight="200" MaxWidth="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" />
-                            <Label Content="NAme" Height="auto" HorizontalAlignment="Left" Margin="20,20,0,0" Name="personName" VerticalAlignment="Top" FontSize="35" />
-                            <GroupBox FontSize="15" FontWeight="Bold" Header="Details" Margin="10,10,10,0" Name="groupBox3" Grid.Column="1" Height="350" VerticalAlignment="Top">
+                            <GroupBox FontSize="15" FontWeight="Bold" Header="Details" Margin="10,10,10,0" Name="groupBox3" Grid.Column="1" Height="auto" VerticalAlignment="Top">
                                 <Grid Height="auto" Width="auto">
                                     <StackPanel CanHorizontallyScroll="False" Focusable="False" Height="auto" Name="detailsStack" Opacity="1" Orientation="Vertical" VerticalAlignment="Top" Visibility="Visible">
                                         <StackPanel Height="Auto" Name="birthdayStack" Orientation="Horizontal" Width="Auto">
@@ -184,24 +189,23 @@
                                     </StackPanel>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox FontSize="15" FontWeight="Bold" Header="Kown For" Margin="6,360,14,16" Name="groupBox4">
+                            <GroupBox FontSize="15" FontWeight="Bold" Header="Kown For" Margin="10,0,10,10" Name="groupBox4" Grid.Column="1" Height="auto" VerticalAlignment="Bottom">
                                 <Grid>
                                     <StackPanel CanHorizontallyScroll="False" Focusable="False" Margin="0,0,0,0" Name="stackPanel23" Opacity="1" Orientation="Vertical" Visibility="Visible">
-                                        <StackPanel Height="Auto" Name="stackPanel24" Orientation="Horizontal" Width="Auto">
-                                            <Label Content="Title1" Height="auto" HorizontalAlignment="Left" Name="label6" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" />
-                                            <Label Content="Charakter Name" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="label7" Width="auto" />
-                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="label9" />
+                                        <StackPanel Height="Auto" Name="knowForStack1" Orientation="Horizontal" Width="Auto">
+                                            <Label Content="Title1" Height="auto" HorizontalAlignment="Left" Name="knowForStack1Title" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="knowForStack1Charakter" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="knowForStack1IMDBRating" />
                                         </StackPanel>
-                                        <StackPanel Height="Auto" Name="stackPanel25" Orientation="Horizontal" Width="Auto" />
-                                        <StackPanel Height="Auto" Name="stackPanel26" Orientation="Horizontal">
-                                            <Label Content="Title2" Height="auto" Name="label8" Width="auto" />
-                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="label10" Width="auto" />
-                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="label11" />
+                                        <StackPanel Height="Auto" Name="knowForStack2" Orientation="Horizontal">
+                                            <Label Content="Title2" Height="auto" Name="knowForStack2Title" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="knowForStack2Charakter" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="knowForStack2IMDBRating" />
                                         </StackPanel>
-                                        <StackPanel Height="Auto" Name="stackPanel27" Orientation="Horizontal">
-                                            <Label Content="Title3" Height="auto" Name="label12" Width="auto" />
-                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="label13" Width="auto" />
-                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="labe11" />
+                                        <StackPanel Height="Auto" Name="knowForStack3" Orientation="Horizontal">
+                                            <Label Content="Title3" Height="auto" Name="knowForStack3Title" Width="auto" />
+                                            <Label Content="Charakter Name" FontWeight="Normal" Height="auto" Name="knowForStack3Charakter" Width="auto" />
+                                            <Label Content="IMDB Wertung" FontWeight="Normal" Height="28" Name="knowForStack3IMDBRating" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
@@ -211,13 +215,16 @@
                                     <ListBox Margin="5" Name="listBox2" />
                                 </Grid>
                             </GroupBox>
+                            <TextBlock Height="auto" Margin="10,10,5,0" Name="personName" Text="Name" VerticalAlignment="Top" FontSize="25" FontWeight="Normal" TextWrapping="Wrap" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="15" FontWeight="Bold" Header="Stars" Margin="10,10,10,0" Name="groupBox6" Grid.Column="1" Height="419" VerticalAlignment="Top">
+                    <GroupBox FontSize="15" FontWeight="Bold" Header="Stars" Margin="0,10,0,10" Name="groupBox6" Grid.Column="2" MinWidth="250">
                         <Grid>
-                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox3" />
+                            <ListBox ClipToBounds="True" Name="listBox3" Width="auto" />
                         </Grid>
                     </GroupBox>
+                    <GridSplitter Grid.Column="1" Name="gridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" Grid.RowSpan="2" />
+                    <GridSplitter Grid.Column="3" Grid.ColumnSpan="1" Height="auto" Margin="0,0,0,0" HorizontalAlignment="Stretch" Background="#FFF9F9F9" VerticalAlignment="Stretch" Name="gridSplitter3"  Width="auto" />
                 </Grid>
             </TabItem>
             <TabItem Header="Boxoffice" Name="boxofficeTab">

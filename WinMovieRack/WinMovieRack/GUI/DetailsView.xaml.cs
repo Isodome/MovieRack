@@ -32,7 +32,6 @@ namespace WinMovieRack
         BigPicture bigPicture;
         GUIMovie movieDetails;
         DetailsViewController controller;
-
         public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
@@ -92,7 +91,10 @@ namespace WinMovieRack
         {
             listBoxMovies.Items.Clear();
         }
-
+        public void resetActorList()
+        {
+            castListBox.Items.Clear();
+        }
         private void getMovieDetails(int itemID)
         {
             this.movieDetails = controller.getGUIMovie(itemID);
@@ -145,8 +147,28 @@ namespace WinMovieRack
         }
         private void setPersonDetails(GUIPerson personDetails)
         {
-            personName.Content = personDetails.Name;
+            personName.Text = personDetails.Name;
+            locationOfBirth.Content = personDetails.CityofBirth;
+            oscars.Content = personDetails.OscarWins;
+            lifetimeGross.Content = personDetails.lifetimeGross;
+            averageBoxoffice.Content = personDetails.boxofficeAverage;
+
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
+            posterBitmap.EndInit();
+            actorPoster.Source = posterBitmap;
         }
 
+        public System.Windows.Controls.ListBox getlistBoxMovies()
+        {
+            return listBoxMovies;
+        }
+
+        public System.Windows.Controls.ListBox getcastListBox()
+        {
+            return castListBox;
+        }
     }
+
 }

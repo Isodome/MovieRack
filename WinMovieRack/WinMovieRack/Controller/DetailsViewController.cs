@@ -32,11 +32,12 @@ namespace WinMovieRack.Controller
             view.resetMovieList();
             createmovieRackListBoxItems();
             addMovieRackListBoxItem();
-
+            view.getlistBoxMovies().SelectedIndex = 0;
         }
 
         public void loadActorList(int itemID)
         {
+            view.resetActorList();
             this.mrListData = db.getPersonListToMovie(itemID);
             this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
@@ -47,6 +48,7 @@ namespace WinMovieRack.Controller
             {
                 view.gernerateCastListBox(movieRackListBoxItems.ElementAt(i));
             }
+            view.getcastListBox().SelectedIndex = 0;
         }
 
         public GUIPerson getGUIPerson(int itemID)
