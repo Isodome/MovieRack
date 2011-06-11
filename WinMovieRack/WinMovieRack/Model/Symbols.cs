@@ -12,6 +12,7 @@ namespace WinMovieRack.Model {
 		
 		public const int NO_IMDB_RATING = -1;
 		public const int NO_IMDB_VOTES = -1;
-
+		public const int NO_YEAR = -1;
+		public const DateTime NO_DATE = DateTime.MinValue;
 	}
 }

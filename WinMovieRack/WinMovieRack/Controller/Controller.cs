@@ -29,7 +29,7 @@ namespace WinMovieRack.Controller {
 		}
 
 		public void func(ThreadJobMaster sender) {
-			((imdbMovieParserMaster)sender).movieData.printToConsole();
+			((ConcurrentImdbMovieParser)sender).movieData.printToConsole();
 		}
 
 		private void initializeGUI() {

@@ -10,9 +10,9 @@ namespace WinMovieRack.Controller
     class TestJob : ThreadJob
     {
         private uint nr;
-        private imdbMovieParserMaster parent;
+        private ConcurrentImdbMovieParser parent;
 
-        public TestJob(imdbMovieParserMaster parent, uint nr)
+        public TestJob(ConcurrentImdbMovieParser parent, uint nr)
         {
             this.nr = nr;
             this.parent = parent;

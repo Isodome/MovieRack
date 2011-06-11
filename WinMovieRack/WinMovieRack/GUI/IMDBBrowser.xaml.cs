@@ -56,8 +56,8 @@ namespace WinMovieRack.GUI {
 			if (lastParser != null) {
 				if (lastParser is ConcurrentIMDBNameParser) {
 					controller.insertPersonInDB((ConcurrentIMDBNameParser)lastParser);
-				} else if (lastParser is imdbMovieParserMaster) {
-					controller.insertMovieInDB((imdbMovieParserMaster)lastParser);
+				} else if (lastParser is ConcurrentImdbMovieParser) {
+					controller.insertMovieInDB((ConcurrentImdbMovieParser)lastParser);
 				}
 			}
 			lastParser = null;
@@ -75,7 +75,7 @@ namespace WinMovieRack.GUI {
 			lastURL = url;
 
 			if (IMDBUtil.isMovieUrl(url)) {
-				imdbMovieParserMaster parser = new imdbMovieParserMaster(IMDBUtil.getTitleIdFromUrl(url));
+				ConcurrentImdbMovieParser parser = new ConcurrentImdbMovieParser(IMDBUtil.getTitleIdFromUrl(url));
 				parser.setFinalizeFunction(this.updateActionButton);
 				ThreadsMaster.getInstance().addVeryVeryImportantThreadMaster(parser);
 			} else if (IMDBUtil.isNameURL(url)) {
@@ -91,8 +91,8 @@ namespace WinMovieRack.GUI {
 			if (sender != null) {
 				if (sender is ConcurrentIMDBNameParser) {
 					setButton("Add '" + ((ConcurrentIMDBNameParser)sender).person.name + "' to Database", true);
-				} else if (sender is imdbMovieParserMaster) {
-					setButton("Add '" + ((imdbMovieParserMaster)sender).movieData.title + "' to Database", true);
+				} else if (sender is ConcurrentImdbMovieParser) {
+					setButton("Add '" + ((ConcurrentImdbMovieParser)sender).movieData.title + "' to Database", true);
 				}
 				lastParser = sender;
 			} else {
