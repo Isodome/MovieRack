@@ -71,55 +71,61 @@ namespace WinMovieRack.Model
 
         }
 
-        public List<MRListData> getMovieList(MovieEnum editable)
+        public List<MRListData> getCompleteMovieList(MovieEnum editable, MovieEnum order)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> movieList = new List<MRListData>();
-            command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + ", posterPath FROM Movies";
+            command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + " FROM Movies ORDER BY " + order.ToString();
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             while (reader.Read())
             {
-                movieList.Add(new MRListData(int.Parse(reader[0].ToString()), reader[1].ToString(), int.Parse(reader[2].ToString()), reader[3].ToString()));
+                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader[editable.ToString()].ToString()));
             }
             command.Dispose();
             return movieList;
         }
 
-        public List<MRListData> getPersonListToMovie(int idMovies)
+        public List<MRListData> getCompletePersonList(PersonEnum editable, PersonEnum order)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> personList = new List<MRListData>();
-            List<string> personID = new List<string>();
-            List<string> charakter = new List<string>();
-            command.CommandText = "SELECT Person_idPerson, CharacterName FROM Role WHERE Movies_idMovies = " + idMovies;
+            command.CommandText = "SELECT idPerson, Name, Birthday, " + editable.ToString() + " FROM Person ORDER BY " + order.ToString();
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             while (reader.Read())
             {
-                personID.Add(reader[0].ToString());
-                charakter.Add(reader[1].ToString());
+                //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
+                personList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader[editable.ToString()].ToString()));
             }
-            for (int i = 0; i < personID.Count; i++)
-            {
-                command = new SQLiteCommand(connection);
-                command.CommandText = "SELECT idPerson, Name, Birthday FROM Person WHERE idPerson = " + personID.ElementAt(i);
-                reader = executeReaderThreadSafe(command);
-                personList.Add(new MRListData(int.Parse(reader["idPerson"].ToString()), reader["Name"].ToString(), 10, charakter.ElementAt(i)));
-            }
-            command.Dispose();
             return personList;
         }
 
-        public List<MRListData> getCompletePersonList(PersonEnum editable)
+        public List<MRListData> getPersonListToMovie(int idMovies)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
-            List<MRListData> personList = new List<MRListData>();
-            command.CommandText = "SELECT idPerson, Name, " + editable.ToString() + " FROM Person";
+            command.CommandText = "SELECT idPerson, Name, Birthday, CharacterName FROM Role JOIN Person WHERE Person.idPerson = Role.Person_idPerson AND Role.Movies_idMovies =" + idMovies;
             SQLiteDataReader reader = executeReaderThreadSafe(command);
+            List<MRListData> movieList = new List<MRListData>();
             while (reader.Read())
             {
-                personList.Add(new MRListData(int.Parse(reader["idPerson"].ToString()), reader["Name"].ToString(), 0, reader[editable.ToString()].ToString()));
+                //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
+                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader.GetString(3)));
             }
-            return personList;
+            return movieList;
+        }
+
+
+
+        public List<MRListData> getMovieListToPerson(int Person_idPerson)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT idMovies, title, year, CharacterName FROM Role JOIN Movies WHERE Movies.idMovies = Role.Movies_idMovies AND Role.Person_idPerson =" + Person_idPerson;
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            List<MRListData> movieList = new List<MRListData>();
+            while (reader.Read())
+            {
+                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3)));
+            }
+            return movieList;
         }
 
         public GUIPerson getPersonInfo(int idPerson)
@@ -143,8 +149,48 @@ namespace WinMovieRack.Model
             int OtherNominations = int.Parse(reader["OtherNominations"].ToString());
             int OtherWins = int.Parse(reader["OtherWins"].ToString());
             int imdbID = int.Parse(reader["imdbID"].ToString());
-            return new GUIPerson(dbID,Name,OriginalName,Biography,CountryofBirth,CityofBirth,lifetimeGross,boxofficeAverage,OscarNominations,OscarWins,OtherNominations,OtherWins,imdbID);
+            return new GUIPerson(dbID, Name, OriginalName, Biography, CountryofBirth, CityofBirth, lifetimeGross, boxofficeAverage, OscarNominations, OscarWins, OtherNominations, OtherWins, imdbID);
         }
+
+        public GUIMovie getMovieInfo(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            int dbId = int.Parse(reader["idMovies"].ToString());
+            string title = reader["title"].ToString();
+            string originalTitle = reader["originalTitle"].ToString();
+            int runtime = int.Parse(reader["runtime"].ToString());
+            string plot = reader["plot"].ToString();
+            int year = int.Parse(reader["year"].ToString());
+            int imdbID = int.Parse(reader["imdbID"].ToString());
+            int imdbRating = int.Parse(reader["imdbRating"].ToString());
+            int imdbRatingVotes = int.Parse(reader["imdbRatingVotes"].ToString());
+            int imdbTop250 = int.Parse(reader["imdbTop250"].ToString());
+            string metacriticsID = reader["metacriticsID"].ToString();
+            int metacriticsReviewRating = int.Parse(reader["metacriticsReviewRating"].ToString());
+            int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
+            string rottentomatoesID = reader["rottentomatoesID"].ToString();
+            int rottenTomatoesAudience = int.Parse(reader["rottenTomatoesAudience"].ToString());
+            int tomatometer = int.Parse(reader["tomatometer"].ToString());
+            int personalRating = int.Parse(reader["personalRating"].ToString());
+            string boxofficemojoID = reader["boxofficemojoID"].ToString();
+            UInt32 boxofficeWorldwide = UInt32.Parse(reader["boxofficeWorldwide"].ToString());
+            UInt32 boxofficeAmerica = UInt32.Parse(reader["boxofficeAmerica"].ToString());
+            UInt32 boxofficeForeign = UInt32.Parse(reader["boxofficeForeign"].ToString());
+            int boxofficeFirstWeekend = int.Parse(reader["boxofficeFirstWeekend"].ToString());
+            int rangFirstWeekend = int.Parse(reader["rangFirstWeekend"].ToString());
+            int rankAllTime = int.Parse(reader["rankAllTime"].ToString());
+            int weeksInCinema = int.Parse(reader["weeksInCinema"].ToString());
+            int otherWins = int.Parse(reader["otherWins"].ToString());
+            int otherNominations = int.Parse(reader["otherNominations"].ToString());
+            string notes = reader["notes"].ToString();
+            bool TVSeries = true; //noch auslesen
+            int seenCount = int.Parse(reader["seenCount"].ToString());
+            DateTime lastSeen = new DateTime(); // noch auslesen
+            return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, rottentomatoesID, rottenTomatoesAudience, tomatometer, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen);
+        }
+
 
         public bool testAndSetPerson(uint imdbID)
         {
@@ -445,45 +491,6 @@ namespace WinMovieRack.Model
             command.Parameters.Add(param);
 
             executeCommandThreadSafe(command);
-        }
-
-        public GUIMovie getMovieInfo(int idMovies)
-        {
-            SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
-            SQLiteDataReader reader = executeReaderThreadSafe(command);
-            int dbId = int.Parse(reader["idMovies"].ToString());
-            string title = reader["title"].ToString();
-            string originalTitle = reader["originalTitle"].ToString();
-            int runtime = int.Parse(reader["runtime"].ToString());
-            string plot = reader["plot"].ToString();
-            int year = int.Parse(reader["year"].ToString());
-            int imdbID = int.Parse(reader["imdbID"].ToString());
-            int imdbRating = int.Parse(reader["imdbRating"].ToString());
-            int imdbRatingVotes = int.Parse(reader["imdbRatingVotes"].ToString());
-            int imdbTop250 = int.Parse(reader["imdbTop250"].ToString());
-            string metacriticsID = reader["metacriticsID"].ToString();
-            int metacriticsReviewRating = int.Parse(reader["metacriticsReviewRating"].ToString());
-            int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
-            string rottentomatoesID = reader["rottentomatoesID"].ToString();
-            int rottenTomatoesAudience = int.Parse(reader["rottenTomatoesAudience"].ToString());
-            int tomatometer = int.Parse(reader["tomatometer"].ToString());
-            int personalRating = int.Parse(reader["personalRating"].ToString());
-            string boxofficemojoID = reader["boxofficemojoID"].ToString();
-            UInt32 boxofficeWorldwide = UInt32.Parse(reader["boxofficeWorldwide"].ToString());
-            UInt32 boxofficeAmerica = UInt32.Parse(reader["boxofficeAmerica"].ToString());
-            UInt32 boxofficeForeign = UInt32.Parse(reader["boxofficeForeign"].ToString());
-            int boxofficeFirstWeekend = int.Parse(reader["boxofficeFirstWeekend"].ToString());
-            int rangFirstWeekend = int.Parse(reader["rangFirstWeekend"].ToString());
-            int rankAllTime = int.Parse(reader["rankAllTime"].ToString());
-            int weeksInCinema = int.Parse(reader["weeksInCinema"].ToString());
-            int otherWins = int.Parse(reader["otherWins"].ToString());
-            int otherNominations = int.Parse(reader["otherNominations"].ToString());
-            string notes = reader["notes"].ToString();
-            bool TVSeries = true; //noch auslesen
-            int seenCount = int.Parse(reader["seenCount"].ToString());
-            DateTime lastSeen = new DateTime(); // noch auslesen
-            return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, rottentomatoesID, rottenTomatoesAudience, tomatometer, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen);
         }
 
         public void savePictureToHD(Bitmap b, string path, string filename)

@@ -13,8 +13,8 @@ namespace WinMovieRack.Controller
         private DetailsView view;
         private Controller controller;
         private SQLiteConnector db;
-        private List<MRListData> mrListData;
-        private List<MovieRackListBoxItem> movieRackListBoxItems;
+        //  private List<MRListData> mrListData;
+        //private List<MovieRackListBoxItem> movieRackListBoxItems;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
@@ -27,28 +27,35 @@ namespace WinMovieRack.Controller
             this.view = dv;
         }
 
-        public void loadMovieList()
-        {
-            view.resetMovieList();
-            createmovieRackListBoxItems();
-            addMovieRackListBoxItem();
-            view.getlistBoxMovies().SelectedIndex = 0;
-        }
-
         public void loadActorList(int itemID)
         {
             view.resetActorList();
-            this.mrListData = db.getPersonListToMovie(itemID);
-            this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            List<MRListData> mrListData = db.getPersonListToMovie(itemID);
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i),false));
+                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
             }
             for (int i = 0; i < movieRackListBoxItems.Count; i++)
             {
-                view.gernerateCastListBox(movieRackListBoxItems.ElementAt(i));
+                view.addCastListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
-            view.getcastListBox().SelectedIndex = 0;
+            view.castListBox.SelectedIndex = 0;
+        }
+
+        public void loadMovieList()
+        {
+            view.resetMovieList();
+            List<MRListData> mrListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            for (int i = 0; i < mrListData.Count; i++)
+            {
+                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), true));
+            }
+            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            {
+                view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
+            }
         }
 
         public GUIPerson getGUIPerson(int itemID)
@@ -56,23 +63,19 @@ namespace WinMovieRack.Controller
             return db.getPersonInfo(itemID);
         }
 
-        private void createmovieRackListBoxItems()
+        public void loadMovieListToPerson(int itemID)
         {
-            this.mrListData = db.getMovieList(MovieEnum.runtime);//Aus Config lesen
-            this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            view.resetMovieListToPerson();
+            List<MRListData> mrListData = db.getMovieListToPerson(itemID);
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i),true));
+                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), true));
             }
-        }
-
-        private void addMovieRackListBoxItem()
-        {
             for (int i = 0; i < movieRackListBoxItems.Count; i++)
             {
-                view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
+                view.addMovieListToPersonItem(movieRackListBoxItems.ElementAt(i));
             }
-            view.sortListBox();
         }
 
         public GUIMovie getGUIMovie(int itemID)

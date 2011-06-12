@@ -16,7 +16,7 @@
         <TextBox Text="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="35" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
         <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,26,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="60,55,0,0" Name="orgialTitleLabel" VerticalAlignment="Top" FontSize="15" />
-        <TabControl Grid.Column="2" Margin="12,278,12,12" Name="detailsViewTab">
+        <TabControl Grid.Column="2" Margin="12,278,12,12" Name="detailsViewTab" SelectionChanged="detailsViewTab_SelectionChanged">
             <TabItem Header="Summery" Name="summeryTab">
                 <Grid x:Name="tabControl" Width="auto" Background="#FFF9F9F9">
                     <Grid.RowDefinitions>
@@ -212,7 +212,7 @@
                             </GroupBox>
                             <GroupBox Header="Movies in Database" Margin="10,10,10,10" Name="groupBox5" Grid.Column="2">
                                 <Grid>
-                                    <ListBox Margin="5" Name="listBox2" />
+                                    <ListBox Margin="5" Name="MovieListToPerson" />
                                 </Grid>
                             </GroupBox>
                             <TextBlock Height="auto" Margin="10,10,5,0" Name="personName" Text="Name" VerticalAlignment="Top" FontSize="25" FontWeight="Normal" TextWrapping="Wrap" />

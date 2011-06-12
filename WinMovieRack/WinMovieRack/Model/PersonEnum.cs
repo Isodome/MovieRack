@@ -7,6 +7,6 @@ namespace WinMovieRack.Model
 {
     public enum PersonEnum
     {
-        OscarWins
+        Name, OscarWins
     }
 }
