@@ -32,6 +32,7 @@ namespace WinMovieRack
         private GUIMovie movieDetails;
         private DetailsViewController controller;
         private MovieRackListBoxItem selectetMovieItem;
+        private List<MovieRackListBoxItem> actorList;
         public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
@@ -157,7 +158,11 @@ namespace WinMovieRack
             {
                 getMovieDetails(selectetMovieItem.itemID);
                 setMovieDetails(movieDetails);
-                controller.loadActorList(selectetMovieItem.itemID);
+                actorList = controller.loadActorList(selectetMovieItem.itemID);
+                if (detailsViewTab.SelectedIndex == 2)
+                {
+                    loadCastPictures();
+                }
             }
         }
 
@@ -166,8 +171,16 @@ namespace WinMovieRack
             if (detailsViewTab.SelectedIndex == 2)
             {
                 //controller.loadActorList(selectetMovieItem.itemID); StackOverFlow, warum auch immer
+                loadCastPictures();
             }
+        }
 
+        private void loadCastPictures()
+        {
+            for (int i = 0; i < actorList.Count; i++)
+            {
+                actorList.ElementAt(i).loadPicture();
+            }
         }
     }
 

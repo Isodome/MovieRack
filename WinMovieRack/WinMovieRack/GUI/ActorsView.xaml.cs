@@ -32,6 +32,7 @@ namespace WinMovieRack.GUI
         public void addActorListBoxItem(MovieRackListBoxItem item)
         {
             listBoxActor.Items.Add(item);
+            item.loadPicture();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)

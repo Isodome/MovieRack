@@ -27,7 +27,7 @@ namespace WinMovieRack.Controller
             this.view = dv;
         }
 
-        public void loadActorList(int itemID)
+        public List<MovieRackListBoxItem> loadActorList(int itemID)
         {
             view.resetActorList();
             List<MRListData> mrListData = db.getPersonListToMovie(itemID);
@@ -41,6 +41,7 @@ namespace WinMovieRack.Controller
                 view.addCastListBoxItem(movieRackListBoxItems.ElementAt(i));
             }
             view.castListBox.SelectedIndex = 0;
+            return movieRackListBoxItems;
         }
 
         public void loadMovieList()
