@@ -96,6 +96,7 @@ namespace WinMovieRack.Model
                 //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
                 personList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader[editable.ToString()].ToString()));
             }
+            command.Dispose();
             return personList;
         }
 
@@ -110,6 +111,7 @@ namespace WinMovieRack.Model
                 //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
                 movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader.GetString(3)));
             }
+            command.Dispose();
             return movieList;
         }
 
@@ -125,7 +127,53 @@ namespace WinMovieRack.Model
             {
                 movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3)));
             }
+            command.Dispose();
             return movieList;
+        }
+
+        public List<String> getGenresToMovie(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT Genre FROM Genre JOIN Movies_has_Genre WHERE Movies_has_Genre.Movies_idMovies = " + idMovies + " AND Movies_has_Genre.Genre_idGenre = Genre.idGenre";
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            List<String> genreList = new List<String>();
+            Console.WriteLine(idMovies);
+            while (reader.Read())
+            {
+                genreList.Add(reader.GetString(0));
+            }
+            command.Dispose();
+            return genreList;
+        }
+
+        public List<String> getAlsoKnownToMovie(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT AlsoKnownAs FROM AlsoKownAs JOIN Movies_has_AlsoKownAs WHERE Movies_has_AlsoKownAs.Movies_idMovies = " + idMovies + " AND Movies_has_AlsoKownAs.AlsoKownAs_idAlsoKownAs = AlsoKownAs.idAlsoKownAs";
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            reader = executeReaderThreadSafe(command);
+            List<String> alsoKnownList = new List<String>();
+            while (reader.Read())
+            {
+                alsoKnownList.Add(reader.GetString(0));
+            }
+            command.Dispose();
+            return alsoKnownList;
+        }
+
+        public List<String> getLanguageToMovie(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT Language FROM Language JOIN Movies_has_Language WHERE Movies_has_Language.Movies_idMovies = " + idMovies + " AND Movies_has_Language.Language_idLanguage = Language.idLanguage";
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            reader = executeReaderThreadSafe(command);
+            List<String> languageList = new List<String>();
+            while (reader.Read())
+            {
+                languageList.Add(reader.GetString(0));
+            }
+            command.Dispose();
+            return languageList;
         }
 
         public GUIPerson getPersonInfo(int idPerson)
@@ -149,13 +197,15 @@ namespace WinMovieRack.Model
             int OtherNominations = int.Parse(reader["OtherNominations"].ToString());
             int OtherWins = int.Parse(reader["OtherWins"].ToString());
             int imdbID = int.Parse(reader["imdbID"].ToString());
+            command.Dispose();
             return new GUIPerson(dbID, Name, OriginalName, Biography, CountryofBirth, CityofBirth, lifetimeGross, boxofficeAverage, OscarNominations, OscarWins, OtherNominations, OtherWins, imdbID);
         }
 
         public GUIMovie getMovieInfo(int idMovies)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies;
+            //command.CommandText = "SELECT * FROM Movies JOIN MovieAgeRating WHERE Movies.idMovies = " + idMovies + " AND Movies.idMovies = MovieAgeRating.Movies_idMovies";
+            command.CommandText = "SELECT * FROM Movies WHERE idMovies = " + idMovies; //Anderen Befehl nutzen, wenn Altersfreigaben eingefügt werden.
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             int dbId = int.Parse(reader["idMovies"].ToString());
             string title = reader["title"].ToString();
@@ -188,6 +238,8 @@ namespace WinMovieRack.Model
             bool TVSeries = true; //noch auslesen
             int seenCount = int.Parse(reader["seenCount"].ToString());
             DateTime lastSeen = new DateTime(); // noch auslesen
+            // String movieAgeRating = reader["MovieAgeRating"].ToString(); //Einkommentieren wenn Altersfreigaben eingefügt werden.
+
             return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, rottentomatoesID, rottenTomatoesAudience, tomatometer, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen);
         }
 
