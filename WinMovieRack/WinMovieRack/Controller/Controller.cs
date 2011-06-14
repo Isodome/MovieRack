@@ -41,7 +41,7 @@ namespace WinMovieRack.Controller {
 			windowController = new MainWindowController();
 			MainWindow mw = new MainWindow(windowController);
             mw.Width = 1024;
-            mw.Height = 768;
+            mw.Height = 600;
 			windowController.setMainWindow(this, mw);
 
 			detailsViewController = new DetailsViewController(this, db);

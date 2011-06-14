@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024" xmlns:my="clr-namespace:WinMovieRack.GUI">
+             d:DesignHeight="600" d:DesignWidth="1024" xmlns:my="clr-namespace:WinMovieRack.GUI">
     <Grid ShowGridLines="False" Background="#FFF0F0F0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MinWidth="100"/>
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="4*" MinWidth="500" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         <TextBox Text="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="25" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
         <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,13,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
@@ -31,45 +30,47 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="2" Header="Details" Margin="0,1,0,0" Name="SummeryDetails" FontSize="13" FontWeight="Bold" Grid.Row="1">
                         <Grid>
-                            <StackPanel Margin="0,0,0,0" Name="stackPanel2" Orientation="Vertical" Visibility="Visible" Opacity="1" CanHorizontallyScroll="False" Focusable="False">
-                                <StackPanel Height="Auto" Name="stackPanel1" Width="Auto" Orientation="Horizontal">
-                                    <Label Content="Runtime:" Height="auto" Width="auto" Name="runtimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left" UseLayoutRounding="False" FontSize="12" />
-                                    <Label Content="120 min" Height="Auto" Name="runtime" Width="auto" FontWeight="Normal" HorizontalContentAlignment="Right" FontSize="12" />
+                            <ScrollViewer  Name="scrollViewer3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <StackPanel Margin="0,0,0,0" Name="stackPanel2" Orientation="Vertical" Visibility="Visible" Opacity="1" CanHorizontallyScroll="False" Focusable="False">
+                                    <StackPanel Height="Auto" Name="stackPanel1" Width="Auto" Orientation="Horizontal">
+                                        <Label Content="Runtime:" Height="auto" Width="auto" Name="runtimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left" UseLayoutRounding="False" FontSize="12" Padding="3" />
+                                        <Label Content="120 min" Height="Auto" Name="runtime" Width="auto" FontWeight="Normal" HorizontalContentAlignment="Right" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel3" Orientation="Horizontal" Width="Auto"></StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel5" Orientation="Horizontal">
+                                        <Label Content="Cinema Date:" Height="auto" Width="auto" Name="cinemaDateLabel" FontSize="12" Padding="3" />
+                                        <Label Content="13.05.2010" Height="auto" Name="cinemaDate" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel7" Orientation="Horizontal">
+                                        <Label Content="Last Seen:" Height="auto" Width="auto" Name="lastSeenLabel" FontSize="12" Padding="3" />
+                                        <Label Content="16.05.2010" Height="auto" Name="lastSeen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel4" Orientation="Horizontal" Width="Auto">
+                                        <Label Content="MPAA:" Height="auto" Width="auto" Name="mpaaLabel" FontSize="12" Padding="3" />
+                                        <Label Content="R" Height="auto" Name="mpaa" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel6" Orientation="Horizontal">
+                                        <Label Content="Seen:" Height="auto" Width="auto" Name="seenLabel" FontSize="12" Padding="3" />
+                                        <Label Content="3" Height="auto" Name="seen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel8" Orientation="Horizontal">
+                                        <Label Content="Awards:" Height="auto" Width="auto" Name="awardsLabel" FontSize="12" Padding="3" />
+                                        <Label Content="3" Height="auto" Name="awards" Width="45" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel9" Orientation="Horizontal">
+                                        <Label Content="Production Budget:" Height="auto" Width="auto" Name="productionBudgetLabel" FontSize="12" Padding="3" />
+                                        <Label Content="150 mio" Height="auto" Name="budget" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel10" Orientation="Horizontal">
+                                        <Label Content="Boxoffice:" Height="auto" Width="auto" Name="boxofficeLabel" FontSize="12" Padding="3" />
+                                        <Label Content="502.675.435" Height="auto" Name="boxxoffice" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Height="Auto" Name="stackPanel11" Orientation="Horizontal">
+                                        <Label Content="Language:" Height="auto" Width="auto" Name="LanguageLabel" FontSize="12" Padding="3" />
+                                        <Label Content="German" Height="auto" Name="language" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                    </StackPanel>
                                 </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel3" Orientation="Horizontal" Width="Auto"></StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel5" Orientation="Horizontal">
-                                    <Label Content="Cinema Date:" Height="auto" Width="auto" Name="cinemaDateLabel" FontSize="12" />
-                                    <Label Content="13.05.2010" Height="auto" Name="cinemaDate" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel7" Orientation="Horizontal">
-                                    <Label Content="Last Seen:" Height="auto" Width="auto" Name="lastSeenLabel" FontSize="12" />
-                                    <Label Content="16.05.2010" Height="auto" Name="lastSeen" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel4" Orientation="Horizontal" Width="Auto">
-                                    <Label Content="MPAA:" Height="auto" Width="auto" Name="mpaaLabel" FontSize="12" />
-                                    <Label Content="R" Height="auto" Name="mpaa" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel6" Orientation="Horizontal">
-                                    <Label Content="Seen:" Height="auto" Width="auto" Name="seenLabel" FontSize="12" />
-                                    <Label Content="3" Height="auto" Name="seen" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel8" Orientation="Horizontal">
-                                    <Label Content="Awards:" Height="auto" Width="auto" Name="awardsLabel" FontSize="12" />
-                                    <Label Content="3" Height="auto" Name="awards" Width="45" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel9" Orientation="Horizontal">
-                                    <Label Content="Production Budget:" Height="auto" Width="auto" Name="productionBudgetLabel" FontSize="12" />
-                                    <Label Content="150 mio" Height="auto" Name="budget" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel10" Orientation="Horizontal">
-                                    <Label Content="Boxoffice:" Height="auto" Width="auto" Name="boxofficeLabel" FontSize="12" />
-                                    <Label Content="502.675.435" Height="auto" Name="boxxoffice" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                                <StackPanel Height="Auto" Name="stackPanel11" Orientation="Horizontal">
-                                    <Label Content="Language:" Height="auto" Width="auto" Name="LanguageLabel" FontSize="12" />
-                                    <Label Content="German" Height="auto" Name="language" Width="auto" FontWeight="Normal" FontSize="12" />
-                                </StackPanel>
-                            </StackPanel>
+                            </ScrollViewer>
                         </Grid>
                     </GroupBox>
                     <GroupBox FontSize="13" FontWeight="Bold" Header="Plot" Margin="0,0,0,0" Name="SummeryPlot" Grid.Column="2" Height="auto">
@@ -132,28 +133,17 @@
             </TabItem>
             <TabItem Header="Cast" Name="castTab">
                 <Grid Width="auto">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="2*" />
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" MinWidth="75" />
+                        <ColumnDefinition Width="261*" MinWidth="75" />
                         <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="1*" MinWidth="75" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="1*"  MinWidth="75" />
+                        <ColumnDefinition Width="526*"  MinWidth="75" />
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Cast" Margin="0" Name="castBox" FontSize="13" FontWeight="Bold" Grid.RowSpan="2" Height="auto">
+                    <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto">
                         <Grid>
                             <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="13" FontWeight="Bold" Header="Production" Margin="0" Name="groupBox1" Grid.Column="4" MinWidth="75">
-                        <Grid>
-                            <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="listBox1" />
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Grid.Column="2" Header="Actor" Margin="0" Name="groupBox2" FontSize="13" FontWeight="Bold" Grid.ColumnSpan="3" Grid.Row="1">
+                    <GroupBox Grid.Column="2" Header="Actor" Name="groupBox2" FontSize="13" FontWeight="Bold" Margin="0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="220*" />
@@ -161,7 +151,7 @@
                                 <ColumnDefinition Width="428*" />
                             </Grid.ColumnDefinitions>
                             <Image Margin="10,80,10,0" Name="actorPoster" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" MaxHeight="200" MaxWidth="200" Height="auto" VerticalAlignment="Top" />
-                            <GroupBox FontSize="13" FontWeight="Bold" Header="Details" Name="groupBox3" Grid.Column="1" Height="176" VerticalAlignment="Top">
+                            <GroupBox FontSize="13" FontWeight="Bold" Header="Details" Name="groupBox3" Grid.Column="1" Height="144" VerticalAlignment="Top">
                                 <Grid Height="auto" Width="auto">
                                     <StackPanel CanHorizontallyScroll="False" Focusable="False" Height="auto" Name="detailsStack" Opacity="1" Orientation="Vertical" VerticalAlignment="Top" Visibility="Visible">
                                         <StackPanel Height="Auto" Name="birthdayStack" Orientation="Horizontal" Width="Auto">
@@ -191,10 +181,10 @@
                                     </StackPanel>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox FontSize="13" FontWeight="Bold" Header="Kown For" Margin="0,182,0,0" Name="groupBox4" Grid.Column="1">
+                            <GroupBox FontSize="13" FontWeight="Bold" Header="Kown For" Margin="0,140,0,0" Name="groupBox4" Grid.Column="1">
                                 <Grid>
                                     <ScrollViewer  Name="scrollViewer2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                        <StackPanel CanHorizontallyScroll="False" Focusable="False" Margin="0,0,0,0" Name="stackPanel23" Opacity="1" Orientation="Vertical" Visibility="Visible">
+                                        <StackPanel CanHorizontallyScroll="False" Focusable="False" Margin="0,0,0,0" Name="stackPanel23" Opacity="1" Orientation="Vertical" Visibility="Visible" Height="auto">
                                             <StackPanel Height="Auto" Name="knowForStack1" Orientation="Horizontal" Width="Auto">
                                                 <Label Content="Title1" Height="auto" HorizontalAlignment="Left" Name="knowForStack1Title" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" FontSize="12" Padding="2" />
                                                 <Label Content="Charakter Name" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="knowForStack1Charakter" Width="auto" FontSize="12" Padding="2" />
@@ -222,13 +212,7 @@
                             <TextBlock Height="auto" Margin="10,10,5,0" Name="personName" Text="Name" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" TextWrapping="Wrap" />
                         </Grid>
                     </GroupBox>
-                    <GroupBox FontSize="13" FontWeight="Bold" Header="Stars" Margin="0" Name="groupBox6" Grid.Column="2" MinWidth="75">
-                        <Grid>
-                            <ListBox ClipToBounds="True" Name="listBox3" Width="auto" />
-                        </Grid>
-                    </GroupBox>
-                    <GridSplitter Grid.Column="1" Name="gridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" Grid.RowSpan="2" />
-                    <GridSplitter Grid.Column="3" Grid.ColumnSpan="1" Height="auto" Margin="0,0,0,0" HorizontalAlignment="Stretch" Background="#FFF9F9F9" VerticalAlignment="Stretch" Name="gridSplitter3"  Width="auto" />
+                    <GridSplitter Grid.Column="1" Name="gridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                 </Grid>
             </TabItem>
             <TabItem Header="Boxoffice" Name="boxofficeTab">
@@ -302,5 +286,6 @@
                 <Button Content="Rottentomatoes" FontSize="10" Height="auto" Name="rottentomatoesLink" Width="auto" VerticalAlignment="Center" Padding="2" />
             </StackPanel>
         </StackPanel>
+        <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
     </Grid>
 </UserControl>
