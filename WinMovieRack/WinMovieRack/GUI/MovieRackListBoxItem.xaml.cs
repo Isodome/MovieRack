@@ -25,15 +25,35 @@ namespace WinMovieRack.GUI
         private MRListData dbItem;
         public int itemID;
         public string title;
+        public bool isMovie;
         public MovieRackListBoxItem(MRListData dbItem, bool isMovie)
         {
             InitializeComponent();
             this.dbItem = dbItem;
             this.itemID = dbItem.dbItemID;
             this.title = dbItem.titleName;
+            this.isMovie = isMovie;
             labelTitleName.Content = dbItem.titleName;
             labelYearAge.Content = dbItem.yearAge;
             labelEditableCharacter.Content = dbItem.editableCharakter;
+            if (isMovie)
+            {
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                if (isMovie)
+                {
+                    posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbItem.dbItemID, PosterSize.LIST));
+                }
+                else
+                {
+                    posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
+                }
+                posterBitmap.EndInit();
+                poster.Source = posterBitmap;
+            }
+        }
+        public void loadPicture()
+        {
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             if (isMovie)

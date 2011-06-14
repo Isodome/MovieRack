@@ -34,7 +34,7 @@ namespace WinMovieRack.Controller
 
         private void createmovieRackListBoxItems()
         {
-            this.mrListData = db.getCompletePersonList(PersonEnum.OscarWins);//Aus Config lesen
+            this.mrListData = db.getCompletePersonList(PersonEnum.OscarWins, PersonEnum.Name);//Aus Config lesen
             this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {

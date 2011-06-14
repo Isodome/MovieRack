@@ -28,25 +28,15 @@ namespace WinMovieRack
     public partial class DetailsView : System.Windows.Controls.UserControl
     {
         private UIElement current;
-        DetailsViewActorPanel actorPanel;
-        BigPicture bigPicture;
-        GUIMovie movieDetails;
-        DetailsViewController controller;
-
+        private BigPicture bigPicture;
+        private GUIMovie movieDetails;
+        private DetailsViewController controller;
+        private MovieRackListBoxItem selectetMovieItem;
+        private List<MovieRackListBoxItem> actorList;
         public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
             this.controller = dvc;
-        }
-
-        public void addMoviesListBoxItem(MovieRackListBoxItem item)
-        {
-            listBoxMovies.Items.Add(item);
-        }
-
-        public void gernerateCastListBox(MovieRackListBoxItem item)
-        {
-            castListBox.Items.Add(item);
         }
 
         private void changeView(UIElement newView)
@@ -59,38 +49,19 @@ namespace WinMovieRack
             current = newView;
         }
 
-        private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void addMoviesListBoxItem(MovieRackListBoxItem item)
         {
-            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
-            if (selectetItem != null)
-            {
-                getMovieDetails(selectetItem.itemID);
-                setMovieDetails(movieDetails);
-                controller.loadActorList(selectetItem.itemID);
-            }
+            listBoxMovies.Items.Add(item);
         }
 
-        private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
+        public void addCastListBoxItem(MovieRackListBoxItem item)
         {
-            bigPicture = new BigPicture();
-            BitmapImage posterBitmap = new BitmapImage();
-            posterBitmap.BeginInit();
-            posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.FULL));
-            posterBitmap.EndInit();
-            bigPicture.bigPicture.Source = posterBitmap;
-
-
-            Point origin = new Point(0, 0);
-            Point screenOrigin = posterTitle.PointToScreen(origin);
-            bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-
-            bigPicture.fadeIn();
+            castListBox.Items.Add(item);
         }
 
-
-        public void resetMovieList()
+        public void addMovieListToPersonItem(MovieRackListBoxItem item)
         {
-            listBoxMovies.Items.Clear();
+            MovieListToPerson.Items.Add(item);
         }
 
         private void getMovieDetails(int itemID)
@@ -98,14 +69,19 @@ namespace WinMovieRack
             this.movieDetails = controller.getGUIMovie(itemID);
         }
 
-        public void sortListBox()
+        public void resetMovieList()
         {
-            //  System.ComponentModel.SortDescription test = new System.ComponentModel.SortDescription("Content.title", System.ComponentModel.ListSortDirection.Descending);
-            //  Console.Write(test.PropertyName);
-            //  listBoxMovies.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Content", System.ComponentModel.ListSortDirection.Descending));
-            // ArrayList arrList;
-            //  arrList = ArrayList.Adapter(listBoxMovies.Items);
-            //  arrList.Sort(new ListComparerTest()); 
+            listBoxMovies.Items.Clear();
+        }
+
+        public void resetActorList()
+        {
+            castListBox.Items.Clear();
+        }
+
+        public void resetMovieListToPerson()
+        {
+            MovieListToPerson.Items.Clear();
         }
 
         private void setMovieDetails(GUIMovie movieDetails)
@@ -134,6 +110,36 @@ namespace WinMovieRack
 
         }
 
+        private void setPersonDetails(GUIPerson personDetails)
+        {
+            personName.Text = personDetails.Name;
+            locationOfBirth.Content = personDetails.CityofBirth;
+            oscars.Content = personDetails.OscarWins;
+            lifetimeGross.Content = personDetails.lifetimeGross;
+            averageBoxoffice.Content = personDetails.boxofficeAverage;
+
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
+            posterBitmap.EndInit();
+            actorPoster.Source = posterBitmap;
+        }
+
+
+        private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            bigPicture = new BigPicture();
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.FULL));
+            posterBitmap.EndInit();
+            bigPicture.bigPicture.Source = posterBitmap;
+            Point origin = new Point(0, 0);
+            Point screenOrigin = posterTitle.PointToScreen(origin);
+            bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
+            bigPicture.fadeIn();
+        }
+
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
@@ -141,12 +147,41 @@ namespace WinMovieRack
             {
                 GUIPerson personDetails = controller.getGUIPerson(selectetItem.itemID);
                 setPersonDetails(personDetails);
+                controller.loadMovieListToPerson(selectetItem.itemID);
             }
         }
-        private void setPersonDetails(GUIPerson personDetails)
+
+        private void listBoxMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            personName.Content = personDetails.Name;
+            selectetMovieItem = (MovieRackListBoxItem)listBoxMovies.SelectedItem;
+            if (selectetMovieItem != null)
+            {
+                getMovieDetails(selectetMovieItem.itemID);
+                setMovieDetails(movieDetails);
+                actorList = controller.loadActorList(selectetMovieItem.itemID);
+                if (detailsViewTab.SelectedIndex == 2)
+                {
+                    loadCastPictures();
+                }
+            }
         }
 
+        private void detailsViewTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (detailsViewTab.SelectedIndex == 2)
+            {
+                //controller.loadActorList(selectetMovieItem.itemID); StackOverFlow, warum auch immer
+                loadCastPictures();
+            }
+        }
+
+        private void loadCastPictures()
+        {
+            for (int i = 0; i < actorList.Count; i++)
+            {
+                actorList.ElementAt(i).loadPicture();
+            }
+        }
     }
+
 }

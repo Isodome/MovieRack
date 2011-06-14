@@ -109,9 +109,6 @@
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\DetailsViewActorPanel.xaml.cs">
-      <DependentUpon>DetailsViewActorPanel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\GUI.cs" />
     <Compile Include="GUI\IMDBBrowser.xaml.cs">
       <DependentUpon>IMDBBrowser.xaml</DependentUpon>
@@ -150,10 +147,6 @@
     <Page Include="GUI\BigPicture.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\DetailsViewActorPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\IMDBBrowser.xaml">
       <SubType>Designer</SubType>
