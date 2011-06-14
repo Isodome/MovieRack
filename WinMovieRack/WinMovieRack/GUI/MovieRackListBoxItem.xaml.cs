@@ -44,8 +44,10 @@ namespace WinMovieRack.GUI
             {
                 posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
             }
+			posterBitmap.CacheOption = BitmapCacheOption.None;
+			posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
             posterBitmap.EndInit();
             poster.Source = posterBitmap;
-        }
+		}
     }
 }
