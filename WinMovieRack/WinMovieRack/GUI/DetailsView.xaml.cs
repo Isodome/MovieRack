@@ -90,7 +90,7 @@ namespace WinMovieRack
             yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
-            imdbRating.Content = movieDetails.imdbRating + "/10";
+			imdbRating.Content = (double)movieDetails.imdbRating/10.0 + "/10";
             imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
             if (movieDetails.imdbTop250 > 0)
             {
