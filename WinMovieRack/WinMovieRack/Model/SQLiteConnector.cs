@@ -127,6 +127,19 @@ namespace WinMovieRack.Model
             }
             return r;
         }
+		private int executeCommandAndReturnID(SQLiteCommand command) {
+			string getIDCommand = "select last_insert_rowid()";
+			SQLiteCommand idQuery = new SQLiteCommand(connection);
+			idQuery.CommandText = getIDCommand;
+
+			int id = -1;
+			lock (DBProtect) {
+				command.ExecuteNonQuery();
+				id = int.Parse(idQuery.ExecuteScalar().ToString());
+			}
+			return id;
+		}
+
 
 
         private int getIdPersonByImdbId(uint personImdbId)

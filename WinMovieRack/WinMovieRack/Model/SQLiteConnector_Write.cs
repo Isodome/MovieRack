@@ -7,6 +7,10 @@ using WinMovieRack.Model.Enums;
 namespace WinMovieRack.Model {
 	public partial class SQLiteConnector {
 
+		private const string insertInOscars = "INSERT INTO Oscars (Year, isWin, category, Movies_idMovies) VALUES(@Year, @isWin, @category, @Movies_idMovies)";
+		private const string insertInOtherWins = "INSERT INTO OtherAwards (Year, isWin, category, Movies_idMovies, award) VALUES(@Year, @isWin, @category, @Movies_idMovies, @award)";
+
+
 		public void insertMovieData(Movie m) {
 			// insert all persons and the movie
 			insertImdbMovie(m.imdbMovie);
@@ -31,11 +35,58 @@ namespace WinMovieRack.Model {
 				updateCountriesToMovie(idMovies, m.imdbMovie.countries);
 				updateGenresToMovie(idMovies, m.imdbMovie.genres);
 				updateLanguageToMovie(idMovies, m.imdbMovie.languages);
+				updateAwardsToMovie(idMovies, m.imdbMovie.awards);
 			}
 			if (m.imdbMovie.poster != null) {
 				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
 			}
+			Console.WriteLine("Done inserting {0} into DB", m.imdbMovie.title);
 
+		}
+
+		private void updateAwardsToMovie(int idMovies, List<Award> awards) {
+			foreach (Award a in awards) {
+				SQLiteCommand command = new SQLiteCommand(connection);
+				var param = new SQLiteParameter();
+				if (a.isOscar) {
+					command.CommandText = insertInOscars;
+				} else {
+					command.CommandText = insertInOtherWins;
+					param = new SQLiteParameter("@award") { Value = a.award };
+					command.Parameters.Add(param);
+				}
+
+				param = new SQLiteParameter("@Year") { Value = a.year };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@category") { Value = a.category };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@isWin") { Value = a.won };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
+				command.Parameters.Add(param);
+				
+				int idAward = executeCommandAndReturnID(command);
+				
+
+				foreach (uint imdbID in a.persons) {
+					int idPerson = getIdPersonByImdbId(imdbID);
+					SQLiteCommand persCmnd = new SQLiteCommand(connection);
+					
+					if (a.isOscar) {
+						persCmnd.CommandText = "INSERT INTO Person_has_Oscars (Person_idPerson, Oscars_idOscar) VALUES(@Person_idPerson, @Oscars_idOscar);";
+						param = new SQLiteParameter("@Oscars_idOscar") { Value = idAward };
+						persCmnd.Parameters.Add(param);
+					} else {
+						persCmnd.CommandText = "INSERT INTO Person_has_OtherAwards (Person_idPerson, OtherAwards_idOtherAwards) VALUES (@Person_idPerson, @OtherAwards_idOtherAwards);";
+						param = new SQLiteParameter("@OtherAwards_idOtherAwards") { Value = idAward };
+						persCmnd.Parameters.Add(param);
+					}
+					param = new SQLiteParameter("@Person_idPerson") { Value = idPerson};
+					persCmnd.Parameters.Add(param);
+					executeCommandThreadSafe(persCmnd);
+				}
+
+			}
 		}
 
 		private void updateCountriesToMovie(int idMovies, List<string> countries) {
