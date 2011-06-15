@@ -8,12 +8,14 @@ namespace WinMovieRack.Model {
 	public partial class SQLiteConnector {
 
 		public void insertMovieData(Movie m) {
+			// insert all persons and the movie
 			insertImdbMovie(m.imdbMovie);
 			foreach (ImdbPerson person in m.persons) {
 				updateImdbPerson(person);
 			}
 
 			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
+
 			if (idMovies > -1) {
 				foreach (Tuple<uint, string> t in m.imdbMovie.roles) {
 					insertRole(t.Item1, t.Item2, idMovies);
@@ -26,12 +28,81 @@ namespace WinMovieRack.Model {
 					int idPerson = getIdPersonByImdbId(id);
 					insertMoviePersonRelation(PersonMovieRelations.Writer, idPerson, idMovies);
 				}
+				updateCountriesToMovie(idMovies, m.imdbMovie.countries);
+				updateGenresToMovie(idMovies, m.imdbMovie.genres);
+				updateLanguageToMovie(idMovies, m.imdbMovie.languages);
 			}
 			if (m.imdbMovie.poster != null) {
 				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
 			}
 
 		}
+
+		private void updateCountriesToMovie(int idMovies, List<string> countries) {
+			foreach (string country in countries) {
+				int idCountry = getIDCountryByCountryName(country);
+				if (idCountry == -1) {
+					SQLiteCommand cmdInsert = new SQLiteCommand(connection);
+					cmdInsert.CommandText = String.Format("INSERT INTO Country (Country) VALUES('{0}')", country);
+					executeCommandThreadSafe(cmdInsert);
+					idCountry = getIDCountryByCountryName(country);
+				}
+
+				SQLiteCommand command = new SQLiteCommand(connection);
+				command.CommandText = string.Format("INSERT INTO Country_has_Movies (Country_idCountry, Movies_idMovies) VALUES(@Country_idCountry, @Movies_idMovies)");
+				var param = new SQLiteParameter("@Country_idCountry") { Value = idCountry };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
+				command.Parameters.Add(param);
+				executeCommandThreadSafe(command);
+
+			}
+		}
+
+		private void updateGenresToMovie(int idMovies, List<string> genres) {
+			foreach (string genre in genres) {
+				int idGenre = getIDGenreByGenre(genre);
+				if (idGenre == -1) {
+					SQLiteCommand cmdInsert = new SQLiteCommand(connection);
+					cmdInsert.CommandText = String.Format("INSERT INTO Genre (Genre) VALUES('{0}')", genre);
+					executeCommandThreadSafe(cmdInsert);
+					idGenre = getIDGenreByGenre(genre);
+				}
+
+				SQLiteCommand command = new SQLiteCommand(connection);
+				command.CommandText = string.Format("INSERT INTO Movies_has_Genre (Genre_idGenre, Movies_idMovies) VALUES(@Genre_idGenre, @Movies_idMovies)");
+				var param = new SQLiteParameter("@Genre_idGenre") { Value = idGenre };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
+				command.Parameters.Add(param);
+				executeCommandThreadSafe(command);
+
+			}
+		}
+
+		private void updateLanguageToMovie(int idMovies, List<string> languages) {
+			foreach (string lang in languages) {
+				int idLanguage = getIDLanguageByLanguage(lang);
+				if (idLanguage == -1) {
+					SQLiteCommand cmdInsert = new SQLiteCommand(connection);
+					cmdInsert.CommandText = String.Format("INSERT INTO Language (Language) VALUES('{0}')", lang);
+					executeCommandThreadSafe(cmdInsert);
+					idLanguage = getIDLanguageByLanguage(lang);
+				}
+
+				SQLiteCommand command = new SQLiteCommand(connection);
+				command.CommandText = string.Format("INSERT INTO Movies_has_Language (Language_idLanguage, Movies_idMovies) VALUES(@Language_idLanguage, @Movies_idMovies)");
+				var param = new SQLiteParameter("@Language_idLanguage") { Value = idLanguage };
+				command.Parameters.Add(param);
+				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
+				command.Parameters.Add(param);
+				executeCommandThreadSafe(command);
+
+			}
+		}
+
+
+
 		private void updateImdbPerson(ImdbPerson person) {
 
 			int idPerson = getIdPersonByImdbId(person.imdbID);
@@ -138,6 +209,7 @@ namespace WinMovieRack.Model {
 
 
 		private void insertImdbMovie(ImdbMovie movie) {
+			beginTransaction();
 			SQLiteCommand command = new SQLiteCommand(connection);
 
 			command.CommandText = "INSERT INTO Movies (title, runtime, plot, originalTitle, " +
@@ -246,6 +318,7 @@ namespace WinMovieRack.Model {
 			command.Parameters.Add(param);
 
 			executeCommandThreadSafe(command);
+			endTransaction();
 		}
 	} 
 }

@@ -13,6 +13,7 @@ namespace WinMovieRack.Controller.Parser
 {
     class JobLoadImage : ThreadJob
     {
+		private const int maxAttempts = 3;
 		string url;
 		Bitmap result;
 		string savePath;
@@ -30,19 +31,28 @@ namespace WinMovieRack.Controller.Parser
 
 		private void getPicture()
 		{
-			try {
-				WebRequest req = WebRequest.Create(url);
-				WebResponse resp = req.GetResponse();
-				result = new Bitmap(resp.GetResponseStream());
-				if (savePath != null) {
-					result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+			int attempts = maxAttempts;
+			do {
+				try {
+					WebRequest req = WebRequest.Create(url);
+					WebResponse resp = req.GetResponse();
+					result = new Bitmap(resp.GetResponseStream());
+					if (savePath != null) {
+						result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+					}
+					resp.Close();
+					break;
+				} catch (Exception) {
+					result = null;
+					attempts--;
 				}
-				resp.Close();
-			} catch (Exception) {
-				result = null;
-			}
 
-			
+			} while (attempts > 0);
+
+			if (attempts == 0) {
+				result = null;
+				// ERRORHANDLING
+			}
 			
 		}
 		public Bitmap getResult()

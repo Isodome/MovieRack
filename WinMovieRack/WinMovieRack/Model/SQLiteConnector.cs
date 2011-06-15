@@ -153,5 +153,35 @@ namespace WinMovieRack.Model
             return -1;
         }
 
+		private int getIDCountryByCountryName(string country) {
+			SQLiteCommand command = new SQLiteCommand(connection);
+			command.CommandText = String.Format("SELECT idCountry FROM Country WHERE Country='{0}'", country);
+			SQLiteDataReader reader = executeReaderThreadSafe(command);
+			if (reader.Read()) {
+				return reader.GetInt32(0);
+			}
+			return -1;
+		}
+
+		private int getIDLanguageByLanguage(string lang) {
+			SQLiteCommand command = new SQLiteCommand(connection);
+			command.CommandText = String.Format("SELECT idLanguage FROM Language WHERE Language='{0}'", lang);
+			SQLiteDataReader reader = executeReaderThreadSafe(command);
+			if (reader.Read()) {
+				return reader.GetInt32(0);
+			}
+			return -1;
+		}
+
+		private int getIDGenreByGenre(string genre) {
+			SQLiteCommand command = new SQLiteCommand(connection);
+			command.CommandText = String.Format("SELECT idGenre FROM Genre WHERE Genre='{0}'", genre);
+			SQLiteDataReader reader = executeReaderThreadSafe(command);
+			if (reader.Read()) {
+				return reader.GetInt32(0);
+			}
+			return -1;
+		}
+
     }
 }
