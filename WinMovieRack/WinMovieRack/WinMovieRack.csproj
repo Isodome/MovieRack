@@ -82,11 +82,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\DetailsViewController.cs" />
+    <Compile Include="Controller\Finalizer.cs" />
     <Compile Include="Controller\ImdbBrowserController.cs" />
     <Compile Include="Controller\IMDBUtil.cs" />
     <Compile Include="Controller\Log.cs" />
     <Compile Include="Controller\MainWindowController.cs" />
     <Compile Include="Controller\Moviefillout\MovieFillOut.cs" />
+    <Compile Include="Controller\Parser\generalJobs\FunctionCall.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\ConcurrentImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\JobImdbMovieParser.cs" />

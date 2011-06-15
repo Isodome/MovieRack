@@ -52,14 +52,19 @@ namespace WinMovieRack.Controller.ThreadManagement
 				Monitor.Enter(lockvar);
 				ThreadJobMaster master = null;
 				ThreadJob job = null;
-
-				for (int i = 0; i < jobMaster.Count && job == null; i++)
+				int i;
+				for (i = 0; i < jobMaster.Count && job == null; i++)
 				{
+					
 					master = jobMaster.ElementAt<ThreadJobMaster>(i);
+					if (master.isFinalizingTask() && i != 0) {
+						continue;
+					}
 					job = master.getJob();
 				}
 
 				Monitor.Exit(lockvar);
+
                 if (job != null)
                 {
                     System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());

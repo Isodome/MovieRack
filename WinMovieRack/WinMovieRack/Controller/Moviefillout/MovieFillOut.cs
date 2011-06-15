@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.Controller.ThreadManagement;
+using WinMovieRack.Controller;
 using WinMovieRack.Model;
 
 namespace WinMovieRack.Controller.Moviefillout {
@@ -61,9 +62,9 @@ namespace WinMovieRack.Controller.Moviefillout {
 				}
 			}
 			db.endTransaction();
-			if (!newActor) {
-				cb(this.movie);
-			}
+			Finalizer f = new Finalizer();
+			f.addFunction(this.insertIntoDB);
+			ThreadsMaster.getInstance().addJobMaster(f);
 		}
 
 		private void startParse(uint imdbID) {
@@ -80,19 +81,11 @@ namespace WinMovieRack.Controller.Moviefillout {
 			lock (this.movie.persons) {
 				this.movie.persons.Add(p.person);
 			}
-			t.Join();
-			Monitor.Enter(this);
-			persons--;
-			if (persons != 0) {
-				Monitor.Exit(this);
-				return;
-			}
-
-			Monitor.Exit(this);
-			cb(this.movie);
 		}
 
-
+		public void insertIntoDB() {
+			cb(this.movie);
+		}
 
 	}
 }

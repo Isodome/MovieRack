@@ -53,6 +53,10 @@ namespace WinMovieRack.Controller.ThreadManagement
 				finFunction(this);
 			}
 		}
+
+		public virtual bool isFinalizingTask() {
+			return false;
+		}
     }
 
 }
