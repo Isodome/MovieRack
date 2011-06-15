@@ -91,7 +91,7 @@ namespace WinMovieRack
             yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
-			imdbRating.Content = (double)movieDetails.imdbRating/10.0 + "/10";
+            imdbRating.Content = (double)movieDetails.imdbRating / 10.0 + "/10";
             imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
             if (movieDetails.imdbTop250 > 0)
             {
@@ -195,6 +195,17 @@ namespace WinMovieRack
         {
             DataSet ds = controller.loadAwards(movieDetails.dbId);
             awardsGrid.DataContext = ds;
+        }
+
+        //Muss noch besser gemacht werden, da bi vielen Filmen zu langsam, bzw. wenn Film in der Datenbank, aber nicht in der Liste Funktioniert es nicht
+        private void MovieListToPerson_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MovieRackListBoxItem selectedItem = (MovieRackListBoxItem)MovieListToPerson.SelectedItem;
+            getMovieDetails(selectedItem.itemID);
+            setMovieDetails(movieDetails);
+            actorList = controller.loadActorList(selectedItem.itemID);
+            loadCastPictures();
+            listBoxMovies.UnselectAll();
         }
     }
 
