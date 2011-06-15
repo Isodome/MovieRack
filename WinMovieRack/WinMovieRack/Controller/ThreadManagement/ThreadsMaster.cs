@@ -80,9 +80,11 @@ namespace WinMovieRack.Controller.ThreadManagement
 
         public void addJobMaster(ThreadJobMaster master)
         {
-            Monitor.Enter(lockvar);
-            jobMaster.AddLast(master);
-            Monitor.Exit(lockvar);
+			if (master != null) {
+				Monitor.Enter(lockvar);
+				jobMaster.AddLast(master);
+				Monitor.Exit(lockvar);
+			}
         }
 
 		public void addVeryVeryImportantThreadMaster(ThreadJobMaster master) {
