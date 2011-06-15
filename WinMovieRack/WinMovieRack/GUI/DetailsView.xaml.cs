@@ -37,6 +37,7 @@ namespace WinMovieRack
         {
             InitializeComponent();
             this.controller = dvc;
+            TextBlock plot1 = plot;
         }
 
         private void changeView(UIElement newView)
@@ -171,7 +172,10 @@ namespace WinMovieRack
             if (detailsViewTab.SelectedIndex == 2)
             {
                 //controller.loadActorList(selectetMovieItem.itemID); StackOverFlow, warum auch immer
-                loadCastPictures();
+                if (actorList != null)
+                {
+                    loadCastPictures();
+                }
             }
         }
 
