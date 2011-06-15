@@ -15,7 +15,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 	public class JobImdbMovieParser : ThreadJob {
 
 		// Regex to parse information from the imdbMainPage
-		public const string titleAndYearRegex = @"<title>(.*?)\((\d+)\) - IMDb</title>";
+		public const string titleAndYearRegex = @"<title>(.*?)\((.*?)\) - IMDb</title>";
 		public const string plotRegex = @"<h2>Storyline</h2>(.|\n|\r)*?<p>(?<plot>(.|\n|\r)*?)</p>";
 		public const string writtenByRegex = @"<(.|\n|\r)*?>";
 		public const string runtimeRegex = @"<h4 class=""inline"">Runtime:</h4>(.|\n|\r)*?(?<time>\d+) min";
@@ -98,7 +98,8 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		public void extractTitleAndYear() {
 			Match m = Regex.Match(mainPage, titleAndYearRegex);
 			movie.title = m.Groups[1].Value.Trim();
-			movie.year = int.Parse(m.Groups[2].Value);
+			string yearstring = Regex.Replace(m.Groups[2].Value, @"\D*", "");
+			movie.year = int.Parse(yearstring);
 
 		}
 		public void extractPlot() {

@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace WinMovieRack.Model
 {
-    public class ImdbMovie : DBItem
+    public class ImdbMovie
     {
 		public uint imdbID;
 		public string title;

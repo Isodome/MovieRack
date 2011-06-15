@@ -116,20 +116,24 @@
     <Compile Include="GUI\MovieRackListBoxItem.xaml.cs">
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Award.cs" />
+    <Compile Include="Model\DataTypes\Award.cs" />
     <Compile Include="Model\DBInterface.cs" />
-    <Compile Include="Model\GUIMovie.cs" />
-    <Compile Include="Model\GUIPerson.cs" />
-    <Compile Include="Model\ImdbPerson.cs" />
-    <Compile Include="Model\Movie.cs" />
-    <Compile Include="Model\MovieEnum.cs" />
+    <Compile Include="Model\Enums\PersonMovieRelations.cs" />
+    <Compile Include="Model\DataTypes\GUIMovie.cs" />
+    <Compile Include="Model\DataTypes\GUIPerson.cs" />
+    <Compile Include="Model\DataTypes\ImdbPerson.cs" />
+    <Compile Include="Model\DataTypes\Movie.cs" />
+    <Compile Include="Model\Enums\MovieEnum.cs" />
     <Compile Include="Model\MRListData.cs" />
-    <Compile Include="Model\PersonEnum.cs" />
+    <Compile Include="Model\Enums\PersonEnum.cs" />
     <Compile Include="Model\PictureHandler.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
-    <Compile Include="Model\ImdbMovie.cs" />
+    <Compile Include="Model\DataTypes\ImdbMovie.cs" />
+    <Compile Include="Model\SQLiteConnector_Delete.cs" />
+    <Compile Include="Model\SQLiteConnector_Read.cs" />
+    <Compile Include="Model\SQLiteConnector_Write.cs" />
     <Compile Include="Model\Symbols.cs" />
-    <Compile Include="Model\Enums.cs" />
+    <Compile Include="Model\Enums\PosterSize.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,7 +176,6 @@
     <Compile Include="ListEditor\ListEditor.xaml.cs">
       <DependentUpon>ListEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DBItem.cs" />
     <Compile Include="GUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -262,6 +265,7 @@
   <ItemGroup>
     <Resource Include="Resources\nopicTINY.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

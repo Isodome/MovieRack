@@ -33,6 +33,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 
 		public void parseNames() {
 			bool newActor = false;
+			db.beginTransaction();
 			foreach (uint cur in movie.imdbMovie.directors) {
 				if (!db.testAndSetPerson(cur)) {
 					startParse(cur);
@@ -51,13 +52,22 @@ namespace WinMovieRack.Controller.Moviefillout {
 					newActor = true;
 				}
 			}
+			foreach (Award a in movie.imdbMovie.awards) {
+				foreach (uint p in a.persons) {
+					if (!db.testAndSetPerson(p)) {
+						startParse(p);
+						newActor = true;
+					}
+				}
+			}
+			db.endTransaction();
 			if (!newActor) {
 				cb(this.movie);
 			}
 		}
 
-		private void startParse(uint i) {
-			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(i);
+		private void startParse(uint imdbID) {
+			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(imdbID);
 			p.setFinalizeFunction(parseFinished);
 			Monitor.Enter(this);
 			ThreadsMaster.getInstance().addJobMaster(p);
