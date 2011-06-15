@@ -218,7 +218,7 @@
                                 </GroupBox>
                                 <GroupBox Header="Movies in Database" Margin="2" Name="groupBox5" Grid.Column="2" FontSize="13" Grid.RowSpan="2">
                                     <Grid>
-                                        <ListBox Margin="5" Name="MovieListToPerson" />
+                                        <ListBox Margin="5" Name="MovieListToPerson" MouseDoubleClick="MovieListToPerson_MouseDoubleClick" />
                                     </Grid>
                                 </GroupBox>
                                 <TextBlock Height="auto" Margin="10,10,5,0" Name="personName" Text="Name" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" TextWrapping="Wrap" Grid.ColumnSpan="1" />
