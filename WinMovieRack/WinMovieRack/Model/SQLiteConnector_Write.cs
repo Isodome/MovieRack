@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SQLite;
-
+using WinMovieRack.Model.Enums;
 namespace WinMovieRack.Model {
 	public partial class SQLiteConnector {
 
@@ -16,13 +16,15 @@ namespace WinMovieRack.Model {
 			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
 			if (idMovies > -1) {
 				foreach (Tuple<uint, string> t in m.imdbMovie.roles) {
-					insertRole(t.Item1, t.Item2, (uint)idMovies);
+					insertRole(t.Item1, t.Item2, idMovies);
 				}
-				foreach (uint id in m.imdbMovie.directors) {
-
+				foreach (uint imdb in m.imdbMovie.directors) {
+					int idPerson = getIdPersonByImdbId(imdb);
+					insertMoviePersonRelation(PersonMovieRelations.Director, idPerson, idMovies);
 				}
 				foreach (uint id in m.imdbMovie.writers) {
-
+					int idPerson = getIdPersonByImdbId(id);
+					insertMoviePersonRelation(PersonMovieRelations.Writer, idPerson, idMovies);
 				}
 			}
 			if (m.imdbMovie.poster != null) {
@@ -101,7 +103,7 @@ namespace WinMovieRack.Model {
 			}
 		}
 
-		private void insertRole(uint personImdbId, String characterName, uint idMovies) {
+		private void insertRole(uint personImdbId, String characterName, int idMovies) {
 			int idPerson = getIdPersonByImdbId(personImdbId);
 			if (idPerson > -1) {
 				SQLiteCommand command = new SQLiteCommand(connection);
@@ -120,6 +122,19 @@ namespace WinMovieRack.Model {
 			}
 		}
 
+		private void insertMoviePersonRelation(PersonMovieRelations table , int idPerson, int idMovies) {
+		
+			SQLiteCommand command = new SQLiteCommand(connection);
+
+			command.CommandText = String.Format("INSERT INTO {0} (Person_idPerson, Movies_idMovies) VALUES(@Person_idPerson, @Movies_idMovies)", table.ToString());
+			var param = new SQLiteParameter("@Person_idPerson") { Value = idPerson };
+			command.Parameters.Add(param);
+			param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
+			command.Parameters.Add(param);
+
+			executeCommandThreadSafe(command);
+
+		}
 
 
 		private void insertImdbMovie(ImdbMovie movie) {
