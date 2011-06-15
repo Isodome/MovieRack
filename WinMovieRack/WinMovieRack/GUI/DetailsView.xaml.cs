@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using System.IO;
 using System.Collections;
-
+using System.Data;
 
 namespace WinMovieRack
 {
@@ -177,6 +177,10 @@ namespace WinMovieRack
                     loadCastPictures();
                 }
             }
+            else if (detailsViewTab.SelectedIndex == 4)
+            {
+                loadAwards();
+            }
         }
 
         private void loadCastPictures()
@@ -185,6 +189,12 @@ namespace WinMovieRack
             {
                 actorList.ElementAt(i).loadPicture();
             }
+        }
+
+        private void loadAwards()
+        {
+            DataSet ds = controller.loadAwards(movieDetails.dbId);
+            awardsGrid.DataContext = ds;
         }
     }
 

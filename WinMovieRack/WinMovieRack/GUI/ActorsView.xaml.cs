@@ -35,22 +35,6 @@ namespace WinMovieRack.GUI
             item.loadPicture();
         }
 
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-
-            TableRow currentRow = resistorTable.RowGroups[0].Rows[0];
-            resistorTable.RowGroups[0].Rows.Add(new TableRow());
-            currentRow = resistorTable.RowGroups[0].Rows[resistorTable.RowGroups[0].Rows.Count - 1];
-            if ((resistorTable.RowGroups[0].Rows.Count - 1) % 2 == 0)
-            {
-                currentRow.Background = System.Windows.Media.Brushes.LightGray;
-            }
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("2009"))));
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("Oscars"))));
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("Nominated"))));
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("Best Actor"))));
-        }
-
         private void listBoxActor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxActor.SelectedItem;

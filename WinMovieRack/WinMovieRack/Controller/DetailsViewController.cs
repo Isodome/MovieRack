@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
+using System.Data;
 namespace WinMovieRack.Controller
 {
 
@@ -82,6 +83,11 @@ namespace WinMovieRack.Controller
         public GUIMovie getGUIMovie(int itemID)
         {
             return db.getMovieInfo(itemID);
+        }
+
+        public DataSet loadAwards(int idMovie)
+        {
+            return db.getAwardstoMovie(idMovie);
         }
     }
 }

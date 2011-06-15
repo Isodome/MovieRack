@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.Data;
 
 namespace WinMovieRack.Model
 {
@@ -174,6 +175,24 @@ namespace WinMovieRack.Model
             }
             command.Dispose();
             return languageList;
+        }
+
+        public DataSet getAwardstoPerson(int idPerson)
+        {
+            SQLiteCommand command = new SQLiteCommand("SELECT title, originalTitle, year,imdbRating FROM Movies", connection);
+            DataSet personAwards = new DataSet();
+            SQLiteDataAdapter sqlDataAdapter = new SQLiteDataAdapter(command);
+            sqlDataAdapter.Fill(personAwards, "personAwards");
+            return personAwards;
+        }
+
+        public DataSet getAwardstoMovie(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand("SELECT Name, Year, isWin, category, award FROM OtherAwards JOIN Person_has_OtherAwards JOIN Person WHERE OtherAwards.Movies_idMovies = " + idMovies + " AND  OtherAwards.idOtherAwards = Person_has_OtherAwards.OtherAwards_idOtherAwards AND Person_has_OtherAwards.Person_idPerson = Person.idPerson", connection);
+            DataSet movieAwards = new DataSet();
+            SQLiteDataAdapter sqlDataAdapter = new SQLiteDataAdapter(command);
+            sqlDataAdapter.Fill(movieAwards, "movieAwards");
+            return movieAwards;
         }
 
         public GUIPerson getPersonInfo(int idPerson)
@@ -365,7 +384,7 @@ namespace WinMovieRack.Model
                 "Biography=@Biography, " +
                 "Birthday=@Birthday, " +
                 "Deathday=@Deathday, " +
-                "male=@male, " +
+                "gender=@gender, " +
                 "CountryofBirth=@CountryofBirth, " +
                 "CityofBirth=@CityofBirth, " +
                 "lifetimeGross=@lifetimeGross, " +
@@ -373,8 +392,7 @@ namespace WinMovieRack.Model
                 "OscarNominations=@OscarNominations, " +
                 "OscarWins=@OscarWins, " +
                 "OtherNominations=@OtherNominations, " +
-                "OtherWins=@OtherWins, " +
-                "PosterPath=@PosterPath" +
+                "OtherWins=@OtherWins " +
                 " WHERE idPerson=@idPerson";
 
             var param = new SQLiteParameter("@Name") { Value = person.name };
@@ -391,7 +409,7 @@ namespace WinMovieRack.Model
             param = new SQLiteParameter("@Deathday") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
-            param = new SQLiteParameter("@male") { Value = 0 };
+            param = new SQLiteParameter("@gender") { Value = person.gender };
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@CountryofBirth") { Value = 0 };
@@ -418,8 +436,6 @@ namespace WinMovieRack.Model
             param = new SQLiteParameter("@OtherWins") { Value = 0 };
             command.Parameters.Add(param);
             //TODO
-            param = new SQLiteParameter("@PosterPath") { Value = "" };
-            command.Parameters.Add(param);
             param = new SQLiteParameter("@idPerson") { Value = idPerson };
             command.Parameters.Add(param);
 
@@ -438,13 +454,13 @@ namespace WinMovieRack.Model
                 "imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsReviewRating, " +
                 "metacriticsUsersRating, rottenTomatoesAudience, tomatometer, personalRating, " +
                 "year, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, " +
-                "rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, posterPath, seenCount, " +
+                "rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, seenCount, " +
                 "TVSeries, lastSeen)" +
                 "VALUES(@title, @runtime, @plot, @originalTitle, " +
                 "@imdbID, @imdbRating, @imdbRatingVotes, @imdbTop250, @metacriticsReviewRating, " +
                 "@metacriticsUsersRating, @rottenTomatoesAudience, @tomatometer, @personalRating, " +
                 "@year, @boxofficeWorldwide, @boxofficeAmerica, @boxofficeForeign, @boxofficeFirstWeekend, " +
-                "@rangFirstWeekend, @rankAllTime, @weeksInCinema, @otherWins, @otherNominations, @notes, @posterPath, @seenCount, " +
+                "@rangFirstWeekend, @rankAllTime, @weeksInCinema, @otherWins, @otherNominations, @notes, @seenCount, " +
                 "@TVSeries, @lastSeen)";
 
             var param = new SQLiteParameter("@title") { Value = movie.title };
@@ -528,9 +544,6 @@ namespace WinMovieRack.Model
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@notes") { Value = "" };
-            command.Parameters.Add(param);
-            //TODO
-            param = new SQLiteParameter("@posterPath") { Value = "" };
             command.Parameters.Add(param);
             //TODO
             param = new SQLiteParameter("@seenCount") { Value = 0 };
