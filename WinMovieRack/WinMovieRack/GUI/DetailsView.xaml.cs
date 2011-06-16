@@ -33,11 +33,14 @@ namespace WinMovieRack
         private DetailsViewController controller;
         private MovieRackListBoxItem selectetMovieItem;
         private List<MovieRackListBoxItem> actorList;
+        DataSet otherAwardsDataSet;
+        DataSet oscarAwardsDataSet;
+
+
         public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
             this.controller = dvc;
-            TextBlock plot1 = plot;
         }
 
         private void changeView(UIElement newView)
@@ -85,6 +88,26 @@ namespace WinMovieRack
             MovieListToPerson.Items.Clear();
         }
 
+        public void resetSummeryStarsList()
+        {
+            SummeryStarsListbox.Items.Clear();
+        }
+
+        public void resetSummeryProductionList()
+        {
+            SummeryProductionListbox.Items.Clear();
+        }
+
+        public void addStarsListBoxItem(MovieRackListBoxItem item)
+        {
+            SummeryStarsListbox.Items.Add(item);
+        }
+
+        public void addProductionListBoxItem(MovieRackListBoxItem item)
+        {
+            SummeryProductionListbox.Items.Add(item);
+        }
+
         private void setMovieDetails(GUIMovie movieDetails)
         {
             this.movieDetails = movieDetails;
@@ -102,13 +125,50 @@ namespace WinMovieRack
                 top250.Content = "N/A";
             }
             plot.Text = movieDetails.plot;
+            genres.Content = genreString();
+            language.Content = languageString();
+
+
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.PREVIEW));
             posterBitmap.EndInit();
             posterTitle.Source = posterBitmap;
             runtime.Content = movieDetails.runtime;
+            //   controller.loadProductionList(movieDetails.dbId);
+            //  controller.loadStarsList(movieDetails.dbId);
+            loadCastPictures(controller.loadProductionList(movieDetails.dbId));
+            loadCastPictures(controller.loadStarsList(movieDetails.dbId));
+        }
+        private String genreString()
+        {
+            String genre = "";
+            List<String> genreString = controller.loadGenreList(movieDetails.dbId);
+            for (int i = 0; i < genreString.Count; i++)
+            {
+                genre += genreString.ElementAt(i);
+                if (i != genreString.Count - 1)
+                {
+                    genre += " | ";
+                }
+            }
+            return genre;
 
+        }
+
+        private String languageString()
+        {
+            String language = "";
+            List<String> languageString = controller.loadLanguageList(movieDetails.dbId);
+            for (int i = 0; i < languageString.Count; i++)
+            {
+                language += languageString.ElementAt(i);
+                if (i != languageString.Count - 1)
+                {
+                    language += " , ";
+                }
+            }
+            return language;
         }
 
         private void setPersonDetails(GUIPerson personDetails)
@@ -138,7 +198,7 @@ namespace WinMovieRack
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-			bigPicture.fadeIn();
+            bigPicture.fadeIn();
         }
 
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -162,8 +222,10 @@ namespace WinMovieRack
                 actorList = controller.loadActorList(selectetMovieItem.itemID);
                 if (detailsViewTab.SelectedIndex == 2)
                 {
-                    loadCastPictures();
+                    loadCastPictures(actorList);
                 }
+                otherAwardsDataSet = null;
+                oscarAwardsDataSet = null;
             }
         }
 
@@ -174,27 +236,40 @@ namespace WinMovieRack
                 //controller.loadActorList(selectetMovieItem.itemID); StackOverFlow, warum auch immer
                 if (actorList != null)
                 {
-                    loadCastPictures();
+                    loadCastPictures(actorList);
                 }
             }
             else if (detailsViewTab.SelectedIndex == 4)
             {
-                loadAwards();
+                if (otherAwardsDataSet == null)
+                {
+                    loadOtherAwards();
+                }
+                if (oscarAwardsDataSet == null)
+                {
+                    loadOscarAwards();
+                }
             }
         }
 
-        private void loadCastPictures()
+        private void loadCastPictures(List<MovieRackListBoxItem> list)
         {
-            for (int i = 0; i < actorList.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                actorList.ElementAt(i).loadPicture();
+                list.ElementAt(i).loadPicture();
             }
         }
 
-        private void loadAwards()
+        private void loadOtherAwards()
         {
-            DataSet ds = controller.loadAwards(movieDetails.dbId);
-            awardsGrid.DataContext = ds;
+            otherAwardsDataSet = controller.loadOtherAwards(movieDetails.dbId);
+            awardsGrid.DataContext = otherAwardsDataSet;
+        }
+
+        private void loadOscarAwards()
+        {
+            oscarAwardsDataSet = controller.loadOscarAwards(movieDetails.dbId);
+            oscarGrid.DataContext = oscarAwardsDataSet;
         }
 
         //Muss noch besser gemacht werden, da bi vielen Filmen zu langsam, bzw. wenn Film in der Datenbank, aber nicht in der Liste Funktioniert es nicht
@@ -204,8 +279,23 @@ namespace WinMovieRack
             getMovieDetails(selectedItem.itemID);
             setMovieDetails(movieDetails);
             actorList = controller.loadActorList(selectedItem.itemID);
-            loadCastPictures();
+            loadCastPictures(actorList);
             listBoxMovies.UnselectAll();
+        }
+
+        private void actorPoster_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
+            bigPicture = new BigPicture();
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(selectetItem.itemID, PosterSize.FULL));
+            posterBitmap.EndInit();
+            bigPicture.bigPicture.Source = posterBitmap;
+            Point origin = new Point(0, 0);
+            Point screenOrigin = actorPoster.PointToScreen(origin);
+            bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
+            bigPicture.fadeIn();
         }
     }
 
