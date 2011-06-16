@@ -138,7 +138,7 @@ namespace WinMovieRack
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-            bigPicture.fadeIn();
+			bigPicture.fadeIn();
         }
 
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
