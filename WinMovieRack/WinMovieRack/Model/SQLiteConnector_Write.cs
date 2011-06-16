@@ -32,6 +32,10 @@ namespace WinMovieRack.Model {
 					int idPerson = getIdPersonByImdbId(id);
 					insertMoviePersonRelation(PersonMovieRelations.Writer, idPerson, idMovies);
 				}
+				foreach (uint id in m.imdbMovie.stars) {
+					int idPerson = getIdPersonByImdbId(id);
+					insertMoviePersonRelation(PersonMovieRelations.Stars, idPerson, idMovies);
+				}
 				updateCountriesToMovie(idMovies, m.imdbMovie.countries);
 				updateGenresToMovie(idMovies, m.imdbMovie.genres);
 				updateLanguageToMovie(idMovies, m.imdbMovie.languages);

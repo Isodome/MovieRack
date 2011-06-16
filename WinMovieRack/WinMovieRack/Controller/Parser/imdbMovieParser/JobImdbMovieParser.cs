@@ -29,6 +29,8 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		public const string alsoKnownAsRegex = @"<h4 class=""inline"">Also Known As:</h4>(?<ana>.*)";
 		public const string awardsTableRegex = @"<table style=""margin-top: 8px; margin-bottom: 8px"" cellspacing=""2"" cellpadding=""2"" border=""1"">(?<bigtable>(.|\r|\n)*?)</table>";
 		public const string awardWinnerRegex = @"<a href=""/name/nm(?<nm>\d+?)/";
+		public const string starsRegex = @"<h4 class=""inline"">Stars:</h4>(?<stars>(.|\n|\r)*?)</div>";
+		public const string getStarRegex = @"href=""/name/nm(?<g>\d+)/""";
 
 		//Regex to parse information from the imdb credits page
 		public const string directorsRegex = @">Directed by</a>(?<directors>.*?)Writing credits<";
@@ -77,6 +79,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 				startSelectiveParse += this.extractLanguages;
 				startSelectiveParse += this.extractCountries;
 				startSelectiveParse += this.extractAlsoKnownAs;
+				startSelectiveParse += this.extractStars;
 			}
 			if (creditsPage != null) {
 				startSelectiveParse += this.extractDirectors;
@@ -177,7 +180,10 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 			MatchCollection mc = Regex.Matches(tmp, getNameFromURLRegex);
 			foreach (Match match in mc) {
 				string id = Regex.Replace(match.Groups["g"].Value.Trim(), @"\D", "");
-				movie.directors.Add(uint.Parse(id));
+				uint nm = uint.Parse(id);
+				if (!movie.directors.Contains<uint>(nm)) {
+					movie.directors.Add(nm);
+				}
 			}
 
 		}
@@ -187,7 +193,10 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 			MatchCollection mc = Regex.Matches(tmp, getNameFromURLRegex);
 			foreach (Match match in mc) {
 				string id = Regex.Replace(match.Groups["g"].Value.Trim(), @"\D", "");
-				movie.writers.Add(uint.Parse(id));
+				uint nm = uint.Parse(id);
+				if (!movie.writers.Contains<uint>(nm)) {
+					movie.writers.Add(nm);
+				}
 			}
 		}
 		public void extractCast() {
@@ -203,6 +212,20 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 				movie.roles.Add(Tuple.Create<uint, string>(nm, role));
 			}
 		}
+		public void extractStars() {
+			Match m = Regex.Match(mainPage, starsRegex);
+			string tmp = m.Groups["stars"].Value;
+
+			MatchCollection mc = Regex.Matches(tmp, getStarRegex);
+			foreach (Match match in mc) {
+				string nmstring = match.Groups["g"].Value.Trim();
+				uint nm = uint.Parse(nmstring);
+				if (!movie.stars.Contains<uint>(nm)) {
+					movie.stars.Add(nm);
+				}
+			}
+		}
+
 
 		public void extractAwards() {
 			Match mTable = Regex.Match(awardsPage, awardsTableRegex);
@@ -234,7 +257,9 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 						rowSpanRemaining[currentColumn] = rs - 1;
 
 						if (currentColumn == 0) {
-							currentYear = int.Parse(content);
+							if (!int.TryParse(content, out currentYear)) {
+								currentYear = -1;
+							}
 						} else if (currentColumn == 1) {
 							currentResult = content;
 						} else if (currentColumn == 2) {
@@ -242,7 +267,9 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 						}
 						currentColumn++;
 					} else {
-						addAward(curCell, currentYear, currentAward, currentResult);
+						if (currentYear != -1) {
+							addAward(curCell, currentYear, currentAward, currentResult);
+						}
 						currentColumn = 0;
 					}
 

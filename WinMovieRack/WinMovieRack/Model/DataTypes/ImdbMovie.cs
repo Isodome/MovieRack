@@ -21,6 +21,7 @@ namespace WinMovieRack.Model
 		public List<string> languages;
 		public List<uint> directors;
 		public List<uint> writers;
+		public List<uint> stars;
 		public List<Tuple<uint, string>> roles;
 		public string alsoKnownAs;
 		public Bitmap poster = null;
@@ -33,6 +34,7 @@ namespace WinMovieRack.Model
 			languages = new List<string>();
 			directors = new List<uint>();
 			writers = new List<uint>();
+			stars = new List<uint>();
 			roles = new List<Tuple<uint, string>>();
 			awards = new List<Award>();
 		}
@@ -81,7 +83,10 @@ namespace WinMovieRack.Model
 			foreach (Tuple<uint, string> t in roles.ToArray<Tuple<uint, string>>()) {
 				Console.WriteLine(t.Item1.ToString() + " as " + t.Item2);
 			}
-
+			Console.Write("Stars: ");
+			foreach (uint s in stars) {
+				Console.Write(s.ToString() + ", ");
+			}
 			Console.WriteLine("Awards:");
 			foreach (Award a in awards) {
 				Console.WriteLine(a.ToString());
