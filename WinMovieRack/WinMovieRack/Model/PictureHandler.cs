@@ -100,7 +100,6 @@ namespace WinMovieRack.Model {
 
 			Bitmap bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT);
 			bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
-
 		}
 
 		private static string buildPosterPath(string path, string filename, PosterSize size) {

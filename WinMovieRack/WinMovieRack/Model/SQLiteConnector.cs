@@ -15,6 +15,7 @@ namespace WinMovieRack.Model
         private object DBProtect = new object();
         private SQLiteConnection connection;
 		private Dictionary<uint, int> imdbPersonIds;
+		private Dictionary<uint, int> imdbMoviesIds;
 		public static SQLiteConnector db;
 
 
@@ -27,6 +28,7 @@ namespace WinMovieRack.Model
             this.checkTables();
 
 			imdbPersonIds = new Dictionary<uint, int>();
+			imdbMoviesIds = new Dictionary<uint, int>();
 
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "select imdbID, idPerson FROM Person";
@@ -35,6 +37,13 @@ namespace WinMovieRack.Model
             {
                 this.imdbPersonIds.Add(uint.Parse(reader["imdbID"].ToString()), int.Parse(reader["idPerson"].ToString()));
             }
+
+			SQLiteCommand command2 = new SQLiteCommand(connection); 
+			command2.CommandText = "select idMovies, imdbID FROM Movies";
+			reader = executeReaderThreadSafe(command2);
+			while (reader.Read()) {
+				this.imdbMoviesIds.Add(uint.Parse(reader["imdbID"].ToString()), int.Parse(reader["idMovies"].ToString()));
+			}
 
             createFolders();
 			db = this;
@@ -86,6 +95,22 @@ namespace WinMovieRack.Model
             return contains;
 
         }
+
+		public bool testAndSetMovies(uint imdbID, out int idMovies) {
+			bool contains;
+			lock (this.imdbMoviesIds) {
+				contains = this.imdbMoviesIds.TryGetValue(imdbID, out idMovies);
+				if (!contains) {
+					SQLiteCommand command = new SQLiteCommand(connection);
+					command.CommandText = "insert into Movies (imdbID) values (" + imdbID.ToString() + ")";
+					idMovies = executeCommandAndReturnID(command);
+					this.imdbMoviesIds.Add(imdbID, idMovies);
+				}
+			}
+			return contains;
+		}
+
+
         public void closeConnection()
         {
             connection.Dispose();

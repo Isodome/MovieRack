@@ -11,15 +11,16 @@ namespace WinMovieRack.Model {
 		private const string insertInOtherWins = "INSERT INTO OtherAwards (Year, isWin, category, Movies_idMovies, award) VALUES(@Year, @isWin, @category, @Movies_idMovies, @award)";
 
 
-		public void insertMovieData(Movie m) {
+		public void updateMovieData(Movie m) {
 			beginTransaction();
-			// insert all persons and the movie
-			insertImdbMovie(m.imdbMovie);
+			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
+
+			updateImdbMovie(m.imdbMovie, idMovies);
 			foreach (ImdbPerson person in m.persons) {
 				updateImdbPerson(person);
 			}
 
-			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
+		
 
 			if (idMovies > -1) {
 				foreach (Tuple<uint, string> t in m.imdbMovie.roles) {
@@ -51,6 +52,7 @@ namespace WinMovieRack.Model {
 		}
 
 		private void updateAwardsToMovie(int idMovies, List<Award> awards) {
+
 			foreach (Award a in awards) {
 				SQLiteCommand command = new SQLiteCommand(connection);
 				var param = new SQLiteParameter();
@@ -106,7 +108,7 @@ namespace WinMovieRack.Model {
 				}
 
 				SQLiteCommand command = new SQLiteCommand(connection);
-				command.CommandText = string.Format("INSERT INTO Country_has_Movies (Country_idCountry, Movies_idMovies) VALUES(@Country_idCountry, @Movies_idMovies)");
+				command.CommandText = string.Format("INSERT OR IGNORE INTO Country_has_Movies (Country_idCountry, Movies_idMovies) VALUES(@Country_idCountry, @Movies_idMovies)");
 				var param = new SQLiteParameter("@Country_idCountry") { Value = idCountry };
 				command.Parameters.Add(param);
 				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
@@ -127,7 +129,7 @@ namespace WinMovieRack.Model {
 				}
 
 				SQLiteCommand command = new SQLiteCommand(connection);
-				command.CommandText = string.Format("INSERT INTO Movies_has_Genre (Genre_idGenre, Movies_idMovies) VALUES(@Genre_idGenre, @Movies_idMovies)");
+				command.CommandText = string.Format("INSERT OR IGNORE INTO Movies_has_Genre (Genre_idGenre, Movies_idMovies) VALUES(@Genre_idGenre, @Movies_idMovies)");
 				var param = new SQLiteParameter("@Genre_idGenre") { Value = idGenre };
 				command.Parameters.Add(param);
 				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
@@ -142,13 +144,13 @@ namespace WinMovieRack.Model {
 				int idLanguage = getIDLanguageByLanguage(lang);
 				if (idLanguage == -1) {
 					SQLiteCommand cmdInsert = new SQLiteCommand(connection);
-					cmdInsert.CommandText = String.Format("INSERT INTO Language (Language) VALUES('{0}')", lang);
+					cmdInsert.CommandText = String.Format("INSERT OR IGNORE INTO Language (Language) VALUES('{0}')", lang);
 					executeCommandThreadSafe(cmdInsert);
 					idLanguage = getIDLanguageByLanguage(lang);
 				}
 
 				SQLiteCommand command = new SQLiteCommand(connection);
-				command.CommandText = string.Format("INSERT INTO Movies_has_Language (Language_idLanguage, Movies_idMovies) VALUES(@Language_idLanguage, @Movies_idMovies)");
+				command.CommandText = string.Format("INSERT OR IGNORE INTO Movies_has_Language (Language_idLanguage, Movies_idMovies) VALUES(@Language_idLanguage, @Movies_idMovies)");
 				var param = new SQLiteParameter("@Language_idLanguage") { Value = idLanguage };
 				command.Parameters.Add(param);
 				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
@@ -188,10 +190,10 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@Biography") { Value = "" };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@Birthday") { Value = 0 };
+			param = new SQLiteParameter("@Birthday") { Value = person.birthday };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@Deathday") { Value = 0 };
+			param = new SQLiteParameter("@Deathday") { Value = person.deathday };
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@gender") { Value = person.gender };
@@ -235,7 +237,7 @@ namespace WinMovieRack.Model {
 			if (idPerson > -1) {
 				SQLiteCommand command = new SQLiteCommand(connection);
 
-				command.CommandText = "INSERT INTO Role (Person_idPerson, Movies_idMovies, CharacterName, Rank) VALUES(@Person_idPerson, @Movies_idMovies, @CharacterName, @Rank)";
+				command.CommandText = "INSERT OR IGNORE INTO Role (Person_idPerson, Movies_idMovies, CharacterName, Rank) VALUES(@Person_idPerson, @Movies_idMovies, @CharacterName, @Rank)";
 				var param = new SQLiteParameter("@Person_idPerson") { Value = idPerson };
 				command.Parameters.Add(param);
 				param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
@@ -253,7 +255,7 @@ namespace WinMovieRack.Model {
 		
 			SQLiteCommand command = new SQLiteCommand(connection);
 
-			command.CommandText = String.Format("INSERT INTO {0} (Person_idPerson, Movies_idMovies) VALUES(@Person_idPerson, @Movies_idMovies)", table.ToString());
+			command.CommandText = String.Format("INSERT OR IGNORE INTO {0} (Person_idPerson, Movies_idMovies) VALUES(@Person_idPerson, @Movies_idMovies)", table.ToString());
 			var param = new SQLiteParameter("@Person_idPerson") { Value = idPerson };
 			command.Parameters.Add(param);
 			param = new SQLiteParameter("@Movies_idMovies") { Value = idMovies };
@@ -264,21 +266,38 @@ namespace WinMovieRack.Model {
 		}
 
 
-		private void insertImdbMovie(ImdbMovie movie) {
+		private void updateImdbMovie(ImdbMovie movie, int idMovies) {
 			SQLiteCommand command = new SQLiteCommand(connection);
 
-			command.CommandText = "INSERT INTO Movies (title, runtime, plot, originalTitle, " +
-				"imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsReviewRating, " +
-				"metacriticsUsersRating, rottenTomatoesAudience, tomatometer, personalRating, " +
-				"year, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, " +
-				"rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, seenCount, " +
-				"TVSeries, lastSeen)" +
-				"VALUES(@title, @runtime, @plot, @originalTitle, " +
-				"@imdbID, @imdbRating, @imdbRatingVotes, @imdbTop250, @metacriticsReviewRating, " +
-				"@metacriticsUsersRating, @rottenTomatoesAudience, @tomatometer, @personalRating, " +
-				"@year, @boxofficeWorldwide, @boxofficeAmerica, @boxofficeForeign, @boxofficeFirstWeekend, " +
-				"@rangFirstWeekend, @rankAllTime, @weeksInCinema, @otherWins, @otherNominations, @notes, @seenCount, " +
-				"@TVSeries, @lastSeen)";
+			command.CommandText = "UPDATE Movies SET " +
+				"title=@title, " + 
+				"runtime=@runtime, " +
+				"plot=@plot, " +
+				"originalTitle=@originalTitle, " +
+				"imdbRating=@imdbRating, " +
+				"imdbRatingVotes=@imdbRatingVotes, " +
+				"imdbTop250=@imdbTop250, " +
+				"metacriticsReviewRating=@metacriticsReviewRating, " +
+				"metacriticsUsersRating=@metacriticsUsersRating, " +
+				"rottenTomatoesAudience=@rottenTomatoesAudience, " +
+				"year=@year, " +
+				"tomatometer=@tomatometer, " +
+				"boxofficeWorldwide=@boxofficeWorldwide, " +
+				"personalRating=@personalRating, " +
+				"boxofficeAmerica=@boxofficeAmerica, " +
+				"boxofficeFirstWeekend=@boxofficeFirstWeekend, " +
+				"boxofficeForeign=@boxofficeForeign, " +
+				"rangFirstWeekend=@rangFirstWeekend, " +
+				"rankAllTime=@rankAllTime, " +
+				"weeksInCinema=@weeksInCinema, " +
+				"otherWins=@otherWins, " +
+				"otherNominations=@otherNominations, " +
+				"notes=@notes, " +
+				"seenCount=@seenCount, " +
+				"TVSeries=@TVSeries, " +
+				"lastSeen=@lastSeen " +
+				"WHERE idMovies=@idMovies";
+
 
 			var param = new SQLiteParameter("@title") { Value = movie.title };
 			command.Parameters.Add(param);
@@ -370,6 +389,8 @@ namespace WinMovieRack.Model {
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@lastSeen") { Value = 0 };
+			command.Parameters.Add(param);
+			param = new SQLiteParameter("@idMovies") { Value = idMovies };
 			command.Parameters.Add(param);
 
 			executeCommandThreadSafe(command);

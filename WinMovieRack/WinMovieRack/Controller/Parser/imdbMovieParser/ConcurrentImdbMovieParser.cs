@@ -44,6 +44,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
         private bool creditsPageJobDone = false;
 		private bool parseJobDone = false;
 		private bool imageLoadJobDone = false;
+		private bool parseStared = false;
 
         public ConcurrentImdbMovieParser(uint imdbID)
         {
@@ -53,15 +54,11 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 			this.awardsPageJob = new JobWebPageDownload(Regex.Replace(URLAwards, placholder, imdbID.ToString()));
 			this.creditsPageJob = new JobWebPageDownload(Regex.Replace(URLcredits, placholder, imdbID.ToString()));
 
-            startJobs();
+			this.addJob(mainPageJob);
+			this.addJob(awardsPageJob);
+			this.addJob(creditsPageJob);
         }
 
-        public void startJobs()
-        {
-            this.addJob(mainPageJob);
-            this.addJob(awardsPageJob);
-            this.addJob(creditsPageJob);
-        }
 		private ThreadJob getPictureLoadJob()
 		{
 			Match m = Regex.Match(mainPage, mediaURLRegex);
@@ -71,42 +68,37 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 		}
 
         public override bool hasFinished(ThreadJob job) {
-			if (job is JobWebPageDownload)
-			{
-				JobWebPageDownload res = (JobWebPageDownload)job;
-				if (job == mainPageJob)
-				{
-					mainPageJobDone = true;
-					this.mainPage = res.getResult();
-					this.addJob(getPictureLoadJob());
-				}
-				else if (job == awardsPageJob)
-				{
-					awardsPageJobDone = true;
-					this.awardsPage = res.getResult();
-				}
-				else if (job == creditsPageJob)
-				{
-					creditsPageJobDone = true;
-					this.creditsPage = res.getResult();
-				}
-
-				if (mainPageJobDone && awardsPageJobDone && creditsPageJobDone)
-				{
-					parseJob = new JobImdbMovieParser(mainPage, creditsPage, awardsPage, movieData);
-					this.addJob(parseJob);
-				}
-			}
-			else if (job == parseJob)
-			{
-				parseJobDone = true;
-			}
-			else if (job == imageLoadJob)
-			{
+			bool result = false;
+			if (job == mainPageJob) {
+				JobWebPageDownload res = job as JobWebPageDownload;
+				mainPageJobDone = true;
+				this.mainPage = res.getResult();
+				this.addJob(getPictureLoadJob());
+			} else if (job == awardsPageJob) {
+				JobWebPageDownload res = job as JobWebPageDownload;
+				awardsPageJobDone = true;
+				this.awardsPage = res.getResult();
+			} else if (job == creditsPageJob) {
+				JobWebPageDownload res = job as JobWebPageDownload;
+				creditsPageJobDone = true;
+				this.creditsPage = res.getResult();
+			} else if (job == imageLoadJob) {
 				this.movieData.poster = ((JobLoadImage)job).getResult();
 				imageLoadJobDone = true;
+			} else if (job == parseJob) {
+				parseJobDone = true;
 			}
-			return (awardsPageJobDone && creditsPageJobDone && imageLoadJobDone && mainPageJobDone && parseJobDone);
+			
+			lock (this) {
+				if (!parseStared && mainPageJobDone && awardsPageJobDone && creditsPageJobDone && imageLoadJobDone) {
+					parseStared = true;
+					parseJob = new JobImdbMovieParser(mainPage, creditsPage, awardsPage, movieData);
+					parseJob.run();
+					result = true;
+				} 
+			}
+
+			return result;
         }
 
 		

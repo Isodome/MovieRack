@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using WinMovieRack.Controller.Moviefillout;
 using System.IO;
+using System.Threading;
 namespace WinMovieRack.GUI {
 	/// <summary>
 	/// Interaction logic for ImportWindow.xaml
@@ -57,7 +58,8 @@ namespace WinMovieRack.GUI {
 			} else {
 				FileInfo file = new FileInfo(path);
 				ImdbIdsImporter importer = new ImdbIdsImporter(file.OpenText().ReadToEnd());
-				importer.import();
+				Thread t = new Thread(new ThreadStart(importer.import));
+				t.Start();
 				this.Close();
 			}
 		}

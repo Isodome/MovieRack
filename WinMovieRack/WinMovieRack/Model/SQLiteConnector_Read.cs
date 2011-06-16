@@ -18,7 +18,11 @@ namespace WinMovieRack.Model
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             while (reader.Read())
             {
-                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader[editable.ToString()].ToString()));
+				int idMovies = reader.GetInt32(0);
+				string title = reader["title"].ToString();
+				int year = reader.GetInt32(2);
+				string edit = reader[editable.ToString()].ToString();
+				movieList.Add(new MRListData(idMovies, title, year, edit));
             }
             command.Dispose();
             return movieList;
@@ -47,8 +51,13 @@ namespace WinMovieRack.Model
             List<MRListData> movieList = new List<MRListData>();
             while (reader.Read())
             {
+				int idPerson = reader.GetInt32(0);
+				string name = reader["Name"].ToString();
+				int years = 10;
+				string edit = reader["CharacterName"].ToString();
+				
                 //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
-                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader.GetString(3)));
+				movieList.Add(new MRListData(idPerson, name, years, edit));
             }
             command.Dispose();
             return movieList;
@@ -231,18 +240,44 @@ namespace WinMovieRack.Model
             string originalTitle = reader["originalTitle"].ToString();
             int runtime = int.Parse(reader["runtime"].ToString());
             string plot = reader["plot"].ToString();
-            int year = int.Parse(reader["year"].ToString());
-            int imdbID = int.Parse(reader["imdbID"].ToString());
-            int imdbRating = int.Parse(reader["imdbRating"].ToString());
-            int imdbRatingVotes = int.Parse(reader["imdbRatingVotes"].ToString());
-            int imdbTop250 = int.Parse(reader["imdbTop250"].ToString());
+
+            int year;
+			if(!int.TryParse(reader["year"].ToString(), out year)) {
+				year = Symbols.NO_YEAR;
+			}
+
+            int imdbID;
+			if (!int.TryParse(reader["imdbID"].ToString(), out imdbID)) {
+				imdbID = 0;
+			}
+
+            int imdbRating;
+			if (!int.TryParse(reader["imdbRating"].ToString(), out imdbRating)) {
+				imdbRating = Symbols.NO_IMDB_RATING;
+			}
+
+			int imdbRatingVotes;
+			if (!int.TryParse(reader["imdbRatingVotes"].ToString(), out imdbRatingVotes)) {
+				imdbRatingVotes = Symbols.NO_IMDB_RATING;
+			}
+
+            int imdbTop250 ;
+			if (!int.TryParse(reader["imdbTop250"].ToString(), out imdbTop250)) {
+				imdbTop250 = Symbols.NO_TOP250;
+			}
+
             string metacriticsID = reader["metacriticsID"].ToString();
             int metacriticsReviewRating = int.Parse(reader["metacriticsReviewRating"].ToString());
             int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
             string rottentomatoesID = reader["rottentomatoesID"].ToString();
             int rottenTomatoesAudience = int.Parse(reader["rottenTomatoesAudience"].ToString());
             int tomatometer = int.Parse(reader["tomatometer"].ToString());
-            int personalRating = int.Parse(reader["personalRating"].ToString());
+
+			int personalRating;
+			if (!int.TryParse(reader["personalRating"].ToString(), out personalRating)) {
+				personalRating = Symbols.NO_PERSONAL_RATING;
+			}
+
             string boxofficemojoID = reader["boxofficemojoID"].ToString();
             UInt32 boxofficeWorldwide = UInt32.Parse(reader["boxofficeWorldwide"].ToString());
             UInt32 boxofficeAmerica = UInt32.Parse(reader["boxofficeAmerica"].ToString());

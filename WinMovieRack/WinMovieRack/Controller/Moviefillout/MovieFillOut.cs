@@ -23,10 +23,12 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void startFillout() {
-
+			int idMovies;
+			SQLiteConnector.db.testAndSetMovies(imdbid, out idMovies);
 			ConcurrentImdbMovieParser p = new ConcurrentImdbMovieParser(imdbid);
 			p.setFinalizeFunction(this.parseNames);
 			ThreadsMaster.getInstance().addJobMaster(p);
+
 		}
 
 		public void parseNames(ThreadJobMaster sender) {
@@ -81,7 +83,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void insertIntoDB() {
-			SQLiteConnector.db.insertMovieData(this.movie);
+			SQLiteConnector.db.updateMovieData(this.movie);
 		}
 
 	}

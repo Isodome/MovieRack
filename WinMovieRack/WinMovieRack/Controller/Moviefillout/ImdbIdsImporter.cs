@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace WinMovieRack.Controller.Moviefillout {
 	public class ImdbIdsImporter {
@@ -21,6 +22,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 				uint id = uint.Parse(idString);
 				MovieFillOut f = new MovieFillOut(id);
 				f.startFillout();
+				Thread.Sleep(1000);
 			}
 		}
 	}

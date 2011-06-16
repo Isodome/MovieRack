@@ -61,7 +61,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			
 			if (job == mainPageJob)
 			{
-				JobWebPageDownload res = (JobWebPageDownload)job;
+				JobWebPageDownload res = job as JobWebPageDownload;
 				this.mainPage = res.getResult();
 				mainPageJobDone = true;
 
