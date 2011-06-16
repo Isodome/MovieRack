@@ -35,39 +35,39 @@
                                 <StackPanel Margin="0,0,0,0" Name="stackPanel2" Orientation="Vertical" Visibility="Visible" Opacity="1">
                                     <StackPanel Height="Auto" Name="stackPanel1" Width="Auto" Orientation="Horizontal">
                                         <Label Content="Runtime:" Height="auto" Width="auto" Name="runtimeLabel" VerticalAlignment="Top" HorizontalAlignment="Left"  FontSize="12" Padding="3" />
-                                        <Label Content="120 min" Height="Auto" Name="runtime" Width="auto" FontWeight="Normal" HorizontalContentAlignment="Right" FontSize="12" Padding="3" />
+                                        <Label Content="N/A" Height="Auto" Name="runtime" Width="auto" FontWeight="Normal" HorizontalContentAlignment="Right" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel5" Orientation="Horizontal">
                                         <Label Content="Cinema Date:" Height="auto" Width="auto" Name="cinemaDateLabel" FontSize="12" Padding="3" />
-                                        <Label Content="13.05.2010" Height="auto" Name="cinemaDate" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="cinemaDate" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel7" Orientation="Horizontal">
                                         <Label Content="Last Seen:" Height="auto" Width="auto" Name="lastSeenLabel" FontSize="12" Padding="3" />
-                                        <Label Content="16.05.2010" Height="auto" Name="lastSeen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="lastSeen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel4" Orientation="Horizontal" Width="Auto">
                                         <Label Content="MPAA:" Height="auto" Width="auto" Name="mpaaLabel" FontSize="12" Padding="3" />
-                                        <Label Content="R" Height="auto" Name="mpaa" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="mpaa" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel6" Orientation="Horizontal">
                                         <Label Content="Seen:" Height="auto" Width="auto" Name="seenLabel" FontSize="12" Padding="3" />
-                                        <Label Content="3" Height="auto" Name="seen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="seen" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel8" Orientation="Horizontal">
                                         <Label Content="Awards:" Height="auto" Width="auto" Name="awardsLabel" FontSize="12" Padding="3" />
-                                        <Label Content="3" Height="auto" Name="awards" Width="45" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="awards" Width="45" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel9" Orientation="Horizontal">
                                         <Label Content="Production Budget:" Height="auto" Width="auto" Name="productionBudgetLabel" FontSize="12" Padding="3" />
-                                        <Label Content="150 mio" Height="auto" Name="budget" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="budget" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel10" Orientation="Horizontal">
                                         <Label Content="Boxoffice:" Height="auto" Width="auto" Name="boxofficeLabel" FontSize="12" Padding="3" />
-                                        <Label Content="502.675.435" Height="auto" Name="boxxoffice" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="boxxoffice" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                     <StackPanel Height="Auto" Name="stackPanel11" Orientation="Horizontal">
                                         <Label Content="Language:" Height="auto" Width="auto" Name="LanguageLabel" FontSize="12" Padding="3" />
-                                        <Label Content="German" Height="auto" Name="language" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
+                                        <Label Content="-" Height="auto" Name="language" Width="auto" FontWeight="Normal" FontSize="12" Padding="3" />
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -308,30 +308,30 @@
         <StackPanel Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,75,0,0" Name="stackPanel22" VerticalAlignment="Top" Width="auto">
             <StackPanel Height="auto" Name="stackPanel12" Width="auto" Orientation="Horizontal">
                 <Label Content="IMDB Rating:" Height="auto" Name="imdbRatingLabel" FontWeight="Bold" FontSize="12" Padding="2" />
-                <Label Content="10/10" Height="auto" Name="imdbRating" FontSize="12" Padding="2" />
-                <Label Content="(999999 Votes)" Height="auto" Name="imdbVotes" FontSize="12" Width="auto" Padding="2" />
+                <Label Content="-/10" Height="auto" Name="imdbRating" FontSize="12" Padding="2" />
+                <Label Content="(- Votes)" Height="auto" Name="imdbVotes" FontSize="12" Width="auto" Padding="2" />
                 <Label Content="Top 250:" Height="auto" Name="top250Label" Width="auto" FontWeight="Bold" FontSize="12" Padding="2" />
-                <Label Content="250" Height="auto" Name="top250" FontSize="12" Padding="2" />
+                <Label Content="-" Height="auto" Name="top250" FontSize="12" Padding="2" />
                 <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" />
             </StackPanel>
             <StackPanel Height="auto" Name="stackPanel13" Width="auto" Orientation="Horizontal">
                 <Label Content="Own Rating:" Height="auto" Name="ownRatingLabel" FontWeight="Bold" FontSize="12" Padding="2" />
-                <Label Content="100/100 (10/10)" Name="ownRating" Height="Auto" FontSize="12" Padding="2" />
+                <Label Content="-/100 (-/10)" Name="ownRating" Height="Auto" FontSize="12" Padding="2" />
                 <Label Content="Genres:" Height="auto" Name="genresLabel" FontWeight="Bold" FontSize="12" Padding="2" />
-                <Label Content="Action" Height="auto" Name="genres" FontSize="12" Padding="2" />
+                <Label Content="" Height="auto" Name="genres" FontSize="12" Padding="2" />
             </StackPanel>
             <StackPanel Height="auto" Name="stackPanel15" Width="auto" Orientation="Horizontal">
                 <Label Content="Metacritics:" Height="auto" Name="metacriticslabel" FontWeight="Bold" FontSize="12" Padding="2" />
                 <StackPanel Height="auto" Name="stackPanel17" Width="auto">
                     <StackPanel Height="auto" Name="stackPanel14" Width="auto" Orientation="Horizontal">
                         <Label Content="Metascore:" FontSize="12" Height="auto" Name="MetacriticsMetascoreLabel" Padding="2" />
-                        <Label Content="100/100" Height="auto" Name="label5" FontSize="12" Width="auto" Padding="2" />
-                        <Label Content="(999999 Critics)" FontSize="12" Height="auto" Name="MetacriticsMetascoreCriticsVotes" Padding="2" />
+                        <Label Content="-/100" Height="auto" Name="label5" FontSize="12" Width="auto" Padding="2" />
+                        <Label Content="(- Critics)" FontSize="12" Height="auto" Name="MetacriticsMetascoreCriticsVotes" Padding="2" />
                     </StackPanel>
                     <StackPanel Height="auto" Name="stackPanel16" Width="auto" Orientation="Horizontal">
                         <Label Content="Users Score:" Height="auto" Name="metacriticsUserLabel" FontSize="12" Padding="2" />
-                        <Label Content="10/10" Height="auto" Name="metacriticsUserRating" FontSize="12" Padding="2" />
-                        <Label Content="(999999 Votes)" FontSize="12" Height="auto" Name="MetacriticsMetascoreUsersVotes" Padding="2" />
+                        <Label Content="-/10" Height="auto" Name="metacriticsUserRating" FontSize="12" Padding="2" />
+                        <Label Content="(- Votes)" FontSize="12" Height="auto" Name="MetacriticsMetascoreUsersVotes" Padding="2" />
                     </StackPanel>
                 </StackPanel>
                 <Button Content="Metacritics" FontSize="10" Height="auto" Name="metacriticsLink" Width="auto" VerticalAlignment="Center" Padding="2" />
@@ -341,13 +341,13 @@
                 <StackPanel Height="auto" Name="stackPanel21" Width="auto">
                     <StackPanel Name="stackPanel19" Orientation="Horizontal" Height="auto" Width="auto">
                         <Label Content="Tomatometer:" Height="auto" Name="rottentomatoesTomatometerLabel" FontSize="12" Padding="2" />
-                        <Label Content="100%" Height="auto" Name="rottentomatoesTomatometerRating" FontSize="12" Padding="2" />
-                        <Label Content="(999999 Critics)" FontSize="12" Height="auto" Name="RottentomatoesTomatoemeterVotes" Padding="2" />
+                        <Label Content="-%" Height="auto" Name="rottentomatoesTomatometerRating" FontSize="12" Padding="2" />
+                        <Label Content="(- Critics)" FontSize="12" Height="auto" Name="RottentomatoesTomatoemeterVotes" Padding="2" />
                     </StackPanel>
                     <StackPanel Height="auto" Name="stackPanel20" Width="auto" Orientation="Horizontal">
                         <Label Content="Audience:" FontSize="12" Height="auto" Name="RottentomatoesAudienceLabel" Padding="2" />
-                        <Label Content="100%" Height="auto" Name="rottentomatoesAudienceRating" FontSize="12" Padding="2" />
-                        <Label Content="(999999 Votes)" FontSize="12" Height="auto" Name="RottentomatoesAudienceVotes" Padding="2" />
+                        <Label Content="-%" Height="auto" Name="rottentomatoesAudienceRating" FontSize="12" Padding="2" />
+                        <Label Content="(- Votes)" FontSize="12" Height="auto" Name="RottentomatoesAudienceVotes" Padding="2" />
                     </StackPanel>
                 </StackPanel>
                 <Button Content="Rottentomatoes" FontSize="10" Height="auto" Name="rottentomatoesLink" Width="auto" VerticalAlignment="Center" Padding="2" />

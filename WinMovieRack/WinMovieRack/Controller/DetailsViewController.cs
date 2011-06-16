@@ -14,8 +14,9 @@ namespace WinMovieRack.Controller
         private DetailsView view;
         private Controller controller;
         private SQLiteConnector db;
-        //  private List<MRListData> mrListData;
-        //private List<MovieRackListBoxItem> movieRackListBoxItems;
+        private List<MovieRackListBoxItem> completeActorList;
+        private List<MovieRackListBoxItem> starsList;
+        private List<MovieRackListBoxItem> productionList;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
@@ -28,88 +29,98 @@ namespace WinMovieRack.Controller
             this.view = dv;
         }
 
-        public List<MovieRackListBoxItem> loadActorList(int itemID)
+        public void loadCompleteMovieList()
         {
-            view.resetActorList();
+            view.completeMovieListBox.Items.Clear();
+            List<MRListData> completeMovieListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            for (int i = 0; i < completeMovieListData.Count; i++)
+            {
+                view.completeMovieListBox.Items.Add(new MovieRackListBoxItem(completeMovieListData.ElementAt(i), true));
+            }
+        }
+
+        public void loadActorList(int itemID)
+        {
             List<MRListData> mrListData = db.getPersonListToMovie(itemID);
-            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            completeActorList = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
+                completeActorList.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
             }
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            for (int i = 0; i < mrListData.Count; i++)
             {
-                view.addCastListBoxItem(movieRackListBoxItems.ElementAt(i));
+                view.completeCastListBox.Items.Add(completeActorList.ElementAt(i));
             }
-            view.castListBox.SelectedIndex = 0;
-            return movieRackListBoxItems;
         }
 
-        public List<MovieRackListBoxItem> loadStarsList(int itemID)
+        public void loadActorListPictures()
         {
-            view.resetSummeryStarsList();
+            for (int i = 0; i < completeActorList.Count; i++)
+            {
+                completeActorList.ElementAt(i).loadPicture();
+            }
+        }
+
+        public void loadStarsList(int itemID)
+        {
+
             List<MRListData> mrListData = db.getStarsListToMovie(itemID);
-            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            starsList = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
+                starsList.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
             }
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            for (int i = 0; i < starsList.Count; i++)
             {
-                view.addStarsListBoxItem(movieRackListBoxItems.ElementAt(i));
+                view.addStarsListBoxItem(starsList.ElementAt(i));
             }
-            return movieRackListBoxItems;
         }
 
-        public List<MovieRackListBoxItem> loadProductionList(int itemID)
+        public void loadProductionList(int itemID)
         {
-            view.resetSummeryProductionList();
             List<MRListData> mrListData = db.getProductionListToMovie(itemID);
-            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            productionList = new List<MovieRackListBoxItem>();
             for (int i = 0; i < mrListData.Count; i++)
             {
-                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
+                productionList.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
             }
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            for (int i = 0; i < productionList.Count; i++)
             {
-                view.addProductionListBoxItem(movieRackListBoxItems.ElementAt(i));
+                view.addProductionListBoxItem(productionList.ElementAt(i));
             }
-            return movieRackListBoxItems;
         }
 
-        public void loadMovieList()
+        public void loadMovieListToPerson(int itemID)
         {
-            view.resetMovieList();
-            List<MRListData> mrListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
-            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            view.completeMovieListToPerson.Items.Clear();
+            List<MRListData> mrListData = db.getMovieListToPerson(itemID);
             for (int i = 0; i < mrListData.Count; i++)
             {
-                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), true));
+                view.completeMovieListToPerson.Items.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), true));
             }
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+        }
+
+
+        public void loadStarsListPictures()
+        {
+            for (int i = 0; i < starsList.Count; i++)
             {
-                view.addMoviesListBoxItem(movieRackListBoxItems.ElementAt(i));
+                starsList.ElementAt(i).loadPicture();
+            }
+        }
+
+        public void loadProductionListPictures()
+        {
+            for (int i = 0; i < productionList.Count; i++)
+            {
+                productionList.ElementAt(i).loadPicture();
             }
         }
 
         public GUIPerson getGUIPerson(int itemID)
         {
             return db.getPersonInfo(itemID);
-        }
-
-        public void loadMovieListToPerson(int itemID)
-        {
-            view.resetMovieListToPerson();
-            List<MRListData> mrListData = db.getMovieListToPerson(itemID);
-            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
-            for (int i = 0; i < mrListData.Count; i++)
-            {
-                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), true));
-            }
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
-            {
-                view.addMovieListToPersonItem(movieRackListBoxItems.ElementAt(i));
-            }
         }
 
         public GUIMovie getGUIMovie(int itemID)
@@ -122,7 +133,6 @@ namespace WinMovieRack.Controller
             return db.getOtherAwardstoMovie(idMovie);
         }
 
-
         public DataSet loadOscarAwards(int idMovie)
         {
             return db.getOscarstoMovie(idMovie);
@@ -132,7 +142,6 @@ namespace WinMovieRack.Controller
         {
             return db.getGenres(idMovies);
         }
-
 
         public List<String> loadLanguageList(int idMovies)
         {
