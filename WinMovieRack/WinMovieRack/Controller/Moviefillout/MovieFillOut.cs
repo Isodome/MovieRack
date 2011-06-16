@@ -60,6 +60,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 				}
 			}
 			SQLiteConnector.db.endTransaction();
+
 			FunctionCaller f = new FunctionCaller();
 			f.addFunction(this.insertIntoDB);
 			f.isWaiting = true;
@@ -70,9 +71,8 @@ namespace WinMovieRack.Controller.Moviefillout {
 			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(imdbID);
 			p.person.idPerson = idPerson;
 			p.setFinalizeFunction(parseFinished);
-			Monitor.Enter(this);
 			ThreadsMaster.getInstance().addJobMaster(p);
-			Monitor.Exit(this);
+
 		}
 
 		public void parseFinished(ThreadJobMaster sender) {

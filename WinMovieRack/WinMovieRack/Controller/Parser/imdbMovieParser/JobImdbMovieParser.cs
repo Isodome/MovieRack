@@ -15,7 +15,7 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 	public class JobImdbMovieParser : ThreadJob {
 
 		// Regex to parse information from the imdbMainPage
-		public const string titleAndYearRegex = @"<title>(.*?)\((.*?)\) - IMDb</title>";
+		public const string titleAndYearRegex = @"<title>(.*)\((.*?)\) - IMDb</title>";
 		public const string plotRegex = @"<h2>Storyline</h2>(.|\n|\r)*?<p>(?<plot>(.|\n|\r)*?)</p>";
 		public const string writtenByRegex = @"<(.|\n|\r)*?>";
 		public const string runtimeRegex = @"<h4 class=""inline"">Runtime:</h4>(.|\n|\r)*?(?<time>\d+) min";
