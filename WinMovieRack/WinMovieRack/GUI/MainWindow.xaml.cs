@@ -68,5 +68,10 @@ namespace WinMovieRack
         {
             controller.shouldChangeView(View.ACTORS_VIEW);
         }
+
+		private void importMenuItem_Click(object sender, RoutedEventArgs e) {
+			ImportWindow i = new ImportWindow();
+			i.Show();
+		}
     }
 }

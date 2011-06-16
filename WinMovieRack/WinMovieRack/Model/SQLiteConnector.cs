@@ -15,6 +15,8 @@ namespace WinMovieRack.Model
         private object DBProtect = new object();
         private SQLiteConnection connection;
 		private Dictionary<uint, int> imdbPersonIds;
+		public static SQLiteConnector db;
+
 
         public void initDb()
         {
@@ -35,6 +37,7 @@ namespace WinMovieRack.Model
             }
 
             createFolders();
+			db = this;
         }
 
         private void createFolders()
@@ -49,25 +52,8 @@ namespace WinMovieRack.Model
             string script = file.OpenText().ReadToEnd();
 
             SQLiteCommand command = new SQLiteCommand(connection);
-
-
-            // Erstellen der Tabelle, sofern diese noch nicht existiert.
             command.CommandText = script;
             executeCommandThreadSafe(command);
-
-            // Einfügen eines Test-Datensatzes.
-            command.CommandText = "INSERT INTO Movies (idMovies, year, title, plot, runtime, posterPath) VALUES(NULL, 1970, 'James Bond xx', 'laaangweilig', 120, 'Z:\\MovieRack\\WinMovieRack\\WinMovieRack\\Images\\#9.jpg')";
-            //executeCommandThreadSafe(command);
-
-            command.CommandText = "SELECT Plot, Title FROM Movies WHERE Year = 1970";
-
-            SQLiteDataReader reader = executeReaderThreadSafe(command);
-
-            while (reader.Read())
-            {
-                Console.WriteLine("Dies ist der {0}. eingefügte Datensatz mit dem Wert: \"{1}\"", reader[0].ToString(), reader[1].ToString());
-            }
-            // Freigabe der Ressourcen.
             command.Dispose();
 
         }
@@ -81,8 +67,6 @@ namespace WinMovieRack.Model
 		}
 
 
-
-      
 
 
         public bool testAndSetPerson(uint imdbID, out int idPerson)

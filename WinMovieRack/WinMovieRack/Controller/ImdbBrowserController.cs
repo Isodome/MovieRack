@@ -34,9 +34,8 @@ namespace WinMovieRack.Controller {
 			}
 		}
 
-		public void insertMovieInDB(ConcurrentImdbMovieParser parser) {
-			Movie m = new Movie(parser.movieData);
-			MovieFillOut fillout = new MovieFillOut(m, controller.db, controller.db.insertMovieData);
+		public void insertMovieInDB(uint imdbid) {
+			MovieFillOut fillout = new MovieFillOut(imdbid);
 			fillout.startFillout();
 		}
 

@@ -57,7 +57,7 @@ namespace WinMovieRack.GUI {
 				if (lastParser is ConcurrentIMDBNameParser) {
 					controller.insertPersonInDB((ConcurrentIMDBNameParser)lastParser);
 				} else if (lastParser is ConcurrentImdbMovieParser) {
-					controller.insertMovieInDB((ConcurrentImdbMovieParser)lastParser);
+					controller.insertMovieInDB(IMDBUtil.getTitleIdFromUrl(lastURL));
 				}
 			}
 			lastParser = null;
