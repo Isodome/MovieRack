@@ -57,7 +57,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 				{
 					
 					master = jobMaster.ElementAt<ThreadJobMaster>(i);
-					if (master.isFinalizingTask() && i != 0) {
+					if (master.isWaitingTask() && i != 0) {
 						continue;
 					}
 					job = master.getJob();

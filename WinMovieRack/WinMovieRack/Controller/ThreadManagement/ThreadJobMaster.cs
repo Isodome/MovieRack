@@ -15,6 +15,7 @@ namespace WinMovieRack.Controller.ThreadManagement
         private List<ThreadJob> jobs = new List<ThreadJob>();
         private Object lockvar = "";
 		private FinalizeFunction finFunction = null;
+		public bool isWaiting;
        // private ThreadsMaster master;
 
         public ThreadJob getJob()
@@ -54,8 +55,8 @@ namespace WinMovieRack.Controller.ThreadManagement
 			}
 		}
 
-		public virtual bool isFinalizingTask() {
-			return false;
+		public virtual bool isWaitingTask() {
+			return this.isWaiting;
 		}
     }
 

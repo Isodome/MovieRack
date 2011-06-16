@@ -6,18 +6,18 @@ using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.Controller.Parser;
 
 namespace WinMovieRack.Controller {
-	public class Finalizer : ThreadJobMaster {
+	public class FunctionCaller : ThreadJobMaster {
 
 		private FunctionCall fc = new FunctionCall(); 
 
-		public Finalizer() {
+		public FunctionCaller() {
 			this.addJob(fc);
 		}
 
 		public override bool hasFinished(ThreadJob job) {
 			return true;
 		}
-		public override bool isFinalizingTask() {
+		public override bool isWaitingTask() {
 			return true;
 		}
 

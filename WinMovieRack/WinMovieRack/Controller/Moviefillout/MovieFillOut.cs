@@ -62,8 +62,9 @@ namespace WinMovieRack.Controller.Moviefillout {
 				}
 			}
 			db.endTransaction();
-			Finalizer f = new Finalizer();
+			FunctionCaller f = new FunctionCaller();
 			f.addFunction(this.insertIntoDB);
+			f.isWaiting = true;
 			ThreadsMaster.getInstance().addJobMaster(f);
 		}
 
