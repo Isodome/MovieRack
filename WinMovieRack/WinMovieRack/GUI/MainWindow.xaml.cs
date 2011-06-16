@@ -16,6 +16,7 @@ using WinMovieRack.Model;
 using WinMovieRack.Controller;
 using WinMovieRack.Controller.Parser.imdbMovieParser;
 using WinMovieRack.GUI;
+using WinMovieRack.Controller.ThreadManagement;
 using System.Threading;
 
 namespace WinMovieRack
@@ -26,7 +27,6 @@ namespace WinMovieRack
     public partial class MainWindow : Window
     {
         private UIElement current;
-
 		private MainWindowController controller;
 
         public MainWindow(MainWindowController c)
@@ -72,6 +72,13 @@ namespace WinMovieRack
 		private void importMenuItem_Click(object sender, RoutedEventArgs e) {
 			ImportWindow i = new ImportWindow();
 			i.Show();
+		}
+		public void setProgressIndicating(bool i) {
+			Action a = new Action(() => {
+				this.progressIndicator.Visibility = i ? Visibility.Visible : Visibility.Hidden;
+			}) ;
+			Dispatcher.BeginInvoke(a); 
+				
 		}
     }
 }

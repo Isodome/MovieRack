@@ -19,8 +19,14 @@ namespace WinMovieRack.Controller {
 			controller.changeToView(v);
 		}
 
-		internal void close() {
+		public void close() {
 			mainWindow.Close();
 		}
+
+		public void setProgressIndicator(bool p) {
+			mainWindow.setProgressIndicating(p);
+		}
+
+
 	}
 }

@@ -13,19 +13,21 @@ namespace WinMovieRack.Controller {
 
 		private WinMovieRack.GUI.GUI gui;
 		public SQLiteConnector db;
+		public static Controller controller;
 		private App app;
 
 		private ImdbBrowserController browserController;
 		private MainWindowController windowController;
 		private DetailsViewController detailsViewController;
         private ActorsViewController actorsViewController;
+		
 
 		public Controller(App app) {
 			this.app = app;
 			this.app.Exit += aboutToExit;
 			initializeModel();
 			initializeGUI();
-
+			controller = this;
 		}
 
 		public void func(ThreadJobMaster sender) {
@@ -86,6 +88,10 @@ namespace WinMovieRack.Controller {
 			windowController.close();
 			ThreadsMaster.getInstance().waitToFinish();
 			Application.Current.Shutdown();
+		}
+
+		internal void setProgressIndicator(bool p) {
+			windowController.setProgressIndicator(p);
 		}
 	}
 }

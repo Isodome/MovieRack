@@ -47,7 +47,7 @@ namespace WinMovieRack.Model {
 				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
 			}
 			endTransaction();
-			Console.WriteLine("Done inserting {0} into DB", m.imdbMovie.title);
+			Console.WriteLine("Done inserting '{0}' into DB", m.imdbMovie.title);
 
 		}
 
@@ -230,6 +230,7 @@ namespace WinMovieRack.Model {
 			if (person.image != null) {
 				PictureHandler.savePersonPortrait(person.image, person.idPerson);
 			}
+			Console.WriteLine("Done inserting '{0}' in DB", person.name);
 		}
 
 		private void insertRole(uint personImdbId, String characterName, int idMovies) {

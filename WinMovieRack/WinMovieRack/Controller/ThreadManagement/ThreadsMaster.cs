@@ -67,7 +67,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 
                 if (job != null)
                 {
-                    System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());
+                    //System.Console.WriteLine("I'm Thread {0} and I'm starting job {1}", threadId + "", job.GetType().ToString());
                     job.run();
 					if (master.hasFinished(job))
 					{
@@ -89,6 +89,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 				Monitor.Enter(lockvar);
 				jobMaster.AddLast(master);
 				Monitor.Exit(lockvar);
+				Controller.controller.setProgressIndicator(true);
 			}
         }
 
@@ -103,7 +104,10 @@ namespace WinMovieRack.Controller.ThreadManagement
 			master.finalize();
             Monitor.Enter(lockvar);
             jobMaster.Remove(master);	
-            Monitor.Exit(lockvar);	
+            Monitor.Exit(lockvar);
+			if (jobMaster.Count == 0) {
+				Controller.controller.setProgressIndicator(false);
+			}
         }
 
 		private void blockingSwitchThreadCount(object newThreadCountObject)

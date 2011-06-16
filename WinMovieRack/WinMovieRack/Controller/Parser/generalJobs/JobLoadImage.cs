@@ -45,12 +45,14 @@ namespace WinMovieRack.Controller.Parser
 				} catch (Exception) {
 					result = null;
 					attempts--;
+					Console.WriteLine("Error downloading image from {0} in attempt {1}. There are {2} attemps remaining", this.url, maxAttempts - attempts, attempts);
 				}
 
 			} while (attempts > 0);
 
 			if (attempts == 0) {
 				result = null;
+				Console.WriteLine("Download of image from {0} failed after {1} unsuccessful attemps.", this.url, maxAttempts);
 				// ERRORHANDLING
 			}
 			

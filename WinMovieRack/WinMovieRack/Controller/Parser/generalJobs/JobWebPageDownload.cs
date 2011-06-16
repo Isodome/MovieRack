@@ -25,7 +25,7 @@ namespace WinMovieRack.Controller.Parser
 
         private void getMainPage()
         {
-			int attemps = maxAttempts;
+			int attempts = maxAttempts;
 			do {
 				try {
 					WebRequest req = WebRequest.Create(url);
@@ -37,15 +37,19 @@ namespace WinMovieRack.Controller.Parser
 					break;
 				} catch (UriFormatException e) {
 					Console.WriteLine("Unvalid URL: " + this.url);
-					attemps--;
+					attempts--;
+					Console.WriteLine("Error downloading website from {0} in attempt {1}. There are {2} attemps remaining", this.url, maxAttempts - attempts, attempts);
 				} catch (Exception f) {
+					attempts--;
 					Console.WriteLine("Webexception: " + this.url + f.Message);
-					attemps--;
+					Console.WriteLine("Error downloading website from {0} in attempt {1}. There are {2} attemps remaining", this.url, maxAttempts - attempts, attempts);
+				
 				}
-			} while (attemps > 0);
+			} while (attempts > 0);
 
-			if (attemps == 0) {
+			if (attempts == 0) {
 				result = null;
+				Console.WriteLine("Download of website from {0} failed after {1} unsuccessful attemps.", this.url, maxAttempts);
 				//ERRORHANDLING
 			}
         }
