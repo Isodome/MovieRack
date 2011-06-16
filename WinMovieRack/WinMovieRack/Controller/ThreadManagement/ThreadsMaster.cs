@@ -100,10 +100,10 @@ namespace WinMovieRack.Controller.ThreadManagement
 
         public void hasFinished(ThreadJobMaster master)
         {
+			master.finalize();
             Monitor.Enter(lockvar);
             jobMaster.Remove(master);	
-            Monitor.Exit(lockvar);
-			master.finalize();
+            Monitor.Exit(lockvar);	
         }
 
 		private void blockingSwitchThreadCount(object newThreadCountObject)

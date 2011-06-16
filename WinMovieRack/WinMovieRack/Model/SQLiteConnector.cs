@@ -7,14 +7,14 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Data;
-
+using System.Collections.Generic;
 namespace WinMovieRack.Model
 {
     public partial class SQLiteConnector
     {
         private object DBProtect = new object();
         private SQLiteConnection connection;
-        private HashSet<uint> imdbPersonIds;
+		private Dictionary<uint, int> imdbPersonIds;
 
         public void initDb()
         {
@@ -24,14 +24,14 @@ namespace WinMovieRack.Model
             connection.Open();
             this.checkTables();
 
-            imdbPersonIds = new HashSet<uint>();
+			imdbPersonIds = new Dictionary<uint, int>();
 
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "select imdbID FROM Person";
+            command.CommandText = "select imdbID, idPerson FROM Person";
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             while (reader.Read())
             {
-                this.imdbPersonIds.Add(uint.Parse(reader[0].ToString()));
+                this.imdbPersonIds.Add(uint.Parse(reader["imdbID"].ToString()), int.Parse(reader["idPerson"].ToString()));
             }
 
             createFolders();
@@ -85,18 +85,18 @@ namespace WinMovieRack.Model
       
 
 
-        public bool testAndSetPerson(uint imdbID)
+        public bool testAndSetPerson(uint imdbID, out int idPerson)
         {
             bool contains;
             lock (this.imdbPersonIds)
             {
-                contains = this.imdbPersonIds.Contains(imdbID);
+				contains = this.imdbPersonIds.TryGetValue(imdbID, out idPerson);
                 if (!contains)
                 {
-                    this.imdbPersonIds.Add(imdbID);
                     SQLiteCommand command = new SQLiteCommand(connection);
                     command.CommandText = "insert into Person (imdbID) values (" + imdbID.ToString() + ")";
-                    executeCommandThreadSafe(command);
+					idPerson = executeCommandAndReturnID(command);
+					this.imdbPersonIds.Add(imdbID, idPerson);
                 }
             }
             return contains;

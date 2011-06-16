@@ -17,14 +17,12 @@ namespace WinMovieRack.Controller.Moviefillout {
 		private SQLiteConnector db;
 		private CallBack cb;
 
-		private int persons;
 		Thread t;
 
 		public MovieFillOut(Movie movie, SQLiteConnector db, CallBack cb) {
 			this.movie = movie;
 			this.db = db;
 			this.cb = cb;
-			persons = 0;
 		}
 
 		public void startFillout() {
@@ -33,31 +31,28 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void parseNames() {
-			bool newActor = false;
+			int idPerson;
 			db.beginTransaction();
+
 			foreach (uint cur in movie.imdbMovie.directors) {
-				if (!db.testAndSetPerson(cur)) {
-					startParse(cur);
-					newActor = true;
+				if (!db.testAndSetPerson(cur, out idPerson)) {
+					startParse(cur, idPerson);
 				}
 			}
 			foreach (uint cur in movie.imdbMovie.writers) {
-				if (!db.testAndSetPerson(cur)) {
-					startParse(cur);
-					newActor = true;
+				if (!db.testAndSetPerson(cur, out idPerson)) {
+					startParse(cur, idPerson);
 				}
 			}
 			foreach (Tuple<uint, string> cur in movie.imdbMovie.roles) {
-				if (!db.testAndSetPerson(cur.Item1)) {
-					startParse(cur.Item1);
-					newActor = true;
+				if (!db.testAndSetPerson(cur.Item1, out idPerson)) {
+					startParse(cur.Item1, idPerson);
 				}
 			}
 			foreach (Award a in movie.imdbMovie.awards) {
 				foreach (uint p in a.persons) {
-					if (!db.testAndSetPerson(p)) {
-						startParse(p);
-						newActor = true;
+					if (!db.testAndSetPerson(p, out idPerson)) {
+						startParse(p, idPerson);
 					}
 				}
 			}
@@ -68,20 +63,18 @@ namespace WinMovieRack.Controller.Moviefillout {
 			ThreadsMaster.getInstance().addJobMaster(f);
 		}
 
-		private void startParse(uint imdbID) {
+		private void startParse(uint imdbID, int idPerson) {
 			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(imdbID);
+			p.person.idPerson = idPerson;
 			p.setFinalizeFunction(parseFinished);
 			Monitor.Enter(this);
 			ThreadsMaster.getInstance().addJobMaster(p);
-			persons++;
 			Monitor.Exit(this);
 		}
 
 		public void parseFinished(ThreadJobMaster sender) {
-			ConcurrentIMDBNameParser p = (ConcurrentIMDBNameParser)sender;
-			lock (this.movie.persons) {
-				this.movie.persons.Add(p.person);
-			}
+			ConcurrentIMDBNameParser p = sender as ConcurrentIMDBNameParser;
+			db.updateImdbPerson(p.person);
 		}
 
 		public void insertIntoDB() {

@@ -12,6 +12,7 @@ namespace WinMovieRack.Model {
 
 
 		public void insertMovieData(Movie m) {
+			beginTransaction();
 			// insert all persons and the movie
 			insertImdbMovie(m.imdbMovie);
 			foreach (ImdbPerson person in m.persons) {
@@ -44,6 +45,7 @@ namespace WinMovieRack.Model {
 			if (m.imdbMovie.poster != null) {
 				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
 			}
+			endTransaction();
 			Console.WriteLine("Done inserting {0} into DB", m.imdbMovie.title);
 
 		}
@@ -158,9 +160,8 @@ namespace WinMovieRack.Model {
 
 
 
-		private void updateImdbPerson(ImdbPerson person) {
+		public void updateImdbPerson(ImdbPerson person) {
 
-			int idPerson = getIdPersonByImdbId(person.imdbID);
 			SQLiteCommand command = new SQLiteCommand(connection);
 
 			command.CommandText = "UPDATE Person SET Name=@Name, " +
@@ -220,12 +221,12 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@OtherWins") { Value = 0 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@idPerson") { Value = idPerson };
+			param = new SQLiteParameter("@idPerson") { Value = person.idPerson };
 			command.Parameters.Add(param);
 
 			executeCommandThreadSafe(command);
 			if (person.image != null) {
-				PictureHandler.savePersonPortrait(person.image, idPerson);
+				PictureHandler.savePersonPortrait(person.image, person.idPerson);
 			}
 		}
 
@@ -264,7 +265,6 @@ namespace WinMovieRack.Model {
 
 
 		private void insertImdbMovie(ImdbMovie movie) {
-			beginTransaction();
 			SQLiteCommand command = new SQLiteCommand(connection);
 
 			command.CommandText = "INSERT INTO Movies (title, runtime, plot, originalTitle, " +
@@ -373,7 +373,6 @@ namespace WinMovieRack.Model {
 			command.Parameters.Add(param);
 
 			executeCommandThreadSafe(command);
-			endTransaction();
 		}
 	} 
 }

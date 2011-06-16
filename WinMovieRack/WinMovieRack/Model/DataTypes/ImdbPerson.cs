@@ -7,6 +7,7 @@ using System.Drawing;
 namespace WinMovieRack.Model {
 	public class ImdbPerson {
 
+		public int idPerson;
 		public uint imdbID;
 		public string name;
 		public DateTime birthday;
