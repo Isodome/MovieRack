@@ -112,12 +112,12 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		}
 		public void extractRuntime() {
 			Match m = Regex.Match(mainPage, runtimeRegex);
-			if (int.TryParse(m.Groups["time"].Value, out movie.runtime)) {
+			string tmpTime = m.Groups["time"].Value;
+			if (!int.TryParse(tmpTime, out movie.runtime)) {
 				movie.runtime = Symbols.NO_RUNTIME;
 			}
-
-
 		}
+
 		public void extractOriginalTitle() {
 			Match m = Regex.Match(mainPage, originalTitleRegex);
 			movie.originalTitle = m.Groups["orgTitle"].Value.Trim();

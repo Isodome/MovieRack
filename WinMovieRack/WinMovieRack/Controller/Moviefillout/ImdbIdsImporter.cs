@@ -14,7 +14,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 			this.file = file;
 		}
 
-		internal void import() {
+		public void import() {
 			MatchCollection mc = Regex.Matches(file, findIdsRegex);
 			foreach (Match m in mc) {
 				string idString = m.Groups["id"].Value;
