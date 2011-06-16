@@ -72,10 +72,20 @@ namespace WinMovieRack.GUI
 			Storyboard.SetTargetProperty(posXAnim, new PropertyPath("(Canvas.Left)"));
 			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
 
-			heightAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight;
-			widthAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth;
-			posYAnim.To = 0;
-			posXAnim.To = 0;
+			double picRatio = (double)bigPicture.Source.Width / (double)bigPicture.Source.Height;
+			double screenRatio = System.Windows.SystemParameters.PrimaryScreenWidth / System.Windows.SystemParameters.PrimaryScreenHeight;
+			if (picRatio > screenRatio) {
+				widthAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth;
+				heightAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth / bigPicture.Source.Width * bigPicture.Source.Height;
+			} else {
+				heightAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight;
+				widthAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight / bigPicture.Source.Height * bigPicture.Source.Width;
+			}
+			
+			 
+			posYAnim.To = (System.Windows.SystemParameters.PrimaryScreenHeight - heightAnim.To) /2;
+			posXAnim.To = (System.Windows.SystemParameters.PrimaryScreenWidth - widthAnim.To) / 2;
+			
 
 
 			sb.Begin();
@@ -138,7 +148,7 @@ namespace WinMovieRack.GUI
 			sb.Children.Add(widthAnim);
 			sb.Children.Add(posXAnim);
 			sb.Children.Add(posYAnim);
-			sb.Children.Add(opacityAnim);
+			//sb.Children.Add(opacityAnim);
 
 			Storyboard.SetTarget(heightAnim, this);
 			Storyboard.SetTarget(widthAnim, this);

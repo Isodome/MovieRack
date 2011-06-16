@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="200">
-    <Grid Height="100" Width="auto">
+             d:DesignHeight="84" d:DesignWidth="200">
+    <Grid Height="84" Width="auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="84" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image x:Name="poster" Height="auto" Margin="2" Width="auto" />
-        <Label Content="Title/Name" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,12,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
-        <Label Content="Year/Age" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,38,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
-        <Label Content="Editable/Char." Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,64,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
+        <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" />
+        <Label Content="Title/Name" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+        <Label Content="Year/Age" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
+        <Label Content="Editable/Char." Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
     </Grid>
 </UserControl>
