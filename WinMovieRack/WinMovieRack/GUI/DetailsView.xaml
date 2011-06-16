@@ -160,7 +160,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
-                            <Image Margin="2,80,2,0" Name="actorPoster" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" MaxHeight="200" MaxWidth="200" Height="auto" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.RowSpan="2" />
+                            <Image Margin="2,80,2,0" Name="actorPoster" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" MaxHeight="200" MaxWidth="200" Height="auto" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.RowSpan="2" MouseUp="actorPoster_MouseUp" />
                             <GroupBox FontSize="13" FontWeight="Bold" Header="Details" Name="groupBox3" Grid.Column="1" Margin="2">
                                 <Grid Height="auto" Width="auto">
                                     <ScrollViewer  Name="scrollViewer91" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">

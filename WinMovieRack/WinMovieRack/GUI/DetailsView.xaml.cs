@@ -41,7 +41,6 @@ namespace WinMovieRack
         {
             InitializeComponent();
             this.controller = dvc;
-            TextBlock plot1 = plot;
         }
 
         private void changeView(UIElement newView)
@@ -136,8 +135,8 @@ namespace WinMovieRack
             posterBitmap.EndInit();
             posterTitle.Source = posterBitmap;
             runtime.Content = movieDetails.runtime;
-         //   controller.loadProductionList(movieDetails.dbId);
-          //  controller.loadStarsList(movieDetails.dbId);
+            //   controller.loadProductionList(movieDetails.dbId);
+            //  controller.loadStarsList(movieDetails.dbId);
             loadCastPictures(controller.loadProductionList(movieDetails.dbId));
             loadCastPictures(controller.loadStarsList(movieDetails.dbId));
         }
@@ -199,7 +198,7 @@ namespace WinMovieRack
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-			bigPicture.fadeIn();
+            bigPicture.fadeIn();
         }
 
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -282,6 +281,21 @@ namespace WinMovieRack
             actorList = controller.loadActorList(selectedItem.itemID);
             loadCastPictures(actorList);
             listBoxMovies.UnselectAll();
+        }
+
+        private void actorPoster_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
+            bigPicture = new BigPicture();
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(selectetItem.itemID, PosterSize.FULL));
+            posterBitmap.EndInit();
+            bigPicture.bigPicture.Source = posterBitmap;
+            Point origin = new Point(0, 0);
+            Point screenOrigin = actorPoster.PointToScreen(origin);
+            bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
+            bigPicture.fadeIn();
         }
     }
 
