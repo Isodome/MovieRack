@@ -112,11 +112,10 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		}
 		public void extractRuntime() {
 			Match m = Regex.Match(mainPage, runtimeRegex);
-			try {
-				movie.runtime = int.Parse(m.Groups["time"].Value);
-			} catch (FormatException) {
-				Log.log("Could not parse runtime of " + movie.title);
+			if (int.TryParse(m.Groups["time"].Value, out movie.runtime)) {
+				movie.runtime = Symbols.NO_RUNTIME;
 			}
+
 
 		}
 		public void extractOriginalTitle() {
@@ -135,24 +134,21 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser {
 		{
 			Match m = Regex.Match(mainPage, imdbRatingRegex);
 			string tmpString =m.Groups["rating"].Value;
-			if (tmpString.Equals("-")) {
+			if (!int.TryParse(Regex.Replace(m.Groups["rating"].Value, @"\D", ""), out movie.imdbRating)) {
 				movie.imdbRating = Symbols.NO_IMDB_RATING;
-			} else {
-				movie.imdbRating = int.Parse(Regex.Replace(m.Groups["rating"].Value, @"\D", ""));
 			}
+
 		}
 
 		public void extractIMDBRatingVotes() {
 			Match m = Regex.Match(mainPage, imdbRatingVotesRegex);
 			string tmpString = Regex.Replace(m.Groups["votes"].Value, @"\D", "");
 
-			try {
-				movie.imdbRatingVotes = int.Parse(tmpString);
-			} catch (FormatException) {
-				Log.log("Could not parse imdb votes of " + movie.title);
-				movie.imdbRatingVotes = -1;
+			if(!int.TryParse(tmpString, out movie.imdbRatingVotes)) {
+				movie.imdbRatingVotes = Symbols.NO_IMDB_VOTES;
 			}
 		}
+
 		public void extractCountries() {
 			Match m = Regex.Match(mainPage, countriesRegex);
 			string genreString = m.Groups["country"].Value;

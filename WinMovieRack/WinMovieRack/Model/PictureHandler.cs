@@ -33,7 +33,7 @@ namespace WinMovieRack.Model {
 
 		private static System.Drawing.Imaging.ImageCodecInfo imageCodec;
 		private static EncoderParameters encodeParams = new EncoderParameters(1);
-		private static long jpegQuali = 100L;
+		private static long jpegQuali = 75L;
 
 
 		private PictureHandler () {}
