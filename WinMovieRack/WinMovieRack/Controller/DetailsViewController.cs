@@ -45,6 +45,38 @@ namespace WinMovieRack.Controller
             return movieRackListBoxItems;
         }
 
+        public List<MovieRackListBoxItem> loadStarsList(int itemID)
+        {
+            view.resetSummeryStarsList();
+            List<MRListData> mrListData = db.getStarsListToMovie(itemID);
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            for (int i = 0; i < mrListData.Count; i++)
+            {
+                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
+            }
+            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            {
+                view.addStarsListBoxItem(movieRackListBoxItems.ElementAt(i));
+            }
+            return movieRackListBoxItems;
+        }
+
+        public List<MovieRackListBoxItem> loadProductionList(int itemID)
+        {
+            view.resetSummeryProductionList();
+            List<MRListData> mrListData = db.getProductionListToMovie(itemID);
+            List<MovieRackListBoxItem> movieRackListBoxItems = new List<MovieRackListBoxItem>();
+            for (int i = 0; i < mrListData.Count; i++)
+            {
+                movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
+            }
+            for (int i = 0; i < movieRackListBoxItems.Count; i++)
+            {
+                view.addProductionListBoxItem(movieRackListBoxItems.ElementAt(i));
+            }
+            return movieRackListBoxItems;
+        }
+
         public void loadMovieList()
         {
             view.resetMovieList();
@@ -85,9 +117,26 @@ namespace WinMovieRack.Controller
             return db.getMovieInfo(itemID);
         }
 
-        public DataSet loadAwards(int idMovie)
+        public DataSet loadOtherAwards(int idMovie)
         {
-            return db.getAwardstoMovie(idMovie);
+            return db.getOtherAwardstoMovie(idMovie);
+        }
+
+
+        public DataSet loadOscarAwards(int idMovie)
+        {
+            return db.getOscarstoMovie(idMovie);
+        }
+
+        public List<String> loadGenreList(int idMovies)
+        {
+            return db.getGenres(idMovies);
+        }
+
+
+        public List<String> loadLanguageList(int idMovies)
+        {
+            return db.getLanguageToMovie(idMovies);
         }
     }
 }
