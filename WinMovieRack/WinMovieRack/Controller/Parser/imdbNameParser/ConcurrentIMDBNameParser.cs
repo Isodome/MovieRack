@@ -23,8 +23,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 		private bool mainPageJobDone = false;
 		private ThreadJob pictureLoadJob;
 		private bool pictureLoadJobDone = false;
-		private ThreadJob parseJob;
-		private bool parseJobDone = false;
+
 
 		private string mainPage;
 
@@ -63,7 +62,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			{
 				JobWebPageDownload res = job as JobWebPageDownload;
 				this.mainPage = res.getResult();
-				mainPageJobDone = true;
+				
 
 				pictureLoadJob = getPictureLoadJob();
 				if (pictureLoadJob != null) {
@@ -72,20 +71,24 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 					pictureLoadJobDone = true;
 				}
 
-				parseJob = new JobIMDBNameParser(mainPage, person);
-				addJob(parseJob);
-			} 
-			else  if (job == parseJob)
-			{
-				parseJobDone = true;
-			}
-			else if (job == pictureLoadJob)
-			{
-				pictureLoadJobDone = true;
+				JobIMDBNameParser parseJob = new JobIMDBNameParser(mainPage, person);
+				parseJob.run();
+				mainPageJobDone = true;
+
+			} else if (job == pictureLoadJob) {	
 				person.image = ((JobLoadImage)job).getResult();
+				pictureLoadJobDone = true;
 			}
 
-			return (mainPageJobDone && parseJobDone && pictureLoadJobDone);
+			bool result = false;
+			lock (this) {
+				if (mainPageJobDone && pictureLoadJobDone) {
+					result = true;
+					mainPageJobDone = false;
+				}
+			}
+
+			return result;
 		}
 	}
 

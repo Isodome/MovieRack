@@ -89,9 +89,14 @@ namespace WinMovieRack.Model {
 
 		private static void savePosterToHD(Bitmap b, string path, string filename) {
 			Directory.CreateDirectory(path);
-
-			b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
-
+			try {
+				b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
+			} catch (Exception) {
+				// Bitmap bFULL = scaleImageProportional(b, b.Height, b.Width);
+				Bitmap bFULL = new Bitmap(b);
+				bFULL.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
+				bFULL.Dispose();
+			}
 			Bitmap bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
 			bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
 			bPreview.Dispose();

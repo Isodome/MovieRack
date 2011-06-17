@@ -118,10 +118,11 @@ namespace WinMovieRack.Controller.ThreadManagement
 
         public void hasFinished(ThreadJobMaster master)
         {
-			master.finalize();
+			
             Monitor.Enter(lockvar);
             jobMaster.Remove(master);	
             Monitor.Exit(lockvar);
+			master.finalize();
 			if (jobMaster.Count == 0) {
 				Controller.controller.setProgressIndicator(false);
 			}

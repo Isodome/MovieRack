@@ -13,6 +13,8 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 		private const string boxofficeIdRegex = @"size=""2""><a href=""/movies/.id=(?<id>.*?).htm"">(?<name>.*?)</a>";
 		private const string releaseDateRegex = @"<a href=""/schedule/.*?"">(?<date>.*?)</a>";
 		private const string coverURLRegex = @"<img src=""(?<url>.*?)""";
+
+
 		private const string urlRegex = @"boxofficemojo.*?id=(?<id>.*?).htm";
 
 		private string query = null;
