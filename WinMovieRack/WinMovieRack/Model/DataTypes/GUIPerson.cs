@@ -16,7 +16,7 @@ namespace WinMovieRack.Model
         public char gender;
         public int CountryofBirth;
         public string CityofBirth;
-        public UInt64 lifetimeGross;
+        public Int64 lifetimeGross;
         public int boxofficeAverage;
         public int OscarNominations;
         public int OscarWins;
@@ -24,7 +24,7 @@ namespace WinMovieRack.Model
         public int OtherWins;
         public int imdbID;
 
-        public GUIPerson(int dbID, string Name, string OriginalName, string Biography, int CountryofBirth, string CityofBirth, UInt64 lifetimeGross, int boxofficeAverage, int OscarNominations, int OscarWins, int OtherNominations, int OtherWins, int imdbID)
+        public GUIPerson(int dbID, string Name, string OriginalName, string Biography, DateTime Birthday, DateTime Deathday, char gender, int CountryofBirth, string CityofBirth, Int64 lifetimeGross, int boxofficeAverage, int OscarNominations, int OscarWins, int OtherNominations, int OtherWins, int imdbID)
         {
             this.dbID = dbID;
             this.Name = Name;

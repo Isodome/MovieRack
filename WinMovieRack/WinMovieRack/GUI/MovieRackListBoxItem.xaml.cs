@@ -34,20 +34,21 @@ namespace WinMovieRack.GUI
             this.title = dbItem.titleName;
             this.isMovie = isMovie;
             labelTitleName.Content = dbItem.titleName;
-            labelYearAge.Content = dbItem.yearAge;
+            if (dbItem.yearAge != -1)
+            {
+                labelYearAge.Content = dbItem.yearAge;
+            }
+            else
+            {
+                labelYearAge.Content = "No Age";
+            }
+
             labelEditableCharacter.Content = dbItem.editableCharakter;
             if (isMovie)
             {
                 BitmapImage posterBitmap = new BitmapImage();
                 posterBitmap.BeginInit();
-                if (isMovie)
-                {
-                    posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbItem.dbItemID, PosterSize.LIST));
-                }
-                else
-                {
-                    posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
-                }
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbItem.dbItemID, PosterSize.LIST));
                 posterBitmap.EndInit();
                 poster.Source = posterBitmap;
             }
@@ -56,18 +57,9 @@ namespace WinMovieRack.GUI
         {
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
-            if (isMovie)
-            {
-                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbItem.dbItemID, PosterSize.LIST));
-            }
-            else
-            {
-                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
-            }
-			posterBitmap.CacheOption = BitmapCacheOption.None;
-			posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(dbItem.dbItemID, PosterSize.LIST));
             posterBitmap.EndInit();
             poster.Source = posterBitmap;
-		}
+        }
     }
 }

@@ -32,12 +32,10 @@ namespace WinMovieRack
         private GUIMovie movieDetails;
         private DetailsViewController controller;
         private MovieRackListBoxItem selectetMovieItem;
-        private List<MovieRackListBoxItem> actorList;
-        DataSet otherAwardsDataSet;
-        DataSet oscarAwardsDataSet;
         public System.Windows.Controls.ListBox completeMovieListBox;
         public System.Windows.Controls.ListBox completeCastListBox;
         public System.Windows.Controls.ListBox completeMovieListToPerson;
+
         public DetailsView(DetailsViewController dvc)
         {
             InitializeComponent();
@@ -67,9 +65,8 @@ namespace WinMovieRack
             SummeryProductionListbox.Items.Add(item);
         }
 
-        private void setMovieDetails(GUIMovie movieDetails)
+        private void setMovieDetails()
         {
-            this.movieDetails = movieDetails;
             yearLabel.Content = "(" + movieDetails.year + ")";
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
@@ -77,9 +74,9 @@ namespace WinMovieRack
             imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
             top250.Content = movieDetails.imdbTop250;
             plot.Text = movieDetails.plot;
+            runtime.Content = movieDetails.runtime;
             genres.Content = generateString(controller.loadGenreList(movieDetails.dbId));
             language.Content = generateString(controller.loadLanguageList(movieDetails.dbId));
-            runtime.Content = movieDetails.runtime;
 
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
@@ -92,6 +89,35 @@ namespace WinMovieRack
         {
             personName.Text = personDetails.Name;
             locationOfBirth.Content = personDetails.CityofBirth;
+            oscars.Content = personDetails.OscarWins;
+            lifetimeGross.Content = personDetails.lifetimeGross;
+            averageBoxoffice.Content = personDetails.boxofficeAverage;
+            if (personDetails.Birthday.Year != 1)
+            {
+                birthday.Content = personDetails.Birthday.Day + "." + personDetails.Birthday.Month + "." + personDetails.Birthday.Year;
+            }
+            else
+            {
+                birthday.Content = "No Birthday";
+            }
+
+            int years = -1;
+            DateTime birthdayDate = personDetails.Birthday;
+            if (birthdayDate.Year != 1)
+            {
+                DateTime now = DateTime.Today;
+                years = now.Year - birthdayDate.Year;
+                if (birthdayDate > now.AddYears(-years))
+                {
+                    years--;
+                }
+                ageDetails.Content = years;
+            }
+            else
+            {
+                ageDetails.Content = "No Age";
+            }
+
             oscars.Content = personDetails.OscarWins;
             lifetimeGross.Content = personDetails.lifetimeGross;
             averageBoxoffice.Content = personDetails.boxofficeAverage;
@@ -110,8 +136,7 @@ namespace WinMovieRack
             SummeryStarsListbox.Items.Clear();
             SummeryProductionListbox.Items.Clear();
             movieDetails = null;
-            otherAwardsDataSet = null;
-            oscarAwardsDataSet = null;
+
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(-1, PosterSize.PREVIEW));
@@ -124,69 +149,59 @@ namespace WinMovieRack
         private void loadMovieDetails(int movieID)
         {
             this.movieDetails = controller.getGUIMovie(movieID);
-            setMovieDetails(movieDetails);
-            controller.loadActorList(movieID);
-            controller.loadProductionList(movieID);
-            controller.loadStarsList(movieID);
-            controller.loadProductionListPictures();
-            controller.loadStarsListPictures();
-            if (detailsViewTab.SelectedIndex == 0)
-            {
-            }
-            else if (detailsViewTab.SelectedIndex == 2)
-            {
-                controller.loadActorListPictures();
-            }
-            else if (detailsViewTab.SelectedIndex == 3)
-            {
-            }
-            else if (detailsViewTab.SelectedIndex == 4)
-            {
-                loadAwards();
-            }
-            else if (detailsViewTab.SelectedIndex == 5)
-            {
-            }
+            setMovieDetails();
+            controller.loadActorListToMovie(movieID, movieDetails.year);
+            controller.loadProductionList(movieID, movieDetails.year);
+            controller.loadStarsList(movieID, movieDetails.year);
+            loadSummerytab();
         }
 
         private void loadAwards()
         {
-            oscarAwardsDataSet = controller.loadOscarAwards(movieDetails.dbId);
-            oscarGrid.DataContext = oscarAwardsDataSet;
-            otherAwardsDataSet = controller.loadOtherAwards(movieDetails.dbId);
-            awardsGrid.DataContext = otherAwardsDataSet;
+            oscarGrid.DataContext = controller.loadOscarAwards(movieDetails.dbId);
+            awardsGrid.DataContext = controller.loadOtherAwards(movieDetails.dbId);
         }
 
         private String generateString(List<String> listBoxMovies)
         {
-            String generatetString = "";
+            String generatedString = "";
             for (int i = 0; i < listBoxMovies.Count; i++)
             {
-                generatetString += listBoxMovies.ElementAt(i);
+                generatedString += listBoxMovies.ElementAt(i);
                 if (i < listBoxMovies.Count - 1)
                 {
-                    generatetString += ", ";
+                    generatedString += ", ";
                 }
             }
-            return generatetString;
+            return generatedString;
         }
 
-        private void MovieListToPerson_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void loadSummerytab()
         {
-            MovieRackListBoxItem selectedItem = (MovieRackListBoxItem)MovieListToPerson.SelectedItem;
-            deleteMovieDetails();
-            loadMovieDetails(selectedItem.itemID);
-            listBoxMovies.UnselectAll();
-        }
-
-        private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
-            if (selectetItem != null)
+            if (movieDetails != null)
             {
-                GUIPerson personDetails = controller.getGUIPerson(selectetItem.itemID);
-                setPersonDetails(personDetails);
-                controller.loadMovieListToPerson(selectetItem.itemID);
+                if (detailsViewTab.SelectedIndex == 0)
+                {
+                    controller.loadProductionListPictures();
+                    controller.loadStarsListPictures();
+                }
+                else if (detailsViewTab.SelectedIndex == 1)
+                {
+                }
+                else if (detailsViewTab.SelectedIndex == 2)
+                {
+                    controller.loadActorListPictures();
+                }
+                else if (detailsViewTab.SelectedIndex == 3)
+                {
+                }
+                else if (detailsViewTab.SelectedIndex == 4)
+                {
+                    loadAwards();
+                }
+                else if (detailsViewTab.SelectedIndex == 5)
+                {
+                }
             }
         }
 
@@ -201,6 +216,29 @@ namespace WinMovieRack
             castListBox.SelectedIndex = 0;
         }
 
+        private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)castListBox.SelectedItem;
+            if (selectetItem != null)
+            {
+                GUIPerson personDetails = controller.getGUIPerson(selectetItem.itemID);
+                setPersonDetails(personDetails);
+                controller.loadMovieListToPerson(selectetItem.itemID);
+            }
+        }
+
+        private void detailsViewTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            loadSummerytab();
+        }
+
+        private void MovieListToPerson_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MovieRackListBoxItem selectedItem = (MovieRackListBoxItem)MovieListToPerson.SelectedItem;
+            deleteMovieDetails();
+            loadMovieDetails(selectedItem.itemID);
+            listBoxMovies.UnselectAll();
+        }
 
         private void actorPoster_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -229,33 +267,6 @@ namespace WinMovieRack
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
             bigPicture.fadeIn();
-        }
-
-        private void detailsViewTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (movieDetails != null)
-            {
-                if (detailsViewTab.SelectedIndex == 0)
-                {
-                }
-                else if (detailsViewTab.SelectedIndex == 1)
-                {
-                }
-                else if (detailsViewTab.SelectedIndex == 2)
-                {
-                    controller.loadActorListPictures();
-                }
-                else if (detailsViewTab.SelectedIndex == 3)
-                {
-                }
-                else if (detailsViewTab.SelectedIndex == 4)
-                {
-                    loadAwards();
-                }
-                else if (detailsViewTab.SelectedIndex == 5)
-                {
-                }
-            }
         }
     }
 }
