@@ -12,12 +12,17 @@ namespace WinMovieRack.Model {
 
 
 		public void updateMovieData(Movie m) {
-			beginTransaction();
+			
 			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
+			if (m.imdbMovie.poster != null) {
+				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
+			}
 
+			beginTransaction();
 			updateImdbMovie(m.imdbMovie, idMovies);
 			foreach (ImdbPerson person in m.persons) {
-				updateImdbPerson(person);
+				int idp;
+				testAndSetPerson(person.imdbID, out idp);
 			}
 
 		
@@ -43,9 +48,7 @@ namespace WinMovieRack.Model {
 				updateLanguageToMovie(idMovies, m.imdbMovie.languages);
 				updateAwardsToMovie(idMovies, m.imdbMovie.awards);
 			}
-			if (m.imdbMovie.poster != null) {
-				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
-			}
+			
 			endTransaction();
 			Console.WriteLine("Done inserting '{0}' into DB", m.imdbMovie.title);
 
@@ -81,11 +84,11 @@ namespace WinMovieRack.Model {
 					SQLiteCommand persCmnd = new SQLiteCommand(connection);
 					
 					if (a.isOscar) {
-						persCmnd.CommandText = "INSERT INTO Person_has_Oscars (Person_idPerson, Oscars_idOscar) VALUES(@Person_idPerson, @Oscars_idOscar);";
+						persCmnd.CommandText = "INSERT OR IGNORE INTO Person_has_Oscars (Person_idPerson, Oscars_idOscar) VALUES(@Person_idPerson, @Oscars_idOscar);";
 						param = new SQLiteParameter("@Oscars_idOscar") { Value = idAward };
 						persCmnd.Parameters.Add(param);
 					} else {
-						persCmnd.CommandText = "INSERT INTO Person_has_OtherAwards (Person_idPerson, OtherAwards_idOtherAwards) VALUES (@Person_idPerson, @OtherAwards_idOtherAwards);";
+						persCmnd.CommandText = "INSERT OR IGNORE INTO Person_has_OtherAwards (Person_idPerson, OtherAwards_idOtherAwards) VALUES (@Person_idPerson, @OtherAwards_idOtherAwards);";
 						param = new SQLiteParameter("@OtherAwards_idOtherAwards") { Value = idAward };
 						persCmnd.Parameters.Add(param);
 					}

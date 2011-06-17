@@ -32,49 +32,38 @@ namespace WinMovieRack.Controller.Moviefillout {
 		}
 
 		public void parseNames(ThreadJobMaster sender) {
-
+				// get parsed movie data;
 			ConcurrentImdbMovieParser parser = sender as ConcurrentImdbMovieParser;
 			this.movie = new Movie(parser.movieData);
 
+			List<uint> IDsToTest = new List<uint>();
+
 			int idPerson;
 			SQLiteConnector.db.beginTransaction();
-
-			foreach (uint cur in movie.imdbMovie.directors) {
-				if (!SQLiteConnector.db.testAndSetPerson(cur, out idPerson)) {
-					startParse(cur, idPerson);
-				}
-			}
-			foreach (uint cur in movie.imdbMovie.writers) {
-				if (!SQLiteConnector.db.testAndSetPerson(cur, out idPerson)) {
-					startParse(cur, idPerson);
-				}
-			}
+			
+			IDsToTest.AddRange(movie.imdbMovie.directors);
+			IDsToTest.AddRange(movie.imdbMovie.writers);
 			foreach (Tuple<uint, string> cur in movie.imdbMovie.roles) {
-				if (!SQLiteConnector.db.testAndSetPerson(cur.Item1, out idPerson)) {
-					startParse(cur.Item1, idPerson);
-				}
+					IDsToTest.Add(cur.Item1);
 			}
 			foreach (Award a in movie.imdbMovie.awards) {
-				foreach (uint p in a.persons) {
-					if (!SQLiteConnector.db.testAndSetPerson(p, out idPerson)) {
-						startParse(p, idPerson);
-					}
+				IDsToTest.AddRange(a.persons);
+			}
+			bool[] contains =SQLiteConnector.db.testAndSetPersons(IDsToTest);
+			int i = 0;
+			foreach (uint id in IDsToTest) {
+				if (!contains[i]) {
+					startParse(id);
 				}
 			}
+			SQLiteConnector.db.updateMovieData(this.movie);
 			SQLiteConnector.db.endTransaction();
-
-			FunctionCaller f = new FunctionCaller();
-			f.addFunction(this.insertIntoDB);
-			f.isWaiting = true;
-			ThreadsMaster.getInstance().addJobMaster(f);
 		}
 
-		private void startParse(uint imdbID, int idPerson) {
+		private void startParse(uint imdbID) {
 			ConcurrentIMDBNameParser p = new ConcurrentIMDBNameParser(imdbID);
-			p.person.idPerson = idPerson;
 			p.setFinalizeFunction(parseFinished);
 			ThreadsMaster.getInstance().addJobMaster(p);
-
 		}
 
 		public void parseFinished(ThreadJobMaster sender) {
@@ -82,9 +71,6 @@ namespace WinMovieRack.Controller.Moviefillout {
 			SQLiteConnector.db.updateImdbPerson(p.person);
 		}
 
-		public void insertIntoDB() {
-			SQLiteConnector.db.updateMovieData(this.movie);
-		}
 
 	}
 }

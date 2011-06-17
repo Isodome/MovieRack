@@ -94,12 +94,15 @@ namespace WinMovieRack.Model {
 
 			Bitmap bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT);
 			bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
+			bPreview.Dispose();
 
 			Bitmap bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT);
 			bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCodec, encodeParams);
+			bList.Dispose();
 
 			Bitmap bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT);
 			bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
+			bTiny.Dispose();
 		}
 
 		private static string buildPosterPath(string path, string filename, PosterSize size) {

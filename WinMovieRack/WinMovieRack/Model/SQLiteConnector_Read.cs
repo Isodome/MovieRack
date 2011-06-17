@@ -37,7 +37,7 @@ namespace WinMovieRack.Model
             while (reader.Read())
             {
                 //Console.WriteLine(reader.GetDateTime(2).Year);//DateTime wird nochnicht gespeichert
-                personList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), 10, reader[editable.ToString()].ToString()));
+                personList.Add(new MRListData(reader.GetInt32(0), reader["Name"].ToString(), 10, reader[editable.ToString()].ToString()));
             }
             command.Dispose();
             return personList;

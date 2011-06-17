@@ -95,6 +95,24 @@ namespace WinMovieRack.Model
             return contains;
 
         }
+		public bool[] testAndSetPersons(List<uint> imdbIDs) {
+			bool[] contains = new bool[imdbIDs.Count];
+			int idPerson;
+			lock (this.imdbPersonIds) {
+				int i = 0;
+				foreach (uint id in imdbIDs) {
+					contains[i] = this.imdbPersonIds.TryGetValue(id, out idPerson);
+					if (!contains[i]) {
+						SQLiteCommand command = new SQLiteCommand(connection);
+						command.CommandText = "insert into Person (imdbID) values (" + id.ToString() + ")";
+						idPerson = executeCommandAndReturnID(command);
+						this.imdbPersonIds.Add(id, idPerson);
+					}
+					i++;
+				}
+			}
+			return contains;
+		}
 
 		public bool testAndSetMovies(uint imdbID, out int idMovies) {
 			bool contains;

@@ -92,6 +92,23 @@ namespace WinMovieRack.Controller.ThreadManagement
 				Controller.controller.setProgressIndicator(true);
 			}
         }
+		public void addJobMasters(ThreadJobMaster[] masters) {
+			Monitor.Enter(lockvar);
+			foreach(ThreadJobMaster m in masters) {
+				jobMaster.AddLast(m);
+				Controller.controller.setProgressIndicator(true);
+			}
+			Monitor.Exit(lockvar);
+		}
+		public void addJobMasters(List<ThreadJobMaster> masters) {
+			Monitor.Enter(lockvar);
+			foreach (ThreadJobMaster m in masters) {
+				jobMaster.AddLast(m);
+				Controller.controller.setProgressIndicator(true);
+			}
+			Monitor.Exit(lockvar);
+		}
+
 
 		public void addVeryVeryImportantThreadMaster(ThreadJobMaster master) {
 			Monitor.Enter(lockvar);
