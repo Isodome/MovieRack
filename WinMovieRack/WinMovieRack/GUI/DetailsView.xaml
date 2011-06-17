@@ -223,7 +223,10 @@
                                     <ListBox Margin="5" Name="MovieListToPerson" MouseDoubleClick="MovieListToPerson_MouseDoubleClick" />
                                 </Grid>
                             </GroupBox>
-                            <TextBlock Height="auto" Margin="10,10,5,0" Name="personName" Text="Name" VerticalAlignment="Top" FontSize="15" FontWeight="Normal" TextWrapping="Wrap" Grid.ColumnSpan="1" />
+                            <StackPanel Height="auto" Margin="10,10,10,0" Name="stackPanel3" VerticalAlignment="Top">
+                                <TextBlock Height="auto" Name="personName" Text="Name" FontSize="15" FontWeight="Bold" TextWrapping="Wrap" />
+                                <TextBlock FontSize="13" FontWeight="Normal" Height="auto" Name="charakter" Text="Charakter" TextWrapping="Wrap" />
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
                     <GridSplitter Grid.Column="1" Name="gridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />

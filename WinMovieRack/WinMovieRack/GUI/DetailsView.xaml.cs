@@ -106,9 +106,10 @@ namespace WinMovieRack
             posterTitle.Source = posterBitmap;
         }
 
-        private void setPersonDetails(GUIPerson personDetails)
+        private void setPersonDetails(GUIPerson personDetails, System.Windows.Controls.Label editableCharacter)
         {
             personName.Text = personDetails.Name;
+            charakter.Text = editableCharacter.Content.ToString();
             locationOfBirth.Content = personDetails.CityofBirth;
             oscars.Content = personDetails.OscarWins;
             lifetimeGross.Content = personDetails.lifetimeGross;
@@ -244,7 +245,7 @@ namespace WinMovieRack
             if (selectetItem != null)
             {
                 GUIPerson personDetails = controller.getGUIPerson(selectetItem.itemID);
-                setPersonDetails(personDetails);
+                setPersonDetails(personDetails, selectetItem.editableCharacter);
                 controller.loadMovieListToPerson(selectetItem.itemID);
             }
         }

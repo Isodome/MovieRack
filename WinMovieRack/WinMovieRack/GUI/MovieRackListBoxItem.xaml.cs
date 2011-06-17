@@ -26,6 +26,7 @@ namespace WinMovieRack.GUI
         public int itemID;
         public string title;
         public bool isMovie;
+        public Label editableCharacter;
         public MovieRackListBoxItem(MRListData dbItem, bool isMovie)
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace WinMovieRack.GUI
             this.itemID = dbItem.dbItemID;
             this.title = dbItem.titleName;
             this.isMovie = isMovie;
+            editableCharacter = labelEditableCharacter;
             labelTitleName.Content = dbItem.titleName;
             if (dbItem.yearAge != -1)
             {
