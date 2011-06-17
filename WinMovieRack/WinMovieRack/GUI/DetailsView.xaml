@@ -128,7 +128,9 @@
                             </Grid>
                         </GroupBox>
                         <GroupBox FontSize="15" FontWeight="Bold" Header="Also Known As" Margin="2,60,2,2" Name="EnhancedAlsoKnownAs" Grid.Row="1">
-                            <Grid></Grid>
+                            <Grid>
+                                <TextBlock Margin="0,0,0,0" Name="alsoKownAs" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </Grid>
                         </GroupBox>
                         <GroupBox FontSize="15" FontWeight="Bold" Header="Recommendations" Margin="2" Name="EnhancedRecommendations" Grid.Column="1" Grid.Row="1">
                             <Grid>
@@ -312,7 +314,7 @@
                 <Label Content="(- Votes)" Height="auto" Name="imdbVotes" FontSize="12" Width="auto" Padding="2" />
                 <Label Content="Top 250:" Height="auto" Name="top250Label" Width="auto" FontWeight="Bold" FontSize="12" Padding="2" />
                 <Label Content="-" Height="auto" Name="top250" FontSize="12" Padding="2" />
-                <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" />
+                <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Click="imdbLink_Click" />
             </StackPanel>
             <StackPanel Height="auto" Name="stackPanel13" Width="auto" Orientation="Horizontal">
                 <Label Content="Own Rating:" Height="auto" Name="ownRatingLabel" FontWeight="Bold" FontSize="12" Padding="2" />
@@ -325,7 +327,7 @@
                 <StackPanel Height="auto" Name="stackPanel17" Width="auto">
                     <StackPanel Height="auto" Name="stackPanel14" Width="auto" Orientation="Horizontal">
                         <Label Content="Metascore:" FontSize="12" Height="auto" Name="MetacriticsMetascoreLabel" Padding="2" />
-                        <Label Content="-/100" Height="auto" Name="label5" FontSize="12" Width="auto" Padding="2" />
+                        <Label Content="-/100" Height="auto" Name="metascore" FontSize="12" Width="auto" Padding="2" />
                         <Label Content="(- Critics)" FontSize="12" Height="auto" Name="MetacriticsMetascoreCriticsVotes" Padding="2" />
                     </StackPanel>
                     <StackPanel Height="auto" Name="stackPanel16" Width="auto" Orientation="Horizontal">

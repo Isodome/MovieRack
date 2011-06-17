@@ -19,6 +19,7 @@ using System.Windows.Media.Animation;
 using System.IO;
 using System.Collections;
 using System.Data;
+using System.Diagnostics;
 
 namespace WinMovieRack
 {
@@ -35,6 +36,7 @@ namespace WinMovieRack
         public System.Windows.Controls.ListBox completeMovieListBox;
         public System.Windows.Controls.ListBox completeCastListBox;
         public System.Windows.Controls.ListBox completeMovieListToPerson;
+        public System.Windows.Controls.TextBlock alsoKnownAsBlock;
 
         public DetailsView(DetailsViewController dvc)
         {
@@ -43,6 +45,7 @@ namespace WinMovieRack
             completeMovieListBox = listBoxMovies;
             completeCastListBox = castListBox;
             completeMovieListToPerson = MovieListToPerson;
+            alsoKownAs = alsoKnownAsBlock;
         }
 
         private void changeView(UIElement newView)
@@ -73,10 +76,28 @@ namespace WinMovieRack
             imdbRating.Content = (double)movieDetails.imdbRating / 10.0 + "/10";
             imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
             top250.Content = movieDetails.imdbTop250;
+            ownRating.Content = movieDetails.personalRating + "/100";
+            genres.Content = generateString(controller.loadGenreList(movieDetails.dbId));
+            metascore.Content = movieDetails.metacriticsReviewRating + "/100";
+            MetacriticsMetascoreCriticsVotes.Content = "(" + movieDetails.metacriticsReviewVotes + ")";
+            metacriticsUserRating.Content = movieDetails.metacriticsUsersRating + "/10";
+            MetacriticsMetascoreUsersVotes.Content = "(" + movieDetails.metacriticsUserVotes + ")";
+            rottentomatoesTomatometerRating.Content = movieDetails.tomatometer + " %";
+            RottentomatoesTomatoemeterVotes.Content = movieDetails.tomatometerVotes;
+            rottentomatoesAudienceRating.Content = movieDetails.rottenTomatoesAudience + " %";
+            RottentomatoesAudienceVotes.Content = movieDetails.rottenTomatoesAudienceVotes;
+
             plot.Text = movieDetails.plot;
             runtime.Content = movieDetails.runtime;
-            genres.Content = generateString(controller.loadGenreList(movieDetails.dbId));
+            // cinemaDate.Content = movieDetails.
+            lastSeen.Content = movieDetails.lastSeen;
+            //mpaa.Content = movieDetails.
+            seen.Content = movieDetails.seenCount;
+            //awards.Content = movieDetails.
+            budget.Content = movieDetails.budget;
+            boxxoffice.Content = movieDetails.boxofficeWorldwide;
             language.Content = generateString(controller.loadLanguageList(movieDetails.dbId));
+            SummeryNotes.Content = movieDetails.notes;
 
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
@@ -187,6 +208,7 @@ namespace WinMovieRack
                 }
                 else if (detailsViewTab.SelectedIndex == 1)
                 {
+                    controller.loadAlsoKnownAs(movieDetails.dbId);
                 }
                 else if (detailsViewTab.SelectedIndex == 2)
                 {
@@ -267,6 +289,14 @@ namespace WinMovieRack
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
             bigPicture.fadeIn();
+        }
+
+        private void imdbLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (movieDetails != null)
+            {
+                Process.Start("http://www.imdb.com/title/tt" + movieDetails.imdbID);
+            }
         }
     }
 }

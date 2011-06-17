@@ -20,9 +20,13 @@ namespace WinMovieRack.Model
         public string metacriticsID;
         public int metacriticsReviewRating;
         public int metacriticsUsersRating;
+        public int metacriticsReviewVotes;
+        public int metacriticsUserVotes;
         public string rottentomatoesID;
         public int rottenTomatoesAudience;
         public int tomatometer;
+        public int rottenTomatoesAudienceVotes;
+        public int tomatometerVotes;
         public int personalRating;
         public string boxofficemojoID;
         public UInt32 boxofficeWorldwide;
@@ -38,8 +42,9 @@ namespace WinMovieRack.Model
         public int seenCount;
         public bool TVSeries;
         public DateTime lastSeen;
+        public UInt32 budget;
 
-        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, int imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen)
+        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, int imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget)
         {
             this.dbId = dbId;
             this.title = title;
@@ -54,8 +59,12 @@ namespace WinMovieRack.Model
             this.metacriticsID = metacriticsID;
             this.metacriticsReviewRating = metacriticsReviewRating;
             this.metacriticsUsersRating = metacriticsUsersRating;
+            this.metacriticsReviewVotes = metacriticsReviewVotes;
+            this.metacriticsUserVotes = metacriticsUserVotes;
             this.rottentomatoesID = rottentomatoesID;
             this.rottenTomatoesAudience = rottenTomatoesAudience;
+            this.rottenTomatoesAudienceVotes = rottenTomatoesAudienceVotes;
+            this.tomatometerVotes = tomatometerVotes;
             this.tomatometer = tomatometer;
             this.personalRating = personalRating;
             this.boxofficemojoID = boxofficemojoID;
@@ -70,9 +79,9 @@ namespace WinMovieRack.Model
             this.otherNominations = otherNominations;
             this.notes = notes;
             this.seenCount = seenCount;
-            //   this.TVSeries = TVSeries; // mus noch gemacht werden
-            //  this.lastSeen = lastSeen;
-
+            this.TVSeries = TVSeries;
+            this.lastSeen = lastSeen;
+            this.budget = budget;
         }
     }
 }

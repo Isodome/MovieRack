@@ -133,12 +133,22 @@ namespace WinMovieRack.Controller
 
         public List<String> loadGenreList(int idMovies)
         {
-            return db.getGenres(idMovies);
+            return db.getGenresToMovie(idMovies);
         }
 
         public List<String> loadLanguageList(int idMovies)
         {
             return db.getLanguageToMovie(idMovies);
+        }
+
+        public void loadAlsoKnownAs(int idMovies)
+        {
+            List<String> alsoKnownas = db.getAlsoKnownToMovie(idMovies);
+            foreach (String title in alsoKnownas)
+            {
+                view.alsoKnownAsBlock.Text += title;
+                view.alsoKnownAsBlock.Text += "\n";
+            }
         }
     }
 }
