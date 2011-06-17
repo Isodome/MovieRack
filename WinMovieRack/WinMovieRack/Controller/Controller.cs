@@ -8,7 +8,7 @@ using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.Parser.BoxOffice;
-
+using System.Net;
 namespace WinMovieRack.Controller {
 	public class Controller {
 
@@ -29,14 +29,8 @@ namespace WinMovieRack.Controller {
 			initializeModel();
 			initializeGUI();
 			controller = this;
-
-			BoxOfficeSearcher s = new BoxOfficeSearcher("Shrek");
-			BoxOfficeSearchResultCollection c = s.searchOnBoxOffice();
-			foreach (BoxOfficeSearchResult res in c.getFoundMovies()) {
-				Console.WriteLine("\t{0}\t{1}\t{2}", res.name, res.release.ToString(), res.boxofficeID);
-			}
-			Console.WriteLine("{0}", BoxOfficeSearcher.getBoxofficeIdFromURL("http://boxofficemojo.com/movies/?page=similar&id=transformers.htm"));
-
+			ServicePointManager.DefaultConnectionLimit = 65000;
+			
 		}
 
 		public void func(ThreadJobMaster sender) {

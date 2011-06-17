@@ -13,6 +13,7 @@ namespace WinMovieRack
             void App_StartUp(object sender, StartupEventArgs e)
             {
 				new WinMovieRack.Controller.Controller(this);
+				
             }   
     }
 }

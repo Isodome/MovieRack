@@ -10,7 +10,7 @@ namespace WinMovieRack.Controller.Parser
 {
 	class JobWebPageDownload : ThreadJob
 	{
-		private const int maxAttempts = 3;
+		private const int maxAttempts = 5;
 		private string url;
 		private string result;
         public JobWebPageDownload(string url)
@@ -28,12 +28,13 @@ namespace WinMovieRack.Controller.Parser
 			int attempts = maxAttempts;
 			do {
 				try {
-					WebRequest req = WebRequest.Create(url);
+					WebRequest req = HttpWebRequest.Create(url);
+					req.Proxy = null;
 					WebResponse resp = req.GetResponse();
 					StreamReader r = new StreamReader(resp.GetResponseStream());
 					result = WebUtility.HtmlDecode(r.ReadToEnd());
-					resp.Close();
 					r.Close();
+					resp.Close();
 					break;
 				} catch (UriFormatException e) {
 					Console.WriteLine("Unvalid URL: " + this.url);
@@ -43,7 +44,9 @@ namespace WinMovieRack.Controller.Parser
 					attempts--;
 					Console.WriteLine("Webexception: " + this.url + f.Message);
 					Console.WriteLine("Error downloading website from {0} in attempt {1}. There are {2} attemps remaining", this.url, maxAttempts - attempts, attempts);
-				
+
+				} finally {
+
 				}
 			} while (attempts > 0);
 
