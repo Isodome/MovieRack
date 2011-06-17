@@ -393,7 +393,7 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@TVSeries") { Value = 0 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@lastSeen") { Value = 0 };
+			param = new SQLiteParameter("@lastSeen") { Value = DateTime.Now };
 			command.Parameters.Add(param);
 			param = new SQLiteParameter("@idMovies") { Value = idMovies };
 			command.Parameters.Add(param);
