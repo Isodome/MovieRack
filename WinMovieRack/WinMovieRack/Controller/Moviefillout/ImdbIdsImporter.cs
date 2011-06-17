@@ -22,7 +22,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 				uint id = uint.Parse(idString);
 				MovieFillOut f = new MovieFillOut(id);
 				f.startFillout();
-				Thread.Sleep(1000);
+				Thread.Sleep(2000);
 			}
 		}
 	}

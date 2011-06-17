@@ -92,6 +92,8 @@
     <Compile Include="Controller\MainWindowController.cs" />
     <Compile Include="Controller\Moviefillout\ImdbIdsImporter.cs" />
     <Compile Include="Controller\Moviefillout\MovieFillOut.cs" />
+    <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearcher.cs" />
+    <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResult.cs" />
     <Compile Include="Controller\Parser\generalJobs\FunctionCall.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\ConcurrentImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
@@ -126,6 +128,7 @@
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DataTypes\Award.cs" />
+    <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResultCollection.cs" />
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\Enums\PersonMovieRelations.cs" />
     <Compile Include="Model\DataTypes\GUIMovie.cs" />

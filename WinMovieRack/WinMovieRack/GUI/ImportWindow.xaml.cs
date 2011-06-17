@@ -22,6 +22,7 @@ namespace WinMovieRack.GUI {
 		public ImportWindow() {
 			InitializeComponent();
 			setLocalization();
+			fileExists();
 		}
 
 		private void setLocalization() {
@@ -66,6 +67,17 @@ namespace WinMovieRack.GUI {
 
 		private void cancelButton_Click(object sender, RoutedEventArgs e) {
 			this.Close();
+		}
+
+		private void imdbidsFileSource_TextChanged(object sender, TextChangedEventArgs e) {
+			fileExists();
+		}
+
+		private bool fileExists() {
+			bool fileExists = File.Exists(imdbidsFileSource.Text);
+			this.importButton.IsEnabled = fileExists;
+			this.doLaterButton.IsEnabled = fileExists;
+			return fileExists;
 		}
 	}
 }

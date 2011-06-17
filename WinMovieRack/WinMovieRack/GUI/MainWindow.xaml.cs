@@ -71,8 +71,9 @@ namespace WinMovieRack
 
 		private void importMenuItem_Click(object sender, RoutedEventArgs e) {
 			ImportWindow i = new ImportWindow();
-			i.Show();
+			i.ShowDialog();
 		}
+
 		public void setProgressIndicating(bool i) {
 			Action a = new Action(() => {
 				this.progressIndicator.Visibility = i ? Visibility.Visible : Visibility.Hidden;

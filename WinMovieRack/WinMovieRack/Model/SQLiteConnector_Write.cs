@@ -167,6 +167,7 @@ namespace WinMovieRack.Model {
 
 		public void updateImdbPerson(ImdbPerson person) {
 
+			person.idPerson = getIdPersonByImdbId(person.imdbID);
 			SQLiteCommand command = new SQLiteCommand(connection);
 
 			command.CommandText = "UPDATE Person SET Name=@Name, " +

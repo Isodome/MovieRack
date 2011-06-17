@@ -7,6 +7,7 @@ using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
+using WinMovieRack.Controller.Parser.BoxOffice;
 
 namespace WinMovieRack.Controller {
 	public class Controller {
@@ -28,6 +29,14 @@ namespace WinMovieRack.Controller {
 			initializeModel();
 			initializeGUI();
 			controller = this;
+
+			BoxOfficeSearcher s = new BoxOfficeSearcher("Shrek");
+			BoxOfficeSearchResultCollection c = s.searchOnBoxOffice();
+			foreach (BoxOfficeSearchResult res in c.getFoundMovies()) {
+				Console.WriteLine("\t{0}\t{1}\t{2}", res.name, res.release.ToString(), res.boxofficeID);
+			}
+			
+
 		}
 
 		public void func(ThreadJobMaster sender) {

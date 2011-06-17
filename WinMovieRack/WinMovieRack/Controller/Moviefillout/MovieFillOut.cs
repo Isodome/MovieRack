@@ -38,7 +38,6 @@ namespace WinMovieRack.Controller.Moviefillout {
 
 			List<uint> IDsToTest = new List<uint>();
 
-			int idPerson;
 			SQLiteConnector.db.beginTransaction();
 			
 			IDsToTest.AddRange(movie.imdbMovie.directors);
@@ -55,6 +54,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 				if (!contains[i]) {
 					startParse(id);
 				}
+				i++;
 			}
 			SQLiteConnector.db.updateMovieData(this.movie);
 			SQLiteConnector.db.endTransaction();
