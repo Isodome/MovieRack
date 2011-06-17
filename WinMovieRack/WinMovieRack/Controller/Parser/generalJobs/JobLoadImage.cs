@@ -37,9 +37,6 @@ namespace WinMovieRack.Controller.Parser
 					WebRequest req = WebRequest.Create(url);
 					WebResponse resp = req.GetResponse();
 					result = new Bitmap(resp.GetResponseStream());
-					if (savePath != null) {
-						result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
-					}
 					resp.Close();
 					break;
 				} catch (Exception) {
@@ -54,6 +51,8 @@ namespace WinMovieRack.Controller.Parser
 				result = null;
 				Console.WriteLine("Download of image from {0} failed after {1} unsuccessful attemps.", this.url, maxAttempts);
 				// ERRORHANDLING
+			} else if (savePath != null) {
+				result.Save(savePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 			}
 			
 		}
