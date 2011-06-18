@@ -84,20 +84,19 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser {
 		}
 
 		public void extractBirthday() {
-			try {
-				Match m = Regex.Match(mainPage, birthdayRegexYear);
-				string yearString = m.Groups["year"].Value;
-				int year = int.Parse(yearString);
-
-				m = Regex.Match(mainPage, brithdayRegexMonthDay);
-				string daystring = m.Groups["day"].Value;
-				int day = int.Parse(daystring);
-
-				string monthstring = m.Groups["month"].Value;
-				int month = int.Parse(monthstring);
-
+			int year, day, month;
+			
+			Match m = Regex.Match(mainPage, birthdayRegexYear);
+			string yearString = m.Groups["year"].Value;
+			
+			m = Regex.Match(mainPage, brithdayRegexMonthDay);
+			string daystring = m.Groups["day"].Value;
+			string monthstring = m.Groups["month"].Value;
+	
+			
+			if (int.TryParse(yearString, out year) && int.TryParse(daystring, out day) && int.TryParse(monthstring, out month)) {
 				person.birthday = new DateTime(year, month, day);
-			} catch (FormatException) {
+			} else{
 				person.birthday = DateTime.MinValue;
 			}
 		}

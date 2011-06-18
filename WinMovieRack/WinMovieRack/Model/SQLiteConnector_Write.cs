@@ -51,6 +51,8 @@ namespace WinMovieRack.Model {
 			}
 			
 			endTransaction();
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 			Console.WriteLine("Done inserting '{0}' into DB", m.imdbMovie.title);
 
 		}
