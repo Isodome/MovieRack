@@ -16,6 +16,7 @@ namespace WinMovieRack.Model {
 			int idMovies = getIdMoviesByImdbId(m.imdbMovie.imdbID);
 			if (m.imdbMovie.poster != null) {
 				PictureHandler.saveMoviePoster(m.imdbMovie.poster, idMovies);
+				m.imdbMovie.poster.Dispose();
 			}
 
 			beginTransaction();
@@ -233,6 +234,7 @@ namespace WinMovieRack.Model {
 			executeCommandThreadSafe(command);
 			if (person.image != null) {
 				PictureHandler.savePersonPortrait(person.image, person.idPerson);
+				person.image.Dispose();
 			}
 			Console.WriteLine("Done inserting '{0}' in DB", person.name);
 		}

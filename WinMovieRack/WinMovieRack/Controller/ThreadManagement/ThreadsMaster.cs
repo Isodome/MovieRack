@@ -31,7 +31,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 		{
 			threads = new Thread[maxThreads];
 			running = new bool[maxThreads];
-			switchToThreadCount(maxThreads/2);
+			switchToThreadCount(maxThreads);
 		}
 
 
