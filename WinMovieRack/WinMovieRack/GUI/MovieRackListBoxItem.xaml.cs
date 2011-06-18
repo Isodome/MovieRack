@@ -34,6 +34,7 @@ namespace WinMovieRack.GUI
             this.itemID = dbItem.dbItemID;
             this.title = dbItem.titleName;
             this.isMovie = isMovie;
+
             editableCharacter = labelEditableCharacter;
             labelTitleName.Content = dbItem.titleName;
             if (dbItem.yearAge != -1)
@@ -44,8 +45,21 @@ namespace WinMovieRack.GUI
             {
                 labelYearAge.Content = "No Age";
             }
-
-            labelEditableCharacter.Content = dbItem.editableCharakter;
+            if (isMovie)
+            {
+                if (dbItem.editableCharakter.Equals("-1"))
+                {
+                    labelEditableCharacter.Content = "No Runtime";
+                }
+                else
+                {
+                    labelEditableCharacter.Content = dbItem.editableCharakter + " min";
+                }
+            }
+            else
+            {
+                labelEditableCharacter.Content = dbItem.editableCharakter;
+            }
             if (isMovie)
             {
                 BitmapImage posterBitmap = new BitmapImage();

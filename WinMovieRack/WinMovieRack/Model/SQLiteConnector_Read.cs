@@ -94,7 +94,6 @@ namespace WinMovieRack.Model
             command.CommandText = "SELECT Genre FROM Genre JOIN Movies_has_Genre WHERE Movies_has_Genre.Movies_idMovies = " + idMovies + " AND Movies_has_Genre.Genre_idGenre = Genre.idGenre";
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             List<String> genreList = new List<String>();
-            Console.WriteLine(idMovies);
             while (reader.Read())
             {
                 genreList.Add(reader.GetString(0));

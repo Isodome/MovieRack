@@ -23,6 +23,7 @@ namespace WinMovieRack.GUI
     {
         ActorsViewController controller;
         GUIPerson personDetails;
+        private BigPicture bigPicture;
         public ActorsView(ActorsViewController avc)
         {
             InitializeComponent();
@@ -42,6 +43,7 @@ namespace WinMovieRack.GUI
             {
                 getPersonDetails(selectetItem.itemID);
                 setPersonDetails(personDetails);
+               // controller.loadMovieListToPerson(selectetItem.itemID);
             }
         }
 
@@ -52,14 +54,35 @@ namespace WinMovieRack.GUI
 
         private void setPersonDetails(GUIPerson personDetails)
         {
-            this.name.Content = personDetails.Name;
+            name.Content = personDetails.Name;
+            locationOfBirth.Content = personDetails.CityofBirth;
+            oscars.Content = personDetails.OscarWins;
+            lifetimeGross.Content = personDetails.lifetimeGross;
+            averageBoxoffice.Content = personDetails.boxofficeAverage;
+            birthday.Content = personDetails.Birthday;
+            oscars.Content = personDetails.OscarWins;
+            lifetimeGross.Content = personDetails.lifetimeGross;
+            averageBoxoffice.Content = personDetails.boxofficeAverage;
+            ageDetails.Content = personDetails.age;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
             posterBitmap.EndInit();
-            posterTitle.Source = posterBitmap;
-            biography.Content = personDetails.Biography;
-            orgialName.Content = personDetails.OriginalName;
+            actorPoster.Source = posterBitmap;
+        }
+
+        private void actorPoster_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            bigPicture = new BigPicture();
+            BitmapImage posterBitmap = new BitmapImage();
+            posterBitmap.BeginInit();
+            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.FULL));
+            posterBitmap.EndInit();
+            bigPicture.bigPicture.Source = posterBitmap;
+            Point origin = new Point(0, 0);
+            Point screenOrigin = actorPoster.PointToScreen(origin);
+            bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
+            bigPicture.fadeIn();
         }
     }
 }
