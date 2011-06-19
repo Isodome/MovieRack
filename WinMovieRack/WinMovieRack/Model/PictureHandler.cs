@@ -89,47 +89,56 @@ namespace WinMovieRack.Model {
 
 		private static void savePosterToHD(Bitmap b, string path, string filename) {
 			Directory.CreateDirectory(path);
+			Bitmap bFULL, bPreview, bList, bTiny;
+
 			try {
 				b.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
 			} catch (Exception) {
 				// Bitmap bFULL = scaleImageProportional(b, b.Height, b.Width);
-				using (Bitmap bFULL = new Bitmap(b)) {
+				using (bFULL = new Bitmap(b)) {
 					bFULL.Save(buildPosterPath(path, filename, PosterSize.FULL), imageCodec, encodeParams);
 					bFULL.Dispose();
 				}
 			}
 			try {
-				using (Bitmap bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT)) {
+				using (bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT)) {
 					bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
 					bPreview.Dispose();
 				}
 			} catch (Exception) {
-				// Bitmap bFULL = scaleImageProportional(b, b.Height, b.Width);
-				using (Bitmap bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT)) {
-					bPreview.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
+				using (bPreview = scaleImageProportional(b, PREVIEW_IMAGE_WIDTH, PREVIEW_IMAGE_HEIGHT)) {
+					using (Bitmap b2 = new Bitmap(bPreview)) {
+						b2.Save(buildPosterPath(path, filename, PosterSize.PREVIEW), imageCodec, encodeParams);
+						b2.Dispose();
+					}
 					bPreview.Dispose();
 				}
 			}
 
 			try {
-				using (Bitmap bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT)) {
+				using (bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT)) {
 					bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCodec, encodeParams);
 					bList.Dispose();
 				}
 			} catch (Exception) {
-				using (Bitmap bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT)) {
-					bList.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCodec, encodeParams);
+				using (bList = scaleImageProportional(b, LIST_IMAGE_WIDTH, LIST_IMAGE_HEIGHT)) {
+					using (Bitmap b2 = new Bitmap(bList)) {
+						b2.Save(buildPosterPath(path, filename, PosterSize.LIST), imageCodec, encodeParams);
+						b2.Dispose();
+					}
 					bList.Dispose();
 				}
 			}
 			try {
-				using (Bitmap bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT)) {
+				using (bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT)) {
 					bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
 					bTiny.Dispose();
 				}
 			} catch (Exception) {
-				using (Bitmap bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT)) {
-					bTiny.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
+				using (bTiny = scaleImageProportional(b, TINY_IMAGE_WIDTH, TINY_IMAGE_HEIGHT)) {
+					using (Bitmap b2 = new Bitmap(bTiny)) {
+						b2.Save(buildPosterPath(path, filename, PosterSize.TINY), imageCodec, encodeParams);
+					}
 					bTiny.Dispose();
 				}
 			}
