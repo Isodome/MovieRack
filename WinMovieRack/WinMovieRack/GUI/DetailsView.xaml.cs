@@ -70,21 +70,30 @@ namespace WinMovieRack
 
         private void setMovieDetails()
         {
-            yearLabel.Content = "(" + movieDetails.year + ")";
+            yearLabel.Content = movieDetails.year;
             movieTitleLabel.Text = movieDetails.title;
             orgialTitleLabel.Content = movieDetails.originalTitle;
-            imdbRating.Content = (double)movieDetails.imdbRating / 10.0 + "/10";
-            imdbVotes.Content = "(" + movieDetails.imdbRatingVotes + " Votes)";
+            imdbRating.Content = movieDetails.imdbRating;
+            imdbVotes.Content = movieDetails.imdbRatingVotes;
             top250.Content = movieDetails.imdbTop250;
-            ownRating.Content = movieDetails.personalRating + "/100";
-            genres.Content = generateString(controller.loadGenreList(movieDetails.dbId));
-            metascore.Content = movieDetails.metacriticsReviewRating + "/100";
-            MetacriticsMetascoreCriticsVotes.Content = "(" + movieDetails.metacriticsReviewVotes + ")";
-            metacriticsUserRating.Content = movieDetails.metacriticsUsersRating + "/10";
-            MetacriticsMetascoreUsersVotes.Content = "(" + movieDetails.metacriticsUserVotes + ")";
-            rottentomatoesTomatometerRating.Content = movieDetails.tomatometer + " %";
+            ownRating.Content = movieDetails.personalRating;
+            string genreString = generateString(controller.loadGenreList(movieDetails.dbId));
+            if (genreString.Equals(""))
+            {
+                genres.Content = "No Genres";
+            }
+            else
+            {
+                genres.Content = genreString;
+            }
+
+            metascore.Content = movieDetails.metacriticsReviewRating;
+            MetacriticsMetascoreCriticsVotes.Content = movieDetails.metacriticsReviewVotes;
+            metacriticsUserRating.Content = movieDetails.metacriticsUsersRating;
+            MetacriticsMetascoreUsersVotes.Content = movieDetails.metacriticsUserVotes;
+            rottentomatoesTomatometerRating.Content = movieDetails.tomatometer;
             RottentomatoesTomatoemeterVotes.Content = movieDetails.tomatometerVotes;
-            rottentomatoesAudienceRating.Content = movieDetails.rottenTomatoesAudience + " %";
+            rottentomatoesAudienceRating.Content = movieDetails.rottenTomatoesAudience;
             RottentomatoesAudienceVotes.Content = movieDetails.rottenTomatoesAudienceVotes;
 
             plot.Text = movieDetails.plot;
@@ -96,7 +105,15 @@ namespace WinMovieRack
             //awards.Content = movieDetails.
             budget.Content = movieDetails.budget;
             boxxoffice.Content = movieDetails.boxofficeWorldwide;
-            language.Content = generateString(controller.loadLanguageList(movieDetails.dbId));
+            string languageString = generateString(controller.loadLanguageList(movieDetails.dbId));
+            if (languageString.Equals(""))
+            {
+                language.Content = "No Languages";
+            }
+            else
+            {
+                language.Content = languageString;
+            }
             SummeryNotes.Content = movieDetails.notes;
 
             BitmapImage posterBitmap = new BitmapImage();
@@ -114,36 +131,11 @@ namespace WinMovieRack
             oscars.Content = personDetails.OscarWins;
             lifetimeGross.Content = personDetails.lifetimeGross;
             averageBoxoffice.Content = personDetails.boxofficeAverage;
-            if (personDetails.Birthday.Year != 1)
-            {
-                birthday.Content = personDetails.Birthday.Day + "." + personDetails.Birthday.Month + "." + personDetails.Birthday.Year;
-            }
-            else
-            {
-                birthday.Content = "No Birthday";
-            }
-
-            int years = -1;
-            DateTime birthdayDate = personDetails.Birthday;
-            if (birthdayDate.Year != 1)
-            {
-                DateTime now = DateTime.Today;
-                years = now.Year - birthdayDate.Year;
-                if (birthdayDate > now.AddYears(-years))
-                {
-                    years--;
-                }
-                ageDetails.Content = years;
-            }
-            else
-            {
-                ageDetails.Content = "No Age";
-            }
-
+            birthday.Content = personDetails.Birthday;
             oscars.Content = personDetails.OscarWins;
             lifetimeGross.Content = personDetails.lifetimeGross;
             averageBoxoffice.Content = personDetails.boxofficeAverage;
-
+            ageDetails.Content = personDetails.age;
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
@@ -172,9 +164,9 @@ namespace WinMovieRack
         {
             this.movieDetails = controller.getGUIMovie(movieID);
             setMovieDetails();
-            controller.loadActorListToMovie(movieID, movieDetails.year);
-            controller.loadProductionList(movieID, movieDetails.year);
-            controller.loadStarsList(movieID, movieDetails.year);
+            controller.loadActorListToMovie(movieID, movieDetails.yearInt);
+            controller.loadProductionList(movieID, movieDetails.yearInt);
+            controller.loadStarsList(movieID, movieDetails.yearInt);
             loadSummerytab();
         }
 

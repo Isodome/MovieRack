@@ -206,7 +206,7 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@gender") { Value = person.gender };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@CountryofBirth") { Value = 0 };
+			param = new SQLiteParameter("@CountryofBirth") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@CityofBirth") { Value = "" };
@@ -215,19 +215,19 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@lifetimeGross") { Value = 0 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@boxofficeAverage") { Value = 0 };
+			param = new SQLiteParameter("@boxofficeAverage") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@OscarNominations") { Value = 0 };
+			param = new SQLiteParameter("@OscarNominations") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@OscarWins") { Value = 0 };
+			param = new SQLiteParameter("@OscarWins") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@OtherNominations") { Value = 0 };
+			param = new SQLiteParameter("@OtherNominations") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@OtherWins") { Value = 0 };
+			param = new SQLiteParameter("@OtherWins") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@idPerson") { Value = person.idPerson };
@@ -304,7 +304,8 @@ namespace WinMovieRack.Model {
 				"notes=@notes, " +
 				"seenCount=@seenCount, " +
 				"TVSeries=@TVSeries, " +
-				"lastSeen=@lastSeen " +
+				"lastSeen=@lastSeen, " +
+                "budget=@budget " +
 				"WHERE idMovies=@idMovies";
 
 
@@ -323,7 +324,7 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@imdbRatingVotes") { Value = movie.imdbRatingVotes };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@imdbTop250") { Value = 0 };
+            param = new SQLiteParameter("@imdbTop250") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
 			/*
@@ -332,10 +333,10 @@ namespace WinMovieRack.Model {
 			command.Parameters.Add(param);
 			 * */
 			//TODO
-			param = new SQLiteParameter("@metacriticsReviewRating") { Value = 0 };
+            param = new SQLiteParameter("@metacriticsReviewRating") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@metacriticsUsersRating") { Value = 0 };
+            param = new SQLiteParameter("@metacriticsUsersRating") { Value = -1 };
 			command.Parameters.Add(param);
 
 			/*
@@ -344,13 +345,13 @@ namespace WinMovieRack.Model {
 			command.Parameters.Add(param);
 			*/
 			//TODO
-			param = new SQLiteParameter("@rottenTomatoesAudience") { Value = 0 };
+            param = new SQLiteParameter("@rottenTomatoesAudience") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@tomatometer") { Value = 0 };
+            param = new SQLiteParameter("@tomatometer") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@personalRating") { Value = 0 };
+            param = new SQLiteParameter("@personalRating") { Value = -1 };
 			command.Parameters.Add(param);
 			param = new SQLiteParameter("@year") { Value = movie.year };
 			command.Parameters.Add(param);
@@ -370,28 +371,28 @@ namespace WinMovieRack.Model {
 			param = new SQLiteParameter("@boxofficeForeign") { Value = 0 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@boxofficeFirstWeekend") { Value = 0 };
+            param = new SQLiteParameter("@boxofficeFirstWeekend") { Value = 0 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@rangFirstWeekend") { Value = 0 };
+            param = new SQLiteParameter("@rangFirstWeekend") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@rankAllTime") { Value = 0 };
+            param = new SQLiteParameter("@rankAllTime") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@weeksInCinema") { Value = 0 };
+            param = new SQLiteParameter("@weeksInCinema") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@otherWins") { Value = 0 };
+			param = new SQLiteParameter("@otherWins") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@otherNominations") { Value = 0 };
+			param = new SQLiteParameter("@otherNominations") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@notes") { Value = "" };
 			command.Parameters.Add(param);
 			//TODO
-			param = new SQLiteParameter("@seenCount") { Value = 0 };
+			param = new SQLiteParameter("@seenCount") { Value = -1 };
 			command.Parameters.Add(param);
 			//TODO
 			param = new SQLiteParameter("@TVSeries") { Value = 0 };
@@ -399,6 +400,9 @@ namespace WinMovieRack.Model {
 			//TODO
 			param = new SQLiteParameter("@lastSeen") { Value = DateTime.Now };
 			command.Parameters.Add(param);
+            //TODO
+            param = new SQLiteParameter("@budget") { Value = 0};
+            command.Parameters.Add(param);
 			param = new SQLiteParameter("@idMovies") { Value = idMovies };
 			command.Parameters.Add(param);
 

@@ -12,8 +12,6 @@
             <ColumnDefinition Width="4*" MinWidth="500" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        <TextBox Text="title" Grid.Column="2" Height="auto" Name="movieTitleLabel" VerticalAlignment="Top" FontSize="25" Margin="60,10,0,0" HorizontalAlignment="Left" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
-        <Label Content="(year)" FontSize="15" Height="auto" HorizontalAlignment="Left" Margin= "10,13,0,0" Name="yearLabel" VerticalAlignment="Top" Width="auto" Grid.Column="2" />
         <Label Content="Orginal Title" Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="60,40,0,0" Name="orgialTitleLabel" VerticalAlignment="Top" FontSize="15" />
         <TabControl Grid.Column="2" Margin="5,210,5,5" Name="detailsViewTab" SelectionChanged="detailsViewTab_SelectionChanged">
             <TabItem Header="Summery" Name="summeryTab">
@@ -77,14 +75,9 @@
                                 <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox FontSize="13" FontWeight="Bold" Header="Stars" Name="SummeryStars" Grid.Row="1" Margin="2">
+                        <GroupBox FontSize="13" FontWeight="Bold" Header="Stars" Name="SummeryStars" Margin="2" Grid.ColumnSpan="1" Grid.RowSpan="1">
                             <Grid>
                                 <ListBox ClipToBounds="True" Margin="0,0,0,0" Name="SummeryStarsListbox" />
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox FontSize="13" FontWeight="Bold" Header="Production" Margin="2" Name="SummeryProduction">
-                            <Grid>
-                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" />
                             </Grid>
                         </GroupBox>
                         <GroupBox FontSize="13" FontWeight="Bold" Header="Additional Information" Margin="2" Name="SummeryAdditionalInformation" Grid.Column="4" Width="auto">
@@ -99,6 +92,11 @@
                         </GroupBox>
                         <GridSplitter Grid.Column="1" Grid.RowSpan="2" Margin="0" Name="summeryGridSplitter1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                         <GridSplitter Grid.Column="3" Grid.RowSpan="2" Margin="0" Name="summeryGridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
+                        <GroupBox FontSize="13" FontWeight="Bold" Header="Production" Margin="2" Name="SummeryProduction" Grid.ColumnSpan="1" Grid.Row="1">
+                            <Grid>
+                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" />
+                            </Grid>
+                        </GroupBox>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -148,7 +146,7 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto" Margin="2">
                         <Grid>
-                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" />
+                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" SelectedIndex="0" />
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="2" Header="Actor" Name="groupBox2" FontSize="13" FontWeight="Bold" Margin="2">
@@ -169,27 +167,27 @@
                                         <StackPanel CanHorizontallyScroll="False" Focusable="False" Name="detailsStack" Opacity="1" Orientation="Vertical" Visibility="Visible" Margin="0">
                                             <StackPanel Height="Auto" Name="birthdayStack" Orientation="Horizontal" Width="Auto">
                                                 <Label Content="Birthday:" Height="auto" HorizontalAlignment="Left" Name="birthdayLabel" UseLayoutRounding="False" VerticalAlignment="Top" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="10.06.2007" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="birthday" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Birthday" FontWeight="Normal" Height="Auto" HorizontalContentAlignment="Right" Name="birthday" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                             <StackPanel Height="Auto" Name="ageStack" Orientation="Horizontal">
                                                 <Label Content="Age:" Height="auto" Name="ageLabel" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="5" FontWeight="Normal" Height="auto" Name="ageDetails" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Age" FontWeight="Normal" Height="auto" Name="ageDetails" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                             <StackPanel Height="Auto" Name="locationOfBirthStack" Orientation="Horizontal">
                                                 <Label Content="Location of Birth:" Height="auto" Name="locationOfBirthLabel" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="Hollywood, California, USA" FontWeight="Normal" Height="auto" Name="locationOfBirth" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Location of Birth" FontWeight="Normal" Height="auto" Name="locationOfBirth" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                             <StackPanel Height="Auto" Name="awardsStack" Orientation="Horizontal" Width="Auto">
                                                 <Label Content="Oscars:" Height="auto" Name="oscarsLabel" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="2" FontWeight="Normal" Height="auto" Name="oscars" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Oscars" FontWeight="Normal" Height="auto" Name="oscars" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                             <StackPanel Height="Auto" Name="lifetimeGrossStack" Orientation="Horizontal">
                                                 <Label Content="Lifetime Gross:" Height="auto" Name="lifetimeGrossLabel" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="3.600.570.482" FontWeight="Normal" Height="auto" Name="lifetimeGross" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Lifetime Gross" FontWeight="Normal" Height="auto" Name="lifetimeGross" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                             <StackPanel Height="Auto" Name="averageBoxofficeStack" Orientation="Horizontal">
                                                 <Label Content="Average Boxoffice:" Height="auto" Name="averageBoxofficeLabel" Width="auto" FontSize="12" Padding="2" />
-                                                <Label Content="200.000.000" FontWeight="Normal" Height="auto" Name="averageBoxoffice" Width="auto" FontSize="12" Padding="2" />
+                                                <Label Content="No Average Gross" FontWeight="Normal" Height="auto" Name="averageBoxoffice" Width="auto" FontSize="12" Padding="2" />
                                             </StackPanel>
                                         </StackPanel>
                                     </ScrollViewer>
@@ -307,7 +305,7 @@
                 </Menu>
                 <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
-                <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" />
+                <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" />
             </Grid>
         </GroupBox>
         <StackPanel Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,75,0,0" Name="stackPanel22" VerticalAlignment="Top" Width="auto">
@@ -317,7 +315,7 @@
                 <Label Content="(- Votes)" Height="auto" Name="imdbVotes" FontSize="12" Width="auto" Padding="2" />
                 <Label Content="Top 250:" Height="auto" Name="top250Label" Width="auto" FontWeight="Bold" FontSize="12" Padding="2" />
                 <Label Content="-" Height="auto" Name="top250" FontSize="12" Padding="2" />
-                <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Click="imdbLink_Click" />
+                <Button Content="IMDB" Height="auto" Name="imdbLink" Width="auto" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="2" Click="imdbLink_Click" Margin="10,0,0,0" />
             </StackPanel>
             <StackPanel Height="auto" Name="stackPanel13" Width="auto" Orientation="Horizontal">
                 <Label Content="Own Rating:" Height="auto" Name="ownRatingLabel" FontWeight="Bold" FontSize="12" Padding="2" />
@@ -339,7 +337,7 @@
                         <Label Content="(- Votes)" FontSize="12" Height="auto" Name="MetacriticsMetascoreUsersVotes" Padding="2" />
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Metacritics" FontSize="10" Height="auto" Name="metacriticsLink" Width="auto" VerticalAlignment="Center" Padding="2" />
+                <Button Content="Metacritics" FontSize="10" Height="auto" Name="metacriticsLink" Width="auto" VerticalAlignment="Center" Padding="2" HorizontalAlignment="Center" Margin="10,0,0,0" />
             </StackPanel>
             <StackPanel Height="auto" Name="stackPanel18" Width="auto" Orientation="Horizontal">
                 <Label Content="Rottentomatoes:" Height="auto" Name="rottentomatoesLabel" FontWeight="Bold" FontSize="12" Padding="2" />
@@ -355,8 +353,12 @@
                         <Label Content="(- Votes)" FontSize="12" Height="auto" Name="RottentomatoesAudienceVotes" Padding="2" />
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Rottentomatoes" FontSize="10" Height="auto" Name="rottentomatoesLink" Width="auto" VerticalAlignment="Center" Padding="2" />
+                <Button Content="Rottentomatoes" FontSize="10" Height="auto" Name="rottentomatoesLink" Width="auto" VerticalAlignment="Center" Padding="2" HorizontalAlignment="Center" Margin="10,0,0,0" />
             </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,10,0,0" Name="stackPanel24" VerticalAlignment="Top" Width="auto" Orientation="Horizontal">
+            <Label Content="(year)" FontSize="15" Height="auto" Name="yearLabel" Width="auto" VerticalAlignment="Bottom" />
+            <TextBox Text="title" Height="auto" Name="movieTitleLabel" FontSize="25" Width="auto" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" BorderThickness="0" />
         </StackPanel>
         <Image Grid.Column="2" Margin="0,11,12,0" Name="posterTitle" Source="/WinMovieRack;component/Resources/nopicPREVIEW.jpg" HorizontalAlignment="Right" Width="auto" Height="auto" MaxHeight="200" MaxWidth="200" VerticalAlignment="Top" MouseUp="posterTitle_MouseUp" />
     </Grid>

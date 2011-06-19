@@ -10,78 +10,186 @@ namespace WinMovieRack.Model
         public int dbId;
         public string title;
         public string originalTitle;
-        public int runtime;
+        public string runtime;
         public string plot;
-        public int year;
+        public string year;
         public int imdbID;
-        public int imdbRating;
-        public int imdbRatingVotes;
-        public int imdbTop250;
+        public string imdbRating;
+        public string imdbRatingVotes;
+        public string imdbTop250;
         public string metacriticsID;
-        public int metacriticsReviewRating;
-        public int metacriticsUsersRating;
-        public int metacriticsReviewVotes;
-        public int metacriticsUserVotes;
+        public string metacriticsReviewRating;
+        public string metacriticsUsersRating;
+        public string metacriticsReviewVotes;
+        public string metacriticsUserVotes;
         public string rottentomatoesID;
-        public int rottenTomatoesAudience;
-        public int tomatometer;
-        public int rottenTomatoesAudienceVotes;
-        public int tomatometerVotes;
-        public int personalRating;
+        public string rottenTomatoesAudience;
+        public string tomatometer;
+        public string rottenTomatoesAudienceVotes;
+        public string tomatometerVotes;
+        public string personalRating;
         public string boxofficemojoID;
-        public UInt32 boxofficeWorldwide;
-        public UInt32 boxofficeAmerica;
-        public UInt32 boxofficeForeign;
-        public int boxofficeFirstWeekend;
-        public int rangFirstWeekend;
-        public int rankAllTime;
-        public int weeksInCinema;
-        public int otherWins;
-        public int otherNominations;
+        public string boxofficeWorldwide;
+        public string boxofficeAmerica;
+        public string boxofficeForeign;
+        public string boxofficeFirstWeekend;
+        public string rangFirstWeekend;
+        public string rankAllTime;
+        public string weeksInCinema;
+        public string otherWins;
+        public string otherNominations;
         public string notes;
-        public int seenCount;
+        public string seenCount;
         public bool TVSeries;
         public DateTime lastSeen;
-        public UInt32 budget;
+        public string budget;
+        public double imdbRatingDouble;
+        public int yearInt;
 
         public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, int imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget)
         {
             this.dbId = dbId;
             this.title = title;
             this.originalTitle = originalTitle;
-            this.runtime = runtime;
             this.plot = plot;
-            this.year = year;
             this.imdbID = imdbID;
-            this.imdbRating = imdbRating;
-            this.imdbRatingVotes = imdbRatingVotes;
-            this.imdbTop250 = imdbTop250;
             this.metacriticsID = metacriticsID;
-            this.metacriticsReviewRating = metacriticsReviewRating;
-            this.metacriticsUsersRating = metacriticsUsersRating;
-            this.metacriticsReviewVotes = metacriticsReviewVotes;
-            this.metacriticsUserVotes = metacriticsUserVotes;
             this.rottentomatoesID = rottentomatoesID;
-            this.rottenTomatoesAudience = rottenTomatoesAudience;
-            this.rottenTomatoesAudienceVotes = rottenTomatoesAudienceVotes;
-            this.tomatometerVotes = tomatometerVotes;
-            this.tomatometer = tomatometer;
-            this.personalRating = personalRating;
             this.boxofficemojoID = boxofficemojoID;
-            this.boxofficeWorldwide = boxofficeWorldwide;
-            this.boxofficeAmerica = boxofficeAmerica;
-            this.boxofficeForeign = boxofficeForeign;
-            this.boxofficeFirstWeekend = boxofficeFirstWeekend;
-            this.rangFirstWeekend = rangFirstWeekend;
-            this.rankAllTime = rankAllTime;
-            this.weeksInCinema = weeksInCinema;
-            this.otherWins = otherWins;
-            this.otherNominations = otherNominations;
+            this.boxofficeWorldwide = "" + boxofficeWorldwide;
+            this.boxofficeAmerica = "" + boxofficeAmerica;
+            this.boxofficeForeign = "" + boxofficeForeign;
             this.notes = notes;
-            this.seenCount = seenCount;
             this.TVSeries = TVSeries;
             this.lastSeen = lastSeen;
-            this.budget = budget;
+            this.budget = "" + budget;
+            this.runtime = "" + runtime;
+            this.year = "(" + year + ")";
+            this.imdbRating = imdbRating / 10.0 + "/10";
+            this.imdbRatingVotes = "(" + imdbRatingVotes + " Votes)";
+            this.imdbTop250 = "" + imdbTop250;
+            this.metacriticsReviewRating = metacriticsReviewRating + "/100";
+            this.metacriticsUsersRating = "" + metacriticsUsersRating + "/10";
+            this.metacriticsReviewVotes = "(" + metacriticsReviewVotes + " Votes)";
+            this.metacriticsUserVotes = "(" + metacriticsUserVotes + " Votes)";
+            this.rottenTomatoesAudience = rottenTomatoesAudience + "%";
+            this.rottenTomatoesAudienceVotes = "(" + rottenTomatoesAudienceVotes + " Votes)";
+            this.tomatometerVotes = "(" + tomatometerVotes + " Votes)";
+            this.tomatometer = tomatometer + "%";
+            this.personalRating = personalRating + "/100 (-/10)";
+            this.boxofficeFirstWeekend = "" + boxofficeFirstWeekend;
+            this.rangFirstWeekend = "" + rangFirstWeekend;
+            this.rankAllTime = "" + rankAllTime;
+            this.weeksInCinema = "" + weeksInCinema;
+            this.otherWins = "" + otherWins;
+            this.otherNominations = "" + otherNominations;
+            this.seenCount = "" + seenCount;
+            this.imdbRatingDouble = imdbRating / 10.0;
+            this.yearInt = year;
+            if (this.runtime.Equals("-1"))
+            {
+                this.runtime = "No Runtime";
+            }
+            if (this.year.Equals("(-1)"))
+            {
+                this.year = "No Year";
+            }
+            if (this.imdbRating.Equals("-0,1/10"))
+            {
+                this.imdbRating = "No Rating";
+            }
+            if (this.imdbRatingVotes.Equals("(-1 Votes)"))
+            {
+                this.imdbRatingVotes = "(No Votes)";
+            }
+            if (this.personalRating.Equals("-1/100 (-/10)"))
+            {
+                this.personalRating = "(No Rating)";
+            }
+
+            if (this.boxofficeWorldwide.Equals("0"))
+            {
+                this.boxofficeWorldwide = "No Boxoffice";
+            }
+            if (this.boxofficeAmerica.Equals("0"))
+            {
+                this.boxofficeAmerica = "No Boxoffice";
+            }
+            if (this.boxofficeForeign.Equals("0"))
+            {
+                this.boxofficeForeign = "No Boxoffice";
+            }
+            if (this.budget.Equals("0"))
+            {
+                this.budget = "No Budget";
+            }
+            if (this.imdbTop250.Equals("-1"))
+            {
+                this.imdbTop250 = "No Rank";
+            }
+            if (this.metacriticsReviewRating.Equals("-1/100"))
+            {
+                this.metacriticsReviewRating = "No Rating";
+            }
+            if (this.metacriticsUsersRating.Equals("-1/10"))
+            {
+                this.metacriticsUsersRating = "No Rating";
+            }
+            if (this.metacriticsReviewVotes.Equals("(-1 Votes)"))
+            {
+                this.metacriticsReviewVotes = "(No Votes)";
+            }
+            if (this.metacriticsUserVotes.Equals("(-1 Votes)"))
+            {
+                this.metacriticsUserVotes = "(No Votes)";
+            }
+            if (this.rottenTomatoesAudience.Equals("-1%"))
+            {
+                this.rottenTomatoesAudience = "No Rating";
+            }
+            if (this.rottenTomatoesAudienceVotes.Equals("(-1 Votes)"))
+            {
+                this.rottenTomatoesAudienceVotes = "(No Votes)";
+            }
+            if (this.tomatometerVotes.Equals("(-1 Votes)"))
+            {
+                this.tomatometerVotes = "(No Votes)";
+            }
+            if (this.tomatometer.Equals("-1%"))
+            {
+                this.tomatometer = "No Rating";
+            }
+            if (this.boxofficeFirstWeekend.Equals("0"))
+            {
+                this.boxofficeFirstWeekend = "No Boxoffice";
+            }
+            if (this.rangFirstWeekend.Equals("-1"))
+            {
+                this.rangFirstWeekend = "No Rank";
+            }
+            if (this.rankAllTime.Equals("-1"))
+            {
+                this.rankAllTime = "No Rank";
+            }
+            if (this.weeksInCinema.Equals("-1"))
+            {
+                this.weeksInCinema = "No Weeks";
+            }
+            if (this.otherWins.Equals("-1"))
+            {
+                this.otherWins = "No Wins";
+            }
+            if (this.otherNominations.Equals("-1"))
+            {
+                this.otherNominations = "No Nominations";
+            }
+            if (this.seenCount.Equals("-1"))
+            {
+                this.seenCount = "No Seen Count";
+            }
+
+
+
         }
     }
 }
