@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
+using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
 
 namespace WinMovieRack.Controller
 {
@@ -11,9 +13,9 @@ namespace WinMovieRack.Controller
     {
         private Controller controller;
         private SQLiteConnector db;
-        private List<MRListData> mrListData;
-        private List<MovieRackListBoxItem> movieRackListBoxItems;
         private ActorsView view;
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> actorsList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieListToPerson = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
 
         public ActorsViewController(Controller c, SQLiteConnector db)
         {
@@ -21,34 +23,44 @@ namespace WinMovieRack.Controller
             this.controller = c;
 
         }
+
         public void setActorsView(ActorsView av)
         {
             this.view = av;
         }
 
-        public void loadList()
+        public void loadCompleteActorsList()
         {
-            createmovieRackListBoxItems();
-            addMovieRackListBoxItem();
+            actorsList.Clear();
+            List<MRListData> completeMovieListData = db.getCompletePersonList(PersonEnum.gender, PersonEnum.Name);//Aus Config lesen
+            completeMovieListData.ForEach(delegate(MRListData actor)
+            {
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+                posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+                posterBitmap.EndInit();
+                actorsList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+            });
+            view.listBoxActor.ItemsSource = actorsList;
         }
 
-        private void createmovieRackListBoxItems()
+        public void loadMovieListToPerson(int itemID)
         {
-            this.mrListData = db.getCompletePersonList(PersonEnum.OscarWins, PersonEnum.Name);//Aus Config lesen
-            this.movieRackListBoxItems = new List<MovieRackListBoxItem>();
-            for (int i = 0; i < mrListData.Count; i++)
+            movieListToPerson.Clear();
+            List<MRListData> movieListPerson = db.getMovieListToPerson(itemID);
+            movieListPerson.ForEach(delegate(MRListData movie)
             {
-                this.movieRackListBoxItems.Add(new MovieRackListBoxItem(mrListData.ElementAt(i), false));
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                posterBitmap.EndInit();
+                movieListToPerson.Add(new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap));
+            });
+            view.MovieListToPerson.ItemsSource = movieListToPerson;
         }
 
-        private void addMovieRackListBoxItem()
-        {
-            for (int i = 0; i < movieRackListBoxItems.Count; i++)
-            {
-                view.addActorListBoxItem(movieRackListBoxItems.ElementAt(i));
-            }
-        }
         public GUIPerson getGUIPerson(int itemID)
         {
             return db.getPersonInfo(itemID);

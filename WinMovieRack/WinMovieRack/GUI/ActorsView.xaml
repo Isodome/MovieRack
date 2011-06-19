@@ -4,7 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1024">
+             d:DesignHeight="600" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <DataTemplate x:Key="listbox">
+                <Grid Height="84" Width="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="84" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+                    <Label Content="{Binding Path=labelOne}" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+                    <Label Content="{Binding Path=labelTwo}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                    <Label Content="{Binding Path=labelThree}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                </Grid>
+
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Height="auto" Width="auto" Background="#FFF0F0F0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -14,7 +29,22 @@
             <Grid>
                 <TextBox Height="30" Margin="5,6,50,0" Name="searchBox" Text="(Search)" VerticalAlignment="Top" />
                 <Button Content="Search" FontSize="10" FontWeight="Normal" Height="auto" HorizontalAlignment="Right" Margin="0,17,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" />
-                <ListBox Margin="5,54,5,5" Name="listBoxActor" SelectionChanged="listBoxActor_SelectionChanged" />
+                <ListBox Margin="5,54,5,5" Name="listBoxActor" SelectionChanged="listBoxActor_SelectionChanged"  >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="84" Width="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="84" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+                                <Label Content="{Binding Path=labelOne}" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+                                <Label Content="{Binding Path=labelTwo}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                                <Label Content="{Binding Path=labelThree}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </GroupBox>
         <Label Content="Name" Grid.Column="1" Height="auto" HorizontalAlignment="Left" Margin="60,10,0,0" Name="name" VerticalAlignment="Top" FontSize="25" FontWeight="Bold" />
@@ -250,7 +280,7 @@
                     </GroupBox>
                     <GroupBox Name="listboxCast" Header="Movies" Margin="2" Height="auto" Grid.Row="1" FontSize="13" FontWeight="Bold">
                         <Grid Margin="0" Width="auto">
-                            <ListBox Margin="0" Name="listBox1" Height="auto" />
+                            <ListBox Margin="0" Name="MovieListToPerson" Height="auto" ItemTemplate="{StaticResource listbox}" />
                         </Grid>
                     </GroupBox>
                 </Grid>
