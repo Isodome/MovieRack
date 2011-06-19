@@ -5,6 +5,8 @@ using System.Text;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
 using System.Data;
+using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
 namespace WinMovieRack.Controller
 {
 
@@ -14,9 +16,11 @@ namespace WinMovieRack.Controller
         private DetailsView view;
         private Controller controller;
         private SQLiteConnector db;
-        private List<MovieRackListBoxItem> completeActorList;
-        private List<MovieRackListBoxItem> starsList;
-        private List<MovieRackListBoxItem> productionList;
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> castList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> starsList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> productionList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieListToPerson = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
@@ -31,85 +35,82 @@ namespace WinMovieRack.Controller
 
         public void loadCompleteMovieList()
         {
-            view.completeMovieListBox.Items.Clear();
+            movieList.Clear();
             List<MRListData> completeMovieListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
-            foreach (MRListData movie in completeMovieListData)
+            completeMovieListData.ForEach(delegate(MRListData movie)
             {
-                view.completeMovieListBox.Items.Add(new MovieRackListBoxItem(movie, true));
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+                posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+                posterBitmap.EndInit();
+                movieList.Add(new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap));
+            });
+            view.listBoxMovies.ItemsSource = movieList;
         }
 
         public void loadActorListToMovie(int itemID, int year)
         {
+            castList.Clear();
             List<MRListData> actorListToMovie = db.getPersonListToMovie(itemID, year);
-            completeActorList = new List<MovieRackListBoxItem>();
-            foreach (MRListData actor in actorListToMovie)
+            actorListToMovie.ForEach(delegate(MRListData actor)
             {
-                MovieRackListBoxItem temp = new MovieRackListBoxItem(actor, false);
-                completeActorList.Add(temp);
-                view.completeCastListBox.Items.Add(temp);
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
+                posterBitmap.EndInit();
+                castList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+            });
+            view.castListBox.ItemsSource = castList;
+
         }
 
-        public void loadActorListPictures()
+        public void loadStarsListToMovie(int itemID, int year)
         {
-            foreach (MovieRackListBoxItem actor in completeActorList)
+            starsList.Clear();
+            List<MRListData> starsListToMovie = db.getStarsListToMovie(itemID, year);
+            starsListToMovie.ForEach(delegate(MRListData actor)
             {
-                actor.loadPicture();
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
+                posterBitmap.EndInit();
+                starsList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+            });
+            view.SummeryStarsListbox.ItemsSource = starsList;
         }
 
-        public void loadStarsList(int itemID, int year)
+        public void loadProductionListToMovie(int itemID, int year)
         {
-
-            List<MRListData> mrListData = db.getStarsListToMovie(itemID, year);
-            starsList = new List<MovieRackListBoxItem>();
-            foreach (MRListData star in mrListData)
+            productionList.Clear();
+            List<MRListData> productionListToMovie = db.getProductionListToMovie(itemID, year);
+            productionListToMovie.ForEach(delegate(MRListData actor)
             {
-                MovieRackListBoxItem temp = new MovieRackListBoxItem(star, false);
-                starsList.Add(temp);
-                view.addStarsListBoxItem(temp);
-            }
-        }
-
-        public void loadProductionList(int itemID, int year)
-        {
-            List<MRListData> mrListData = db.getProductionListToMovie(itemID, year);
-            productionList = new List<MovieRackListBoxItem>();
-            foreach (MRListData production in mrListData)
-            {
-                MovieRackListBoxItem temp = new MovieRackListBoxItem(production, false);
-                productionList.Add(temp);
-                view.addProductionListBoxItem(temp);
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
+                posterBitmap.EndInit();
+                productionList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+            });
+            view.SummeryProductionListbox.ItemsSource = productionList;
         }
 
         public void loadMovieListToPerson(int itemID)
         {
-            view.completeMovieListToPerson.Items.Clear();
-            List<MRListData> mrListData = db.getMovieListToPerson(itemID);
-            foreach (MRListData movie in mrListData)
+            movieListToPerson.Clear();
+            List<MRListData> movieListPerson = db.getMovieListToPerson(itemID);
+            movieListPerson.ForEach(delegate(MRListData movie)
             {
-                view.completeMovieListToPerson.Items.Add(new MovieRackListBoxItem(movie, true));
-            }
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                posterBitmap.EndInit();
+                movieListToPerson.Add(new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap));
+            });
+            view.MovieListToPerson.ItemsSource = movieListToPerson;
         }
 
-
-        public void loadStarsListPictures()
-        {
-            foreach (MovieRackListBoxItem star in starsList)
-            {
-                star.loadPicture();
-            }
-        }
-
-        public void loadProductionListPictures()
-        {
-            foreach (MovieRackListBoxItem production in productionList)
-            {
-                production.loadPicture();
-            }
-        }
 
         public GUIPerson getGUIPerson(int itemID)
         {
@@ -146,8 +147,8 @@ namespace WinMovieRack.Controller
             List<String> alsoKnownas = db.getAlsoKnownToMovie(idMovies);
             foreach (String title in alsoKnownas)
             {
-                view.alsoKnownAsBlock.Text += title;
-                view.alsoKnownAsBlock.Text += "\n";
+                view.alsoKownAs.Text += title;
+                view.alsoKownAs.Text += "\n";
             }
         }
     }

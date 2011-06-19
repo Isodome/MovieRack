@@ -30,27 +30,18 @@ namespace WinMovieRack.GUI
             this.controller = avc;
         }
 
-        public void addActorListBoxItem(MovieRackListBoxItem item)
-        {
-            listBoxActor.Items.Add(item);
-            item.loadPicture();
-        }
 
         private void listBoxActor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MovieRackListBoxItem selectetItem = (MovieRackListBoxItem)listBoxActor.SelectedItem;
+            MRListBoxItem selectetItem = (MRListBoxItem)listBoxActor.SelectedItem;
             if (selectetItem != null)
             {
-                getPersonDetails(selectetItem.itemID);
+                this.personDetails = controller.getGUIPerson(selectetItem.getId);
                 setPersonDetails(personDetails);
-               // controller.loadMovieListToPerson(selectetItem.itemID);
+                controller.loadMovieListToPerson(selectetItem.getId);
             }
         }
 
-        private void getPersonDetails(int itemID)
-        {
-            this.personDetails = controller.getGUIPerson(itemID);
-        }
 
         private void setPersonDetails(GUIPerson personDetails)
         {
@@ -68,6 +59,7 @@ namespace WinMovieRack.GUI
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(personDetails.dbID, PosterSize.PREVIEW));
             posterBitmap.EndInit();
+            posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
             actorPoster.Source = posterBitmap;
         }
 

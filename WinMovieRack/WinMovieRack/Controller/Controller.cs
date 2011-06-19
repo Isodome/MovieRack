@@ -71,7 +71,7 @@ namespace WinMovieRack.Controller {
 			//Inform specific controllers
 			switch (view) {
 				case View.ACTORS_VIEW:
-                    actorsViewController.loadList();
+                    actorsViewController.loadCompleteActorsList();
 					break;
 				case View.DETAILS_VIEW:
                     detailsViewController.loadCompleteMovieList();

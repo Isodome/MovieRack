@@ -122,6 +122,7 @@
     <Compile Include="GUI\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\MRListBoxItem.cs" />
     <Compile Include="GUI\ListComparerTest.cs" />
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
