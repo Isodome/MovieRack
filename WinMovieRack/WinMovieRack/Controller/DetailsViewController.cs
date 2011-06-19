@@ -21,6 +21,9 @@ namespace WinMovieRack.Controller
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> starsList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> productionList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieListToPerson = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private Dictionary<int, MRListBoxItem> movieListItems = new Dictionary<int, MRListBoxItem>();
+        private Dictionary<int, MRListBoxItem> castListItems = new Dictionary<int, MRListBoxItem>();
+        private bool isLoad = false;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
@@ -35,24 +38,30 @@ namespace WinMovieRack.Controller
 
         public void loadCompleteMovieList()
         {
-            movieList.Clear();
-            List<MRListData> completeMovieListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
-            completeMovieListData.ForEach(delegate(MRListData movie)
+            if (!isLoad)
             {
-                BitmapImage posterBitmap = new BitmapImage();
-                posterBitmap.BeginInit();
-                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
-                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
-                posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
-                posterBitmap.EndInit();
-                movieList.Add(new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap));
-            });
-            view.listBoxMovies.ItemsSource = movieList;
+                List<MRListData> completeMovieListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
+                completeMovieListData.ForEach(delegate(MRListData movie)
+                {
+                    BitmapImage posterBitmap = new BitmapImage();
+                    posterBitmap.BeginInit();
+                    posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                    posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+                    posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+                    posterBitmap.EndInit();
+                    MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
+                    movieList.Add(item);
+                    movieListItems.Add(movie.dbItemID, item);
+                });
+                view.listBoxMovies.ItemsSource = movieList;
+            }
+            isLoad = true;
         }
 
         public void loadActorListToMovie(int itemID, int year)
         {
             castList.Clear();
+            castListItems.Clear();
             List<MRListData> actorListToMovie = db.getPersonListToMovie(itemID, year);
             actorListToMovie.ForEach(delegate(MRListData actor)
             {
@@ -60,7 +69,9 @@ namespace WinMovieRack.Controller
                 posterBitmap.BeginInit();
                 posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
                 posterBitmap.EndInit();
-                castList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+                MRListBoxItem item = new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap);
+                castList.Add(item);
+                castListItems.Add(actor.dbItemID, item);
             });
             view.castListBox.ItemsSource = castList;
 
@@ -150,6 +161,34 @@ namespace WinMovieRack.Controller
                 view.alsoKownAs.Text += title;
                 view.alsoKownAs.Text += "\n";
             }
+        }
+
+        public void deleteItem(int id)
+        {
+            MRListBoxItem itemToDelete;
+            movieListItems.TryGetValue(id, out itemToDelete);
+            movieList.Remove(itemToDelete);
+
+        }
+
+        public void addItem(int id, MRListBoxItem item)
+        {
+            movieList.Add(item);
+            movieListItems.Add(id, item);
+        }
+
+        public void changeItem(int id, MRListBoxItem item)
+        {
+            MRListBoxItem itemToChange;
+            movieListItems.TryGetValue(id, out itemToChange);
+            itemToChange = item;
+        }
+
+        public MRListBoxItem getitem(int id)
+        {
+            MRListBoxItem itemToChange;
+            castListItems.TryGetValue(id, out itemToChange);
+            return itemToChange;
         }
     }
 }

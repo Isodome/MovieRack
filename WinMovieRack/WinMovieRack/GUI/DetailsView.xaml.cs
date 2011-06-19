@@ -218,16 +218,19 @@ namespace WinMovieRack
         private void actorPoster_MouseUp(object sender, MouseButtonEventArgs e)
         {
             MRListBoxItem selectedItem = (MRListBoxItem)castListBox.SelectedItem;
-            bigPicture = new BigPicture();
-            BitmapImage posterBitmap = new BitmapImage();
-            posterBitmap.BeginInit();
-            posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(selectedItem.getId, PosterSize.FULL));
-            posterBitmap.EndInit();
-            bigPicture.bigPicture.Source = posterBitmap;
-            Point origin = new Point(0, 0);
-            Point screenOrigin = actorPoster.PointToScreen(origin);
-            bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
-            bigPicture.fadeIn();
+            if (selectedItem != null)
+            {
+                bigPicture = new BigPicture();
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(selectedItem.getId, PosterSize.FULL));
+                posterBitmap.EndInit();
+                bigPicture.bigPicture.Source = posterBitmap;
+                Point origin = new Point(0, 0);
+                Point screenOrigin = actorPoster.PointToScreen(origin);
+                bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
+                bigPicture.fadeIn();
+            }
         }
 
         private void posterTitle_MouseUp(object sender, MouseButtonEventArgs e)
@@ -250,6 +253,16 @@ namespace WinMovieRack
             {
                 Process.Start("http://www.imdb.com/title/tt" + movieDetails.imdbID);
             }
+        }
+
+        private void SummeryStarsListbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MRListBoxItem selectedItem = (MRListBoxItem)SummeryStarsListbox.SelectedItem;
+            MRListBoxItem itemToSelect = controller.getitem(selectedItem.getId);
+
+            detailsViewTab.SelectedIndex = 2;
+            castListBox.SelectedItem = itemToSelect;
+
         }
     }
 }
