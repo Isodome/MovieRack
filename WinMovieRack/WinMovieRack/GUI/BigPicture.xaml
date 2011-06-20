@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="BigPicture" Height="300" Width="300" ResizeMode="NoResize" SizeToContent="Height" Topmost="True" WindowStyle="None" WindowStartupLocation="Manual" MouseLeftButtonDown="Window_MouseLeftButtonDown" Opacity="1" Background="Black">
     <Grid>
-        <Image Height="auto" HorizontalAlignment="Stretch" Name="bigPicture" VerticalAlignment="Stretch" Width="auto" MouseLeave="bigPicture_MouseLeave" MouseEnter="bigPicture_MouseEnter" />
+        <Image Height="auto" HorizontalAlignment="Stretch" Name="bigPicture" VerticalAlignment="Stretch" Width="auto" MouseLeave="bigPicture_MouseLeave" MouseEnter="bigPicture_MouseEnter" MouseUp="bigPicture_MouseUp" />
         <Grid Name="buttonGrid" Height="auto" VerticalAlignment="Bottom" Opacity="0" Margin="0,0,0,0" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="118" />
                 <ColumnDefinition Width="23" />
             </Grid.ColumnDefinitions>
-            <Button Click="quitButton_Click" Content="Quit" Height="auto" Margin="80,0,0,0" Name="quitButton" Opacity="1" VerticalAlignment="Bottom" MouseEnter="quitButton_MouseEnter" MouseLeave="quitButton_MouseLeave" Width="38" HorizontalAlignment="Center" />
             <Button Content="Save" Height="auto" Name="saveButton" MouseEnter="saveButton_MouseEnter" MouseLeave="saveButton_MouseLeave" Margin="26,0,43,0" VerticalAlignment="Bottom" Width="49" HorizontalAlignment="Center" />
         </Grid>
     </Grid>

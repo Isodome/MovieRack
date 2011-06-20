@@ -75,8 +75,8 @@ namespace WinMovieRack.GUI
 			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
 
 			if ((double)bigPicture.Source.Width <= System.Windows.SystemParameters.PrimaryScreenWidth && (double)bigPicture.Source.Height <= System.Windows.SystemParameters.PrimaryScreenHeight) {
-				widthAnim.To = (double)bigPicture.Source.Width;
-				heightAnim.To = (double)bigPicture.Source.Height;
+				widthAnim.To = (double)(bigPicture.Source as BitmapSource).PixelWidth;
+				heightAnim.To = (double)(bigPicture.Source as BitmapSource).PixelHeight;
 			
 			} else {
 				double picRatio = (double)bigPicture.Source.Width / (double)bigPicture.Source.Height;
@@ -132,8 +132,7 @@ namespace WinMovieRack.GUI
            buttonGrid.Opacity = 0;
         }
 
-        private void quitButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void fadeOut() {   
 			Storyboard sb = new Storyboard();
 			DoubleAnimation heightAnim = new DoubleAnimation();
 			DoubleAnimation widthAnim = new DoubleAnimation();
@@ -186,16 +185,6 @@ namespace WinMovieRack.GUI
 			this.Close();
 		}
 
-        private void quitButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            buttonGrid.Opacity = 1;
-        }
-
-        private void quitButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            buttonGrid.Opacity = 0;
-        }
-
         private void saveButton_MouseEnter(object sender, MouseEventArgs e)
         {
             buttonGrid.Opacity = 1;
@@ -205,6 +194,10 @@ namespace WinMovieRack.GUI
         {
             buttonGrid.Opacity = 0;
         }
+
+		private void bigPicture_MouseUp(object sender, MouseButtonEventArgs e) {
+			fadeOut();
+		}
 		
     }
 }
