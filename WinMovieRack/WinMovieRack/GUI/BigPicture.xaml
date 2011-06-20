@@ -4,7 +4,7 @@
         Title="BigPicture" Height="300" Width="300" ResizeMode="NoResize" SizeToContent="Height" Topmost="True" WindowStyle="None" WindowStartupLocation="Manual" MouseLeftButtonDown="Window_MouseLeftButtonDown" Opacity="1" Background="Black">
     <Grid>
         <Image Height="auto" HorizontalAlignment="Stretch" Name="bigPicture" VerticalAlignment="Stretch" Width="auto" MouseLeave="bigPicture_MouseLeave" MouseEnter="bigPicture_MouseEnter" />
-        <Grid Name="buttonGrid" Height="auto" VerticalAlignment="Bottom" Opacity="0" Margin="70,0,67,0" HorizontalAlignment="Center">
+        <Grid Name="buttonGrid" Height="auto" VerticalAlignment="Bottom" Opacity="0" Margin="0,0,0,0" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="118" />
                 <ColumnDefinition Width="23" />

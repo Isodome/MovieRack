@@ -169,11 +169,10 @@ namespace WinMovieRack.Model
             return movieList;
         }
 
-
-        public List<MRListData> getProductionListToMovie(int idMovies, int year)
+        public List<MRListData> getStarsListToMovie1(int idMovies, int year)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "SELECT idPerson, Name, Birthday FROM Director JOIN Person WHERE Person.idPerson = Director.Person_idPerson AND Director.Movies_idMovies =" + idMovies;
+            command.CommandText = "SELECT DISTINCT idPerson, Name, Birthday FROM Person JOIN Director JOIN Writer WHERE Writer.Person_idPerson = Director.Person_idPerson AND Person.idPerson = Writer.Person_idPerson AND Director.Movies_idMovies =" + idMovies;
             SQLiteDataReader reader = executeReaderThreadSafe(command);
             List<MRListData> movieList = new List<MRListData>();
             while (reader.Read())
@@ -183,7 +182,41 @@ namespace WinMovieRack.Model
                 {
                     years = year - reader.GetDateTime(2).Year;
                 }
-                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Director"));
+                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Writer, Direktor"));
+            }
+            command.Dispose();
+            return movieList;
+        }
+
+
+        public List<MRListData> getProductionListToMovie(int idMovies, int year)
+        {
+            List<MRListData> test = new List<MRListData>();
+            test = getStarsListToMovie1(idMovies, year);
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT idPerson, Name, Birthday FROM Director JOIN Person WHERE Person.idPerson = Director.Person_idPerson AND Director.Movies_idMovies =" + idMovies;
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            List<MRListData> movieList = new List<MRListData>();
+            movieList = test;
+            while (reader.Read())
+            {
+                int years = 0;
+                if (reader.GetDateTime(2).Year != 1)
+                {
+                    years = year - reader.GetDateTime(2).Year;
+                }
+                int count = test.Count;
+                for (int i = 0; i < test.Count; i++)
+                {
+                    if (test.ElementAt(i).dbItemID != reader.GetInt32(0))
+                    {
+                        count--;
+                    }
+                }
+                if (count == 0)
+                {
+                    movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Director"));
+                }
             }
             command.Dispose();
             command.CommandText = "SELECT idPerson, Name, Birthday FROM Writer JOIN Person WHERE Person.idPerson = Writer.Person_idPerson AND Writer.Movies_idMovies =" + idMovies;
@@ -197,7 +230,18 @@ namespace WinMovieRack.Model
                     years = now.Year - reader.GetDateTime(2).Year;
                     if (reader.GetDateTime(2) > now.AddYears(-years)) years--;
                 }
-                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Writer"));
+                int count = test.Count;
+                for (int i = 0; i < test.Count; i++)
+                {
+                    if (test.ElementAt(i).dbItemID != reader.GetInt32(0))
+                    {
+                        count--;
+                    }
+                }
+                if (count == 0)
+                {
+                    movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Writer"));
+                }
             }
             return movieList;
         }

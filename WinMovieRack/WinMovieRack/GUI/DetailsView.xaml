@@ -158,7 +158,7 @@
                         <ColumnDefinition Width="5" />
                         <ColumnDefinition Width="4*"  MinWidth="75" />
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto" Margin="2">
+                    <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto" Margin="2,30,2,2">
                         <Grid>
                             <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" SelectedIndex="0"  ItemTemplate="{StaticResource listbox}" />
                         </Grid>
@@ -242,6 +242,10 @@
                         </Grid>
                     </GroupBox>
                     <GridSplitter Grid.Column="1" Name="gridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
+                    <ComboBox Height="auto" Margin="5,5,5,0" Name="personchange" VerticalAlignment="Top" SelectionChanged="personchange_SelectionChanged" SelectedIndex="0">
+                        <ComboBoxItem Name="cast" Content="Cast" />
+                        <ComboBoxItem Name="production" Content="Production" />
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Boxoffice" Name="boxofficeTab">

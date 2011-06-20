@@ -190,6 +190,7 @@ namespace WinMovieRack
                 loadMovieDetails(selectedMovieItem.getId);
             }
             castListBox.SelectedIndex = 0;
+            personchange.SelectedIndex = 0;
         }
 
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -263,6 +264,14 @@ namespace WinMovieRack
             detailsViewTab.SelectedIndex = 2;
             castListBox.SelectedItem = itemToSelect;
 
+        }
+
+        private void personchange_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (controller != null)
+            {
+                controller.castListBoxSelectionChanged(personchange.SelectedIndex);
+            }
         }
     }
 }

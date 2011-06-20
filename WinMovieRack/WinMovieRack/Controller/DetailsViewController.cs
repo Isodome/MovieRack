@@ -122,6 +122,17 @@ namespace WinMovieRack.Controller
             view.MovieListToPerson.ItemsSource = movieListToPerson;
         }
 
+        public void castListBoxSelectionChanged(int index)
+        {
+            if (view.personchange.SelectedIndex == 0)
+            {
+                view.castListBox.ItemsSource = castList;
+            }
+            else
+            {
+                view.castListBox.ItemsSource = productionList;
+            }
+        }
 
         public GUIPerson getGUIPerson(int itemID)
         {

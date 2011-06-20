@@ -10,7 +10,7 @@ namespace WinMovieRack.Controller.Parser
 {
 	class JobWebPageDownload : ThreadJob
 	{
-		private const int maxAttempts = 5;
+		private const int maxAttempts = 15;
 		private string url;
 		private string result;
         public JobWebPageDownload(string url)
