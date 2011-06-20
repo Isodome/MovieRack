@@ -108,7 +108,7 @@
                         <GridSplitter Grid.Column="3" Grid.RowSpan="2" Margin="0" Name="summeryGridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                         <GroupBox FontSize="13" FontWeight="Bold" Header="Production" Margin="2" Name="SummeryProduction" Grid.ColumnSpan="1" Grid.Row="1">
                             <Grid>
-                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" ItemTemplate="{StaticResource listbox}" />
+                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" ItemTemplate="{StaticResource listbox}" MouseDoubleClick="SummeryProductionListbox_MouseDoubleClick" />
                             </Grid>
                         </GroupBox>
                     </Grid>

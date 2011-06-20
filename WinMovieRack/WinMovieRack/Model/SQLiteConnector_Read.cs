@@ -182,7 +182,7 @@ namespace WinMovieRack.Model
                 {
                     years = year - reader.GetDateTime(2).Year;
                 }
-                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Writer, Direktor"));
+                movieList.Add(new MRListData(reader.GetInt32(0), reader.GetString(1), years, "Writer, Director"));
             }
             command.Dispose();
             return movieList;
