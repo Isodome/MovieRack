@@ -37,6 +37,8 @@ namespace WinMovieRack
         {
             InitializeComponent();
             this.controller = dvc;
+            seenCalendar.DisplayDateEnd = DateTime.Today;
+            seenCalendar.SelectedDate = DateTime.Today;
         }
 
         private void setMovieDetails()
@@ -272,5 +274,12 @@ namespace WinMovieRack
             personchange.SelectedIndex = 1;
             castListBox.SelectedItem = itemToSelect;
         }
+
+        private void seenCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Calendar calendar = (Calendar)sender;
+            Console.WriteLine(calendar.SelectedDate.ToString());
+        }
     }
+
 }

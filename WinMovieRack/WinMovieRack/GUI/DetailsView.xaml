@@ -324,6 +324,13 @@
                 <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
                 <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" >
+                    <ListBox.ContextMenu>
+                        <ContextMenu AllowDrop="True" >
+                            <MenuItem Header="Seen">
+                                <Calendar Height="auto" HorizontalAlignment="Left" Margin="0" Name="seenCalendar" VerticalAlignment="Top" Width="auto" FirstDayOfWeek="Monday" SelectedDatesChanged="seenCalendar_SelectedDatesChanged" />
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="84" Width="auto">
