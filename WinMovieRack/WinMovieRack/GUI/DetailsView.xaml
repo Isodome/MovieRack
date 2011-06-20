@@ -253,48 +253,51 @@
             </TabItem>
             <TabItem Header="Awards" Name="awardsTab">
                 <Grid Width="auto">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <GroupBox FontSize="13" FontWeight="Bold" Header="Awards" Height="auto" Margin="2" Name="completeAwards" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer></ScrollViewer>
+                    <GroupBox FontSize="13" FontWeight="Bold" Header="Awards" Height="auto" Margin="2,2,2,2" Name="completeAwards" Grid.RowSpan="1" Grid.Row="2">
                         <Grid>
-                            <ScrollViewer  Name="scrollViewer911" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                                <StackPanel>
-                                    <DataGrid AlternatingRowBackground="#FFF0F0F0" AutoGenerateColumns="False" ItemsSource="{Binding movieAwards}" Name="awardsGrid">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Path=Year}" Header="Year" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=award}" Header="Award" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=isWin}" Header="Result" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=category}" Header="Category" Width="auto" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="auto" />
-                                        </Grid.ColumnDefinitions>
-                                    </Grid>
-                                </StackPanel>
-                            </ScrollViewer>
+                            <StackPanel>
+                                <ListView  ItemsSource="{Binding movieAwards}" Name="awardsGrid">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn  DisplayMemberBinding="{Binding Path=Year}" Header="Year" Width="auto" />
+                                            <GridViewColumn  DisplayMemberBinding="{Binding Path=award}" Header="Award" Width="auto" />
+                                            <GridViewColumn  DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="auto" />
+                                            <GridViewColumn   DisplayMemberBinding="{Binding Path=isWin}" Header="Result" Width="auto" />
+                                            <GridViewColumn  DisplayMemberBinding="{Binding Path=category}" Header="Category" Width="auto" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Oscars" Margin="2" Name="groupBox1" FontSize="13" FontWeight="Bold">
+                    <GroupBox Header="Oscars" Margin="0" Name="groupBox1" FontSize="13" FontWeight="Bold" Grid.RowSpan="1" Height="auto">
                         <Grid>
                             <ScrollViewer  Name="scrollViewer9111" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                                 <StackPanel>
-                                    <DataGrid AlternatingRowBackground="#FFF0F0F0" AutoGenerateColumns="False" ItemsSource="{Binding movieAwards}" Name="oscarGrid">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Path=Year}" Header="Year" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=isWin}" Header="Result" Width="auto" />
-                                            <DataGridTextColumn Binding="{Binding Path=category}" Header="Category" Width="auto" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                    <ListView ItemsSource="{Binding movieAwards}" Name="oscarGrid" SelectionMode="Single">
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="False">
+                                                <GridViewColumn  DisplayMemberBinding="{Binding Path=Year}" Header="Year" Width="auto" />
+                                                <GridViewColumn  DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="auto" />
+                                                <GridViewColumn  DisplayMemberBinding="{Binding Path=isWin}" Header="Result" Width="auto" />
+                                                <GridViewColumn  DisplayMemberBinding="{Binding Path=category}" Header="Category" Width="auto" />
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
@@ -325,9 +328,19 @@
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
                 <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" >
                     <ListBox.ContextMenu>
-                        <ContextMenu AllowDrop="True" >
+                        <ContextMenu AllowDrop="True" Name="movieListBoxContext">
                             <MenuItem Header="Seen">
-                                <Calendar Height="auto" HorizontalAlignment="Left" Margin="0" Name="seenCalendar" VerticalAlignment="Top" Width="auto" FirstDayOfWeek="Monday" SelectedDatesChanged="seenCalendar_SelectedDatesChanged" />
+                                <MenuItem Header="Today" Name="calendarToday" Click="calendarToday_Click">
+                                </MenuItem>
+                                <MenuItem Header="Yesterday"  Name="calendarYesterday" Click="calendarYesterday_Click">
+                                </MenuItem>
+                                <MenuItem Header="At" Margin="0" Height="auto" Width="auto" >
+                                    <Calendar Height="auto" HorizontalAlignment="Left" Margin="0" Name="seenCalendar" VerticalAlignment="Top" Width="auto" FirstDayOfWeek="Monday" SelectedDatesChanged="seenCalendar_SelectedDatesChanged" />
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="Add to List">
+                            </MenuItem>
+                            <MenuItem Header="Rent to">
                             </MenuItem>
                         </ContextMenu>
                     </ListBox.ContextMenu>

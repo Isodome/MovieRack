@@ -216,5 +216,9 @@ namespace WinMovieRack.Controller
             productionListItems.TryGetValue(id, out itemToChange);
             return itemToChange;
         }
+
+        public void setSeenDate(DateTime date, int id){
+
+        }
     }
 }
