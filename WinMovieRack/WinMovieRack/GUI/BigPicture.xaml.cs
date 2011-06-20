@@ -27,6 +27,9 @@ namespace WinMovieRack.GUI
         {
             InitializeComponent();
             this.MaxHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+			this.Loaded += (object sender, RoutedEventArgs e) => {
+				fadeIn();
+			};
         }
 		public void setOrigin(double height, double width, double posx, double posy) {
 			this.orgWidth = width;
@@ -35,13 +38,12 @@ namespace WinMovieRack.GUI
 			this.posy = posy;
 		}
 
-		public void fadeIn() {
+		private void fadeIn() {
 			
 			this.Height = orgHeight;
 			this.Width = orgWidth;
 			this.Left = posx;
 			this.Top = posy;
-			this.ShowDialog();
 			
 			Storyboard sb = new Storyboard();
 			DoubleAnimation heightAnim = new DoubleAnimation();
@@ -90,11 +92,10 @@ namespace WinMovieRack.GUI
 			 
 			posYAnim.To = (System.Windows.SystemParameters.PrimaryScreenHeight - heightAnim.To) /2;
 			posXAnim.To = (System.Windows.SystemParameters.PrimaryScreenWidth - widthAnim.To) / 2;
-			
 
-			
 			sb.Begin();
 		}
+
         private void bigPicture_MouseLeave(object sender, MouseEventArgs e)
         {
             buttonGrid.Opacity = 0;
