@@ -7,9 +7,10 @@ using System.Data;
 
 namespace WinMovieRack.Model
 {
+	
     public partial class SQLiteConnector
     {
-
+		public delegate void MRToDo(MRListData t);
         public List<MRListData> getCompleteMovieList(MovieEnum editable, MovieEnum order)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
@@ -28,6 +29,10 @@ namespace WinMovieRack.Model
             command.Dispose();
             return movieList;
         }
+
+		public void completeMovieListForEach() {
+
+		}
 
         public List<MRListData> getCompletePersonList(PersonEnum editable, PersonEnum order)
         {

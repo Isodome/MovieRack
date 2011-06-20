@@ -29,7 +29,6 @@ namespace WinMovieRack
     /// </summary>
     public partial class DetailsView : System.Windows.Controls.UserControl
     {
-        private UIElement current;
         private BigPicture bigPicture;
         private GUIMovie movieDetails;
         private DetailsViewController controller;
@@ -38,16 +37,6 @@ namespace WinMovieRack
         {
             InitializeComponent();
             this.controller = dvc;
-        }
-
-        private void changeView(UIElement newView)
-        {
-            tabControl.Children.Remove(current);
-            Grid.SetColumn(newView, 2);
-            Grid.SetRow(newView, 2);
-            Grid.SetColumnSpan(newView, 1);
-            tabControl.Children.Add(newView);
-            current = newView;
         }
 
         private void setMovieDetails()
