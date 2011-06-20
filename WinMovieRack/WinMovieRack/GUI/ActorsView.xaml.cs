@@ -136,7 +136,7 @@ namespace WinMovieRack.GUI
             Point origin = new Point(0, 0);
             Point screenOrigin = actorPoster.PointToScreen(origin);
             bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
-            bigPicture.fadeIn();
+			bigPicture.ShowDialog();
         }
 
         private void MovieListToPerson_SelectionChanged(object sender, SelectionChangedEventArgs e)

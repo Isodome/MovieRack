@@ -229,7 +229,7 @@ namespace WinMovieRack
                 Point origin = new Point(0, 0);
                 Point screenOrigin = actorPoster.PointToScreen(origin);
                 bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
-                bigPicture.fadeIn();
+				bigPicture.ShowDialog();
             }
         }
 
@@ -244,7 +244,7 @@ namespace WinMovieRack
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-            bigPicture.fadeIn();
+			bigPicture.ShowDialog();
         }
 
         private void imdbLink_Click(object sender, RoutedEventArgs e)
