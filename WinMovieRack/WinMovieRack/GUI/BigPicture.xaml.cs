@@ -75,8 +75,8 @@ namespace WinMovieRack.GUI
 			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
 
 			if ((double)bigPicture.Source.Width <= System.Windows.SystemParameters.PrimaryScreenWidth && (double)bigPicture.Source.Height <= System.Windows.SystemParameters.PrimaryScreenHeight) {
-				widthAnim.To = (double)bigPicture.Source.Width;
-				heightAnim.To = (double)bigPicture.Source.Height;
+				widthAnim.To = (double)(bigPicture.Source as BitmapSource).PixelWidth;
+				heightAnim.To = (double)(bigPicture.Source as BitmapSource).PixelHeight;
 			
 			} else {
 				double picRatio = (double)bigPicture.Source.Width / (double)bigPicture.Source.Height;
