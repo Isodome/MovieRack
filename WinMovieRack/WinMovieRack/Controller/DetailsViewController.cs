@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
-using System.Data;
-using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
+
+
 namespace WinMovieRack.Controller
 {
 
@@ -24,39 +29,46 @@ namespace WinMovieRack.Controller
         private Dictionary<int, MRListBoxItem> movieListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> castListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> productionListItems = new Dictionary<int, MRListBoxItem>();
-        private bool isLoad = false;
+        private bool isFirstLoad = true;
+		private Action<MRListData> addToListFunction;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
             this.controller = c;
             this.db = db;
+
+			
+			
+
+			
         }
 
         public void setDetailsView(DetailsView dv)
         {
             this.view = dv;
+			var context = SynchronizationContext.Current;
+			view.listBoxMovies.ItemsSource = movieList;
+			addToListFunction = (MRListData movie) => context.Send(delegate(object sender) {
+				BitmapImage posterBitmap = new BitmapImage();
+				posterBitmap.BeginInit();
+				posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+				posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+				posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+				posterBitmap.EndInit();
+				MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
+				movieList.Add(item);
+				movieListItems.Add(movie.dbItemID, item);
+
+			}, null);
         }
 
-        public void loadCompleteMovieList()
-        {
-            if (!isLoad)
-            {
-                List<MRListData> completeMovieListData = db.getCompleteMovieList(MovieEnum.runtime, MovieEnum.title);//Aus Config lesen
-                completeMovieListData.ForEach(delegate(MRListData movie)
-                {
-                    BitmapImage posterBitmap = new BitmapImage();
-                    posterBitmap.BeginInit();
-                    posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
-                    posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
-                    posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
-                    posterBitmap.EndInit();
-                    MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
-                    movieList.Add(item);
-                    movieListItems.Add(movie.dbItemID, item);
-                });
-                view.listBoxMovies.ItemsSource = movieList;
+        public void loadCompleteMovieList() {
+            if (isFirstLoad) {
+				isFirstLoad = false;
+				var t = new Thread(() => db.completeMovieListForEach(MovieEnum.runtime, MovieEnum.title, addToListFunction));
+				t.Start();
+
             }
-            isLoad = true;
         }
 
         public void loadActorListToMovie(int itemID, int year)

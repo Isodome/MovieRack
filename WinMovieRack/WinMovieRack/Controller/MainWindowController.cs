@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WinMovieRack.GUI;
 
+
 namespace WinMovieRack.Controller {
 	public class MainWindowController {
 
@@ -27,6 +28,6 @@ namespace WinMovieRack.Controller {
 			mainWindow.setProgressIndicating(p);
 		}
 
-
+		
 	}
 }

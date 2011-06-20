@@ -21,7 +21,7 @@ using System.Collections;
 using System.Data;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
-
+using System.Collections.ObjectModel;
 namespace WinMovieRack
 {
     /// <summary>
@@ -280,6 +280,15 @@ namespace WinMovieRack
             Calendar calendar = (Calendar)sender;
             Console.WriteLine(calendar.SelectedDate.ToString());
         }
-    }
+
+
+		public void addItemToMovieList(MRListBoxItem item) {
+			Dispatcher.BeginInvoke(new Action(() => {
+				((ObservableCollection<MRListBoxItem>)listBoxMovies.ItemsSource).Add(item);
+			}));
+		}
+
+
+	}
 
 }

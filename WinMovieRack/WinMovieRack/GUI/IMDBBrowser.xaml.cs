@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WinMovieRack.Controller.ThreadManagement;
-using System.Text.RegularExpressions;
 using WinMovieRack.Controller;
-using WinMovieRack.Controller.Parser.imdbNameParser;
 using WinMovieRack.Controller.Parser.imdbMovieParser;
-using WinMovieRack.Model;
+using WinMovieRack.Controller.Parser.imdbNameParser;
+using WinMovieRack.Controller.ThreadManagement;
 
 namespace WinMovieRack.GUI {
 	/// <summary>
