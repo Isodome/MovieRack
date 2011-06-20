@@ -23,6 +23,7 @@ namespace WinMovieRack.Controller
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieListToPerson = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> movieListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> castListItems = new Dictionary<int, MRListBoxItem>();
+        private Dictionary<int, MRListBoxItem> productionListItems = new Dictionary<int, MRListBoxItem>();
         private bool isLoad = false;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
@@ -95,6 +96,7 @@ namespace WinMovieRack.Controller
         public void loadProductionListToMovie(int itemID, int year)
         {
             productionList.Clear();
+            productionListItems.Clear();
             List<MRListData> productionListToMovie = db.getProductionListToMovie(itemID, year);
             productionListToMovie.ForEach(delegate(MRListData actor)
             {
@@ -102,7 +104,9 @@ namespace WinMovieRack.Controller
                 posterBitmap.BeginInit();
                 posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(actor.dbItemID, PosterSize.LIST));
                 posterBitmap.EndInit();
-                productionList.Add(new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap));
+                MRListBoxItem item = new MRListBoxItem(actor.dbItemID, actor.titleName, actor.yearAge.ToString(), actor.editableCharakter, posterBitmap);
+                productionList.Add(item);
+                productionListItems.Add(actor.dbItemID, item);
             });
             view.SummeryProductionListbox.ItemsSource = productionList;
         }
@@ -127,10 +131,14 @@ namespace WinMovieRack.Controller
             if (view.personchange.SelectedIndex == 0)
             {
                 view.castListBox.ItemsSource = castList;
+                view.castListBox.SelectedIndex = 0;
+                view.castBox.Header = "Cast";
             }
             else
             {
                 view.castListBox.ItemsSource = productionList;
+                view.castListBox.SelectedIndex = 0;
+                view.castBox.Header = "Production";
             }
         }
 
@@ -195,10 +203,17 @@ namespace WinMovieRack.Controller
             itemToChange = item;
         }
 
-        public MRListBoxItem getitem(int id)
+        public MRListBoxItem getCastItem(int id)
         {
             MRListBoxItem itemToChange;
             castListItems.TryGetValue(id, out itemToChange);
+            return itemToChange;
+        }
+
+        public MRListBoxItem getProductionItem(int id)
+        {
+            MRListBoxItem itemToChange;
+            productionListItems.TryGetValue(id, out itemToChange);
             return itemToChange;
         }
     }

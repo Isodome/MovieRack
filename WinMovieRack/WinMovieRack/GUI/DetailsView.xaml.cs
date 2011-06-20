@@ -230,7 +230,7 @@ namespace WinMovieRack
                 Point origin = new Point(0, 0);
                 Point screenOrigin = actorPoster.PointToScreen(origin);
                 bigPicture.setOrigin(actorPoster.Source.Height, actorPoster.Source.Width, screenOrigin.X, screenOrigin.Y);
-				bigPicture.ShowDialog();
+                bigPicture.ShowDialog();
             }
         }
 
@@ -245,7 +245,7 @@ namespace WinMovieRack
             Point origin = new Point(0, 0);
             Point screenOrigin = posterTitle.PointToScreen(origin);
             bigPicture.setOrigin(posterTitle.Source.Height, posterTitle.Source.Width, screenOrigin.X, screenOrigin.Y);
-			bigPicture.ShowDialog();
+            bigPicture.ShowDialog();
         }
 
         private void imdbLink_Click(object sender, RoutedEventArgs e)
@@ -259,11 +259,11 @@ namespace WinMovieRack
         private void SummeryStarsListbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MRListBoxItem selectedItem = (MRListBoxItem)SummeryStarsListbox.SelectedItem;
-            MRListBoxItem itemToSelect = controller.getitem(selectedItem.getId);
+            MRListBoxItem itemToSelect = controller.getCastItem(selectedItem.getId);
 
             detailsViewTab.SelectedIndex = 2;
+            personchange.SelectedIndex = 0;
             castListBox.SelectedItem = itemToSelect;
-
         }
 
         private void personchange_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -272,6 +272,16 @@ namespace WinMovieRack
             {
                 controller.castListBoxSelectionChanged(personchange.SelectedIndex);
             }
+        }
+
+        private void SummeryProductionListbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MRListBoxItem selectedItem = (MRListBoxItem)SummeryProductionListbox.SelectedItem;
+            MRListBoxItem itemToSelect = controller.getProductionItem(selectedItem.getId);
+
+            detailsViewTab.SelectedIndex = 2;
+            personchange.SelectedIndex = 1;
+            castListBox.SelectedItem = itemToSelect;
         }
     }
 }
