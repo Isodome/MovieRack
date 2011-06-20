@@ -30,8 +30,19 @@ namespace WinMovieRack.Model
             return movieList;
         }
 
-		public void completeMovieListForEach() {
+		public void completeMovieListForEach(MovieEnum editable, MovieEnum order, MRToDo todo) {
+			SQLiteCommand command = new SQLiteCommand(connection);
+			command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + " FROM Movies ORDER BY " + order.ToString();
+			SQLiteDataReader reader = executeReaderThreadSafe(command);
+			while (reader.Read()) {
 
+				int idMovies = reader.GetInt32(0);
+				string title = reader.GetString(1);
+				int year = reader.GetInt32(2);
+				string edit = reader[editable.ToString()].ToString();
+				todo(new MRListData(idMovies, title, year, edit));
+			}
+			command.Dispose();
 		}
 
         public List<MRListData> getCompletePersonList(PersonEnum editable, PersonEnum order)
