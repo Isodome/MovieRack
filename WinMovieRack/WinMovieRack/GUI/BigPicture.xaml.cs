@@ -41,7 +41,8 @@ namespace WinMovieRack.GUI
 			this.Width = orgWidth;
 			this.Left = posx;
 			this.Top = posy;
-
+			this.ShowDialog();
+			
 			Storyboard sb = new Storyboard();
 			DoubleAnimation heightAnim = new DoubleAnimation();
 			DoubleAnimation widthAnim = new DoubleAnimation();
@@ -91,7 +92,7 @@ namespace WinMovieRack.GUI
 			posXAnim.To = (System.Windows.SystemParameters.PrimaryScreenWidth - widthAnim.To) / 2;
 			
 
-			this.ShowDialog();
+			
 			sb.Begin();
 		}
         private void bigPicture_MouseLeave(object sender, MouseEventArgs e)
