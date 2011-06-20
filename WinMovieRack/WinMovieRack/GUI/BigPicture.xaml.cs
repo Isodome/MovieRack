@@ -71,16 +71,21 @@ namespace WinMovieRack.GUI
 			Storyboard.SetTargetProperty(posXAnim, new PropertyPath("(Canvas.Left)"));
 			Storyboard.SetTargetProperty(posYAnim, new PropertyPath("(Canvas.Top)"));
 
-			double picRatio = (double)bigPicture.Source.Width / (double)bigPicture.Source.Height;
-			double screenRatio = System.Windows.SystemParameters.PrimaryScreenWidth / System.Windows.SystemParameters.PrimaryScreenHeight;
-			if (picRatio > screenRatio) {
-				widthAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth;
-				heightAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth / bigPicture.Source.Width * bigPicture.Source.Height;
-			} else {
-				heightAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight;
-				widthAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight / bigPicture.Source.Height * bigPicture.Source.Width;
-			}
+			if ((double)bigPicture.Source.Width <= System.Windows.SystemParameters.PrimaryScreenWidth && (double)bigPicture.Source.Height <= System.Windows.SystemParameters.PrimaryScreenHeight) {
+				widthAnim.To = (double)bigPicture.Source.Width;
+				heightAnim.To = (double)bigPicture.Source.Height;
 			
+			} else {
+				double picRatio = (double)bigPicture.Source.Width / (double)bigPicture.Source.Height;
+				double screenRatio = System.Windows.SystemParameters.PrimaryScreenWidth / System.Windows.SystemParameters.PrimaryScreenHeight;
+				if (picRatio > screenRatio) {
+					widthAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth;
+					heightAnim.To = System.Windows.SystemParameters.PrimaryScreenWidth / bigPicture.Source.Width * bigPicture.Source.Height;
+				} else {
+					heightAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight;
+					widthAnim.To = System.Windows.SystemParameters.PrimaryScreenHeight / bigPicture.Source.Height * bigPicture.Source.Width;
+				}
+			}
 			 
 			posYAnim.To = (System.Windows.SystemParameters.PrimaryScreenHeight - heightAnim.To) /2;
 			posXAnim.To = (System.Windows.SystemParameters.PrimaryScreenWidth - widthAnim.To) / 2;
