@@ -54,7 +54,7 @@ namespace WinMovieRack.Controller
 				Thread.Sleep(0);
 				BitmapImage posterBitmap = new BitmapImage();
 				posterBitmap.BeginInit();
-				posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+				posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(movie.dbItemID, PosterSize.LIST));
 				posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
 				posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
 				posterBitmap.EndInit();
