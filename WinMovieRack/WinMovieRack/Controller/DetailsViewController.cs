@@ -45,9 +45,28 @@ namespace WinMovieRack.Controller
 
         public void setDetailsView(DetailsView dv)
         {
-            this.view = dv;
-			var context = SynchronizationContext.Current;
+			
+			this.view = dv;
 			view.listBoxMovies.ItemsSource = movieList;
+
+			Dispatcher disp = Dispatcher.CurrentDispatcher;
+			addToListFunction = (MRListData movie) => disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
+				Thread.Sleep(0);
+				BitmapImage posterBitmap = new BitmapImage();
+				posterBitmap.BeginInit();
+				posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+				posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+				posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+				posterBitmap.EndInit();
+				MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
+				movieList.Add(item);
+				movieListItems.Add(movie.dbItemID, item);
+			})));
+
+			/*
+           
+			var context = SynchronizationContext.Current;
+			
 			addToListFunction = (MRListData movie) => context.Send(delegate(object sender) {
 				BitmapImage posterBitmap = new BitmapImage();
 				posterBitmap.BeginInit();
@@ -60,7 +79,9 @@ namespace WinMovieRack.Controller
 				movieListItems.Add(movie.dbItemID, item);
 
 			}, null);
+			 */
         }
+
 
         public void loadCompleteMovieList() {
             if (isFirstLoad) {
