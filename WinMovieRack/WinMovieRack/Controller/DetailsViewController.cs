@@ -251,7 +251,7 @@ namespace WinMovieRack.Controller
         }
 
         public void setSeenDate(DateTime date, int id){
-
+            Console.WriteLine(date);
         }
     }
 }

@@ -160,7 +160,7 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto" Margin="2,30,2,2">
                         <Grid>
-                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectionChanged="castListBox_SelectionChanged" SelectedIndex="0"  ItemTemplate="{StaticResource listbox}" />
+                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectedIndex="0"  ItemTemplate="{StaticResource listbox}" />
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="2" Header="Actor" Name="groupBox2" FontSize="13" FontWeight="Bold" Margin="2">
@@ -334,8 +334,7 @@
                                 </MenuItem>
                                 <MenuItem Header="Yesterday"  Name="calendarYesterday" Click="calendarYesterday_Click">
                                 </MenuItem>
-                                <MenuItem Header="At" Margin="0" Height="auto" Width="auto" >
-                                    <Calendar Height="auto" HorizontalAlignment="Left" Margin="0" Name="seenCalendar" VerticalAlignment="Top" Width="auto" FirstDayOfWeek="Monday" SelectedDatesChanged="seenCalendar_SelectedDatesChanged" />
+                                <MenuItem Header="At" Name="seenAt" Margin="0" Height="auto" Width="auto" Click="seenAt_Click">
                                 </MenuItem>
                             </MenuItem>
                             <MenuItem Header="Add to List">

@@ -37,8 +37,6 @@ namespace WinMovieRack
         {
             InitializeComponent();
             this.controller = dvc;
-            seenCalendar.DisplayDateEnd = DateTime.Today;
-            seenCalendar.SelectedDate = DateTime.Today;
         }
 
         private void setMovieDetails()
@@ -182,6 +180,9 @@ namespace WinMovieRack
             }
             castListBox.SelectedIndex = 0;
             personchange.SelectedIndex = 0;
+            castListBox.SelectionChanged += castListBox_SelectionChanged;
+            calendarYesterday.Click += calendarYesterday_Click;
+            SummeryStarsListbox.MouseDoubleClick += SummeryStarsListbox_MouseDoubleClick;
         }
 
         private void castListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -275,15 +276,6 @@ namespace WinMovieRack
             castListBox.SelectedItem = itemToSelect;
         }
 
-        private void seenCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (movieDetails != null)
-            {
-                Calendar calendar = (Calendar)sender;
-                controller.setSeenDate((DateTime)calendar.SelectedDate, movieDetails.dbId);
-                movieListBoxContext.IsOpen = false;
-            }
-        }
 
         private void calendarToday_Click(object sender, RoutedEventArgs e)
         {
@@ -302,6 +294,13 @@ namespace WinMovieRack
                 controller.setSeenDate(DateTime.Today.Subtract(new TimeSpan(TimeSpan.TicksPerDay)), movieDetails.dbId);
                 movieListBoxContext.IsOpen = false;
             }
+        }
+
+        private void seenAt_Click(object sender, RoutedEventArgs e)
+        {
+            GUI.Calendar calendar = new GUI.Calendar(controller, movieDetails.dbId);
+            calendar.Show();
+            movieListBoxContext.IsOpen = false;
         }
 
     }

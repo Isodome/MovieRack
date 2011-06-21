@@ -119,6 +119,9 @@
     <Compile Include="GUI\BigPicture.xaml.cs">
       <DependentUpon>BigPicture.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Calendar.xaml.cs">
+      <DependentUpon>Calendar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
@@ -172,6 +175,10 @@
     <Page Include="GUI\BigPicture.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Calendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\IMDBBrowser.xaml">
       <SubType>Designer</SubType>
