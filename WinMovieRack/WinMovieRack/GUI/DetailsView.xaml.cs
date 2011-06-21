@@ -277,23 +277,33 @@ namespace WinMovieRack
 
         private void seenCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            Calendar calendar = (Calendar)sender;
-            controller.setSeenDate((DateTime)calendar.SelectedDate, movieDetails.dbId);
-            movieListBoxContext.IsOpen = false;
+            if (movieDetails != null)
+            {
+                Calendar calendar = (Calendar)sender;
+                controller.setSeenDate((DateTime)calendar.SelectedDate, movieDetails.dbId);
+                movieListBoxContext.IsOpen = false;
+            }
         }
 
         private void calendarToday_Click(object sender, RoutedEventArgs e)
         {
-            controller.setSeenDate(DateTime.Today, movieDetails);
-            movieListBoxContext.IsOpen = false;
+            if (movieDetails != null)
+            {
+                controller.setSeenDate(DateTime.Today, movieDetails.dbId);
+                movieListBoxContext.IsOpen = false;
+            }
+
         }
 
         private void calendarYesterday_Click(object sender, RoutedEventArgs e)
         {
-            controller.setSeenDate(DateTime.Today.Subtract(new TimeSpan(TimeSpan.TicksPerDay)), movieDetails);
-            movieListBoxContext.IsOpen = false;
+            if (movieDetails != null)
+            {
+                controller.setSeenDate(DateTime.Today.Subtract(new TimeSpan(TimeSpan.TicksPerDay)), movieDetails.dbId);
+                movieListBoxContext.IsOpen = false;
+            }
         }
 
-	}
+    }
 
 }
