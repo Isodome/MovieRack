@@ -61,7 +61,7 @@ namespace WinMovieRack.Controller {
             ListView lv = new ListView(listViewController);
             listViewController.setListView(lv);
 
-			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av);
+			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av, lv);
 		}
 
 		private void initializeModel() {

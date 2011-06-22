@@ -15,14 +15,16 @@ namespace WinMovieRack.GUI {
 		private DetailsView detailsView;
 		private IMDBBrowser imdbBrowser;
         private ActorsView actorsView;
+        private ListView listView;
 
 
-		public GUI(WinMovieRack.Controller.Controller c, MainWindow mw, IMDBBrowser browser, DetailsView dv, ActorsView av) {
+		public GUI(WinMovieRack.Controller.Controller c, MainWindow mw, IMDBBrowser browser, DetailsView dv, ActorsView av, ListView lv) {
 			this.controller = c;
 			this.imdbBrowser = browser;
 			this.mainWindow = mw;
 			this.detailsView = dv;
             this.actorsView = av;
+            this.listView = lv;
 
 			mainWindow = mw;
 			mainWindow.Show();
@@ -41,6 +43,7 @@ namespace WinMovieRack.GUI {
 					mainWindow.changeView(imdbBrowser);
 					break;
 				case View.LIST_VIEW:
+                    mainWindow.changeView(listView);
 					break;
 			}
 		}
