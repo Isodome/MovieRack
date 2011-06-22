@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using WinMovieRack.Model.DataTypes;
 namespace WinMovieRack.Model {
 	public class BoxofficeMovie {
 
@@ -11,9 +11,13 @@ namespace WinMovieRack.Model {
 		public Int64 america;
 		public Int64 foreign;
 		public Int64 openingWeekend;
+		public List<BOFranchise> franchises;
+		public List<BOGenre> genres;
 
 		public BoxofficeMovie(string id) {
 			this.boxofficeid = id;
+			genres = new List<BOGenre>();
+			franchises = new List<BOFranchise>();
 		}
 
 		public void printToConsole() {
