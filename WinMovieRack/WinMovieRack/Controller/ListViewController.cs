@@ -7,7 +7,7 @@ using WinMovieRack.GUI;
 
 namespace WinMovieRack.Controller
 {
-    class ListViewController
+    public class ListViewController
     {
         Controller controller;
         SQLiteConnector db;
