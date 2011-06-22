@@ -105,9 +105,11 @@
     <Compile Include="Controller\Parser\generalJobs\FunctionCall.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\ConcurrentImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\SerialImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\JobImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobWebPageDownload.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
+    <Compile Include="Controller\Parser\imdbNameParser\SerialIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
     <Compile Include="Controller\ActorsViewController.cs" />

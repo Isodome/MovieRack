@@ -18,10 +18,6 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
     public class ConcurrentImdbMovieParser : ConcThreadJobMaster
     {
-        public const string placholder = "{ID}";
-        public const string URL = "http://www.imdb.com/title/tt" + placholder + "/";
-        public const string URLAwards = URL + "awards";
-        public const string URLcredits = URL + "fullcredits";
 		private string imageURL;
 
         public ThreadJob mainPageJob;
@@ -50,9 +46,9 @@ namespace WinMovieRack.Controller.Parser.imdbMovieParser
         {
 			movieData = new ImdbMovie(imdbID);
 
-            this.mainPageJob = new JobWebPageDownload(Regex.Replace(URL, placholder, imdbID.ToString()));
-			this.awardsPageJob = new JobWebPageDownload(Regex.Replace(URLAwards, placholder, imdbID.ToString()));
-			this.creditsPageJob = new JobWebPageDownload(Regex.Replace(URLcredits, placholder, imdbID.ToString()));
+            this.mainPageJob = new JobWebPageDownload(IMDBUtil.getURLToMovie(imdbID));
+			this.awardsPageJob = new JobWebPageDownload(IMDBUtil.getAwardsURLToMovie(imdbID));
+			this.creditsPageJob = new JobWebPageDownload(IMDBUtil.getFullcreditsURLToMovie(imdbID));
 
 			this.addJob(mainPageJob);
 			this.addJob(awardsPageJob);
