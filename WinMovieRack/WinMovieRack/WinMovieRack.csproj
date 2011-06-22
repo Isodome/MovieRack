@@ -143,6 +143,7 @@
     <Compile Include="GUI\TodoList.xaml.cs">
       <DependentUpon>TodoList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\TodoListBoxItem.cs" />
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
