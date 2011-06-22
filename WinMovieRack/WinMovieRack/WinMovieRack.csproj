@@ -91,6 +91,7 @@
     <Compile Include="Controller\FunctionCaller.cs" />
     <Compile Include="Controller\ImdbBrowserController.cs" />
     <Compile Include="Controller\IMDBUtil.cs" />
+    <Compile Include="Controller\ListViewController.cs" />
     <Compile Include="Controller\Log.cs" />
     <Compile Include="Controller\MainWindowController.cs" />
     <Compile Include="Controller\Moviefillout\ImdbIdsImporter.cs" />
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="GUI\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListView.xaml.cs">
+      <DependentUpon>ListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MRListBoxItem.cs" />
     <Compile Include="GUI\ListComparerTest.cs" />
@@ -200,6 +204,10 @@
     <Page Include="GUI\ImportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\MovieRackListBoxItem.xaml">
       <SubType>Designer</SubType>
