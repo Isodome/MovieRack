@@ -18,6 +18,7 @@ namespace WinMovieRack.Controller {
 		private App app;
 
 		private ImdbBrowserController browserController;
+        private TodoListController todoListController;
 		private MainWindowController windowController;
 		private DetailsViewController detailsViewController;
         private ActorsViewController actorsViewController;
@@ -43,6 +44,10 @@ namespace WinMovieRack.Controller {
 			IMDBBrowser browser = new IMDBBrowser(browserController);
 			browserController.setBrowser(browser);
 
+            todoListController = new TodoListController(this);
+            TodoList todoList = new TodoList(todoListController);
+            todoListController.setTodoList(todoList);
+
 			windowController = new MainWindowController();
 			MainWindow mw = new MainWindow(windowController);
             mw.Width = 1024;
@@ -61,8 +66,8 @@ namespace WinMovieRack.Controller {
             ListView lv = new ListView(listViewController);
             listViewController.setListView(lv);
 
-			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av, lv);
-		}
+			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av, lv,todoList);
+
 
 		private void initializeModel() {
 			db = new SQLiteConnector();

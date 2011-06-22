@@ -64,6 +64,10 @@ namespace WinMovieRack
 			controller.shouldChangeView(View.IMDB_BROWSER);
 		}
 
+        private void todoMenuEntry_Click(object sender, RoutedEventArgs e) {
+            controller.shouldChangeView(View.TODO_LIST);
+        }
+
         private void actorsMenuEntry_Click(object sender, RoutedEventArgs e)
         {
             controller.shouldChangeView(View.ACTORS_VIEW);

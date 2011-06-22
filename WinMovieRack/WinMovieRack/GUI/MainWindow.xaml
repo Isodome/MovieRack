@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menuBar2" VerticalAlignment="Top" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Width="196" Padding="10,6,0,0">
+        <Menu Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menuBar2" VerticalAlignment="Top" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Width="250" Padding="10,6,0,0">
            <Menu.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFF0F0F0" Offset="1" />
@@ -26,8 +26,9 @@
             <MenuItem Header="Actors" Name="actorsMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="actorsMenuEntry_Click" />
             <MenuItem Header="List" Name="listMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="listMenuEntry_Click" />
             <MenuItem Header="IMDB" Name="imdbMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="imdbMenuEntry_Click" />
+            <MenuItem Header="Todo" Name="todoMenuEntry" HorizontalAlignment="Center" Padding="8,3" Click="todoMenuEntry_Click" />
         </Menu>
-        <Menu Grid.Column="1" Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menuBar3" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Margin="195,0,0,0" FlowDirection="RightToLeft" Padding="0,6,0,0">
+        <Menu Grid.Column="2" Grid.Row="1" Height="33" HorizontalAlignment="Stretch" Name="menuBar3" VerticalAlignment="Stretch" FlowDirection="RightToLeft" Padding="0,6,0,0">
             <ProgressBar Name="progressIndicator" Visibility="Hidden" IsEnabled="True" Height="auto" VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0"  Width="9" IsIndeterminate="True" Orientation="Vertical" />
             <MenuItem Header="Help" Name="helpMenuEntry" HorizontalAlignment="Stretch" Padding="8,3" />
      

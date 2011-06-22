@@ -106,9 +106,11 @@
     <Compile Include="Controller\Parser\generalJobs\FunctionCall.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\ConcurrentImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />
+    <Compile Include="Controller\Parser\imdbMovieParser\SerialImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\JobImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobWebPageDownload.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
+    <Compile Include="Controller\Parser\imdbNameParser\SerialIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
     <Compile Include="Controller\ActorsViewController.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="Controller\ThreadManagement\SerialThreadJobMaster.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadJob.cs" />
     <Compile Include="Controller\ThreadManagement\ThreadsMaster.cs" />
+    <Compile Include="Controller\TodoListController.cs" />
     <Compile Include="GUI\ActorsView.xaml.cs">
       <DependentUpon>ActorsView.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,9 @@
       <DependentUpon>Seen.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SeenBoxItem.cs" />
+    <Compile Include="GUI\TodoList.xaml.cs">
+      <DependentUpon>TodoList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
@@ -208,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Seen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\TodoList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
