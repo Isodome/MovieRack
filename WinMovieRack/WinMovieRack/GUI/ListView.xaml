@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1024">
+             d:DesignHeight="2000" d:DesignWidth="1024">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -25,19 +25,38 @@
 
         <TabControl Margin="0" Name="tabControl1">
             <TabItem Header="Filter" Name="filter">
-                <Grid />
+                <Grid>
+                    <TreeView Margin="0" Name="treeView1" >
+                        <TreeViewItem Header="Cold Drinks">
+                            <TreeViewItem Header="Coke"></TreeViewItem>
+                            <TreeViewItem Header="Pepsi"></TreeViewItem>
+                            <TreeViewItem Header="Orange Juice"></TreeViewItem>
+                            <TreeViewItem Header="Milk"></TreeViewItem>
+                            <TreeViewItem Header="Iced Tea"></TreeViewItem>
+                            <TreeViewItem Header="Mango Shake"></TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                </Grid>
             </TabItem>
             <TabItem Header="Info" Name="movieInfo">
                 <Grid Width="auto" Margin="0">
-                    <ScrollViewer  Name="scrollViewer91" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0">
-                        <Grid Width="auto" Margin="0">
-                            <Border BorderBrush="Black" BorderThickness="1" Height="290" Margin="5,5,5,0" Name="border1" VerticalAlignment="Top" Width="auto">
+                    <ScrollViewer  Name="scrollViewer91" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0">
+                        <Grid Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="5,5,5,5" Name="border1" Width="auto">
                                 <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="1*" />
                                         <RowDefinition Height="10*" />
                                     </Grid.RowDefinitions>
-                                    <TextBox Name="textBoxTitle" Foreground="White" Text="Title" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
+                                    <TextBox Name="textBoxTitle" Foreground="White" Text="Title" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0" IsReadOnly="True" AutoWordSelection="True">
                                         <TextBox.Background>
                                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                                 <GradientStop Color="#FF7198B2" Offset="0" />
@@ -51,27 +70,30 @@
                                     <StackPanel Grid.Row="1" Height="auto" Margin="110,5,5,0" Name="stackPanel2" VerticalAlignment="Top">
                                         <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto">
                                             <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" />
-                                            <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" />
+                                            <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" BorderThickness="0" />
                                         </StackPanel>
                                         <StackPanel Height="auto" Name="stackPanel3" Width="auto">
-                                            <TextBox Height="auto" Name="originalTitleBox" Width="auto" Text="Original Title" FlowDirection="RightToLeft" FontStyle="Italic" Background="#FFF9F9F9" />
+                                            <TextBox Height="auto" Name="originalTitleBox" Width="auto" Text="Original Title" FlowDirection="RightToLeft" FontStyle="Italic" Background="#FFF9F9F9" BorderThickness="0" />
                                         </StackPanel>
                                         <StackPanel Height="auto" Name="stackPanel4" Width="auto" />
                                         <StackPanel Height="auto" Name="stackPanel5" Width="auto" Orientation="Horizontal">
-                                            <TextBox Height="auto" Name="ratingLabelBox" Width="auto" Text="Rating:" Background="#FFF9F9F9" />
-                                            <TextBox Height="auto" Name="imdbRatingBox" Width="auto" Text="10/10" Background="#FFF9F9F9" />
+                                            <TextBox Height="auto" Name="ratingLabelBox" Width="auto" Text="Rating:" Background="#FFF9F9F9" BorderThickness="0" FontWeight="Bold" />
+                                            <TextBox Height="auto" Name="imdbRatingBox" Width="auto" Text="10/10" Background="#FFF9F9F9" BorderThickness="0" />
+                                        </StackPanel>
+                                        <StackPanel Height="auto" Name="stackPanel7" Orientation="Horizontal">
+                                            <TextBox Height="auto" Name="genreLabelBox" Text="Genre: " Background="#FFF9F9F9" CharacterCasing="Upper" IsReadOnly="True" Width="auto" BorderThickness="0" FontWeight="Bold" />
                                         </StackPanel>
                                         <StackPanel Height="auto" Name="stackPanel6" Width="auto" Orientation="Horizontal"></StackPanel>
                                     </StackPanel>
-                                    <TextBox Height="auto" Name="genreBox" Text="Genre: Action, Action, Action," Background="#FFF9F9F9" TextWrapping="Wrap" CharacterCasing="Upper" IsReadOnly="True" Width="auto" Margin="110,70,5,0" Grid.Row="1" VerticalAlignment="Top" />
+                                    <TextBox Height="34" Name="genreBox" Text="Action, Action, Action," Background="#FFF9F9F9" TextWrapping="Wrap" CharacterCasing="Upper" IsReadOnly="True" Width="110" BorderThickness="0" Margin="150,63,5,0" Grid.Row="1" VerticalAlignment="Top" />
                                 </Grid>
                             </Border>
 
-                            <Border BorderBrush="Black" BorderThickness="1" Height="186" Margin="5,302,5,0" Name="border2" VerticalAlignment="Top">
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="5" Name="border2" Grid.Row="1">
                                 <Grid Height="auto" Name="grid2">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="10*" />
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <TextBox Name="textBoxDetails" Foreground="White" Text="Details" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
                                         <TextBox.Background>
@@ -83,11 +105,133 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
+                                    <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="5,10,0,5" Name="stackPanel8" Width="auto">
+                                        <Label Content="Label" Height="Auto" Name="label1" FontWeight="Bold" Padding="3" />
+                                        <Label Content="Label" Height="Auto" Name="label2" FontWeight="Bold" Padding="3" />
+                                        <Label Content="Label" Height="Auto" Name="label3" FontWeight="Bold" Padding="3" />
+                                        <Label Content="Label" Height="Auto" Name="label5" FontWeight="Bold" Padding="3" />
+                                        <Label Content="Label" Height="Auto" Name="label4" FontWeight="Bold" Padding="3" />
+                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label11" Padding="3" />
+                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label12" Padding="3" />
+                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label13" Padding="3" />
+                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label14" Padding="3" />
+                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label15" Padding="3" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" Margin="65,10,5,5" Name="stackPanel9">
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label6" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label7" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label8" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label9" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label10" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label16" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label17" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label18" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label19" Padding="3" />
+                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label20" Padding="3" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border3" Grid.Row="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox Name="textboxProduction" Foreground="White" Text="Plot" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <Expander Grid.Row="1" Header="expander1" Margin="0,0,0,0" Name="expander1">
+                                        <Grid>
+                                            <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                        </Grid>
+                                    </Expander>
+                                </Grid>
+                           
+                            </Border>
+                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5"  Name="border4" Grid.Row="3">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBoxStars" Text="Stars" TextWrapping="Wrap">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <Expander Header="expander1" Margin="0" Name="expander2" Grid.Row="1">
+                                        <Grid>
+                                            <ListBox Name="listBox2" Width="auto" Margin="0" />
+                                        </Grid>
+                                    </Expander>
+                                </Grid>
+                            </Border>
+
+                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border5" Grid.Row="4">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0" Name="textBox1" Text="Production" TextWrapping="Wrap">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <Expander Header="expander1" Margin="0" Name="expander3" Grid.Row="1">
+                                        <Grid>
+                                            <ListBox Name="listBox3" Width="auto" Margin="0" />
+                                        </Grid>
+                                    </Expander>
+                                </Grid>
+                            </Border>
+                           
+                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border6" Grid.Row="5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBox2" Text="Cast" TextWrapping="Wrap">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <Expander Header="expander1" Margin="0" Name="expander4" Grid.Row="1" Width="auto">
+                                        <Grid>
+                                            <ListBox Margin="0" Name="listBox1" Width="auto" />
+                                        </Grid>
+                                    </Expander>
                                 </Grid>
                             </Border>
                         </Grid>
 
+
                     </ScrollViewer>
+
                 </Grid>
             </TabItem>
         </TabControl>
