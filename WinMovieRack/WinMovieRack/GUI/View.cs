@@ -5,6 +5,6 @@ using System.Text;
 
 namespace WinMovieRack.GUI {
 	public enum View {
-		DETAILS_VIEW, LIST_VIEW, ACTORS_VIEW, IMDB_BROWSER
+		DETAILS_VIEW, LIST_VIEW, ACTORS_VIEW, IMDB_BROWSER, TODO_LIST
 	}
 }
