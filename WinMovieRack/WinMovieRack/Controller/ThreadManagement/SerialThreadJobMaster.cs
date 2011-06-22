@@ -6,7 +6,7 @@ using System.Text;
 namespace WinMovieRack.Controller.ThreadManagement {
 	public abstract class SerialThreadJobMaster {
 
-		public abstract void run();
+		public abstract bool run();
 
 	}
 }
