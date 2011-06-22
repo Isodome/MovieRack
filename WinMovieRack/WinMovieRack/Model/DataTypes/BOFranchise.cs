@@ -6,5 +6,7 @@ using System.Text;
 namespace WinMovieRack.Model.DataTypes {
 	public class BOFranchise {
 		public int rank;
+		public string name;
+		public string id;
 	}
 }

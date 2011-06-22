@@ -16,7 +16,7 @@ namespace WinMovieRack.Model {
 		public const int NO_RUNTIME = -1;
 		public const int NO_TOP250 = -1;
 		public const int NO_PERSONAL_RATING = -1;
-		public const int NO_BO_NUMBER = -1;
+		public const Int64 NO_BO_NUMBER = -1;
 
 	}
 }
