@@ -1,0 +1,25 @@
+=========Parser===========
+Boxoffice Parser schreiben
+Rottentomatoes Sucher schreiben
+Rottentomatoes Parser schreiben
+Metacritics Sucher schreiben
+Metacritics Parser schreiben
+
+
+========Todo & Verwaltung============
+Todoliste Implementieren und Interface bereitstellen;
+ThreadsMaster so aender, dass es mehrere instanzen geben kann
+Ermoeglichen einer Anbindung einer ProgressBar an einem ThreadsMaster
+
+
+==========GUI==========
+Groese von anderen filmen eines schauspielers in Cast tab aenderbar machen
+suche implementieren
+seen implementieren
+Actors nur die top 1000 anzeigen
+Filmnamen im Kontextmenu einzeigen
+
+
+=======================
+====Webseite machen====
+=======================
