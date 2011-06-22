@@ -91,7 +91,7 @@
                         </GroupBox>
                         <GroupBox FontSize="13" FontWeight="Bold" Header="Stars" Name="SummeryStars" Margin="2" Grid.ColumnSpan="1" Grid.RowSpan="1">
                             <Grid>
-                                <ListBox Margin="0,0,0,0" Name="SummeryStarsListbox" ItemTemplate="{StaticResource listbox}" MouseDoubleClick="SummeryStarsListbox_MouseDoubleClick" />
+                                <ListBox Margin="0,0,0,0" Name="SummeryStarsListbox" ItemTemplate="{StaticResource listbox}" MouseDoubleClick="SummeryStarsListbox_MouseDoubleClick" TextSearch.TextPath="labelOne" />
                             </Grid>
                         </GroupBox>
                         <GroupBox FontSize="13" FontWeight="Bold" Header="Additional Information" Margin="2" Name="SummeryAdditionalInformation" Grid.Column="4" Width="auto">
@@ -108,7 +108,7 @@
                         <GridSplitter Grid.Column="3" Grid.RowSpan="2" Margin="0" Name="summeryGridSplitter2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFF9F9F9" />
                         <GroupBox FontSize="13" FontWeight="Bold" Header="Production" Margin="2" Name="SummeryProduction" Grid.ColumnSpan="1" Grid.Row="1">
                             <Grid>
-                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" ItemTemplate="{StaticResource listbox}" MouseDoubleClick="SummeryProductionListbox_MouseDoubleClick" />
+                                <ListBox ClipToBounds="False" Margin="0,0,0,0" Name="SummeryProductionListbox" ItemTemplate="{StaticResource listbox}" MouseDoubleClick="SummeryProductionListbox_MouseDoubleClick" TextSearch.TextPath="labelOne" />
                             </Grid>
                         </GroupBox>
                     </Grid>
@@ -128,7 +128,7 @@
                         </Grid.ColumnDefinitions>
                         <GroupBox FontSize="15" FontWeight="Bold" Header="Seen" Margin="2" Name="EnhancedSeen">
                             <Grid>
-                                <ListBox Margin="0" Name="seenListBox" >
+                                <ListBox Margin="0" Name="seenListBox" IsHitTestVisible="False">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Height="auto" Width="auto">
@@ -172,7 +172,7 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Cast" Name="castBox" FontSize="13" FontWeight="Bold" Height="auto" Margin="2,30,2,2">
                         <Grid>
-                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectedIndex="0"  ItemTemplate="{StaticResource listbox}" />
+                            <ListBox Height="auto" Margin="0" Name="castListBox" Width="auto" SelectedIndex="0"  ItemTemplate="{StaticResource listbox}" TextSearch.TextPath="labelOne" />
                         </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="2" Header="Actor" Name="groupBox2" FontSize="13" FontWeight="Bold" Margin="2">
@@ -244,7 +244,7 @@
                             </GroupBox>
                             <GroupBox Header="Movies in Database" Margin="2" Name="groupBox5" Grid.Column="2" FontSize="13" Grid.RowSpan="2">
                                 <Grid>
-                                    <ListBox Margin="5" Name="MovieListToPerson" MouseDoubleClick="MovieListToPerson_MouseDoubleClick" ItemTemplate="{StaticResource listbox}"/>
+                                    <ListBox Margin="5" Name="MovieListToPerson" MouseDoubleClick="MovieListToPerson_MouseDoubleClick" ItemTemplate="{StaticResource listbox}" TextSearch.TextPath="labelOne"/>
                                 </Grid>
                             </GroupBox>
                             <StackPanel Height="auto" Margin="10,10,10,0" Name="stackPanel3" VerticalAlignment="Top">
@@ -338,7 +338,7 @@
                 </Menu>
                 <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
-                <ListBox Margin="0" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" >
+                <ListBox Margin="0" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" TextSearch.TextPath="labelOne" >
                     <ListBox.ContextMenu>
                         <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
                             <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >

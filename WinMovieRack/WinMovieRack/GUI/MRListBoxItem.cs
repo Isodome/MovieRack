@@ -8,7 +8,7 @@ namespace WinMovieRack.GUI
 {
     public class MRListBoxItem
     {
-        private string title;
+        public string title;
         private string year;
         private string editable;
         private int id;

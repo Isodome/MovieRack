@@ -18,7 +18,6 @@ namespace WinMovieRack.GUI
             {
                 this.notes = "No Notes";
             }
-            Console.WriteLine(notes);
         }
 
         public string labelOne
