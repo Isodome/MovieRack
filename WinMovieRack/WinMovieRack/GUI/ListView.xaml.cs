@@ -26,6 +26,5 @@ namespace WinMovieRack.GUI
             InitializeComponent();
             this.controller = lvc;
         }
-
     }
 }
