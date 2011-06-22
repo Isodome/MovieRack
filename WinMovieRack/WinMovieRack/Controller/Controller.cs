@@ -9,106 +9,116 @@ using WinMovieRack.GUI;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.Parser.BoxOffice;
 using System.Net;
-namespace WinMovieRack.Controller {
-	public class Controller {
+namespace WinMovieRack.Controller
+{
+    public class Controller
+    {
 
-		private WinMovieRack.GUI.GUI gui;
-		public SQLiteConnector db;
-		public static Controller controller;
-		private App app;
+        private WinMovieRack.GUI.GUI gui;
+        public SQLiteConnector db;
+        public static Controller controller;
+        private App app;
 
-		private ImdbBrowserController browserController;
+        private ImdbBrowserController browserController;
         private TodoListController todoListController;
-		private MainWindowController windowController;
-		private DetailsViewController detailsViewController;
+        private MainWindowController windowController;
+        private DetailsViewController detailsViewController;
         private ActorsViewController actorsViewController;
         private ListViewController listViewController;
 
-		public Controller(App app) {
-			this.app = app;
-			this.app.Exit += aboutToExit;
-			initializeModel();
-			initializeGUI();
-			controller = this;
-			ServicePointManager.DefaultConnectionLimit = 65000;
+        public Controller(App app)
+        {
+            this.app = app;
+            this.app.Exit += aboutToExit;
+            initializeModel();
+            initializeGUI();
+            controller = this;
+            ServicePointManager.DefaultConnectionLimit = 65000;
 
-			SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
-			b.run();
-			b.getResult().printToConsole();
-			
-		}
+            SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
+            b.run();
+            b.getResult().printToConsole();
 
-		public void func(ConcThreadJobMaster sender) {
-			((ConcurrentImdbMovieParser)sender).movieData.printToConsole();
-		}
+        }
 
-		private void initializeGUI() {
+        public void func(ConcThreadJobMaster sender)
+        {
+            ((ConcurrentImdbMovieParser)sender).movieData.printToConsole();
+        }
 
-			browserController = new ImdbBrowserController(this);
-			IMDBBrowser browser = new IMDBBrowser(browserController);
-			browserController.setBrowser(browser);
+        private void initializeGUI()
+        {
+
+            browserController = new ImdbBrowserController(this);
+            IMDBBrowser browser = new IMDBBrowser(browserController);
+            browserController.setBrowser(browser);
 
             todoListController = new TodoListController(this);
             TodoList todoList = new TodoList(todoListController);
             todoListController.setTodoList(todoList);
 
-			windowController = new MainWindowController();
-			MainWindow mw = new MainWindow(windowController);
+            windowController = new MainWindowController();
+            MainWindow mw = new MainWindow(windowController);
             mw.Width = 1024;
             mw.Height = 600;
-			windowController.setMainWindow(this, mw);
+            windowController.setMainWindow(this, mw);
 
-			detailsViewController = new DetailsViewController(this, db);
-			DetailsView dv = new DetailsView(detailsViewController);
-			detailsViewController.setDetailsView(dv);
+            detailsViewController = new DetailsViewController(this, db);
+            DetailsView dv = new DetailsView(detailsViewController);
+            detailsViewController.setDetailsView(dv);
 
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
             actorsViewController.setActorsView(av);
-           
+
             listViewController = new ListViewController(this, db);
             ListView lv = new ListView(listViewController);
             listViewController.setListView(lv);
 
-			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av, lv,todoList);
+            gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av, lv, todoList);
+        }
+
+        private void initializeModel()
+        {
+            db = new SQLiteConnector();
+            db.initDb();
+            PictureHandler.initialize();
+        }
 
 
-		private void initializeModel() {
-			db = new SQLiteConnector();
-			db.initDb();
-			PictureHandler.initialize();
-		}
-
-
-		public void changeToView(View view) {
-			//Inform specific controllers
-			switch (view) {
-				case View.ACTORS_VIEW:
+        public void changeToView(View view)
+        {
+            //Inform specific controllers
+            switch (view)
+            {
+                case View.ACTORS_VIEW:
                     actorsViewController.loadCompleteActorsList();
-					break;
-				case View.DETAILS_VIEW:
+                    break;
+                case View.DETAILS_VIEW:
                     detailsViewController.loadCompleteMovieList();
-					break;
-				case View.IMDB_BROWSER:
-					browserController.activated();
-					break;
-				case View.LIST_VIEW:
+                    break;
+                case View.IMDB_BROWSER:
+                    browserController.activated();
+                    break;
+                case View.LIST_VIEW:
 
-					break;
-			}
-			gui.changeToView(view);
-		}
+                    break;
+            }
+            gui.changeToView(view);
+        }
 
 
-		public void aboutToExit(object sender, ExitEventArgs e) {
-			db.closeConnection();
-			windowController.close();
-			ThreadsMaster.getInstance().waitToFinish();
-			Application.Current.Shutdown();
-		}
+        public void aboutToExit(object sender, ExitEventArgs e)
+        {
+            db.closeConnection();
+            windowController.close();
+            ThreadsMaster.getInstance().waitToFinish();
+            Application.Current.Shutdown();
+        }
 
-		internal void setProgressIndicator(bool p) {
-			windowController.setProgressIndicator(p);
-		}
-	}
+        internal void setProgressIndicator(bool p)
+        {
+            windowController.setProgressIndicator(p);
+        }
+    }
 }
