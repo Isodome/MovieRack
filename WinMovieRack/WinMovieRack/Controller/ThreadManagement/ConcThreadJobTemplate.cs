@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace WinMovieRack.Controller.ThreadManagement
 {
-	public delegate void FinalizeFunction(ThreadJobMaster master);
+	public delegate void FinalizeFunction(ConcThreadJobMaster master);
 
-    public abstract class ThreadJobMaster
+    public abstract class ConcThreadJobMaster
     {
         private List<ThreadJob> jobs = new List<ThreadJob>();
         private Object lockvar = "";

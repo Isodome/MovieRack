@@ -17,7 +17,7 @@ namespace WinMovieRack.GUI {
 		public string lastURL;
 		public const string homeURL = "http://www.imdb.com";
 		private ImdbBrowserController controller;
-		private ThreadJobMaster lastParser;
+		private ConcThreadJobMaster lastParser;
 
 
 		public IMDBBrowser(ImdbBrowserController contr) {
@@ -77,7 +77,7 @@ namespace WinMovieRack.GUI {
 			}
 		}
 
-		private void updateActionButton(ThreadJobMaster sender) {
+		private void updateActionButton(ConcThreadJobMaster sender) {
 			if (sender != null) {
 				if (sender is ConcurrentIMDBNameParser) {
 					setButton("Add '" + ((ConcurrentIMDBNameParser)sender).person.name + "' to Database", true);

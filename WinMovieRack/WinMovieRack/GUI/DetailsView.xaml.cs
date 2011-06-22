@@ -244,7 +244,7 @@ namespace WinMovieRack
         {
             if (movieDetails != null)
             {
-                Process.Start("http://www.imdb.com/title/tt" + movieDetails.imdbID);
+				Process.Start(IMDBUtil.getURLToMovie(movieDetails.imdbID));
             }
         }
 

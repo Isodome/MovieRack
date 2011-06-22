@@ -372,8 +372,8 @@ namespace WinMovieRack.Model
                 year = Symbols.NO_YEAR;
             }
 
-            int imdbID;
-            if (!int.TryParse(reader["imdbID"].ToString(), out imdbID))
+            uint imdbID;
+            if (!uint.TryParse(reader["imdbID"].ToString(), out imdbID))
             {
                 imdbID = 0;
             }
