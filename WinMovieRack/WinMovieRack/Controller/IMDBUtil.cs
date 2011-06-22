@@ -41,10 +41,10 @@ namespace WinMovieRack.Controller {
 			return string.Format("http://www.imdb.com/title/tt{0}/", imdbID);
 		}
 
-		public string getAwardsURLToMovie(uint imdbID) {
+		public static string getAwardsURLToMovie(uint imdbID) {
 			return string.Format("http://www.imdb.com/title/tt{0}/awards", imdbID);
 		}
-		public string getFullcreditsURLToMovie(uint imdbID) {
+		public static string getFullcreditsURLToMovie(uint imdbID) {
 			return string.Format("http://www.imdb.com/title/tt{0}/fullcredits", imdbID);
 		}
 	}

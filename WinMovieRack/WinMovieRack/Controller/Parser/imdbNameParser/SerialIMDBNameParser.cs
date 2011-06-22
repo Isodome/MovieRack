@@ -12,31 +12,20 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 {
 	public class SerialIMDBNameParser : SerialThreadJobMaster
 	{
-		private const string placeholder = "{ID}";
-		private const string url = "http://www.imdb.com/name/nm" + placeholder + "/";
-		private const string pictureRegex = @"(?<url>img_primary(.|\n|\r)*?</td>)";
 
+		private const string pictureRegex = @"(?<url>img_primary(.|\n|\r)*?</td>)";
 		private const string pictureRegex2 = @"img_primary""\srowspan=""2"">(.|\n|\r)*?<img src=""(?<url>.*?V1).*?""";
 
-
-		private ThreadJob mainPageJob;
-		private bool mainPageJobDone = false;
-		private ThreadJob pictureLoadJob;
-		private bool pictureLoadJobDone = false;
-
-
 		private string mainPage;
-
 		public ImdbPerson person;
 
 
-		public SerialIMDBNameParser(uint imdbID)
-		{
+		public SerialIMDBNameParser(uint imdbID) {
 			person = new ImdbPerson(imdbID);
-
 		}
+
 		public override bool run() {
-			JobWebPageDownload mainPageJob = new JobWebPageDownload(Regex.Replace(url, placeholder, imdbID.ToString()));
+			JobWebPageDownload mainPageJob = new JobWebPageDownload(IMDBUtil.getURLToName(person.imdbID));
 			mainPageJob.run();
 			this.mainPage = mainPageJob.getResult();
 			if (mainPage == null) {
@@ -53,8 +42,7 @@ namespace WinMovieRack.Controller.Parser.imdbNameParser
 			return true;
 		}
 
-		private JobLoadImage getPictureLoadJob()
-		{
+		private JobLoadImage getPictureLoadJob() {
 			if (mainPage == null) {
 				Console.WriteLine("mainpage ist null");
 			}
