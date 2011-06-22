@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace WinMovieRack.Controller.Parser.BoxOffice {
 	public class JobBoxofficeMovieParser :ThreadJob {
 
-		private const string openingWeekendRegex = @";Weekend:</a></td><td>(?<we>(.|\n|\r)*?)</td>";
+		private const string openingWeekendRegex = @"Weekend:</a></td><td>(?<we>(.|\n|\r)*?)</td>";
 		private const string genreRegex = @"<div class=""mp_box_tab"">Genres</div>(?<genre>(.|\n|\r)*?)</table";
 
 
