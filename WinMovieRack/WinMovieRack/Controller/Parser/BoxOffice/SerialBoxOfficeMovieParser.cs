@@ -8,10 +8,6 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 	public class SerialBoxOfficeMovieParser : SerialThreadJobMaster {
 
 		private string boxofficeId;
-		private const string url = "http://boxofficemojo.com/movies/?id={0}.htm";
-		private const string urlWeekend = "http://boxofficemojo.com/movies/?page=weekend&id={0}.htm";
-		private const string urlForeign = "http://boxofficemojo.com/movies/?page=intl&id={0}.htm";
-
 		private BoxofficeMovie movieData;
 
 		private string mainPage;
@@ -20,27 +16,26 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 
 		public SerialBoxOfficeMovieParser(string boxofficeId) {
 			this.boxofficeId = boxofficeId;
-			this.movieData = new BoxofficeMovie(boxofficeId);
-			
+			this.movieData = new BoxofficeMovie(boxofficeId);	
 		}
 
 
 
 		public override bool run() {
 
-			JobWebPageDownload mainPageJob = new JobWebPageDownload(string.Format(url, boxofficeId));
+			JobWebPageDownload mainPageJob = new JobWebPageDownload(BoxofficeUtil.getURLbyID(boxofficeId));
 			mainPageJob.run();
 			mainPage = mainPageJob.getResult();
 			if (mainPage == null) {
 				return false;
 			}
-			JobWebPageDownload weekEndPageJob = new JobWebPageDownload(string.Format(urlWeekend, boxofficeId));
+			JobWebPageDownload weekEndPageJob = new JobWebPageDownload(BoxofficeUtil.getWeekendpageURL(boxofficeId));
 			weekEndPageJob.run();
 			weekendPage = weekEndPageJob.getResult();
 			if (weekendPage == null) {
 				return false;
 			}
-			JobWebPageDownload foreignPageJob = new JobWebPageDownload(string.Format(urlForeign, boxofficeId));
+			JobWebPageDownload foreignPageJob = new JobWebPageDownload(BoxofficeUtil.getForeignPageURL(boxofficeId));
 			foreignPageJob.run();
 			foreignPage = foreignPageJob.getResult();
 			if (foreignPage == null) {

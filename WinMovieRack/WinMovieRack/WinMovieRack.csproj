@@ -87,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\BoxofficeUtil.cs" />
     <Compile Include="Controller\DetailsViewController.cs" />
     <Compile Include="Controller\FunctionCaller.cs" />
     <Compile Include="Controller\ImdbBrowserController.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="GUI\TodoList.xaml.cs">
       <DependentUpon>TodoList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\TodoListBoxItem.cs" />
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
@@ -154,6 +156,8 @@
     </Compile>
     <Compile Include="Model\DataTypes\Award.cs" />
     <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResultCollection.cs" />
+    <Compile Include="Model\DataTypes\BOFranchise.cs" />
+    <Compile Include="Model\DataTypes\BOGenre.cs" />
     <Compile Include="Model\DataTypes\BoxofficeMovie.cs" />
     <Compile Include="Model\DBInterface.cs" />
     <Compile Include="Model\Enums\PersonMovieRelations.cs" />
