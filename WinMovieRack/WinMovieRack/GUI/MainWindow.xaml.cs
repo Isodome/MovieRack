@@ -81,5 +81,10 @@ namespace WinMovieRack
 			Dispatcher.BeginInvoke(a); 
 				
 		}
+
+        private void listMenuEntry_Click(object sender, RoutedEventArgs e)
+        {
+            controller.shouldChangeView(View.LIST_VIEW);
+        }
     }
 }

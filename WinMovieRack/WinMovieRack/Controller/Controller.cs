@@ -21,7 +21,7 @@ namespace WinMovieRack.Controller {
 		private MainWindowController windowController;
 		private DetailsViewController detailsViewController;
         private ActorsViewController actorsViewController;
-		
+        private ListViewController listViewController;
 
 		public Controller(App app) {
 			this.app = app;
@@ -56,6 +56,10 @@ namespace WinMovieRack.Controller {
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
             actorsViewController.setActorsView(av);
+           
+            listViewController = new ListViewController(this, db);
+            ListView lv = new ListView(listViewController);
+            listViewController.setListView(lv);
 
 			gui = new WinMovieRack.GUI.GUI(this, mw, browser, dv, av);
 		}
@@ -80,6 +84,7 @@ namespace WinMovieRack.Controller {
 					browserController.activated();
 					break;
 				case View.LIST_VIEW:
+
 					break;
 			}
 			gui.changeToView(view);
