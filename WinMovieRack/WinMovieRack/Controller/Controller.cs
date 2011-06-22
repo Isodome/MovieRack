@@ -31,6 +31,10 @@ namespace WinMovieRack.Controller {
 			initializeGUI();
 			controller = this;
 			ServicePointManager.DefaultConnectionLimit = 65000;
+
+			SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
+			b.run();
+			b.getResult().printToConsole();
 			
 		}
 
