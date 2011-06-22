@@ -6,6 +6,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <ListBox Height="auto" HorizontalAlignment="Left" Margin="12,12,0,12" Name="listBox1" VerticalAlignment="Stretch" Width="179">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="auto" Width="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Path=labelOne}" Grid.Column="0" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTodoName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+                        <Label Content="{Binding Path=labelTwo}" Grid.Column="0" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelTodoDescription" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="1" Content="Add selected" Height="23" HorizontalAlignment="Left" Margin="12,12,0,12" Name="button1" VerticalAlignment="Top" Width="75"  />
     </Grid>
 </UserControl>
