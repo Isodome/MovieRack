@@ -12,5 +12,8 @@ namespace WinMovieRack.Model {
 			this.boxofficeid = id;
 		}
 
+		public void printToConsole() {
+			Console.WriteLine("ID: '{0}'", boxofficeid);
+		}
 	}
 }

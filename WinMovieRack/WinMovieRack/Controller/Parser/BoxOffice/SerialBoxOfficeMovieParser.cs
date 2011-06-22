@@ -46,12 +46,8 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 			if (foreignPage == null) {
 				return false;
 			}
-			JobBoxofficeMainPageParser pjob = new JobBoxofficeMainPageParser(mainPage, movieData);
+			JobBoxofficeMovieParser pjob = new JobBoxofficeMovieParser(mainPage,foreignPage, weekendPage, movieData);
 			pjob.run();
-			JobBoxofficeWeekendPageParser WEjob = new JobBoxofficeWeekendPageParser(weekendPage, movieData);
-			WEjob.run();
-			JobBoxofficeForeignPageParser fjob = new JobBoxofficeForeignPageParser(foreignPage, movieData);
-			fjob.run();
 			
 
 			return true;
