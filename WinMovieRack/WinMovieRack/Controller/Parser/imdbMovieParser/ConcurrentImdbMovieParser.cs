@@ -16,7 +16,7 @@ using WinMovieRack.Model;
 
 namespace WinMovieRack.Controller.Parser.imdbMovieParser
 {
-    public class ConcurrentImdbMovieParser : ThreadJobMaster
+    public class ConcurrentImdbMovieParser : ConcThreadJobMaster
     {
         public const string placholder = "{ID}";
         public const string URL = "http://www.imdb.com/title/tt" + placholder + "/";

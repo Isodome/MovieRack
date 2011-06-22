@@ -6,7 +6,7 @@ using WinMovieRack.Controller.ThreadManagement;
 using WinMovieRack.Controller.Parser;
 
 namespace WinMovieRack.Controller {
-	public class FunctionCaller : ThreadJobMaster {
+	public class FunctionCaller : ConcThreadJobMaster {
 
 		private FunctionCall fc = new FunctionCall(); 
 

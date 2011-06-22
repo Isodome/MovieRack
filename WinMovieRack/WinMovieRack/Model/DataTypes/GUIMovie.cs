@@ -13,7 +13,7 @@ namespace WinMovieRack.Model
         public string runtime;
         public string plot;
         public string year;
-        public int imdbID;
+        public uint imdbID;
         public string imdbRating;
         public string imdbRatingVotes;
         public string imdbTop250;
@@ -46,7 +46,7 @@ namespace WinMovieRack.Model
         public double imdbRatingDouble;
         public int yearInt;
 
-        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, int imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget)
+        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, uint imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget)
         {
             this.dbId = dbId;
             this.title = title;

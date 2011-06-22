@@ -31,7 +31,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 
 		}
 
-		public void parseNames(ThreadJobMaster sender) {
+		public void parseNames(ConcThreadJobMaster sender) {
 				// get parsed movie data;
 			ConcurrentImdbMovieParser parser = sender as ConcurrentImdbMovieParser;
 			this.movie = new Movie(parser.movieData);
@@ -66,7 +66,7 @@ namespace WinMovieRack.Controller.Moviefillout {
 			ThreadsMaster.getInstance().addJobMaster(p);
 		}
 
-		public void parseFinished(ThreadJobMaster sender) {
+		public void parseFinished(ConcThreadJobMaster sender) {
 			ConcurrentIMDBNameParser p = sender as ConcurrentIMDBNameParser;
 			SQLiteConnector.db.updateImdbPerson(p.person);
 		}

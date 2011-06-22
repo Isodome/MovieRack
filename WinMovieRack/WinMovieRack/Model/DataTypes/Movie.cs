@@ -17,7 +17,7 @@ namespace WinMovieRack.Model {
 			this.persons = new List<ImdbPerson>();
 		}
 
-		public void imdbParseFinished(ThreadJobMaster sender) {
+		public void imdbParseFinished(ConcThreadJobMaster sender) {
 			ConcurrentImdbMovieParser parser = (ConcurrentImdbMovieParser)sender;
 			this.imdbMovie = parser.movieData;
 		}

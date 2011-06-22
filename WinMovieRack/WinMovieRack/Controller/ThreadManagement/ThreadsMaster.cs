@@ -13,7 +13,7 @@ namespace WinMovieRack.Controller.ThreadManagement
 		private static ThreadsMaster threadsMaster;
 		private static object instancelock = "";
 
-        private LinkedList<ThreadJobMaster> jobMaster = new LinkedList<ThreadJobMaster>();
+        private LinkedList<ConcThreadJobMaster> jobMaster = new LinkedList<ConcThreadJobMaster>();
 
         private static Object lockvar = "";
         private static Object idlevar = "";
@@ -50,13 +50,13 @@ namespace WinMovieRack.Controller.ThreadManagement
             while (running[threadId])
             {
 				Monitor.Enter(lockvar);
-				ThreadJobMaster master = null;
+				ConcThreadJobMaster master = null;
 				ThreadJob job = null;
 				int i;
 				for (i = 0; i < jobMaster.Count && job == null; i++)
 				{
 					
-					master = jobMaster.ElementAt<ThreadJobMaster>(i);
+					master = jobMaster.ElementAt<ConcThreadJobMaster>(i);
 					if (master.isWaitingTask() && i != 0) {
 						continue;
 					}
@@ -83,7 +83,7 @@ namespace WinMovieRack.Controller.ThreadManagement
             }
         }
 
-        public void addJobMaster(ThreadJobMaster master)
+        public void addJobMaster(ConcThreadJobMaster master)
         {
 			if (master != null) {
 				Monitor.Enter(lockvar);
@@ -92,17 +92,17 @@ namespace WinMovieRack.Controller.ThreadManagement
 				Controller.controller.setProgressIndicator(true);
 			}
         }
-		public void addJobMasters(ThreadJobMaster[] masters) {
+		public void addJobMasters(ConcThreadJobMaster[] masters) {
 			Monitor.Enter(lockvar);
-			foreach(ThreadJobMaster m in masters) {
+			foreach(ConcThreadJobMaster m in masters) {
 				jobMaster.AddLast(m);
 				Controller.controller.setProgressIndicator(true);
 			}
 			Monitor.Exit(lockvar);
 		}
-		public void addJobMasters(List<ThreadJobMaster> masters) {
+		public void addJobMasters(List<ConcThreadJobMaster> masters) {
 			Monitor.Enter(lockvar);
-			foreach (ThreadJobMaster m in masters) {
+			foreach (ConcThreadJobMaster m in masters) {
 				jobMaster.AddLast(m);
 				Controller.controller.setProgressIndicator(true);
 			}
@@ -110,13 +110,13 @@ namespace WinMovieRack.Controller.ThreadManagement
 		}
 
 
-		public void addVeryVeryImportantThreadMaster(ThreadJobMaster master) {
+		public void addVeryVeryImportantThreadMaster(ConcThreadJobMaster master) {
 			Monitor.Enter(lockvar);
 			jobMaster.AddFirst(master);
 			Monitor.Exit(lockvar);
 		}
 
-        public void hasFinished(ThreadJobMaster master)
+        public void hasFinished(ConcThreadJobMaster master)
         {
 			
             Monitor.Enter(lockvar);

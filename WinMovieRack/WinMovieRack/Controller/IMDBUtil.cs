@@ -33,6 +33,12 @@ namespace WinMovieRack.Controller {
 		}
 
 
-		
+		public static string getURLToName(uint imdbID) {
+			return string.Format("http:/http://www.imdb.com/name/nm{0}/", imdbID);
+		}
+
+		public static string getURLToMovie(uint imdbID) {
+			return string.Format("http://www.imdb.com/title/tt{0}/", imdbID);
+		}
 	}
 }
