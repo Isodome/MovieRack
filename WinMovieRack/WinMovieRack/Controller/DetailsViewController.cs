@@ -26,68 +26,72 @@ namespace WinMovieRack.Controller
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> starsList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> productionList = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
         private ObservableCollection<WinMovieRack.GUI.MRListBoxItem> movieListToPerson = new ObservableCollection<WinMovieRack.GUI.MRListBoxItem>();
+        private ObservableCollection<WinMovieRack.GUI.SeenBoxItem> seenListToMovie;
         private Dictionary<int, MRListBoxItem> movieListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> castListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> productionListItems = new Dictionary<int, MRListBoxItem>();
         private bool isFirstLoad = true;
-		private Action<MRListData> addToListFunction;
+        private Action<MRListData> addToListFunction;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
         {
             this.controller = c;
             this.db = db;
 
-			
-			
 
-			
+
+
+
         }
 
         public void setDetailsView(DetailsView dv)
         {
-			
-			this.view = dv;
-			view.listBoxMovies.ItemsSource = movieList;
 
-			Dispatcher disp = Dispatcher.CurrentDispatcher;
-			addToListFunction = (MRListData movie) => disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
-				Thread.Sleep(0);
-				BitmapImage posterBitmap = new BitmapImage();
-				posterBitmap.BeginInit();
-				posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
-				posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
-				posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
-				posterBitmap.EndInit();
-				MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
-				movieList.Add(item);
-				movieListItems.Add(movie.dbItemID, item);
-			})));
+            this.view = dv;
+            view.listBoxMovies.ItemsSource = movieList;
 
-			/*
+            Dispatcher disp = Dispatcher.CurrentDispatcher;
+            addToListFunction = (MRListData movie) => disp.BeginInvoke(DispatcherPriority.Background, (new Action(() =>
+            {
+                Thread.Sleep(0);
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+                posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+                posterBitmap.EndInit();
+                MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
+                movieList.Add(item);
+                movieListItems.Add(movie.dbItemID, item);
+            })));
+
+            /*
            
-			var context = SynchronizationContext.Current;
+            var context = SynchronizationContext.Current;
 			
-			addToListFunction = (MRListData movie) => context.Send(delegate(object sender) {
-				BitmapImage posterBitmap = new BitmapImage();
-				posterBitmap.BeginInit();
-				posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
-				posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
-				posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
-				posterBitmap.EndInit();
-				MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
-				movieList.Add(item);
-				movieListItems.Add(movie.dbItemID, item);
+            addToListFunction = (MRListData movie) => context.Send(delegate(object sender) {
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movie.dbItemID, PosterSize.LIST));
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
+                posterBitmap.CacheOption = BitmapCacheOption.OnDemand;
+                posterBitmap.EndInit();
+                MRListBoxItem item = new MRListBoxItem(movie.dbItemID, movie.titleName, movie.yearAge.ToString(), movie.editableCharakter, posterBitmap);
+                movieList.Add(item);
+                movieListItems.Add(movie.dbItemID, item);
 
-			}, null);
-			 */
+            }, null);
+             */
         }
 
 
-        public void loadCompleteMovieList() {
-            if (isFirstLoad) {
-				isFirstLoad = false;
-				var t = new Thread(() => db.completeMovieListForEach(MovieEnum.runtime, MovieEnum.title, addToListFunction));
-				t.Start();
+        public void loadCompleteMovieList()
+        {
+            if (isFirstLoad)
+            {
+                isFirstLoad = false;
+                var t = new Thread(() => db.completeMovieListForEach(MovieEnum.runtime, MovieEnum.title, addToListFunction));
+                t.Start();
 
             }
         }
@@ -158,6 +162,18 @@ namespace WinMovieRack.Controller
             });
             view.MovieListToPerson.ItemsSource = movieListToPerson;
         }
+
+        public void loadSeenListToMovie(int idMovies)
+        {
+            seenListToMovie = new ObservableCollection<WinMovieRack.GUI.SeenBoxItem>();
+            List<MRSeenData> seenList = db.getSeenList(idMovies);
+            seenList.ForEach(delegate(MRSeenData seen)
+           {
+               seenListToMovie.Add(new SeenBoxItem(seen.date, seen.notes));
+           });
+            view.seenListBox.ItemsSource = seenListToMovie;
+        }
+
 
         public void castListBoxSelectionChanged(int index)
         {
@@ -250,8 +266,16 @@ namespace WinMovieRack.Controller
             return itemToChange;
         }
 
-        public void setSeenDate(DateTime date, int id){
-            Console.WriteLine(date);
+        internal void setSeenDate(DateTime selectedDate, int id, string notes)
+        {
+            db.updateSeenToMovie(id, selectedDate, notes);
+            view.seen.Content = (int)view.seen.Content + 1;
+            view.loadSummerytab();
+        }
+
+        internal int getSeenCount(int idMovies)
+        {
+            return db.getSeenCount(idMovies);
         }
     }
 }

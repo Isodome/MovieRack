@@ -183,7 +183,7 @@ function exportTable(file, dbName, schema, tbl)
   local primaryKey, pKColumn, colComment
   -- cannot create empty tables
   if (grtV.getn(tbl.columns) > 0) then
-    file:write("CREATE TABLE " .. dbName .. dq(tbl.name) .. "(\n" .. sCommentFormat(tbl.comment))
+    file:write("CREATE TABLE IF NOT EXISTS " .. dbName .. dq(tbl.name) .. "(\n" .. sCommentFormat(tbl.comment))
 
     -- find the primary key
     for k = 1, grtV.getn(tbl.indices) do
@@ -331,7 +331,7 @@ function exportTable(file, dbName, schema, tbl)
           indexName = tbl.name .. ".index" .. k
           --uniqueId = uniqueId + 1
         end
-        file:write("CREATE INDEX " .. dbName .. dq(indexName) .. " ON " .. dq(tbl.name) .. "(")
+        file:write("CREATE INDEX IF NOT EXISTS " .. dbName .. dq(indexName) .. " ON " .. dq(tbl.name) .. "(")
         file:write(printIndexColumns(index) .. ");\n")
       end
     end
