@@ -76,6 +76,7 @@ namespace WinMovieRack
             //awards.Content = movieDetails.
             budget.Content = movieDetails.budget;
             boxxoffice.Content = movieDetails.boxofficeWorldwide;
+            seen.Content = controller.getSeenCount(movieDetails.dbId);
             string languageString = generateString(controller.loadLanguageList(movieDetails.dbId));
             if (languageString.Equals(""))
             {
@@ -86,7 +87,6 @@ namespace WinMovieRack
                 language.Content = languageString;
             }
             SummeryNotes.Content = movieDetails.notes;
-
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.PREVIEW));
@@ -144,7 +144,7 @@ namespace WinMovieRack
             return generatedString;
         }
 
-        private void loadSummerytab()
+        public void loadSummerytab()
         {
             if (movieDetails != null)
             {
@@ -154,6 +154,7 @@ namespace WinMovieRack
                 else if (detailsViewTab.SelectedIndex == 1)
                 {
                     controller.loadAlsoKnownAs(movieDetails.dbId);
+                    controller.loadSeenListToMovie(movieDetails.dbId);
                 }
                 else if (detailsViewTab.SelectedIndex == 2)
                 {
@@ -181,7 +182,6 @@ namespace WinMovieRack
             castListBox.SelectedIndex = 0;
             personchange.SelectedIndex = 0;
             castListBox.SelectionChanged += castListBox_SelectionChanged;
-            calendarYesterday.Click += calendarYesterday_Click;
             SummeryStarsListbox.MouseDoubleClick += SummeryStarsListbox_MouseDoubleClick;
         }
 
@@ -276,33 +276,18 @@ namespace WinMovieRack
             castListBox.SelectedItem = itemToSelect;
         }
 
-
-        private void calendarToday_Click(object sender, RoutedEventArgs e)
+        private void movieListBoxContext_Opened(object sender, RoutedEventArgs e)
         {
-            if (movieDetails != null)
-            {
-                controller.setSeenDate(DateTime.Today, movieDetails.dbId);
-                movieListBoxContext.IsOpen = false;
-            }
-
+            contextMenueTitle.Header = movieDetails.title;
+            Uri uri = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.TINY));
+            contextMoviePoster.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
         }
 
-        private void calendarYesterday_Click(object sender, RoutedEventArgs e)
+        private void menuItemSeen_Click(object sender, RoutedEventArgs e)
         {
-            if (movieDetails != null)
-            {
-                controller.setSeenDate(DateTime.Today.Subtract(new TimeSpan(TimeSpan.TicksPerDay)), movieDetails.dbId);
-                movieListBoxContext.IsOpen = false;
-            }
+            GUI.Seen seen = new GUI.Seen(controller, movieDetails.dbId);
+            seen.ShowDialog();
         }
-
-        private void seenAt_Click(object sender, RoutedEventArgs e)
-        {
-            GUI.Calendar calendar = new GUI.Calendar(controller, movieDetails.dbId);
-            calendar.Show();
-            movieListBoxContext.IsOpen = false;
-        }
-
     }
 
 }

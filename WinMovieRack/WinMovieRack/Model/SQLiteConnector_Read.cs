@@ -7,10 +7,10 @@ using System.Data;
 
 namespace WinMovieRack.Model
 {
-	
+
     public partial class SQLiteConnector
     {
-		public delegate void MRToDo(MRListData t);
+        public delegate void MRToDo(MRListData t);
         public List<MRListData> getCompleteMovieList(MovieEnum editable, MovieEnum order)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
@@ -30,22 +30,25 @@ namespace WinMovieRack.Model
             return movieList;
         }
 
-		public void completeMovieListForEach(MovieEnum editable, MovieEnum order, Action<MRListData> todo) {
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + " FROM Movies ORDER BY " + order.ToString();
-			SQLiteDataReader reader = executeReaderThreadSafe(command);
-			while (reader.Read()) {
+        public void completeMovieListForEach(MovieEnum editable, MovieEnum order, Action<MRListData> todo)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT idMovies, title, year, " + editable.ToString() + " FROM Movies ORDER BY " + order.ToString();
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            while (reader.Read())
+            {
 
-				int idMovies = reader.GetInt32(0);
-				string title = reader.GetString(1);
-				int year = reader.GetInt32(2);
-				string edit = reader[editable.ToString()].ToString();
-				todo(new MRListData(idMovies, title, year, edit));
-			}
-			command.Dispose();
-		}
+                int idMovies = reader.GetInt32(0);
+                string title = reader.GetString(1);
+                int year = reader.GetInt32(2);
+                string edit = reader[editable.ToString()].ToString();
+                todo(new MRListData(idMovies, title, year, edit));
+            }
+            command.Dispose();
+        }
 
-        public List<MRListData> getCompletePersonList(PersonEnum editable, PersonEnum order) {
+        public List<MRListData> getCompletePersonList(PersonEnum editable, PersonEnum order)
+        {
             SQLiteCommand command = new SQLiteCommand(connection);
             List<MRListData> personList = new List<MRListData>();
             command.CommandText = "SELECT idPerson, Name, Birthday, " + editable.ToString() + " FROM Person ORDER BY " + order.ToString();
@@ -65,22 +68,25 @@ namespace WinMovieRack.Model
             return personList;
         }
 
-		public void completePersonListForEach(PersonEnum editable, PersonEnum order, Action<MRListData> todo) {
-			SQLiteCommand command = new SQLiteCommand(connection);
-			command.CommandText = "SELECT idPerson, Name, Birthday, " + editable.ToString() + " FROM Person ORDER BY " + order.ToString();
-			SQLiteDataReader reader = executeReaderThreadSafe(command);
-			while (reader.Read()) {
-				int years = 0;
-				if (reader.GetDateTime(2).Year != 1) {
-					DateTime now = DateTime.Today;
-					years = now.Year - reader.GetDateTime(2).Year;
-					if (reader.GetDateTime(2) > now.AddYears(-years))
-						years--;
-				}
-				todo(new MRListData(reader.GetInt32(0), reader["Name"].ToString(), years, reader[editable.ToString()].ToString()));
-			}
-			command.Dispose();
-		}
+        public void completePersonListForEach(PersonEnum editable, PersonEnum order, Action<MRListData> todo)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT idPerson, Name, Birthday, " + editable.ToString() + " FROM Person ORDER BY " + order.ToString();
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            while (reader.Read())
+            {
+                int years = 0;
+                if (reader.GetDateTime(2).Year != 1)
+                {
+                    DateTime now = DateTime.Today;
+                    years = now.Year - reader.GetDateTime(2).Year;
+                    if (reader.GetDateTime(2) > now.AddYears(-years))
+                        years--;
+                }
+                todo(new MRListData(reader.GetInt32(0), reader["Name"].ToString(), years, reader[editable.ToString()].ToString()));
+            }
+            command.Dispose();
+        }
 
         public List<MRListData> getPersonListToMovie(int idMovies, int year)
         {
@@ -278,6 +284,28 @@ namespace WinMovieRack.Model
             return movieList;
         }
 
+        public int getSeenCount(int idMovies)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT COUNT (Movies_idMovies) FROM Seen WHERE Movies_idMovies = " + idMovies;
+            return int.Parse(command.ExecuteScalar().ToString());
+        }
+
+
+
+        public List<MRSeenData> getSeenList(int idMovies)
+        {
+            List<MRSeenData> movieList = new List<MRSeenData>();
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT Date, Comment FROM Seen WHERE Movies_idMovies = " + idMovies;
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+            while (reader.Read())
+            {
+                movieList.Add(new MRSeenData(reader.GetDateTime(0), reader.GetString(1)));
+            }
+            command.Dispose();
+            return movieList;
+        }
 
         public GUIPerson getPersonInfo(int idPerson)
         {

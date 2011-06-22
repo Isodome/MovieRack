@@ -128,6 +128,18 @@
                         </Grid.ColumnDefinitions>
                         <GroupBox FontSize="15" FontWeight="Bold" Header="Seen" Margin="2" Name="EnhancedSeen">
                             <Grid>
+                                <ListBox Margin="0" Name="seenListBox" >
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Height="auto" Width="auto">
+                                                <StackPanel Grid.Column="2" Name="stackPanel25" Orientation="Horizontal" Height="auto" VerticalAlignment="Top">
+                                                    <Label Content="{Binding Path=labelOne}" Height="auto" Name="seenDate" />
+                                                    <Label Content="{Binding Path=labelTwo}" Height="auto" Name="notes" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </Grid>
                         </GroupBox>
                         <GroupBox FontSize="15" FontWeight="Bold" Header="Added" Margin="2" Name="EnhancedAdded" Grid.Column="1">
@@ -326,16 +338,15 @@
                 </Menu>
                 <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
                 <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
-                <ListBox Margin="5,71,5,5" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" >
+                <ListBox Margin="0" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" >
                     <ListBox.ContextMenu>
-                        <ContextMenu AllowDrop="True" Name="movieListBoxContext">
-                            <MenuItem Header="Seen">
-                                <MenuItem Header="Today" Name="calendarToday" Click="calendarToday_Click">
-                                </MenuItem>
-                                <MenuItem Header="Yesterday"  Name="calendarYesterday" Click="calendarYesterday_Click">
-                                </MenuItem>
-                                <MenuItem Header="At" Name="seenAt" Margin="0" Height="auto" Width="auto" Click="seenAt_Click">
-                                </MenuItem>
+                        <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
+                            <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >
+                                <MenuItem.Icon>
+                                    <Image Name="contextMoviePoster"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Seen" Name="menuItemSeen" Click="menuItemSeen_Click">
                             </MenuItem>
                             <MenuItem Header="Add to List">
                             </MenuItem>

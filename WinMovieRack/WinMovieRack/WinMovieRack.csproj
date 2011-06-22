@@ -119,14 +119,18 @@
     <Compile Include="GUI\BigPicture.xaml.cs">
       <DependentUpon>BigPicture.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Calendar.xaml.cs">
-      <DependentUpon>Calendar.xaml</DependentUpon>
+    <Compile Include="GUI\ErrorMessage.xaml.cs">
+      <DependentUpon>ErrorMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MRListBoxItem.cs" />
     <Compile Include="GUI\ListComparerTest.cs" />
+    <Compile Include="GUI\Seen.xaml.cs">
+      <DependentUpon>Seen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SeenBoxItem.cs" />
     <Compile Include="GUI\View.cs" />
     <Compile Include="GUI\DetailsView.xaml.cs">
       <DependentUpon>DetailsView.xaml</DependentUpon>
@@ -150,6 +154,7 @@
     <Compile Include="Model\Enums\MovieEnum.cs" />
     <Compile Include="Model\MRListData.cs" />
     <Compile Include="Model\Enums\PersonEnum.cs" />
+    <Compile Include="Model\MRSeenData.cs" />
     <Compile Include="Model\PictureHandler.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\DataTypes\ImdbMovie.cs" />
@@ -176,7 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Calendar.xaml">
+    <Page Include="GUI\ErrorMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MovieRackListBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Seen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
