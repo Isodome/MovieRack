@@ -7,6 +7,7 @@ using WinMovieRack.GUI;
 
 namespace WinMovieRack.Controller
 {
+
    public class ListViewController {
 
         Controller controller;

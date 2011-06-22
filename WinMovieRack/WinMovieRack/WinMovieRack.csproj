@@ -100,9 +100,7 @@
     <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResult.cs" />
     <Compile Include="Controller\Parser\BoxOffice\ConcurrentBoxOfficeMovieParser.cs" />
     <Compile Include="Controller\Parser\BoxOffice\SerialBoxOfficeMovieParser.cs" />
-    <Compile Include="Controller\Parser\BoxOffice\JobBoxofficeForeignPageParser.cs" />
-    <Compile Include="Controller\Parser\BoxOffice\JobBoxofficeMainPageParser.cs" />
-    <Compile Include="Controller\Parser\BoxOffice\JobBoxofficeWeekendPageParser.cs" />
+    <Compile Include="Controller\Parser\BoxOffice\JobBoxofficeMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\FunctionCall.cs" />
     <Compile Include="Controller\Parser\imdbMovieParser\ConcurrentImdbMovieParser.cs" />
     <Compile Include="Controller\Parser\generalJobs\JobLoadImage.cs" />

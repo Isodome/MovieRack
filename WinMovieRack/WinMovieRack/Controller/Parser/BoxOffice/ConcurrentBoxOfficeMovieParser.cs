@@ -40,16 +40,12 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 		public override bool hasFinished(ThreadJob job) {
 			if (job == mainPageJob) {
 				mainPage = (job as JobWebPageDownload).getResult();
-				JobBoxofficeMainPageParser pjob = new JobBoxofficeMainPageParser(mainPage, movieData);
-				pjob.run();
+
 			} else if (job == weekEndPageJob) {
 				weekendPage = (job as JobWebPageDownload).getResult();
-				JobBoxofficeWeekendPageParser WEjob = new JobBoxofficeWeekendPageParser(weekendPage, movieData);
-				WEjob.run();
+
 			} else if (job == foreignPageJob) {
 				foreignPage = (job as JobWebPageDownload).getResult();
-				JobBoxofficeForeignPageParser fjob = new JobBoxofficeForeignPageParser(foreignPage, movieData);
-				fjob.run();
 			}
 
 			return false;

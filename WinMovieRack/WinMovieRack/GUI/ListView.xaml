@@ -4,8 +4,92 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="1024">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" Name="gridSplitter1" />
+        <ListView ItemsSource="{Binding movieAwards}" Name="oscarGrid" SelectionMode="Single" Grid.Column="2" Margin="0">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Year}" Header="Year" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=isWin}" Header="Result" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=category}" Header="Category" Width="auto" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TabControl Margin="0" Name="tabControl1">
+            <TabItem Header="Filter" Name="filter">
+                <Grid />
+            </TabItem>
+            <TabItem Header="Info" Name="movieInfo">
+                <Grid Width="auto" Margin="0">
+                    <ScrollViewer  Name="scrollViewer91" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0">
+                        <Grid Width="auto" Margin="0">
+                            <Border BorderBrush="Black" BorderThickness="1" Height="290" Margin="5,5,5,0" Name="border1" VerticalAlignment="Top" Width="auto">
+                                <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="10*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox Name="textBoxTitle" Foreground="White" Text="Title" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                    <Image Height="150" Name="image1" Stretch="Fill" Width="100" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Source="/WinMovieRack;component/Resources/nopicLIST.jpg" />
+                                    <StackPanel Grid.Row="1" Height="auto" Margin="110,5,5,0" Name="stackPanel2" VerticalAlignment="Top">
+                                        <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto">
+                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" />
+                                            <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" />
+                                        </StackPanel>
+                                        <StackPanel Height="auto" Name="stackPanel3" Width="auto">
+                                            <TextBox Height="auto" Name="originalTitleBox" Width="auto" Text="Original Title" FlowDirection="RightToLeft" FontStyle="Italic" Background="#FFF9F9F9" />
+                                        </StackPanel>
+                                        <StackPanel Height="auto" Name="stackPanel4" Width="auto" />
+                                        <StackPanel Height="auto" Name="stackPanel5" Width="auto" Orientation="Horizontal">
+                                            <TextBox Height="auto" Name="ratingLabelBox" Width="auto" Text="Rating:" Background="#FFF9F9F9" />
+                                            <TextBox Height="auto" Name="imdbRatingBox" Width="auto" Text="10/10" Background="#FFF9F9F9" />
+                                        </StackPanel>
+                                        <StackPanel Height="auto" Name="stackPanel6" Width="auto" Orientation="Horizontal"></StackPanel>
+                                    </StackPanel>
+                                    <TextBox Height="auto" Name="genreBox" Text="Genre: Action, Action, Action," Background="#FFF9F9F9" TextWrapping="Wrap" CharacterCasing="Upper" IsReadOnly="True" Width="auto" Margin="110,70,5,0" Grid.Row="1" VerticalAlignment="Top" />
+                                </Grid>
+                            </Border>
+
+                            <Border BorderBrush="Black" BorderThickness="1" Height="186" Margin="5,302,5,0" Name="border2" VerticalAlignment="Top">
+                                <Grid Height="auto" Name="grid2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="10*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBox Name="textBoxDetails" Foreground="White" Text="Details" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
+                                        <TextBox.Background>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF7198B2" Offset="0" />
+                                                <GradientStop Color="#FF044875" Offset="1" />
+                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                                <GradientStop Color="#FF044875" Offset="0.649" />
+                                            </LinearGradientBrush>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
