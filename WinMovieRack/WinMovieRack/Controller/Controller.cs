@@ -75,6 +75,7 @@ namespace WinMovieRack.Controller
             detailsViewController = new DetailsViewController(this, db);
             DetailsView dv = new DetailsView(detailsViewController);
             detailsViewController.setDetailsView(dv);
+			detailsViewController.loadCompleteMovieList();
 
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
