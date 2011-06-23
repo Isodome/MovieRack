@@ -5,7 +5,7 @@ using System.Text;
 using WinMovieRack.Model.Enums;
 
 namespace WinMovieRack.Model {
-    class TodoListData {
+    public class TodoListData {
         public int dbIdTodo;
         public TodoType todoType;
         public string parameter;
