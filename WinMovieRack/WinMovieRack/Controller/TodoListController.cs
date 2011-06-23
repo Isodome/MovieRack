@@ -21,6 +21,10 @@ namespace WinMovieRack.Controller {
         private ObservableCollection<WinMovieRack.GUI.TodoListBoxItem> todoList = new ObservableCollection<WinMovieRack.GUI.TodoListBoxItem>();
         private Dictionary<int, TodoListBoxItem> todoListItems = new Dictionary<int, TodoListBoxItem>();
 
+        private Action<TodoListData> addToListFunction;
+
+        private Dispatcher disp;
+
         public TodoListController(Controller c, SQLiteConnectorTodo dbTodo) {
             this.controller = c;
             this.dbTodo = dbTodo;
@@ -29,7 +33,16 @@ namespace WinMovieRack.Controller {
 
         public void setTodoList(TodoList todoView) {
             this.todoView = todoView;
-            todoView.todoListBox.ItemsSource = todoListItems;
+            todoView.todoListBox.ItemsSource = todoList;
+
+            disp = Dispatcher.CurrentDispatcher;
+            addToListFunction = (TodoListData todo) => disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
+                //System.Console.WriteLine(todo.description);
+                TodoListBoxItem boxItem = new TodoListBoxItem(todo);
+                todoList.Add(boxItem);
+                todoListItems.Add(boxItem.getId, boxItem);
+            })));
+
             updateTodoList();
         }
 
@@ -43,16 +56,17 @@ namespace WinMovieRack.Controller {
         }
 
         private void updateTodoList() {
-            todoList = new ObservableCollection<WinMovieRack.GUI.TodoListBoxItem>();
-            todoListItems = new Dictionary<int, TodoListBoxItem>();
-
-            List<TodoListData> todoListData = dbTodo.getCompleteTodoList();
-            foreach (TodoListData d in todoListData) {
-                TodoListBoxItem boxItem = new TodoListBoxItem(d);
-                todoList.Add(boxItem);
-                todoListItems.Add(boxItem.getId, boxItem);
-            }
+            disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
+                todoList.Clear();
+                todoListItems.Clear();
+            })));
+           
+            var t = new Thread(() => dbTodo.doActionOnCompleteTodoList(addToListFunction));
+            t.Start();
         }
 
+        public void update() {
+            updateTodoList();
+        }
     }
 }

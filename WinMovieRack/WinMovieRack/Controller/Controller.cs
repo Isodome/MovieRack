@@ -113,11 +113,30 @@ namespace WinMovieRack.Controller
                 case View.IMDB_BROWSER:
                     browserController.activated();
                     break;
+                case View.TODO_LIST:
+                    browserController.activated();
+                    break;
                 case View.LIST_VIEW:
 
                     break;
             }
             gui.changeToView(view);
+        }
+
+        public void updateView(View view) {
+            switch (view) {
+                case View.ACTORS_VIEW:
+                    break;
+                case View.DETAILS_VIEW:
+                    break;
+                case View.IMDB_BROWSER:
+                    break;
+                case View.LIST_VIEW:
+                    break;
+                case View.TODO_LIST:
+                    todoListController.update();
+                    break;
+            }
         }
 
 
