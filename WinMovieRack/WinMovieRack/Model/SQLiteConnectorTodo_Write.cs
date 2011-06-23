@@ -13,7 +13,7 @@ namespace WinMovieRack.Model {
 
         private const string commandInsertTodo = "INSERT INTO TodoList (todoType, parameter, title, description) VALUES(@todoType, @parameter, @title, @description)";
 
-        public void insertTodo(TodoListData todo) {
+        public int insertTodo(TodoListData todo) {
             SQLiteCommand command = new SQLiteCommand(connection);
             var param = new SQLiteParameter();
 
@@ -29,7 +29,12 @@ namespace WinMovieRack.Model {
             param = new SQLiteParameter("@description") { Value = todo.description };
             command.Parameters.Add(param);
 
-            int idTodo = executeCommandAndReturnID(command);
+            return executeCommandAndReturnID(command);
+        }
+
+        public void insertTodoWithActionOnTodo(TodoListData todo, Action<TodoListData> action) {
+            todo.dbIdTodo = insertTodo(todo);
+            action(todo);
         }
     }
 }

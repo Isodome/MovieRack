@@ -33,9 +33,9 @@ namespace WinMovieRack.Controller.Moviefillout {
                 foreach (Match m in mc) {
                     string idString = m.Groups["id"].Value;
                     TodoListData data = new TodoListData(TodoType.INSERT_MOVIE_BY_IMDB_ID, idString, "IMDB Movie importieren", "Den Film mit der ID " + idString + " importieren.");
-                    SQLiteConnectorTodo.db.insertTodo(data);
+                    SQLiteConnectorTodo.db.insertTodoWithActionOnTodo(data, TodoListController.addToListFunction);
                 }
-                Controller.controller.updateView(View.TODO_LIST);
+                //Controller.controller.updateView(View.TODO_LIST);
             }
 		}
 	}

@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Threading;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
+using WinMovieRack.Model.Enums;
+using WinMovieRack.Controller.Moviefillout;
 
 
 namespace WinMovieRack.Controller {
@@ -21,7 +23,7 @@ namespace WinMovieRack.Controller {
         private ObservableCollection<WinMovieRack.GUI.TodoListBoxItem> todoList = new ObservableCollection<WinMovieRack.GUI.TodoListBoxItem>();
         private Dictionary<int, TodoListBoxItem> todoListItems = new Dictionary<int, TodoListBoxItem>();
 
-        private Action<TodoListData> addToListFunction;
+        public static Action<TodoListData> addToListFunction;
 
         private Dispatcher disp;
 
@@ -46,20 +48,34 @@ namespace WinMovieRack.Controller {
             updateTodoList();
         }
 
+        public void doTodo(TodoListData todo) {
+            switch (todo.todoType) {
+                case TodoType.INSERT_MOVIE_BY_IMDB_ID:
+                    startInsertMovieByImdbId(todo.parameter);
+                    break;
+            }
+        }
+
+        private void startInsertMovieByImdbId(string imdbId) {
+            uint id = uint.Parse(imdbId);
+            MovieFillOut f = new MovieFillOut(id);
+            f.startFillout();
+        }
+
         public void activated() {
 
             if (firstLoad) {
                 firstLoad = false;
             }
 
-            updateTodoList();
+            // updateTodoList();
         }
 
         private void updateTodoList() {
-            disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
+            /*disp.BeginInvoke(DispatcherPriority.Background, (new Action(() => {
                 todoList.Clear();
                 todoListItems.Clear();
-            })));
+            })));*/
            
             var t = new Thread(() => dbTodo.doActionOnCompleteTodoList(addToListFunction));
             t.Start();

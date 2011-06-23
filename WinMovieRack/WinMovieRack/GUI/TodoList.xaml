@@ -10,7 +10,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ListBox Height="auto" HorizontalAlignment="Left" Margin="12,12,0,12" Name="todoListBox" VerticalAlignment="Stretch" Width="300">
+        <ListBox Height="auto" HorizontalAlignment="Left" Margin="12,12,0,12" Name="todoListBox" VerticalAlignment="Stretch" Width="300" SelectionMode="Extended">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="auto" Width="auto">
@@ -23,6 +23,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="1" Content="Add selected" Height="23" HorizontalAlignment="Left" Margin="12,12,0,12" Name="button1" VerticalAlignment="Top" Width="75"  />
+        <Button Grid.Row="1" Content="Run selected Jobs" Height="23" HorizontalAlignment="Left" Margin="12,12,0,12" Name="button1" VerticalAlignment="Top" Width="125" Click="runSelectedJobs_Click" />
     </Grid>
 </UserControl>

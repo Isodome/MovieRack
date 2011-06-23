@@ -26,5 +26,11 @@ namespace WinMovieRack.GUI {
             this.controller = contr;
         }
 
+        private void runSelectedJobs_Click(object sender, RoutedEventArgs e) {
+            foreach (TodoListBoxItem item in todoListBox.SelectedItems) {
+                controller.doTodo(item.todo);
+            }
+        }
+
     }
 }
