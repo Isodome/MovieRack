@@ -28,11 +28,11 @@ namespace WinMovieRack.Model {
 			Console.WriteLine("Opening Weekend: ${0}", openingWeekend);
 			Console.WriteLine("Franchises: ");
 			foreach (BOFranchise french in franchises) {
-				Console.WriteLine("ID: '{0}', Name: '{1}', Rank: {2}", french.id, french.name, french.rank);
+				Console.WriteLine("Name: '{1}', ID: '{0}',  Rank: {2}", french.id, french.name, french.rank);
 			}
 			Console.WriteLine("Genres: ");
 			foreach (BOGenre gen in genres) {
-				Console.WriteLine("ID: '{0}', Name: '{1}', Rank: {2}", gen.id, gen.name, gen.rank);
+				Console.WriteLine("Name: '{1}', ID: '{0}',  Rank: {2}", gen.id, gen.name, gen.rank);
 			}
 		}
 	}

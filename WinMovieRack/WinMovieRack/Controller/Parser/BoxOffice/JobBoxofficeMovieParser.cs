@@ -5,14 +5,17 @@ using System.Text;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.ThreadManagement;
 using System.Text.RegularExpressions;
+using WinMovieRack.Model.DataTypes;
 namespace WinMovieRack.Controller.Parser.BoxOffice {
 	public class JobBoxofficeMovieParser :ThreadJob {
 
 		private const string openingWeekendRegex = @"Weekend:</a></td><td>(?<we>(.|\n|\r)*?)</td>";
 		private const string numbersTableRegex = @"<div class=""mp_box_tab"">Total Lifetime Grosses</b></div>(?<num>(.|\n|\r)*?)</table";
 		private const string genreRegex = @"<div class=""mp_box_tab"">Genres</div>(?<genre>(.|\n|\r)*?)</table";
-		private const string tableCellRegex = @"<td(.|\n|\r)*?</td?";
-
+		private const string franchiseRegex = @"<div class=""mp_box_tab"">Franchises</div>(?<franchise>(.|\n|\r)*?)</table";
+		private const string tableCellRegex = @"<td(.|\n|\r)*?</td>";
+		private const string genreIDNameRegex = @"<a href=""/genres/chart/\?id=(?<id>.*?)\.htm"">(?<name>.*?)</a>";
+		private const string franchiseIDNameRegex = @"<a href=""/showdowns/chart/\?id=(?<id>.*?)\.htm"">(?<name>.*?)</a>";
 
 		private string mainPage;
 		private string weekendPage;
@@ -42,6 +45,10 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 		}
 
 		private void extractNumbers() {
+			movie.america = Symbols.NO_BO_NUMBER;
+			movie.foreign = Symbols.NO_BO_NUMBER;
+			movie.worldwide = Symbols.NO_BO_NUMBER;
+
 			Match m = Regex.Match(mainPage, numbersTableRegex);
 			string tmpstring = m.Groups["num"].Value;
 			MatchCollection mc = Regex.Matches(tmpstring, tableCellRegex);
@@ -93,11 +100,52 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 				return;
 			}
 			string genreTable = m.Groups["genre"].Value;
-			//TODO
+			MatchCollection mc = Regex.Matches(genreTable, tableCellRegex);
+
+
+			for (int i = 0 ; i < mc.Count ; i++) {
+				string cell = mc[i].Value;
+				Match match = Regex.Match(cell, genreIDNameRegex);
+				if (match.Success) {
+					int rank;
+					string nextName = match.Groups["name"].Value.Trim();
+					nextName = Regex.Replace(nextName, @"<.*?>", "").Trim();
+					string nextID = match.Groups["id"].Value;
+					i++;
+					cell = mc[i].Value;
+					string rankstring = Regex.Replace(cell, @"<.*?>", "").Trim();
+					if (int.TryParse(rankstring, out rank)) {
+						movie.genres.Add(new BOGenre(nextName, nextID, rank));
+					}
+				}
+			}
 		}
 
 		private void extractFranchises() {
+			Match m = Regex.Match(mainPage, franchiseRegex);
+			if (!m.Success) {
+				return;
+			}
+			string genreTable = m.Groups["franchise"].Value;
+			MatchCollection mc = Regex.Matches(genreTable, tableCellRegex);
 
+
+			for (int i = 0 ; i < mc.Count ; i++) {
+				string cell = mc[i].Value;
+				Match match = Regex.Match(cell, franchiseIDNameRegex);
+				if (match.Success) {
+					int rank;
+					string nextName = match.Groups["name"].Value.Trim();
+					nextName = Regex.Replace(nextName, @"<.*?>", "").Trim();
+					string nextID = match.Groups["id"].Value;
+					i++;
+					cell = mc[i].Value;
+					string rankstring = Regex.Replace(cell, @"<.*?>", "").Trim();
+					if (int.TryParse(rankstring, out rank)) {
+						movie.franchises.Add(new BOFranchise(nextName, nextID, rank));
+					}
+				}
+			}
 		}
 
 	}
