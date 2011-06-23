@@ -16,6 +16,7 @@ namespace WinMovieRack.Controller
 
         private WinMovieRack.GUI.GUI gui;
         public SQLiteConnector db;
+        public SQLiteConnectorTodo dbTodo;
         public static Controller controller;
         private App app;
 
@@ -53,7 +54,7 @@ namespace WinMovieRack.Controller
             IMDBBrowser browser = new IMDBBrowser(browserController);
             browserController.setBrowser(browser);
 
-            todoListController = new TodoListController(this);
+            todoListController = new TodoListController(this, dbTodo);
             TodoList todoList = new TodoList(todoListController);
             todoListController.setTodoList(todoList);
 
@@ -82,6 +83,8 @@ namespace WinMovieRack.Controller
         {
             db = new SQLiteConnector();
             db.initDb();
+            dbTodo = new SQLiteConnectorTodo();
+            dbTodo.initDb();
             PictureHandler.initialize();
         }
 

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.Controller;
+using WinMovieRack.Model;
 
 namespace WinMovieRack.GUI {
     /// <summary>
