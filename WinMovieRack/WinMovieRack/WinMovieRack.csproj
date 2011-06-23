@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="Model\DataTypes\Award.cs" />
     <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResultCollection.cs" />
+    <Compile Include="Model\DataTypes\BOForeignInfo.cs" />
     <Compile Include="Model\DataTypes\BOFranchise.cs" />
     <Compile Include="Model\DataTypes\BOGenre.cs" />
     <Compile Include="Model\DataTypes\BoxofficeMovie.cs" />
