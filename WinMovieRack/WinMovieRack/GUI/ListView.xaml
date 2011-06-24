@@ -6,23 +6,66 @@
              xmlns:local="clr-namespace:WinMovieRack.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="2000" d:DesignWidth="1024">
-    <Grid>
+    <UserControl.Resources>
+        <DataTemplate x:Key="coverColumn">
+            <Grid Height="84" Width="auto">
+                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = getPicture}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="regisseurColumn">
+            <Grid Height="84" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="starsColumn">
+            <Grid Height="84" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+        <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Name="gridSplitter1" />
-        <ListView ItemsSource="{Binding movieAwards}" Name="oscarGrid" SelectionMode="Single" Grid.Column="2" Margin="0">
+        
+            
+        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0">
             <ListView.View>
-                <GridView AllowsColumnReorder="False">
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Year}" Header="Year" Width="auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=isWin}" Header="Result" Width="auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=category}" Header="Category" Width="auto" />
+                <GridView AllowsColumnReorder="True">
+                    <GridView.ColumnHeaderContextMenu>
+                               <ContextMenu Name="InvoiceDetailsList" StaysOpen="true" Background="WhiteSmoke">
+                                <ContextMenu.BitmapEffect>
+                                    <BitmapEffectGroup/>
+                                </ContextMenu.BitmapEffect>
+                                <MenuItem Header="Edit" Name="EditIVD" />
+                                <MenuItem Header="Remove" Name="RemoveIVD"  />
+                                </ContextMenu>
+                            </GridView.ColumnHeaderContextMenu>
+                    <GridViewColumn Header="Cover" Width="auto" CellTemplate="{StaticResource coverColumn}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"   />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=originalTitle}" Header="Original Title" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=year}" Header="Year" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=regisseur}" Header="Regisseur" Width="auto" CellTemplate="{StaticResource regisseurColumn}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=stars}" Header="Stars" Width="auto" CellTemplate="{StaticResource starsColumn}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=runtime}" Header="Runtime" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=imdbRating}" Header="IMDB Rating" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=lastSeen}" Header="Last Seen" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=seenCount}" Header="Seen" Width="auto"  />
                 </GridView>
             </ListView.View>
         </ListView>
+        
         <TabControl Margin="0" Name="tabControl1">
             <TabItem Header="Filter" Name="filterTabItem">
                 <Grid Name="gridFilter">
@@ -57,28 +100,26 @@
                                         <Setter Property="BorderBrush" Value="#D9D9D9"/>
                                     </MultiTrigger>
                                 </Style.Triggers>
-
                                 <Style.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="2"/>
                                     </Style>
                                 </Style.Resources>
                             </Style>
-
-
-                                <!-- Brushes for the selected item -->
-                                <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
-                                    <GradientStop Color="#FFDCEBFC" Offset="0"/>
-                                    <GradientStop Color="#FFC1DBFC" Offset="1"/>
-                                </LinearGradientBrush>
-                                <LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint="0,1" StartPoint="0,0">
-                                    <GradientStop Color="#FFF8F8F8" Offset="0"/>
-                                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
-                                </LinearGradientBrush>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
-
+                            <!-- Brushes for the selected item -->
+                            <LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint="0,1" StartPoint="0,0">
+                                <GradientStop Color="#FFDCEBFC" Offset="0"/>
+                                <GradientStop Color="#FFC1DBFC" Offset="1"/>
+                            </LinearGradientBrush>
+                            <LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint="0,1" StartPoint="0,0">
+                                <GradientStop Color="#FFF8F8F8" Offset="0"/>
+                                <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                            </LinearGradientBrush>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
                         </TreeView.Resources>
+
+
                         <TreeViewItem Header="Show All" />
                         <TreeViewItem Header="Title" Name="filterTitle">
                             <TreeViewItem Header="A" Name="a" />

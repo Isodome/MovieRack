@@ -123,12 +123,8 @@ namespace WinMovieRack.GUI
 
                     RoutedEventArgs newItemArgs = new RoutedEventArgs(UpdateOverItemEvent);
                     currentPosition.RaiseEvent(newItemArgs);
-
                 }
             }
         }
-
-
     }
-
 }

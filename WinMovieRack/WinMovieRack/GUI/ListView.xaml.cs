@@ -44,6 +44,11 @@ namespace WinMovieRack.GUI
             System.Windows.Forms.Application.EnableVisualStyles();
             SetWindowTheme(test.Handle, "Explorer", null);
         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Test"); 
+        }
     }
 
 }

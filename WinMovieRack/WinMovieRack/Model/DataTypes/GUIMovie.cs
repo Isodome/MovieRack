@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace WinMovieRack.Model
 {
@@ -189,6 +190,24 @@ namespace WinMovieRack.Model
             }
 
 
+
+        }
+
+        public string getTitle
+        {
+            get { return title; }
+            set { title = value; }
+        }
+        public BitmapImage getPicture
+        {
+            get
+            {
+                BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.BeginInit();
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.PREVIEW));
+                posterBitmap.EndInit();
+                return posterBitmap;
+            }
 
         }
     }

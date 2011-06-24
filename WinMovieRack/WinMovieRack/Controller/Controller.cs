@@ -117,7 +117,7 @@ namespace WinMovieRack.Controller
                     browserController.activated();
                     break;
                 case View.LIST_VIEW:
-
+                    listViewController.loadlistView();
                     break;
             }
             gui.changeToView(view);
