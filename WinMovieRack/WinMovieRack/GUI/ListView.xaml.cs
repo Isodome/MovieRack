@@ -33,22 +33,18 @@ namespace WinMovieRack.GUI
             this.controller = lvc;
             System.Windows.Forms.Integration.WindowsFormsHost host = new System.Windows.Forms.Integration.WindowsFormsHost();
             System.Windows.Forms.TreeView test = new System.Windows.Forms.TreeView();
-            host.Child= test;
+            host.Child = test;
             test.Nodes.Add(new TreeNode("Test"));
             test.Nodes.Add(new TreeNode("Test1"));
             test.Nodes.Add(new TreeNode("Test2"));
             test.Nodes.Add(new TreeNode("Test3"));
             test.Nodes.Add(new TreeNode("Test4"));
-            gridFilter.Children.Add(host);
+           // gridFilter.Children.Add(host);
             System.Windows.Forms.Integration.WindowsFormsHost.EnableWindowsFormsInterop();
             System.Windows.Forms.Application.EnableVisualStyles();
-            SetWindowTheme(test.Handle, "Explorer", null); 
+            SetWindowTheme(test.Handle, "Explorer", null);
         }
-
-
-
+    }
 
 }
 
-        }
-    

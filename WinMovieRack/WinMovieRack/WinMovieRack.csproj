@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="GUI\MRListBoxItem.cs" />
     <Compile Include="GUI\ListComparerTest.cs" />
+    <Compile Include="GUI\MyTreeViewHelper.cs" />
     <Compile Include="GUI\Seen.xaml.cs">
       <DependentUpon>Seen.xaml</DependentUpon>
     </Compile>
