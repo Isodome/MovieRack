@@ -8,7 +8,7 @@
              d:DesignHeight="2000" d:DesignWidth="1024">
     <UserControl.Resources>
         <DataTemplate x:Key="coverColumn">
-            <Grid Height="84" Width="auto">
+            <Grid Height="auto" Width="auto">
                 <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = getPicture}" />
             </Grid>
         </DataTemplate>
@@ -40,7 +40,7 @@
         <GridSplitter Grid.Column="1" Name="gridSplitter1" />
         
             
-        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0">
+        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0" SelectionChanged="movieList_SelectionChanged">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridView.ColumnHeaderContextMenu>
@@ -55,13 +55,13 @@
                     <GridViewColumn Header="Cover" Width="auto" CellTemplate="{StaticResource coverColumn}"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"   />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=originalTitle}" Header="Original Title" Width="auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=year}" Header="Year" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getYear}" Header="Year" Width="auto" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=regisseur}" Header="Regisseur" Width="auto" CellTemplate="{StaticResource regisseurColumn}" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=stars}" Header="Stars" Width="auto" CellTemplate="{StaticResource starsColumn}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=runtime}" Header="Runtime" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=imdbRating}" Header="IMDB Rating" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=lastSeen}" Header="Last Seen" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=seenCount}" Header="Seen" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getRuntime}" Header="Runtime" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getImdbRating}" Header="IMDB Rating" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getLastSeen}" Header="Last Seen" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getSeenCount}" Header="Seen" Width="auto"  />
                 </GridView>
             </ListView.View>
         </ListView>
@@ -182,7 +182,7 @@
                                     <Image Height="150" Name="image1" Stretch="Fill" Width="100" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Source="/WinMovieRack;component/Resources/nopicLIST.jpg" />
                                     <StackPanel Grid.Row="1" Height="auto" Margin="110,5,5,0" Name="stackPanel2" VerticalAlignment="Top">
                                         <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto">
-                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" />
+                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" />
                                             <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" BorderThickness="0" />
                                         </StackPanel>
                                         <StackPanel Height="auto" Name="stackPanel3" Width="auto">
@@ -261,7 +261,7 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Expander Grid.Row="1" Header="expander1" Margin="0,0,0,0" Name="expander1">
+                                    <Expander Grid.Row="1" Margin="0,0,0,0" Name="expander1">
                                         <Grid>
                                             <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                         </Grid>

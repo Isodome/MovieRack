@@ -196,7 +196,6 @@ namespace WinMovieRack.Model
         public string getTitle
         {
             get { return title; }
-            set { title = value; }
         }
         public BitmapImage getPicture
         {
@@ -204,11 +203,43 @@ namespace WinMovieRack.Model
             {
                 BitmapImage posterBitmap = new BitmapImage();
                 posterBitmap.BeginInit();
-                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.PREVIEW));
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.LIST));
                 posterBitmap.EndInit();
                 return posterBitmap;
             }
+        }
 
+        public string getOriginalTitle
+        {
+            get { return originalTitle; }
+        }
+        public string getRuntime
+        {
+            get { return runtime; }
+        }
+        public string getPlot
+        {
+            get { return plot; }
+        }
+        public string getYear
+        {
+            get { return year; }
+        }
+        public string getImdbRating
+        {
+            get { return imdbRating; }
+        }
+        public string getimdbTop250
+        {
+            get { return imdbTop250; }
+        }
+        public string getSeenCount
+        {
+            get { return seenCount; }
+        }
+        public string getLastSeen
+        {
+            get { return lastSeen.ToShortDateString() ; }
         }
     }
 }

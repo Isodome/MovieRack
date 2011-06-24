@@ -31,5 +31,12 @@ namespace WinMovieRack.Controller
           completeMovieList= db.getCompleteMovieInfo();
           view.movieList.ItemsSource = completeMovieList;
        }
+
+       public void getGUIMovie(object sender)
+       {
+           GUIMovie movie = (GUIMovie)sender;
+           
+       }
+
     }
 }
