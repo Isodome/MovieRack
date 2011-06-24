@@ -33,11 +33,11 @@
     </UserControl.Resources>
         <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column="1" Name="gridSplitter1" />
+        <GridSplitter Grid.Column="1" Name="gridSplitter1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         
             
         <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0" SelectionChanged="movieList_SelectionChanged">
