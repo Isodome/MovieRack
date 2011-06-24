@@ -48,19 +48,28 @@ namespace WinMovieRack.GUI {
 		private void importButton_Click(object sender, RoutedEventArgs e) {
 			TabItem current = importTypeSelector.SelectedItem as TabItem;
 			if (current == tabByImdbIds) {
-				importByImdbIds();
+				importByImdbIds(false);
 			}
 		}
 
-		private void importByImdbIds() {
+
+        private void todoButton_Click(object sender, RoutedEventArgs e) {
+			TabItem current = importTypeSelector.SelectedItem as TabItem;
+			if (current == tabByImdbIds) {
+                importByImdbIds(true);
+			}
+		}
+
+
+		private void importByImdbIds(Boolean importToTodoList) {
 			string path = imdbidsFileSource.Text;
 			if (!File.Exists(path)) {
 				MessageBox.Show("The File you selected does't exist");
 			} else {
 				FileInfo file = new FileInfo(path);
 				ImdbIdsImporter importer = new ImdbIdsImporter(file.OpenText().ReadToEnd());
-				Thread t = new Thread(new ThreadStart(importer.import));
-				t.Start();
+				Thread t = new Thread(new ParameterizedThreadStart(importer.import));
+                t.Start(importToTodoList);
 				this.Close();
 			}
 		}

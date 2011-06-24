@@ -156,6 +156,7 @@
     </Compile>
     <Compile Include="Model\DataTypes\Award.cs" />
     <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResultCollection.cs" />
+    <Compile Include="Model\DataTypes\BOForeignInfo.cs" />
     <Compile Include="Model\DataTypes\BOFranchise.cs" />
     <Compile Include="Model\DataTypes\BOGenre.cs" />
     <Compile Include="Model\DataTypes\BoxofficeMovie.cs" />
@@ -166,17 +167,23 @@
     <Compile Include="Model\DataTypes\ImdbPerson.cs" />
     <Compile Include="Model\DataTypes\Movie.cs" />
     <Compile Include="Model\Enums\MovieEnum.cs" />
+    <Compile Include="Model\Enums\TodoType.cs" />
     <Compile Include="Model\MRListData.cs" />
     <Compile Include="Model\Enums\PersonEnum.cs" />
     <Compile Include="Model\MRSeenData.cs" />
     <Compile Include="Model\PictureHandler.cs" />
     <Compile Include="Model\SQLiteConnector.cs" />
     <Compile Include="Model\DataTypes\ImdbMovie.cs" />
+    <Compile Include="Model\SQLiteConnectorTodo.cs" />
+    <Compile Include="Model\SQLiteConnectorTodo_Delete.cs" />
+    <Compile Include="Model\SQLiteConnectorTodo_Read.cs" />
+    <Compile Include="Model\SQLiteConnectorTodo_Write.cs" />
     <Compile Include="Model\SQLiteConnector_Delete.cs" />
     <Compile Include="Model\SQLiteConnector_Read.cs" />
     <Compile Include="Model\SQLiteConnector_Write.cs" />
     <Compile Include="Model\Symbols.cs" />
     <Compile Include="Model\Enums\PosterSize.cs" />
+    <Compile Include="Model\TodoListData.cs" />
     <Compile Include="Resources\Localization\ListEditor\ListEditorStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -16,6 +16,7 @@ namespace WinMovieRack.Controller
 
         private WinMovieRack.GUI.GUI gui;
         public SQLiteConnector db;
+        public SQLiteConnectorTodo dbTodo;
         public static Controller controller;
         private App app;
 
@@ -35,10 +36,19 @@ namespace WinMovieRack.Controller
             controller = this;
             ServicePointManager.DefaultConnectionLimit = 65000;
 
-            SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
-            b.run();
-            b.getResult().printToConsole();
-
+			if (System.Environment.MachineName.Equals("DOMI-PC")) {
+				SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
+				b.run();
+				b.getResult().printToConsole();
+				b = new SerialBoxOfficeMovieParser("abduction11");
+				b.run();
+				b.getResult().printToConsole();
+				b = new SerialBoxOfficeMovieParser("inception");
+				b.run();
+				b.getResult().printToConsole();
+			} else {
+				Console.WriteLine("Nicht auf DOMI-PC sonder auf {0}, deswegen jetzt kein BO Parsen", System.Environment.MachineName);
+			}
         }
 
         public void func(ConcThreadJobMaster sender)
@@ -53,7 +63,7 @@ namespace WinMovieRack.Controller
             IMDBBrowser browser = new IMDBBrowser(browserController);
             browserController.setBrowser(browser);
 
-            todoListController = new TodoListController(this);
+            todoListController = new TodoListController(this, dbTodo);
             TodoList todoList = new TodoList(todoListController);
             todoListController.setTodoList(todoList);
 
@@ -66,6 +76,7 @@ namespace WinMovieRack.Controller
             detailsViewController = new DetailsViewController(this, db);
             DetailsView dv = new DetailsView(detailsViewController);
             detailsViewController.setDetailsView(dv);
+			detailsViewController.loadCompleteMovieList();
 
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
@@ -82,6 +93,8 @@ namespace WinMovieRack.Controller
         {
             db = new SQLiteConnector();
             db.initDb();
+            dbTodo = new SQLiteConnectorTodo();
+            dbTodo.initDb();
             PictureHandler.initialize();
         }
 
@@ -100,11 +113,30 @@ namespace WinMovieRack.Controller
                 case View.IMDB_BROWSER:
                     browserController.activated();
                     break;
+                case View.TODO_LIST:
+                    browserController.activated();
+                    break;
                 case View.LIST_VIEW:
 
                     break;
             }
             gui.changeToView(view);
+        }
+
+        public void updateView(View view) {
+            switch (view) {
+                case View.ACTORS_VIEW:
+                    break;
+                case View.DETAILS_VIEW:
+                    break;
+                case View.IMDB_BROWSER:
+                    break;
+                case View.LIST_VIEW:
+                    break;
+                case View.TODO_LIST:
+                    todoListController.update();
+                    break;
+            }
         }
 
 

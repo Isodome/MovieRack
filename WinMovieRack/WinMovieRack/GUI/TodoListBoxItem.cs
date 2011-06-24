@@ -2,34 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WinMovieRack.Model;
 
 namespace WinMovieRack.GUI {
     class TodoListBoxItem {
-        public int id;
-        public string name;
-        public string description;
-
-        public TodoListBoxItem(int id, string name, string description)
+        public TodoListData todo;
+        public TodoListBoxItem(TodoListData todo)
         {
-            this.id = id;
-            this.name = name;
-            this.description = description;
+            this.todo = todo;
         }
 
         public string labelOne
         {
-            get { return name; }
-            set { name = value; }
+            get { return todo.title; }
+            set { todo.title = value; }
         }
         public string labelTwo
         {
-            get { return description; }
-            set { description = value; }
+            get { return todo.description; }
+            set { todo.description = value; }
         }
 
         public int getId
         {
-            get { return id; }
+            get { return todo.dbIdTodo; }
         }
 
     }

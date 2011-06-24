@@ -32,7 +32,7 @@
         </TabControl>
         <StackPanel Grid.Row="2" FlowDirection="LeftToRight" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Padding="4" Height="auto"  Content="Cancel" Name="cancelButton" Width="Auto" Margin="4" Click="cancelButton_Click" VerticalAlignment="Center"/>
-            <Button Padding="4" Content="Add To Todo List"  Name="doLaterButton" Width="Auto" Margin="4" VerticalAlignment="Center"/>
+            <Button Padding="4" Content="Add To Todo List"  Name="doLaterButton" Width="Auto" Margin="4" VerticalAlignment="Center" Click="todoButton_Click"/>
             <Button Padding="4" Content="Import Now" Name="importButton" Width="Auto" Margin="4" Click="importButton_Click" VerticalAlignment="Center" />
         </StackPanel>
     </Grid>

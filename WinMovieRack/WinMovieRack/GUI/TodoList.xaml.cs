@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WinMovieRack.Controller;
+using WinMovieRack.Model;
 
 namespace WinMovieRack.GUI {
     /// <summary>
@@ -23,6 +24,12 @@ namespace WinMovieRack.GUI {
         public TodoList(TodoListController contr) {
             InitializeComponent();
             this.controller = contr;
+        }
+
+        private void runSelectedJobs_Click(object sender, RoutedEventArgs e) {
+            foreach (TodoListBoxItem item in todoListBox.SelectedItems) {
+                controller.doTodo(item.todo);
+            }
         }
 
     }
