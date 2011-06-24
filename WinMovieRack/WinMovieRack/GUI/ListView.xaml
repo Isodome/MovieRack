@@ -22,19 +22,36 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
         <TabControl Margin="0" Name="tabControl1">
-            <TabItem Header="Filter" Name="filter">
-                <Grid>
-                    <TreeView Margin="0" Name="treeView1" >
-                        <TreeViewItem Header="Cold Drinks">
-                            <TreeViewItem Header="Coke"></TreeViewItem>
-                            <TreeViewItem Header="Pepsi"></TreeViewItem>
-                            <TreeViewItem Header="Orange Juice"></TreeViewItem>
-                            <TreeViewItem Header="Milk"></TreeViewItem>
-                            <TreeViewItem Header="Iced Tea"></TreeViewItem>
-                            <TreeViewItem Header="Mango Shake"></TreeViewItem>
+            <TabItem Header="Filter" Name="filterTabItem">
+                <Grid Name="gridFilter">
+                    <TreeView Margin="0" Name="filterTreeView" UseLayoutRounding="True" >
+                        <TreeViewItem Header="Show All" />
+                        <TreeViewItem Header="Title" Name="filterTitle">
+                            <TreeViewItem Header="A" Name="a" />
+                            <TreeViewItem Header="B"/>
+                            <TreeViewItem Header="C"/>
+                            <TreeViewItem Header="D"/>
                         </TreeViewItem>
+                        <TreeViewItem Header="Year" Name="filterYear">
+                            <TreeViewItem Header="2000"/>
+                            <TreeViewItem Header="2001"/>
+                            <TreeViewItem Header="70er"/>
+                            <TreeViewItem Header="80er"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Genres" Name="filterGenre">
+                            <TreeViewItem Header="Action"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Countrys" Name="filterCountry">
+                            <TreeViewItem Header="German"/>
+                            <TreeViewItem Header="English"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Runtime" Name="filterRuntime"/>
+                        <TreeViewItem Header="Rating" Name="filterRating"/>
+                        <TreeViewItem Header="MPAA" Name="filterMPAA"/>
+                        <TreeViewItem Header="Not Seen Since" Name="filterSeen"/>
+                        <TreeViewItem Header="Added Since" Name="filterAdded"/>
+                        <TreeViewItem Header="Own Lists" Name="filterOwnList"/>
                     </TreeView>
                 </Grid>
             </TabItem>
@@ -154,7 +171,7 @@
                                         </Grid>
                                     </Expander>
                                 </Grid>
-                           
+
                             </Border>
                             <Border BorderBrush="Silver" BorderThickness="1" Margin="5"  Name="border4" Grid.Row="3">
                                 <Grid>
@@ -203,7 +220,7 @@
                                     </Expander>
                                 </Grid>
                             </Border>
-                           
+
                             <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border6" Grid.Row="5">
                                 <Grid>
                                     <Grid.RowDefinitions>
