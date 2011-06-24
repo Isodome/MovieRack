@@ -15,8 +15,8 @@
             <Button Content="Yesterday" Height="auto" Name="yesterdayButton" Width="auto" Margin="0,5,0,0" Click="yesterdayButton_Click" HorizontalAlignment="Left" />
             <ToggleButton Content="Date" Height="auto" Name="dateButton" Width="auto" Margin="0,5,0,0" HorizontalAlignment="Left" ClickMode="Release" Checked="dateButton_Checked" Unchecked="dateButton_Unchecked" />
             <StackPanel Height="auto" Name="stackPanel3" Width="auto" Orientation="Horizontal">
-                <Button Content="Save" Height="Auto" Name="saveButton" Width="auto" Padding="0" Click="saveButton_Click" Margin="0,40,0,0" />
-                <Button Content="Chancel" Height="Auto" Name="chancelButton" Width="Auto" Margin="10,40,0,0" IsCancel="True" />
+                <Button Content="Save" Height="Auto" Name="saveButton" Width="auto" Padding="2" Click="saveButton_Click"  Margin="0,40,0,0" />
+                <Button Content="Cancel" Height="Auto" Name="chancelButton" Width="Auto" Margin="10,40,0,0" IsCancel="True" Padding="2" />
             </StackPanel>
         </StackPanel>
     </Grid>
