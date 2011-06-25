@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WinMovieRack.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="2000" d:DesignWidth="1024">
+             d:DesignHeight="600" d:DesignWidth="1024">
     <UserControl.Resources>
         <DataTemplate x:Key="coverColumn">
-            <Grid Height="84" Width="auto">
+            <Grid Height="auto" Width="auto">
                 <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = getPicture}" />
             </Grid>
         </DataTemplate>
@@ -30,43 +30,60 @@
                 <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
             </Grid>
         </DataTemplate>
+
     </UserControl.Resources>
-        <Grid>
+
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"  MinWidth="150"/>
+            <ColumnDefinition Width="1*" MinWidth="250"/>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Name="gridSplitter1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        
-            
-        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0">
+
+
+        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0" SelectionChanged="movieList_SelectionChanged">
+            <ListView.ContextMenu>
+                <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
+                    <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >
+                        <MenuItem.Icon>
+                            <Image Name="contextMoviePoster"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Seen" Name="menuItemSeen" Click="menuItemSeen_Click">
+                    </MenuItem>
+                    <MenuItem Header="Add to List">
+                    </MenuItem>
+                    <MenuItem Header="Rent to">
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridView.ColumnHeaderContextMenu>
-                               <ContextMenu Name="InvoiceDetailsList" StaysOpen="true" Background="WhiteSmoke">
-                                <ContextMenu.BitmapEffect>
-                                    <BitmapEffectGroup/>
-                                </ContextMenu.BitmapEffect>
-                                <MenuItem Header="Edit" Name="EditIVD" />
-                                <MenuItem Header="Remove" Name="RemoveIVD"  />
-                                </ContextMenu>
-                            </GridView.ColumnHeaderContextMenu>
+                        <ContextMenu Name="InvoiceDetailsList" StaysOpen="true" Background="WhiteSmoke">
+                            <ContextMenu.BitmapEffect>
+                                <BitmapEffectGroup/>
+                            </ContextMenu.BitmapEffect>
+                            <MenuItem Header="Edit" Name="EditIVD" />
+                            <MenuItem Header="Remove" Name="RemoveIVD"  />
+                        </ContextMenu>
+                    </GridView.ColumnHeaderContextMenu>
                     <GridViewColumn Header="Cover" Width="auto" CellTemplate="{StaticResource coverColumn}"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"   />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"  TextSearch.TextPath="getTitle" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=originalTitle}" Header="Original Title" Width="auto" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=year}" Header="Year" Width="auto" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getYear}" Header="Year" Width="auto" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=regisseur}" Header="Regisseur" Width="auto" CellTemplate="{StaticResource regisseurColumn}" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=stars}" Header="Stars" Width="auto" CellTemplate="{StaticResource starsColumn}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=runtime}" Header="Runtime" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=imdbRating}" Header="IMDB Rating" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=lastSeen}" Header="Last Seen" Width="auto"  />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=seenCount}" Header="Seen" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getRuntime}" Header="Runtime" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getImdbRating}" Header="IMDB Rating" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getLastSeen}" Header="Last Seen" Width="auto"  />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getSeenCount}" Header="Seen" Width="auto"  />
                 </GridView>
             </ListView.View>
         </ListView>
-        
-        <TabControl Margin="0" Name="tabControl1">
+
+        <TabControl Margin="0" Name="tabControl">
             <TabItem Header="Filter" Name="filterTabItem">
                 <Grid Name="gridFilter">
                     <TreeView Margin="0" Name="filterTreeView" UseLayoutRounding="True" >
@@ -149,200 +166,35 @@
                     </TreeView>
                 </Grid>
             </TabItem>
-
-
             <TabItem Header="Info" Name="movieInfo">
-                <Grid Width="auto" Margin="0">
-                    <ScrollViewer  Name="scrollViewer91" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0">
-                        <Grid Margin="0">
+                <Grid Name="infoGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+                    <Grid Name="noMovie"> 
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="5" Name="border1" Width="auto" Grid.RowSpan="1">
+                        <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Border BorderBrush="Black" BorderThickness="1" Margin="5,5,5,5" Name="border1" Width="auto">
-                                <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="10*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox Name="textBoxTitle" Foreground="White" Text="Title" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0" IsReadOnly="True" AutoWordSelection="True">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <Image Height="150" Name="image1" Stretch="Fill" Width="100" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Source="/WinMovieRack;component/Resources/nopicLIST.jpg" />
-                                    <StackPanel Grid.Row="1" Height="auto" Margin="110,5,5,0" Name="stackPanel2" VerticalAlignment="Top">
-                                        <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto">
-                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" />
-                                            <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel3" Width="auto">
-                                            <TextBox Height="auto" Name="originalTitleBox" Width="auto" Text="Original Title" FlowDirection="RightToLeft" FontStyle="Italic" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel4" Width="auto" />
-                                        <StackPanel Height="auto" Name="stackPanel5" Width="auto" Orientation="Horizontal">
-                                            <TextBox Height="auto" Name="ratingLabelBox" Width="auto" Text="Rating:" Background="#FFF9F9F9" BorderThickness="0" FontWeight="Bold" />
-                                            <TextBox Height="auto" Name="imdbRatingBox" Width="auto" Text="10/10" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel7" Orientation="Horizontal">
-                                            <TextBox Height="auto" Name="genreLabelBox" Text="Genre: " Background="#FFF9F9F9" CharacterCasing="Upper" IsReadOnly="True" Width="auto" BorderThickness="0" FontWeight="Bold" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel6" Width="auto" Orientation="Horizontal"></StackPanel>
-                                    </StackPanel>
-                                    <TextBox Height="34" Name="genreBox" Text="Action, Action, Action," Background="#FFF9F9F9" TextWrapping="Wrap" CharacterCasing="Upper" IsReadOnly="True" Width="110" BorderThickness="0" Margin="150,63,5,0" Grid.Row="1" VerticalAlignment="Top" />
-                                </Grid>
-                            </Border>
-
-                            <Border BorderBrush="Black" BorderThickness="1" Margin="5" Name="border2" Grid.Row="1">
-                                <Grid Height="auto" Name="grid2">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox Name="textBoxDetails" Foreground="White" Text="Details" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="5,10,0,5" Name="stackPanel8" Width="auto">
-                                        <Label Content="Label" Height="Auto" Name="label1" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label2" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label3" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label5" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label4" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label11" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label12" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label13" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label14" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label15" Padding="3" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="1" Margin="65,10,5,5" Name="stackPanel9">
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label6" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label7" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label8" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label9" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label10" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label16" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label17" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label18" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label19" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label20" Padding="3" />
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-
-                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border3" Grid.Row="2">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox Name="textboxProduction" Foreground="White" Text="Plot" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <Expander Grid.Row="1" Header="expander1" Margin="0,0,0,0" Name="expander1">
-                                        <Grid>
-                                            <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                        </Grid>
-                                    </Expander>
-                                </Grid>
-
-                            </Border>
-                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5"  Name="border4" Grid.Row="3">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBoxStars" Text="Stars" TextWrapping="Wrap">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander2" Grid.Row="1">
-                                        <Grid>
-                                            <ListBox Name="listBox2" Width="auto" Margin="0" />
-                                        </Grid>
-                                    </Expander>
-                                </Grid>
-                            </Border>
-
-                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border5" Grid.Row="4">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0" Name="textBox1" Text="Production" TextWrapping="Wrap">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander3" Grid.Row="1">
-                                        <Grid>
-                                            <ListBox Name="listBox3" Width="auto" Margin="0" />
-                                        </Grid>
-                                    </Expander>
-                                </Grid>
-                            </Border>
-
-                            <Border BorderBrush="Silver" BorderThickness="1" Margin="5" Name="border6" Grid.Row="5">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="25" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBox2" Text="Cast" TextWrapping="Wrap">
-                                        <TextBox.Background>
-                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                <GradientStop Color="#FF7198B2" Offset="0" />
-                                                <GradientStop Color="#FF044875" Offset="1" />
-                                                <GradientStop Color="#FF668FAB" Offset="0.351" />
-                                                <GradientStop Color="#FF044875" Offset="0.649" />
-                                            </LinearGradientBrush>
-                                        </TextBox.Background>
-                                    </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander4" Grid.Row="1" Width="auto">
-                                        <Grid>
-                                            <ListBox Margin="0" Name="listBox1" Width="auto" />
-                                        </Grid>
-                                    </Expander>
-                                </Grid>
-                            </Border>
+                            <TextBox Name="textBoxTitle" Foreground="White" Text="MovieRack" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0" IsReadOnly="True" AutoWordSelection="True">
+                                <TextBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF7198B2" Offset="0" />
+                                        <GradientStop Color="#FF044875" Offset="1" />
+                                        <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                        <GradientStop Color="#FF044875" Offset="0.649" />
+                                    </LinearGradientBrush>
+                                </TextBox.Background>
+                            </TextBox>
+                            <TextBox Grid.Row="1" Margin="10" Name="textBox1" TextAlignment="Center" Text="Please Choose a Movie" IsReadOnly="True" TextWrapping="Wrap" Background="#FFF9F9F9" BorderThickness="0" />
                         </Grid>
-                    </ScrollViewer>
+                    </Border>
+                    </Grid>
                 </Grid>
+               
             </TabItem>
         </TabControl>
     </Grid>

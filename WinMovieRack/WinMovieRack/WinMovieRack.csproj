@@ -90,9 +90,12 @@
     <Compile Include="Controller\BoxofficeUtil.cs" />
     <Compile Include="Controller\DetailsViewController.cs" />
     <Compile Include="Controller\FunctionCaller.cs" />
+    <Compile Include="Controller\GUIController.cs" />
     <Compile Include="Controller\ImdbBrowserController.cs" />
     <Compile Include="Controller\IMDBUtil.cs" />
+    <Compile Include="Controller\ListViewMovieController.cs" />
     <Compile Include="Controller\ListViewController.cs" />
+    <Compile Include="Controller\ListViewPersonController.cs" />
     <Compile Include="Controller\Log.cs" />
     <Compile Include="Controller\MainWindowController.cs" />
     <Compile Include="Controller\Moviefillout\ImdbIdsImporter.cs" />
@@ -131,8 +134,17 @@
     <Compile Include="GUI\ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\List.xaml.cs">
+      <DependentUpon>List.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ListView.xaml.cs">
       <DependentUpon>ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListViewMovieInfo.xaml.cs">
+      <DependentUpon>ListViewMovieInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListViewPersonInfo.xaml.cs">
+      <DependentUpon>ListViewPersonInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MRListBoxItem.cs" />
     <Compile Include="GUI\ListComparerTest.cs" />
@@ -216,9 +228,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\List.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\ListViewMovieInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListViewPersonInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MovieRackListBoxItem.xaml">
       <SubType>Designer</SubType>

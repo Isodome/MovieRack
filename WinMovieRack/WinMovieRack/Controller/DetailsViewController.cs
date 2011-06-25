@@ -10,12 +10,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
+using System.Windows.Controls;
 
 
 namespace WinMovieRack.Controller
 {
 
-    public class DetailsViewController
+    public class DetailsViewController : GUIController
     {
 
         private DetailsView view;
@@ -30,7 +31,9 @@ namespace WinMovieRack.Controller
         private Dictionary<int, MRListBoxItem> movieListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> castListItems = new Dictionary<int, MRListBoxItem>();
         private Dictionary<int, MRListBoxItem> productionListItems = new Dictionary<int, MRListBoxItem>();
+        private Dictionary<int, string> listItems = new Dictionary<int, string>();
         private bool isFirstLoad = true;
+        private bool isListLoad = false;
         private Action<MRListData> addToListFunction;
 
         public DetailsViewController(Controller c, SQLiteConnector db)
@@ -266,16 +269,44 @@ namespace WinMovieRack.Controller
             return itemToChange;
         }
 
-        internal void setSeenDate(DateTime selectedDate, int id, string notes)
+        internal override void setSeenDate(DateTime selectedDate, int id, string notes)
         {
             db.updateSeenToMovie(id, selectedDate, notes);
-            view.seen.Content = (int)view.seen.Content + 1;
+            view.seen.Content = int.Parse(view.seen.Content.ToString()) + 1;
             view.loadSummerytab();
         }
 
-        internal int getSeenCount(int idMovies)
+        public void getLists()
         {
-            return db.getSeenCount(idMovies);
+            if (!isListLoad)
+            {
+                List<Tuple<int, string>> lists = db.getLists();
+                lists.ForEach(delegate(Tuple<int, string> list)
+                {
+                    this.listItems.Add(list.Item1,list.Item2);
+                    MenuItem temp = new MenuItem();
+                    temp.Header = list.Item2;
+                    temp.Click += view.list_Click;
+                    view.menuItemLists.Items.Add(temp);
+                });
+                isListLoad = true;
+            }
+        }
+
+        internal override void addList(string name)
+        {
+            MRListBoxItem selectedItem = (MRListBoxItem)view.listBoxMovies.SelectedItem;
+            db.addNewList(name, selectedItem.getId);
+            MenuItem temp = new MenuItem();
+            temp.Header = name;
+            temp.Click += view.list_Click;
+            view.menuItemLists.Items.Add(temp);
+            Console.WriteLine(name);
+        }
+
+        internal void addMovieToList(string name, int id)
+        {
+            db.addMovieToList(name, id);
         }
     }
 }

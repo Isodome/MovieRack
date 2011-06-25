@@ -7,7 +7,6 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Data;
-using System.Collections.Generic;
 namespace WinMovieRack.Model
 {
     public partial class SQLiteConnector

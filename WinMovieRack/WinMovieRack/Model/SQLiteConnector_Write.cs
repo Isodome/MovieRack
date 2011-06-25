@@ -217,6 +217,56 @@ namespace WinMovieRack.Model
 
         }
 
+        public void addNewList(string name)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = string.Format("INSERT INTO Lists (Name) VALUES(@name)");
+            var param = new SQLiteParameter("@Name") { Value = name };
+            command.Parameters.Add(param);
+            executeCommandThreadSafe(command);
+        }
+
+        public void addNewList(string name, int id)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = string.Format("INSERT INTO Lists (Name) VALUES(@name)");
+            var param = new SQLiteParameter("@Name") { Value = name };
+            command.Parameters.Add(param);
+            executeCommandThreadSafe(command);
+
+            SQLiteCommand cmdGetListID = new SQLiteCommand(connection);
+            cmdGetListID.CommandText = string.Format("SELECT idLists SET FROM Lists WHERE Name =@name");
+            param = new SQLiteParameter("@Name") { Value = name };
+            cmdGetListID.Parameters.Add(param);
+            SQLiteDataReader reader = executeReaderThreadSafe(cmdGetListID);
+            int listID = int.Parse(reader["idLists"].ToString());
+
+            SQLiteCommand cmdAddMovieToList = new SQLiteCommand(connection);
+            cmdAddMovieToList.CommandText = string.Format("INSERT INTO Lists_has_Movies (Lists_idLists,Movies_idMovies) VALUES(@listId, @movieId)");
+            param = new SQLiteParameter("@listId") { Value = listID };
+            cmdAddMovieToList.Parameters.Add(param);
+            param = new SQLiteParameter("@movieId") { Value = id };
+            cmdAddMovieToList.Parameters.Add(param);
+            executeCommandThreadSafe(cmdAddMovieToList);
+        }
+
+        public void addMovieToList(string name, int movieid) {
+            SQLiteCommand cmdGetListID = new SQLiteCommand(connection);
+            cmdGetListID.CommandText = string.Format("SELECT idLists FROM Lists WHERE Name =@name");
+            var param = new SQLiteParameter("@Name") { Value = name };
+            cmdGetListID.Parameters.Add(param);
+            SQLiteDataReader reader = executeReaderThreadSafe(cmdGetListID);
+            int listID = int.Parse(reader["idLists"].ToString());
+
+            SQLiteCommand cmdAddMovieToList = new SQLiteCommand(connection);
+            cmdAddMovieToList.CommandText = string.Format("INSERT INTO Lists_has_Movies (Lists_idLists,Movies_idMovies) VALUES(@listId, @movieId)");
+            param = new SQLiteParameter("@listId") { Value = listID };
+            cmdAddMovieToList.Parameters.Add(param);
+            param = new SQLiteParameter("@movieId") { Value = movieid };
+            cmdAddMovieToList.Parameters.Add(param);
+            executeCommandThreadSafe(cmdAddMovieToList);
+        }
+
         public void updateImdbPerson(ImdbPerson person)
         {
 

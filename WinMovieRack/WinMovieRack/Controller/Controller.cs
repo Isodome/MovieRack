@@ -80,11 +80,12 @@ namespace WinMovieRack.Controller
             detailsViewController = new DetailsViewController(this, db);
             DetailsView dv = new DetailsView(detailsViewController);
             detailsViewController.setDetailsView(dv);
-			detailsViewController.loadCompleteMovieList();
+            detailsViewController.loadCompleteMovieList();
 
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
             actorsViewController.setActorsView(av);
+
 
             listViewController = new ListViewController(this, db);
             ListView lv = new ListView(listViewController);
@@ -127,8 +128,10 @@ namespace WinMovieRack.Controller
             gui.changeToView(view);
         }
 
-        public void updateView(View view) {
-            switch (view) {
+        public void updateView(View view)
+        {
+            switch (view)
+            {
                 case View.ACTORS_VIEW:
                     break;
                 case View.DETAILS_VIEW:

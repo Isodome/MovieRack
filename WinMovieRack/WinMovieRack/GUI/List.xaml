@@ -1,0 +1,15 @@
+﻿<Window x:Class="WinMovieRack.GUI.List"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="99" d:DesignWidth="235"
+   Title="Lists" Height="Auto" Width="Auto" WindowStyle="ToolWindow" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight">
+    <Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="50,5,0,0" Name="listTextBox" VerticalAlignment="Top" Width="120" />
+        <Label Content="Name:" Height="auto" HorizontalAlignment="Left" Margin="5,5,0,0" Name="label1" VerticalAlignment="Top" />
+        <Button Content="Add" Height="auto" HorizontalAlignment="Left" Margin="10,35,0,0" Name="add" VerticalAlignment="Top" Width="75" Click="add_Click" />
+        <Button Content="Cancel" Height="auto" HorizontalAlignment="Right" Margin="0,35,10,0" Name="cancel" VerticalAlignment="Top" Width="75" IsCancel="True" />
+    </Grid>
+</Window>

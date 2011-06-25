@@ -19,13 +19,13 @@ namespace WinMovieRack.GUI
     /// </summary>
     public partial class Seen : Window
     {
-        private DetailsViewController detailsViewController;
+        private GUIController detailsViewController;
         private int id;
         DateTime selectedDate;
-        public Seen(DetailsViewController dvc, int id)
+        public Seen(GUIController guic, int id)
         {
             InitializeComponent();
-            this.detailsViewController = dvc;
+            this.detailsViewController = guic;
             this.id = id;
             calendar.DisplayDateEnd = DateTime.Today;
             this.Left = System.Windows.Forms.Control.MousePosition.X;

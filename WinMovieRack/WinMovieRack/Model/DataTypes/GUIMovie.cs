@@ -47,7 +47,7 @@ namespace WinMovieRack.Model
         public double imdbRatingDouble;
         public int yearInt;
 
-        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, uint imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget)
+        public GUIMovie(int dbId, string title, string originalTitle, int runtime, string plot, int year, uint imdbID, int imdbRating, int imdbRatingVotes, int imdbTop250, string metacriticsID, int metacriticsReviewRating, int metacriticsUsersRating, int metacriticsReviewVotes, int metacriticsUserVotes, string rottentomatoesID, int rottenTomatoesAudience, int tomatometer, int rottenTomatoesAudienceVotes, int tomatometerVotes, int personalRating, string boxofficemojoID, UInt32 boxofficeWorldwide, UInt32 boxofficeAmerica, UInt32 boxofficeForeign, int boxofficeFirstWeekend, int rangFirstWeekend, int rankAllTime, int weeksInCinema, int otherWins, int otherNominations, string notes, bool TVSeries, int seenCount, DateTime lastSeen, UInt32 budget, SQLiteConnector db)
         {
             this.dbId = dbId;
             this.title = title;
@@ -84,7 +84,6 @@ namespace WinMovieRack.Model
             this.weeksInCinema = "" + weeksInCinema;
             this.otherWins = "" + otherWins;
             this.otherNominations = "" + otherNominations;
-            this.seenCount = "" + seenCount;
             this.imdbRatingDouble = imdbRating / 10.0;
             this.yearInt = year;
             if (this.runtime.Equals("-1"))
@@ -184,10 +183,14 @@ namespace WinMovieRack.Model
             {
                 this.otherNominations = "No Nominations";
             }
+            this.seenCount = "" + db.getSeenCount(dbId);
             if (this.seenCount.Equals("-1"))
             {
                 this.seenCount = "No Seen Count";
             }
+       
+
+        
 
 
 
@@ -196,19 +199,52 @@ namespace WinMovieRack.Model
         public string getTitle
         {
             get { return title; }
-            set { title = value; }
         }
         public BitmapImage getPicture
         {
             get
             {
                 BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
                 posterBitmap.BeginInit();
-                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.PREVIEW));
+                posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.LIST));
                 posterBitmap.EndInit();
+
                 return posterBitmap;
             }
+        }
 
+        public string getOriginalTitle
+        {
+            get { return originalTitle; }
+        }
+        public string getRuntime
+        {
+            get { return runtime; }
+        }
+        public string getPlot
+        {
+            get { return plot; }
+        }
+        public string getYear
+        {
+            get { return year; }
+        }
+        public string getImdbRating
+        {
+            get { return imdbRating; }
+        }
+        public string getimdbTop250
+        {
+            get { return imdbTop250; }
+        }
+        public string getSeenCount
+        {
+            get { return seenCount; }
+        }
+        public string getLastSeen
+        {
+            get { return lastSeen.ToShortDateString() ; }
         }
     }
 }

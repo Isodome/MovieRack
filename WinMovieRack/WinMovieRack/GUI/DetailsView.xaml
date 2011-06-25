@@ -315,40 +315,41 @@
                     <MenuItem x:Name="searchMovie" Header="Search"/>
                     <MenuItem x:Name="playMovie" Header="Play"/>
                 </Menu>
-                <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
-                <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
-                <ListBox Margin="0" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" TextSearch.TextPath="labelOne" >
-                    <ListBox.ContextMenu>
-                        <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
-                            <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >
-                                <MenuItem.Icon>
-                                    <Image Name="contextMoviePoster"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="Seen" Name="menuItemSeen" Click="menuItemSeen_Click">
-                            </MenuItem>
-                            <MenuItem Header="Add to List">
-                            </MenuItem>
-                            <MenuItem Header="Rent to">
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Height="84" Width="auto">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="84" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
-                                <Label Content="{Binding Path=labelOne}" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
-                                <Label Content="{Binding Path=labelTwo}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
-                                <Label Content="{Binding Path=labelThree}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
+                    <TextBox Height="30" Margin="5,30,50,0" Name="searchBox" VerticalAlignment="Top" Text="(Search)" />
+                    <Button Content="Search" Height="auto" HorizontalAlignment="Right" Margin="0,34,6,0" Name="searchButton" VerticalAlignment="Top" Width="auto" FontWeight="Normal" FontSize="10" />
+                    <ListBox Margin="0,70,0,0" Name="listBoxMovies" SelectionChanged="listBoxMovies_SelectionChanged" SelectedIndex="0" TextSearch.TextPath="labelOne"  >
+                        <ListBox.ContextMenu>
+                            <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
+                                <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >
+                                    <MenuItem.Icon>
+                                        <Image Name="contextMoviePoster"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Seen" Name="menuItemSeen" Click="menuItemSeen_Click">
+                                </MenuItem>
+                                <MenuItem Header="Add to List" Name="menuItemLists">
+                                    <MenuItem Header="New List" Name="newList" Click="newList_Click" />
+                                </MenuItem>
+                                <MenuItem Header="Rent to">
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="84" Width="auto">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="84" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+                                    <Label Content="{Binding Path=labelOne}" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+                                    <Label Content="{Binding Path=labelTwo}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                                    <Label Content="{Binding Path=labelThree}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
         </GroupBox>
         <StackPanel Grid.Column="2" Height="auto" HorizontalAlignment="Left" Margin="10,75,0,0" Name="stackPanel22" VerticalAlignment="Top" Width="auto">
             <StackPanel Height="auto" Name="stackPanel12" Width="auto" Orientation="Horizontal">
