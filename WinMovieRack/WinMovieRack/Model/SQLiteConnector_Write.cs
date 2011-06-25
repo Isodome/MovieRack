@@ -235,7 +235,7 @@ namespace WinMovieRack.Model
             executeCommandThreadSafe(command);
 
             SQLiteCommand cmdGetListID = new SQLiteCommand(connection);
-            cmdGetListID.CommandText = string.Format("SELECT idLists SET FROM Lists WHERE Name =@name");
+            cmdGetListID.CommandText = string.Format("SELECT idLists FROM Lists WHERE Name =@name");
             param = new SQLiteParameter("@Name") { Value = name };
             cmdGetListID.Parameters.Add(param);
             SQLiteDataReader reader = executeReaderThreadSafe(cmdGetListID);

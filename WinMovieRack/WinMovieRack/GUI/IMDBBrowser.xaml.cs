@@ -52,7 +52,7 @@ namespace WinMovieRack.GUI {
 			}
 			lastParser = null;
 		}
-
+		
 
 		private void imdbWebBrowser_Navigating(object sender, NavigatingCancelEventArgs e) {
 			string url = e.Uri.ToString();

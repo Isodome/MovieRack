@@ -26,6 +26,11 @@ namespace WinMovieRack.Controller {
 			uint id = uint.Parse(isName.Groups["id"].Value.Trim());
 			return id;
 		}
+		/// <summary>
+		/// Gibt die IMDB Film ID zurueck, wenn eine guelige URL zu einem Film angegeben wird
+		/// </summary>
+		/// <param name="url">URL zu der IMDB Seite eines Films</param>
+		/// <returns>IMDB Filme ID</returns>
 		public static uint getTitleIdFromUrl(string url) {
 			Match isTitle = Regex.Match(url, titleRegex);
 			uint id = uint.Parse(isTitle.Groups["id"].Value.Trim());

@@ -50,7 +50,9 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 		private void extractWeekendGross() {
 			
 		}
-
+		/// <summary>
+		/// Extrahiert die Einnahmen des Films in allen Laendern au der Webseite
+		/// </summary>
 		private void extractForeign() {
 			Match m = Regex.Match(foreignPage, foreignTableRegex);
 			if (!m.Success) {
