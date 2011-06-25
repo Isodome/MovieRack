@@ -202,9 +202,11 @@ namespace WinMovieRack.Model
             get
             {
                 BitmapImage posterBitmap = new BitmapImage();
+                posterBitmap.CreateOptions = BitmapCreateOptions.DelayCreation;
                 posterBitmap.BeginInit();
                 posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(dbId, PosterSize.LIST));
                 posterBitmap.EndInit();
+
                 return posterBitmap;
             }
         }

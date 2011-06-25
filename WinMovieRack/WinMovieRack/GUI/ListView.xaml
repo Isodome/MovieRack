@@ -30,30 +30,43 @@
                 <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="listbox">
+            <Grid Height="84" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="84" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="poster" Height="auto" Margin="2" Width="auto" Stretch="None" Source="{Binding Path = picture}" />
+                <Label Content="{Binding Path=labelOne}" Grid.Column="1" Height="auto" Width="auto" HorizontalAlignment="Stretch" Margin="0,8,6,0" Name="labelTitleName" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Padding="2" />
+                <Label Content="{Binding Path=labelTwo}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,34,6,0" Name="labelYearAge" VerticalAlignment="Top" FontSize="13" Padding="2" />
+                <Label Content="{Binding Path=labelThree}" Grid.Column="1" Height="auto" HorizontalAlignment="Stretch" Margin="0,60,6,0" Name="labelEditableCharacter" VerticalAlignment="Top" FontSize="13" Padding="2" />
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
-        <Grid>
+
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="1*" MinWidth="250"/>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Name="gridSplitter1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        
-            
-        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0" SelectionChanged="movieList_SelectionChanged">
+
+
+        <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0,27,0,-27" SelectionChanged="movieList_SelectionChanged">
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridView.ColumnHeaderContextMenu>
-                               <ContextMenu Name="InvoiceDetailsList" StaysOpen="true" Background="WhiteSmoke">
-                                <ContextMenu.BitmapEffect>
-                                    <BitmapEffectGroup/>
-                                </ContextMenu.BitmapEffect>
-                                <MenuItem Header="Edit" Name="EditIVD" />
-                                <MenuItem Header="Remove" Name="RemoveIVD"  />
-                                </ContextMenu>
-                            </GridView.ColumnHeaderContextMenu>
+                        <ContextMenu Name="InvoiceDetailsList" StaysOpen="true" Background="WhiteSmoke">
+                            <ContextMenu.BitmapEffect>
+                                <BitmapEffectGroup/>
+                            </ContextMenu.BitmapEffect>
+                            <MenuItem Header="Edit" Name="EditIVD" />
+                            <MenuItem Header="Remove" Name="RemoveIVD"  />
+                        </ContextMenu>
+                    </GridView.ColumnHeaderContextMenu>
                     <GridViewColumn Header="Cover" Width="auto" CellTemplate="{StaticResource coverColumn}"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"   />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=getTitle}" Header="Title" Width="auto"  TextSearch.TextPath="getTitle" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=originalTitle}" Header="Original Title" Width="auto" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=getYear}" Header="Year" Width="auto" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=regisseur}" Header="Regisseur" Width="auto" CellTemplate="{StaticResource regisseurColumn}" />
@@ -65,7 +78,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <TabControl Margin="0" Name="tabControl1">
             <TabItem Header="Filter" Name="filterTabItem">
                 <Grid Name="gridFilter">
@@ -179,26 +192,31 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Image Height="150" Name="image1" Stretch="Fill" Width="100" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Source="/WinMovieRack;component/Resources/nopicLIST.jpg" />
-                                    <StackPanel Grid.Row="1" Height="auto" Margin="110,5,5,0" Name="stackPanel2" VerticalAlignment="Top">
-                                        <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto">
-                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="15" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" />
-                                            <TextBox Height="auto" Name="yearBox" Width="auto" Text="(Year)" FontWeight="Bold" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel3" Width="auto">
-                                            <TextBox Height="auto" Name="originalTitleBox" Width="auto" Text="Original Title" FlowDirection="RightToLeft" FontStyle="Italic" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
+                                    <Image Name="posterInfo" Stretch="Uniform" Width="100" Margin="5,5,0,5" HorizontalAlignment="Left" Grid.Row="1" Source="/WinMovieRack;component/Resources/nopicLIST.jpg" MouseUp="posterInfo_MouseUp" VerticalAlignment="Top" />
+                                    <StackPanel Grid.Row="1" Height="auto" Margin="109,101,6,0" Name="stackPanel2" VerticalAlignment="Top">
+                                        <StackPanel Height="auto" Name="stackPanel1" Orientation="Horizontal" FlowDirection="RightToLeft" Width="auto"></StackPanel>
                                         <StackPanel Height="auto" Name="stackPanel4" Width="auto" />
-                                        <StackPanel Height="auto" Name="stackPanel5" Width="auto" Orientation="Horizontal">
-                                            <TextBox Height="auto" Name="ratingLabelBox" Width="auto" Text="Rating:" Background="#FFF9F9F9" BorderThickness="0" FontWeight="Bold" />
-                                            <TextBox Height="auto" Name="imdbRatingBox" Width="auto" Text="10/10" Background="#FFF9F9F9" BorderThickness="0" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel7" Orientation="Horizontal">
-                                            <TextBox Height="auto" Name="genreLabelBox" Text="Genre: " Background="#FFF9F9F9" CharacterCasing="Upper" IsReadOnly="True" Width="auto" BorderThickness="0" FontWeight="Bold" />
-                                        </StackPanel>
-                                        <StackPanel Height="auto" Name="stackPanel6" Width="auto" Orientation="Horizontal"></StackPanel>
                                     </StackPanel>
-                                    <TextBox Height="34" Name="genreBox" Text="Action, Action, Action," Background="#FFF9F9F9" TextWrapping="Wrap" CharacterCasing="Upper" IsReadOnly="True" Width="110" BorderThickness="0" Margin="150,63,5,0" Grid.Row="1" VerticalAlignment="Top" />
+                                    <WrapPanel Margin="110,10,5,5" Name="wrapPanel2" Orientation="Vertical" Grid.Row="1">
+                                        <WrapPanel Height="auto" Name="wrapPanel5" Width="auto">
+                                            <TextBox Text="Year" Height="auto" Name="yearBox" FontSize="13" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                            <TextBox Text="Title" Height="auto" Name="movieTitleBox" FontSize="13" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" />
+                                        </WrapPanel>
+                                        <TextBox Text="Title" Height="auto" Name="originalTitle" FontSize="12" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Italic" />
+                                        <WrapPanel Height="auto" Name="wrapPanel4" Width="auto">
+                                            <TextBox Text="IMDB Rating:" Height="auto" Name="imdbRatingLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                            <TextBox Text="10/10" Height="auto" Name="imdbRating" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                        </WrapPanel>
+                                        <WrapPanel Height="auto" Name="wrapPanel3" Width="auto">
+                                            <TextBox Text="Genre:" Height="auto" Name="genreLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                            <TextBox Text="Action" Height="auto" Name="genres" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                        </WrapPanel>
+                                        <WrapPanel Height="auto" Name="wrapPanel1" Width="auto">
+                                            <TextBox Text="Language:" Height="auto" Name="languageLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                            <TextBox Text="German, English" Height="auto" Name="language" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                        </WrapPanel>
+
+                                    </WrapPanel>
                                 </Grid>
                             </Border>
 
@@ -218,30 +236,98 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="5,10,0,5" Name="stackPanel8" Width="auto">
-                                        <Label Content="Label" Height="Auto" Name="label1" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label2" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label3" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label5" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" Height="Auto" Name="label4" FontWeight="Bold" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label11" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label12" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label13" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label14" Padding="3" />
-                                        <Label Content="Label" FontWeight="Bold" Height="Auto" Name="label15" Padding="3" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="1" Margin="65,10,5,5" Name="stackPanel9">
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label6" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label7" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label8" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label9" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label10" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label16" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label17" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label18" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label19" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label20" Padding="3" />
-                                    </StackPanel>
+                                    <Expander Name="detailsExpander" Margin="0,0,0,0" Grid.Row="1" FlowDirection="LeftToRight" HorizontalAlignment="Stretch">
+                                        <Grid Height="auto" Margin="0">
+                                            <WrapPanel Margin="0" Name="wrapPanelDetails1" Orientation="Vertical" Grid.Row="1">
+                                                <WrapPanel Height="auto" Name="wrapPanelRuntime" Width="auto" Margin="10,10,0,0">
+                                                    <Label Content="Runtime:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="RuntimeLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="runtime" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelImdbRating" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="IMDB Rating:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="ImdbRatingLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="imdbRatingDetailsLabel" Padding="3" />
+                                                    <Label Content="Votes" FontWeight="Normal" Height="Auto" Name="imdbRatingDetails" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelPersonaRating" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Personal Rating" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="PersonaRatingLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label36" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelTop250" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="IMDB Top 250:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="top250Label" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="top250" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelSeenCount" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Seen Count:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="seenCountLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="seenCount" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelLastSeen" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Last Seen:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="lastSeenLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="lastSeen" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelMetaReview" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Metacritics Review:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaReviewLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="metaReview" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelMetaUser" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Metacritics User:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaUserLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="metaUser" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelTomatoe" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Tomatoemeter:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="tomatoe" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelTomatoeUser" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Rottentomatioes Users:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeUserLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="tomatoeUser" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelOscarWins" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Oscar Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarWinsLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="oscarWins" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelOtherWins" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Other Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherWinsLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="otherWins" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelOscarNom" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Oscar Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarNomLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="oscarNom" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelOtherNom" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Other Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherNomLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="otherNom" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelWeeksInCine" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Weeks in Cinema:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="weeksInCineLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="weeksInCine" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelBudget" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Budget:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="budgetLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="budget" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelBoxWorld" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Boxoffice Wordlwide:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxWorldLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="boxWorld" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelBoxAmerica" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Boxoffice America:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxAmericaLabel" Padding="3" />
+                                                    <Label Content="99999999999999999999999999999999" FontWeight="Normal" Height="Auto" Name="boxAmerica" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelBoxForeign" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Boxoffice Foreign:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxForeignLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="boxForeign" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelBoxFirstWeekend" Width="auto" Margin="10,0,0,0">
+                                                    <Label Content="Boxoffice First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="firstWeekendLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="firstWeekend" Padding="3" />
+                                                </WrapPanel>
+                                                <WrapPanel Height="auto" Name="wrapPanelRankFirstWeekend" Width="auto" Margin="10,0,0,10">
+                                                    <Label Content="Rank First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="rankFirstWeekendLabel" Padding="3" />
+                                                    <Label Content="Label" FontWeight="Normal" Height="Auto" Name="rankFirstWeekend" Padding="3" />
+                                                </WrapPanel>
+                                            </WrapPanel>
+                                        </Grid>
+                                    </Expander>
+
                                 </Grid>
                             </Border>
 
@@ -261,7 +347,7 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Expander Grid.Row="1" Margin="0,0,0,0" Name="expander1">
+                                    <Expander Grid.Row="1" Margin="0,0,0,0" Name="plotExpander">
                                         <Grid>
                                             <TextBlock Margin="0,0,0,0" Name="plot" TextWrapping="Wrap" FontWeight="Normal" Width="auto" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                         </Grid>
@@ -285,9 +371,9 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander2" Grid.Row="1">
+                                    <Expander Margin="0" Name="expander2" Grid.Row="1">
                                         <Grid>
-                                            <ListBox Name="listBox2" Width="auto" Margin="0" />
+                                            <ListBox Margin="0,0,0,0" Name="starsListBox" ItemTemplate="{StaticResource listbox}" />
                                         </Grid>
                                     </Expander>
                                 </Grid>
@@ -309,9 +395,9 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander3" Grid.Row="1">
+                                    <Expander Margin="0" Name="expander3" Grid.Row="1">
                                         <Grid>
-                                            <ListBox Name="listBox3" Width="auto" Margin="0" />
+                                            <ListBox Margin="0,0,0,0" Name="productionListBox" ItemTemplate="{StaticResource listbox}"/>
                                         </Grid>
                                     </Expander>
                                 </Grid>
@@ -333,9 +419,9 @@
                                             </LinearGradientBrush>
                                         </TextBox.Background>
                                     </TextBox>
-                                    <Expander Header="expander1" Margin="0" Name="expander4" Grid.Row="1" Width="auto">
+                                    <Expander Margin="0" Name="castExpander" Grid.Row="1" Width="auto" Expanded="castExpander_Expanded">
                                         <Grid>
-                                            <ListBox Margin="0" Name="listBox1" Width="auto" />
+                                            <ListBox Margin="0,0,0,0" Name="castListBox" ItemTemplate="{StaticResource listbox}"/>
                                         </Grid>
                                     </Expander>
                                 </Grid>
