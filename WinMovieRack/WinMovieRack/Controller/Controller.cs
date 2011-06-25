@@ -36,19 +36,22 @@ namespace WinMovieRack.Controller
             controller = this;
             ServicePointManager.DefaultConnectionLimit = 65000;
 
-			if (System.Environment.MachineName.Equals("DOMI-PC")) {
-				SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
-				b.run();
-				b.getResult().printToConsole();
-				b = new SerialBoxOfficeMovieParser("abduction11");
-				b.run();
-				b.getResult().printToConsole();
-				b = new SerialBoxOfficeMovieParser("inception");
-				b.run();
-				b.getResult().printToConsole();
-			} else {
-				Console.WriteLine("Nicht auf DOMI-PC sonder auf {0}, deswegen jetzt kein BO Parsen", System.Environment.MachineName);
-			}
+            if (System.Environment.MachineName.Equals("DOMI-PC"))
+            {
+                SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
+                b.run();
+                b.getResult().printToConsole();
+                b = new SerialBoxOfficeMovieParser("abduction11");
+                b.run();
+                b.getResult().printToConsole();
+                b = new SerialBoxOfficeMovieParser("inception");
+                b.run();
+                b.getResult().printToConsole();
+            }
+            else
+            {
+                Console.WriteLine("Nicht auf DOMI-PC sonder auf {0}, deswegen jetzt kein BO Parsen", System.Environment.MachineName);
+            }
         }
 
         public void func(ConcThreadJobMaster sender)
@@ -76,11 +79,12 @@ namespace WinMovieRack.Controller
             detailsViewController = new DetailsViewController(this, db);
             DetailsView dv = new DetailsView(detailsViewController);
             detailsViewController.setDetailsView(dv);
-			detailsViewController.loadCompleteMovieList();
+            detailsViewController.loadCompleteMovieList();
 
             actorsViewController = new ActorsViewController(this, db);
             ActorsView av = new ActorsView(actorsViewController);
             actorsViewController.setActorsView(av);
+
 
             listViewController = new ListViewController(this, db);
             ListView lv = new ListView(listViewController);
@@ -123,8 +127,10 @@ namespace WinMovieRack.Controller
             gui.changeToView(view);
         }
 
-        public void updateView(View view) {
-            switch (view) {
+        public void updateView(View view)
+        {
+            switch (view)
+            {
                 case View.ACTORS_VIEW:
                     break;
                 case View.DETAILS_VIEW:
