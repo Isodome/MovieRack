@@ -308,6 +308,22 @@ namespace WinMovieRack.Model
             return movieList;
         }
 
+        public List<Tuple<int, string>> getLists()
+        {
+            List<Tuple<int, string>> lists = new List<Tuple<int,string>>();
+
+                    SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "SELECT * FROM Lists";
+            SQLiteDataReader reader = executeReaderThreadSafe(command);
+                while(reader.Read()){
+                lists.Add(new Tuple<int, string>(reader.GetInt32(0),reader.GetString(1)));
+
+                }
+            return lists;
+
+        }
+
+
         public GUIPerson getPersonInfo(int idPerson)
         {
             SQLiteCommand command = new SQLiteCommand(connection);
@@ -362,87 +378,88 @@ namespace WinMovieRack.Model
             //command.CommandText = "SELECT * FROM Movies JOIN MovieAgeRating WHERE Movies.idMovies = " + idMovies + " AND Movies.idMovies = MovieAgeRating.Movies_idMovies";
             command.CommandText = "SELECT * FROM Movies"; //Anderen Befehl nutzen, wenn Altersfreigaben eingefügt werden.
             SQLiteDataReader reader = executeReaderThreadSafe(command);
-        ObservableCollection<GUIMovie> completeMovieList = new ObservableCollection<GUIMovie>();
-            while(reader.Read()){
-
-            int dbId = int.Parse(reader["idMovies"].ToString());
-            string title = reader["title"].ToString();
-            string originalTitle = reader["originalTitle"].ToString();
-            int runtime = int.Parse(reader["runtime"].ToString());
-            string plot = reader["plot"].ToString();
-
-            int year;
-            if (!int.TryParse(reader["year"].ToString(), out year))
+            ObservableCollection<GUIMovie> completeMovieList = new ObservableCollection<GUIMovie>();
+            while (reader.Read())
             {
-                year = Symbols.NO_YEAR;
-            }
 
-            uint imdbID;
-            if (!uint.TryParse(reader["imdbID"].ToString(), out imdbID))
-            {
-                imdbID = 0;
-            }
+                int dbId = int.Parse(reader["idMovies"].ToString());
+                string title = reader["title"].ToString();
+                string originalTitle = reader["originalTitle"].ToString();
+                int runtime = int.Parse(reader["runtime"].ToString());
+                string plot = reader["plot"].ToString();
 
-            int imdbRating;
-            if (!int.TryParse(reader["imdbRating"].ToString(), out imdbRating))
-            {
-                imdbRating = Symbols.NO_IMDB_RATING;
-            }
+                int year;
+                if (!int.TryParse(reader["year"].ToString(), out year))
+                {
+                    year = Symbols.NO_YEAR;
+                }
 
-            int imdbRatingVotes;
-            if (!int.TryParse(reader["imdbRatingVotes"].ToString(), out imdbRatingVotes))
-            {
-                imdbRatingVotes = Symbols.NO_IMDB_RATING;
-            }
+                uint imdbID;
+                if (!uint.TryParse(reader["imdbID"].ToString(), out imdbID))
+                {
+                    imdbID = 0;
+                }
 
-            int imdbTop250;
-            if (!int.TryParse(reader["imdbTop250"].ToString(), out imdbTop250))
-            {
-                imdbTop250 = Symbols.NO_TOP250;
-            }
+                int imdbRating;
+                if (!int.TryParse(reader["imdbRating"].ToString(), out imdbRating))
+                {
+                    imdbRating = Symbols.NO_IMDB_RATING;
+                }
 
-            string metacriticsID = reader["metacriticsID"].ToString();
-            int metacriticsReviewRating = int.Parse(reader["metacriticsReviewRating"].ToString());
-            int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
-            int metacriticsReviewVotes = int.Parse(reader["metacriticsReviewVotes"].ToString());
-            int metacriticsUserVotes = int.Parse(reader["metacriticsUserVotes"].ToString());
+                int imdbRatingVotes;
+                if (!int.TryParse(reader["imdbRatingVotes"].ToString(), out imdbRatingVotes))
+                {
+                    imdbRatingVotes = Symbols.NO_IMDB_RATING;
+                }
 
-            string rottentomatoesID = reader["rottentomatoesID"].ToString();
-            int rottenTomatoesAudience = int.Parse(reader["rottenTomatoesAudience"].ToString());
-            int tomatometer = int.Parse(reader["tomatometer"].ToString());
-            int rottenTomatoesAudienceVotes = int.Parse(reader["rottenTomatoesAudienceVotes"].ToString());
-            int tomatometerVotes = int.Parse(reader["tomatometerVotes"].ToString());
+                int imdbTop250;
+                if (!int.TryParse(reader["imdbTop250"].ToString(), out imdbTop250))
+                {
+                    imdbTop250 = Symbols.NO_TOP250;
+                }
+
+                string metacriticsID = reader["metacriticsID"].ToString();
+                int metacriticsReviewRating = int.Parse(reader["metacriticsReviewRating"].ToString());
+                int metacriticsUsersRating = int.Parse(reader["metacriticsUsersRating"].ToString());
+                int metacriticsReviewVotes = int.Parse(reader["metacriticsReviewVotes"].ToString());
+                int metacriticsUserVotes = int.Parse(reader["metacriticsUserVotes"].ToString());
+
+                string rottentomatoesID = reader["rottentomatoesID"].ToString();
+                int rottenTomatoesAudience = int.Parse(reader["rottenTomatoesAudience"].ToString());
+                int tomatometer = int.Parse(reader["tomatometer"].ToString());
+                int rottenTomatoesAudienceVotes = int.Parse(reader["rottenTomatoesAudienceVotes"].ToString());
+                int tomatometerVotes = int.Parse(reader["tomatometerVotes"].ToString());
 
 
-            int personalRating;
-            if (!int.TryParse(reader["personalRating"].ToString(), out personalRating))
-            {
-                personalRating = Symbols.NO_PERSONAL_RATING;
-            }
+                int personalRating;
+                if (!int.TryParse(reader["personalRating"].ToString(), out personalRating))
+                {
+                    personalRating = Symbols.NO_PERSONAL_RATING;
+                }
 
-            string boxofficemojoID = reader["boxofficemojoID"].ToString();
-            UInt32 boxofficeWorldwide = UInt32.Parse(reader["boxofficeWorldwide"].ToString());
-            UInt32 boxofficeAmerica = UInt32.Parse(reader["boxofficeAmerica"].ToString());
-            UInt32 boxofficeForeign = UInt32.Parse(reader["boxofficeForeign"].ToString());
-            int boxofficeFirstWeekend = int.Parse(reader["boxofficeFirstWeekend"].ToString());
-            int rangFirstWeekend = int.Parse(reader["rangFirstWeekend"].ToString());
-            int rankAllTime = int.Parse(reader["rankAllTime"].ToString());
-            int weeksInCinema = int.Parse(reader["weeksInCinema"].ToString());
-            int otherWins = int.Parse(reader["otherWins"].ToString());
-            int otherNominations = int.Parse(reader["otherNominations"].ToString());
-            string notes = reader["notes"].ToString();
-            bool TVSeries = true;
-            int seenCount = int.Parse(reader["seenCount"].ToString());
-            DateTime lastSeen;
-            if (!DateTime.TryParse(reader["lastSeen"].ToString(), out lastSeen))
-            {
-                lastSeen = new DateTime();
-            }
+                string boxofficemojoID = reader["boxofficemojoID"].ToString();
+                UInt32 boxofficeWorldwide = UInt32.Parse(reader["boxofficeWorldwide"].ToString());
+                UInt32 boxofficeAmerica = UInt32.Parse(reader["boxofficeAmerica"].ToString());
+                UInt32 boxofficeForeign = UInt32.Parse(reader["boxofficeForeign"].ToString());
+                int boxofficeFirstWeekend = int.Parse(reader["boxofficeFirstWeekend"].ToString());
+                int rangFirstWeekend = int.Parse(reader["rangFirstWeekend"].ToString());
+                int rankAllTime = int.Parse(reader["rankAllTime"].ToString());
+                int weeksInCinema = int.Parse(reader["weeksInCinema"].ToString());
+                int otherWins = int.Parse(reader["otherWins"].ToString());
+                int otherNominations = int.Parse(reader["otherNominations"].ToString());
+                string notes = reader["notes"].ToString();
+                bool TVSeries = true;
+                int seenCount = int.Parse(reader["seenCount"].ToString());
+                DateTime lastSeen;
+                if (!DateTime.TryParse(reader["lastSeen"].ToString(), out lastSeen))
+                {
+                    lastSeen = new DateTime();
+                }
 
-            UInt32 budget = UInt32.Parse(reader["budget"].ToString());
-            // String movieAgeRating = reader["MovieAgeRating"].ToString(); //Einkommentieren wenn Altersfreigaben eingefügt werden.
+                UInt32 budget = UInt32.Parse(reader["budget"].ToString());
+                // String movieAgeRating = reader["MovieAgeRating"].ToString(); //Einkommentieren wenn Altersfreigaben eingefügt werden.
 
-            completeMovieList.Add(new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, metacriticsReviewVotes, metacriticsUserVotes, rottentomatoesID, rottenTomatoesAudience, tomatometer, rottenTomatoesAudienceVotes, tomatometerVotes, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen, budget));
+                completeMovieList.Add(new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, metacriticsReviewVotes, metacriticsUserVotes, rottentomatoesID, rottenTomatoesAudience, tomatometer, rottenTomatoesAudienceVotes, tomatometerVotes, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen, budget, this));
             }
             return completeMovieList;
         }
@@ -530,7 +547,7 @@ namespace WinMovieRack.Model
             UInt32 budget = UInt32.Parse(reader["budget"].ToString());
             // String movieAgeRating = reader["MovieAgeRating"].ToString(); //Einkommentieren wenn Altersfreigaben eingefügt werden.
 
-            return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, metacriticsReviewVotes, metacriticsUserVotes, rottentomatoesID, rottenTomatoesAudience, tomatometer, rottenTomatoesAudienceVotes, tomatometerVotes, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen, budget);
+            return new GUIMovie(dbId, title, originalTitle, runtime, plot, year, imdbID, imdbRating, imdbRatingVotes, imdbTop250, metacriticsID, metacriticsReviewRating, metacriticsUsersRating, metacriticsReviewVotes, metacriticsUserVotes, rottentomatoesID, rottenTomatoesAudience, tomatometer, rottenTomatoesAudienceVotes, tomatometerVotes, personalRating, boxofficemojoID, boxofficeWorldwide, boxofficeAmerica, boxofficeForeign, boxofficeFirstWeekend, rangFirstWeekend, rankAllTime, weeksInCinema, otherWins, otherNominations, notes, TVSeries, seenCount, lastSeen, budget, this);
         }
 
     }

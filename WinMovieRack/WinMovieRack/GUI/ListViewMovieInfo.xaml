@@ -33,8 +33,8 @@
                 <Border BorderBrush="Black" BorderThickness="1" Margin="5,5,5,5" Name="border1" Width="auto">
                     <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="10*" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBox Name="textBoxTitle" Foreground="White" Text="Title" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0" IsReadOnly="True" AutoWordSelection="True">
                             <TextBox.Background>
@@ -59,15 +59,15 @@
                             <TextBox Text="Title" Height="auto" Name="originalTitle" FontSize="12" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Italic" />
                             <WrapPanel Height="auto" Name="wrapPanel4" Width="auto">
                                 <TextBox Text="IMDB Rating:" Height="auto" Name="imdbRatingLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
-                                <TextBox Text="10/10" Height="auto" Name="imdbRating" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                <TextBox Text="" Height="auto" Name="imdbRating" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
                             </WrapPanel>
                             <WrapPanel Height="auto" Name="wrapPanel3" Width="auto">
                                 <TextBox Text="Genre:" Height="auto" Name="genreLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
-                                <TextBox Text="Action" Height="auto" Name="genres" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                <TextBox Text="" Height="auto" Name="genres" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
                             </WrapPanel>
                             <WrapPanel Height="auto" Name="wrapPanel1" Width="auto">
                                 <TextBox Text="Language:" Height="auto" Name="languageLabel" FontSize="10" FontWeight="Bold" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
-                                <TextBox Text="German, English" Height="auto" Name="language" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
+                                <TextBox Text="" Height="auto" Name="language" FontSize="10" FontWeight="Normal" IsEnabled="True" CharacterCasing="Normal" IsReadOnly="True" Background="#FFF9F9F9" BorderBrush="#FFF0F0F0" BorderThickness="0" TextWrapping="Wrap" FontStyle="Normal" />
                             </WrapPanel>
 
                         </WrapPanel>
@@ -93,90 +93,94 @@
                         <Expander Name="detailsExpander" Margin="0,0,0,0" Grid.Row="1" FlowDirection="LeftToRight" HorizontalAlignment="Stretch">
                             <Grid Height="auto" Margin="0">
                                 <WrapPanel Margin="0" Name="wrapPanelDetails1" Orientation="Vertical" Grid.Row="1">
-                                    <WrapPanel Height="auto" Name="wrapPanelRuntime" Width="auto" Margin="10,10,0,0">
-                                        <Label Content="Runtime:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="RuntimeLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="runtime" Padding="3" />
+                                    <WrapPanel Height="auto" Name="wrapPanelRuntime" Width="auto" Margin="10,5,0,0">
+                                        <Label Content="Runtime:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="RuntimeLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="runtime" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelImdbRating" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="IMDB Rating:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="ImdbRatingLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="imdbRatingDetailsLabel" Padding="3" />
-                                        <Label Content="Votes" FontWeight="Normal" Height="Auto" Name="imdbRatingDetails" Padding="3" />
+                                        <Label Content="IMDB Rating:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="ImdbRatingLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="imdbRatingDetails" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="imdbRatingDetailsVotes" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelPersonaRating" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Personal Rating" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="PersonaRatingLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="label36" Padding="3" />
+                                        <Label Content="Personal Rating" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="PersonaRatingLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="label36" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelTop250" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="IMDB Top 250:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="top250Label" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="top250" Padding="3" />
+                                        <Label Content="IMDB Top 250:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="top250Label" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="top250" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelSeenCount" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Seen Count:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="seenCountLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="seenCount" Padding="3" />
+                                        <Label Content="Seen Count:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="seenCountLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="seenCount" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelLastSeen" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Last Seen:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="lastSeenLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="lastSeen" Padding="3" />
+                                        <Label Content="Last Seen:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="lastSeenLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="lastSeen" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelMetaReview" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Metacritics Review:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaReviewLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="metaReview" Padding="3" />
+                                        <Label Content="Metacritics Review:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaReviewLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="metaReview" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="metaReviewVotes" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelMetaUser" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Metacritics User:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaUserLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="metaUser" Padding="3" />
+                                        <Label Content="Metacritics User:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="metaUserLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="metaUser" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="metaUserVotes" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelTomatoe" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Tomatoemeter:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="tomatoe" Padding="3" />
+                                        <Label Content="Tomatoemeter:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="tomatoe" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="tomatoeVotes" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelTomatoeUser" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Rottentomatioes Users:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeUserLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="tomatoeUser" Padding="3" />
+                                        <Label Content="Rottentomatioes Users:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="tomatoeUserLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="tomatoeUser" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="tomatoeUserVotes" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelOscarWins" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Oscar Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarWinsLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="oscarWins" Padding="3" />
+                                        <Label Content="Oscar Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarWinsLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="oscarWins" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelOtherWins" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Other Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherWinsLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="otherWins" Padding="3" />
+                                        <Label Content="Other Wins:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherWinsLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="otherWins" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelOscarNom" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Oscar Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarNomLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="oscarNom" Padding="3" />
+                                        <Label Content="Oscar Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="oscarNomLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="oscarNom" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelOtherNom" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Other Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherNomLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="otherNom" Padding="3" />
+                                        <Label Content="Other Nominations:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="otherNomLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="otherNom" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelWeeksInCine" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Weeks in Cinema:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="weeksInCineLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="weeksInCine" Padding="3" />
+                                        <Label Content="Weeks in Cinema:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="weeksInCineLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="weeksInCine" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelBudget" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Budget:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="budgetLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="budget" Padding="3" />
+                                        <Label Content="Budget:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="budgetLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="budget" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelBoxWorld" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Boxoffice Wordlwide:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxWorldLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="boxWorld" Padding="3" />
+                                        <Label Content="Boxoffice Wordlwide:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxWorldLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="boxWorld" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelBoxAmerica" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Boxoffice America:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxAmericaLabel" Padding="3" />
-                                        <Label Content="99999999999999999999999999999999" FontWeight="Normal" Height="Auto" Name="boxAmerica" Padding="3" />
+                                        <Label Content="Boxoffice America:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxAmericaLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="boxAmerica" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelBoxForeign" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Boxoffice Foreign:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxForeignLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="boxForeign" Padding="3" />
+                                        <Label Content="Boxoffice Foreign:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="boxForeignLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="boxForeign" Padding="1" />
                                     </WrapPanel>
                                     <WrapPanel Height="auto" Name="wrapPanelBoxFirstWeekend" Width="auto" Margin="10,0,0,0">
-                                        <Label Content="Boxoffice First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="firstWeekendLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="firstWeekend" Padding="3" />
+                                        <Label Content="Boxoffice First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="firstWeekendLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="firstWeekend" Padding="1" />
                                     </WrapPanel>
-                                    <WrapPanel Height="auto" Name="wrapPanelRankFirstWeekend" Width="auto" Margin="10,0,0,10">
-                                        <Label Content="Rank First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="rankFirstWeekendLabel" Padding="3" />
-                                        <Label Content="Label" FontWeight="Normal" Height="Auto" Name="rankFirstWeekend" Padding="3" />
+                                    <WrapPanel Height="auto" Name="wrapPanelRankFirstWeekend" Width="auto" Margin="10,0,0,5">
+                                        <Label Content="Rank First Weekend:" FontWeight="Bold" Grid.Column="2" Height="Auto" Margin="0" Name="rankFirstWeekendLabel" Padding="1" />
+                                        <Label Content="" FontWeight="Normal" Height="Auto" Name="rankFirstWeekend" Padding="1" />
                                     </WrapPanel>
                                 </WrapPanel>
                             </Grid>
@@ -191,7 +195,7 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <TextBox Name="textboxProduction" Foreground="White" Text="Plot" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
+                        <TextBox Name="textboxPlot" Foreground="White" Text="Plot" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0">
                             <TextBox.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF7198B2" Offset="0" />
@@ -239,7 +243,7 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <TextBox FontWeight="Bold" Foreground="White" Margin="0" Name="textBox1" Text="Production" TextWrapping="Wrap">
+                        <TextBox FontWeight="Bold" Foreground="White" Margin="0" Name="textProduction" Text="Production" TextWrapping="Wrap">
                             <TextBox.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF7198B2" Offset="0" />
@@ -263,7 +267,7 @@
                             <RowDefinition Height="25" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBox2" Text="Cast" TextWrapping="Wrap">
+                        <TextBox FontWeight="Bold" Foreground="White" Margin="0,0,0,0" Name="textBoxCast" Text="Cast" TextWrapping="Wrap">
                             <TextBox.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="#FF7198B2" Offset="0" />

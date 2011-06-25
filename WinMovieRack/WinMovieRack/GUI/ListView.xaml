@@ -37,12 +37,27 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" MinWidth="250"/>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Name="gridSplitter1" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
 
         <ListView Name="movieList" SelectionMode="Single" Grid.Column="2" Margin="0" SelectionChanged="movieList_SelectionChanged">
+            <ListView.ContextMenu>
+                <ContextMenu AllowDrop="True" Name="movieListBoxContext" Padding="2" HasDropShadow="True" Opened="movieListBoxContext_Opened">
+                    <MenuItem Header="Title" Name="contextMenueTitle" FontWeight="Bold" FontSize="15" Padding="2,3" >
+                        <MenuItem.Icon>
+                            <Image Name="contextMoviePoster"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Seen" Name="menuItemSeen" Click="menuItemSeen_Click">
+                    </MenuItem>
+                    <MenuItem Header="Add to List">
+                    </MenuItem>
+                    <MenuItem Header="Rent to">
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView AllowsColumnReorder="True">
                     <GridView.ColumnHeaderContextMenu>
@@ -151,11 +166,33 @@
                     </TreeView>
                 </Grid>
             </TabItem>
-
-
             <TabItem Header="Info" Name="movieInfo">
                 <Grid Name="infoGrid">
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+                    <Grid Name="noMovie"> 
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="5" Name="border1" Width="auto" Grid.RowSpan="1">
+                        <Grid Height="auto" Name="grid1" Width="auto" Margin="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBox Name="textBoxTitle" Foreground="White" Text="MovieRack" FontWeight="Bold" TextWrapping="Wrap" Margin="0,0,0,0" IsReadOnly="True" AutoWordSelection="True">
+                                <TextBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF7198B2" Offset="0" />
+                                        <GradientStop Color="#FF044875" Offset="1" />
+                                        <GradientStop Color="#FF668FAB" Offset="0.351" />
+                                        <GradientStop Color="#FF044875" Offset="0.649" />
+                                    </LinearGradientBrush>
+                                </TextBox.Background>
+                            </TextBox>
+                            <TextBox Grid.Row="1" Margin="10" Name="textBox1" TextAlignment="Center" Text="Please Choose a Movie" IsReadOnly="True" TextWrapping="Wrap" Background="#FFF9F9F9" BorderThickness="0" />
+                        </Grid>
+                    </Border>
+                    </Grid>
                 </Grid>
                
             </TabItem>

@@ -32,9 +32,21 @@ namespace WinMovieRack.GUI
         public void setPersonInfo(int personID)
         {
             selectedPerson= controller.getPersonInfo(personID);
+            textBoxName.Text = selectedPerson.Name;
             nameBox.Text = selectedPerson.Name;
-
-
+            originalName.Text = selectedPerson.OriginalName;
+            birthday.Text = selectedPerson.Birthday;
+            gender.Text = selectedPerson.gender;
+            countryofBirth.Content = selectedPerson.CountryofBirth;
+            cityofBirth.Content = selectedPerson.CityofBirth;
+            lifetimeGross.Content = selectedPerson.lifetimeGross;
+            boxofficeAverage.Content = selectedPerson.boxofficeAverage;
+            oscarNom.Content = selectedPerson.OscarNominations;
+            oscarWins.Content = selectedPerson.OscarWins;
+            otherNom.Content = selectedPerson.OtherNominations;
+            otherWins.Content = selectedPerson.OtherWins;
+            biogrpahy.Text = selectedPerson.Biography;
+            controller.loadMovieListToPerson(personID);
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getPersonPortraitPath(selectedPerson.dbID, PosterSize.PREVIEW));
@@ -54,6 +66,12 @@ namespace WinMovieRack.GUI
             Point screenOrigin = posterInfo.PointToScreen(origin);
             bigPicture.setOrigin(posterInfo.Source.Height, posterInfo.Source.Width, screenOrigin.X, screenOrigin.Y);
             bigPicture.ShowDialog();
+        }
+
+        private void movieListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MRListBoxItem selectedItem = (MRListBoxItem)movieListBox.SelectedItem;
+            controller.movieClicked(selectedItem);
         }
     }
 }

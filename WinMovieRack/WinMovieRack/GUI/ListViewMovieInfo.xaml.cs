@@ -27,7 +27,7 @@ namespace WinMovieRack.GUI
         public ListViewMovieInfo(ListViewMovieController controller)
         {
             InitializeComponent();
-            this.controller=  controller;
+            this.controller = controller;
         }
 
         public void setMovieDetails(GUIMovie selectedMovie)
@@ -40,13 +40,18 @@ namespace WinMovieRack.GUI
             imdbRating.Text = selectedMovie.imdbRating;
             runtime.Content = selectedMovie.runtime;
             imdbRatingDetails.Content = selectedMovie.imdbRating;
+            imdbRatingDetails.Content = selectedMovie.imdbRatingVotes;
             top250.Content = selectedMovie.imdbTop250;
             seenCount.Content = selectedMovie.seenCount;
             lastSeen.Content = selectedMovie.lastSeen;
             metaReview.Content = selectedMovie.metacriticsReviewRating;
             metaUser.Content = selectedMovie.metacriticsUsersRating;
+            metaReviewVotes.Content = selectedMovie.metacriticsReviewVotes;
+            metaUserVotes.Content = selectedMovie.metacriticsUserVotes;
             tomatoe.Content = selectedMovie.tomatometer;
             tomatoeUser.Content = selectedMovie.rottenTomatoesAudience;
+            tomatoeVotes.Content = selectedMovie.tomatometerVotes;
+            tomatoeUserVotes.Content = selectedMovie.rottenTomatoesAudienceVotes;
             otherWins.Content = selectedMovie.otherWins;
             otherNom.Content = selectedMovie.otherNominations;
             weeksInCine.Content = selectedMovie.weeksInCinema;
@@ -76,12 +81,16 @@ namespace WinMovieRack.GUI
             }
             controller.loadStarsListToMovie(selectedMovie.dbId, selectedMovie.yearInt);
             controller.loadProductionListToMovie(selectedMovie.dbId, selectedMovie.yearInt);
-
+            if (castExpander.IsExpanded)
+            {
+                controller.loadActorListToMovie(selectedMovie.dbId, selectedMovie.yearInt);
+            }
             BitmapImage posterBitmap = new BitmapImage();
             posterBitmap.BeginInit();
             posterBitmap.UriSource = new Uri(PictureHandler.getMoviePosterPath(selectedMovie.dbId, PosterSize.PREVIEW));
             posterBitmap.EndInit();
             posterInfo.Source = posterBitmap;
+
         }
 
         private String generateString(List<String> listBoxMovies)

@@ -91,5 +91,10 @@ namespace WinMovieRack.Controller
             return db.getLanguageToMovie(idMovies);
         }
 
+
+        internal void updateSeenCount()
+        {
+            view.seenCountLabel.Content = int.Parse(view.seenCount.Content.ToString()) + 1;
+        }
     }
 }

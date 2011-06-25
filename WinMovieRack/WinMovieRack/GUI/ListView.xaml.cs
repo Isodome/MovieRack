@@ -23,6 +23,7 @@ namespace WinMovieRack.GUI
     public partial class ListView : System.Windows.Controls.UserControl
     {
         ListViewController controller;
+        GUIMovie movieDetails;
         public ListView(ListViewController lvc)
         {
             InitializeComponent();
@@ -31,8 +32,22 @@ namespace WinMovieRack.GUI
 
         private void movieList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            movieDetails = (GUIMovie)movieList.SelectedItem;
             controller.changeToMovieView((GUIMovie)movieList.SelectedItem);
             tabControl.SelectedIndex = 1;
+        }
+
+        private void movieListBoxContext_Opened(object sender, RoutedEventArgs e)
+        {
+            contextMenueTitle.Header = movieDetails.title;
+            Uri uri = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.TINY));
+            contextMoviePoster.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+        }
+
+        private void menuItemSeen_Click(object sender, RoutedEventArgs e)
+        {
+            Seen seen = new Seen(controller, movieDetails.dbId);
+            seen.ShowDialog();
         }
     }
 }

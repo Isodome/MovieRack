@@ -14,13 +14,11 @@ using System.Windows.Shapes;
 using WinMovieRack.GUI;
 using WinMovieRack.Model;
 using WinMovieRack.Controller;
-using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using System.IO;
 using System.Collections;
 using System.Data;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
 using System.Collections.ObjectModel;
 namespace WinMovieRack
 {
@@ -76,7 +74,7 @@ namespace WinMovieRack
             //awards.Content = movieDetails.
             budget.Content = movieDetails.budget;
             boxxoffice.Content = movieDetails.boxofficeWorldwide;
-            seen.Content = controller.getSeenCount(movieDetails.dbId);
+            seen.Content = movieDetails.seenCount;
             string languageString = generateString(controller.loadLanguageList(movieDetails.dbId));
             if (languageString.Equals(""))
             {
@@ -244,7 +242,7 @@ namespace WinMovieRack
         {
             if (movieDetails != null)
             {
-				Process.Start(IMDBUtil.getURLToMovie(movieDetails.imdbID));
+                Process.Start(IMDBUtil.getURLToMovie(movieDetails.imdbID));
             }
         }
 
@@ -281,12 +279,27 @@ namespace WinMovieRack
             contextMenueTitle.Header = movieDetails.title;
             Uri uri = new Uri(PictureHandler.getMoviePosterPath(movieDetails.dbId, PosterSize.TINY));
             contextMoviePoster.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+            controller.getLists();
+
         }
 
         private void menuItemSeen_Click(object sender, RoutedEventArgs e)
         {
             GUI.Seen seen = new GUI.Seen(controller, movieDetails.dbId);
             seen.ShowDialog();
+        }
+
+        private void newList_Click(object sender, RoutedEventArgs e)
+        {
+            GUI.List list = new GUI.List(controller);
+            list.ShowDialog();
+        }
+
+        public void list_Click(object sender, RoutedEventArgs e)
+        {
+            MRListBoxItem selectedMovie = (MRListBoxItem)listBoxMovies.SelectedItem;
+            MenuItem selectedList = (MenuItem)sender;
+            controller.addMovieToList(selectedList.Header.ToString(), selectedMovie.getId);
         }
     }
 
