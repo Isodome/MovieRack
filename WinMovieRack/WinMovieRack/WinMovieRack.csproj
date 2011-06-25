@@ -111,6 +111,7 @@
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\SerialIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
+    <Compile Include="Controller\Parser\Rottentomatoes\JobRottentomatoesParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
     <Compile Include="Controller\ActorsViewController.cs" />
     <Compile Include="Controller\ThreadManagement\ConcThreadJobTemplate.cs" />

@@ -9,6 +9,7 @@ using WinMovieRack.GUI;
 using WinMovieRack.Model;
 using WinMovieRack.Controller.Parser.BoxOffice;
 using System.Net;
+using System.Threading;
 namespace WinMovieRack.Controller
 {
     public class Controller
@@ -37,15 +38,18 @@ namespace WinMovieRack.Controller
             ServicePointManager.DefaultConnectionLimit = 65000;
 
 			if (System.Environment.MachineName.Equals("DOMI-PC")) {
-				SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
-				b.run();
-				b.getResult().printToConsole();
-				b = new SerialBoxOfficeMovieParser("abduction11");
-				b.run();
-				b.getResult().printToConsole();
-				b = new SerialBoxOfficeMovieParser("inception");
-				b.run();
-				b.getResult().printToConsole();
+				ThreadStart ts = () => {
+					SerialBoxOfficeMovieParser b = new SerialBoxOfficeMovieParser("titanic");
+					b.run();
+					b.getResult().printToConsole();
+					b = new SerialBoxOfficeMovieParser("abduction11");
+					b.run();
+					b.getResult().printToConsole();
+					b = new SerialBoxOfficeMovieParser("inception");
+					b.run();
+					b.getResult().printToConsole();
+				};
+				(new Thread(ts)).Start();
 			} else {
 				Console.WriteLine("Nicht auf DOMI-PC sonder auf {0}, deswegen jetzt kein BO Parsen", System.Environment.MachineName);
 			}

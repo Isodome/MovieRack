@@ -43,8 +43,12 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 				extractForeign();
 			}
 			if (weekendPage != null) {
-			
+				extractWeekendGross();
 			}
+		}
+
+		private void extractWeekendGross() {
+			
 		}
 
 		private void extractForeign() {
@@ -85,9 +89,6 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 				if (Int64.TryParse(moneystring, out money)) {
 					movie.foreign.Add(new BOForeignInfo(country, money, isFinal));
 				}
-				
-
-				
 				
 			}
 		}
@@ -130,7 +131,6 @@ namespace WinMovieRack.Controller.Parser.BoxOffice {
 					}
 				}
 			}
-			//TODO
 		}
 
 		private void extractFirstWeekend() {
