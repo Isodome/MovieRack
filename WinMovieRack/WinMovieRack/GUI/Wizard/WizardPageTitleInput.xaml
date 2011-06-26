@@ -1,0 +1,32 @@
+﻿<PageFunction
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+    x:Class="WinMovieRack.GUI.Wizard.WizardPageTitleInput"
+        xmlns:local="clr-namespace:WinMovieRack.GUI.Wizard" 
+    x:TypeArguments="local:WizardResult"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="300"
+       FocusManager.FocusedElement="{Binding ElementName=searchBox}" 
+    Title="WizardPageTitleInput">
+    
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Height="auto" HorizontalAlignment="Center" Margin="56,0,40,12" Name="stackPanelButtons" Orientation="Horizontal" VerticalAlignment="Center" Width="auto">
+                <Button Click="nextButton_Click" Content="Next" IsDefault="True" Name="nextButton" Padding="5,0" Width="auto" />
+                <Button Click="cancelButton_Click" Content="Cancel" IsCancel="True" Margin="10,0,0,0" Name="cancelButton" Padding="5,0" Width="auto" />
+                <Button Content="Finished" IsEnabled="False" Margin="10,0,0,0" Name="finishButton" Padding="5,0" Width="auto" />
+            </StackPanel>
+        <StackPanel Margin="20,10,0,10" Name="stackPanel1" Orientation="Horizontal" HorizontalAlignment="Left" Width="auto">
+            <Label Content="Title:" Height="auto" Name="titleLabel" />
+            <TextBox Height="auto" Name="searchBox" Width="200" />
+        </StackPanel>
+    </Grid>
+
+</PageFunction>

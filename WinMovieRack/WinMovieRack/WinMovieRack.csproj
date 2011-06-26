@@ -114,7 +114,6 @@
     <Compile Include="Controller\Parser\imdbNameParser\ConcurrentIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\SerialIMDBNameParser.cs" />
     <Compile Include="Controller\Parser\imdbNameParser\JobIMDBNameParser.cs" />
-    <Compile Include="Controller\Parser\Rottentomatoes\JobRottentomatoesParser.cs" />
     <Compile Include="Controller\TestJob.cs" />
     <Compile Include="Controller\ActorsViewController.cs" />
     <Compile Include="Controller\ThreadManagement\ConcThreadJobTemplate.cs" />
@@ -168,6 +167,26 @@
     <Compile Include="GUI\MovieRackListBoxItem.xaml.cs">
       <DependentUpon>MovieRackListBoxItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Wizard\MovieAddWizard.xaml.cs">
+      <DependentUpon>MovieAddWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wizard\WizardData.cs" />
+    <Compile Include="GUI\Wizard\WizardLauncher.cs" />
+    <Compile Include="GUI\Wizard\WizardPageBoxofficeResult.xaml.cs">
+      <DependentUpon>WizardPageBoxofficeResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wizard\WizardPageIMDBResult.xaml.cs">
+      <DependentUpon>WizardPageIMDBResult.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wizard\WizardPageSelectSites.xaml.cs">
+      <DependentUpon>WizardPageSelectSites.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wizard\WizardPageTitleInput.xaml.cs">
+      <DependentUpon>WizardPageTitleInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Wizard\WizardResult.cs" />
+    <Compile Include="GUI\Wizard\WizardReturnEventArgs.cs" />
+    <Compile Include="GUI\Wizard\WizardReturnEventHandler.cs" />
     <Compile Include="Model\DataTypes\Award.cs" />
     <Compile Include="Controller\Parser\BoxOffice\BoxOfficeSearchResultCollection.cs" />
     <Compile Include="Model\DataTypes\BOForeignInfo.cs" />
@@ -253,6 +272,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\TodoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Wizard\MovieAddWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Wizard\WizardPageBoxofficeResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Wizard\WizardPageIMDBResult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Wizard\WizardPageSelectSites.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Wizard\WizardPageTitleInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,6 +413,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\Parser\Rottentomatoes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -310,7 +310,10 @@
         <GroupBox Header="Lists - Unseen" Margin="2,0,0,0" Name="ListGroup" FontSize="15" FontWeight="Bold">
             <Grid>
                 <Menu Height="23" Margin="0,0,0,0" Name="listMenu" VerticalAlignment="Top">
-                    <MenuItem x:Name="addMovie" Header="Add"/>
+                    <MenuItem x:Name="addMovie" Header="Add">
+                        <MenuItem x:Name="addMovieWizard" Header="Wizard" Click="addMovieWizard_Click" />
+                        <MenuItem x:Name="addMovieExperd" Header="Expert"/>
+                    </MenuItem>
                     <MenuItem x:Name="deleteMovie" Header="Delete"/>
                     <MenuItem x:Name="searchMovie" Header="Search"/>
                     <MenuItem x:Name="playMovie" Header="Play"/>

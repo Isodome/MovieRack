@@ -20,6 +20,8 @@ using System.Collections;
 using System.Data;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using WinMovieRack.GUI.Wizard;
+
 namespace WinMovieRack
 {
     /// <summary>
@@ -300,6 +302,12 @@ namespace WinMovieRack
             MRListBoxItem selectedMovie = (MRListBoxItem)listBoxMovies.SelectedItem;
             MenuItem selectedList = (MenuItem)sender;
             controller.addMovieToList(selectedList.Header.ToString(), selectedMovie.getId);
+        }
+
+        private void addMovieWizard_Click(object sender, RoutedEventArgs e)
+        {
+            MovieAddWizard wizard = new MovieAddWizard();
+            bool dialogResult = (bool)wizard.ShowDialog();
         }
     }
 
